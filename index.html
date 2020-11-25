@@ -428,12 +428,13 @@ pre {
   <div id="links">
     <a id="show_links" href="javascript:showLinks();" alt="Show links" title="Show links"><i class='material-icons'>chevron_right</i></a><br/>
     <a id="undo" href="javascript:undo();" alt="Undo" title="Undo"><i class='material-icons'>undo</i> Undo</a><br/>
-    <a id="share" href="javascript:window.open('https://www.blogger.com/blog-this.g?t='+res.value, 'blog');" alt="Share" title="Share"><i class='material-icons'>share</i> Share</a><br/>
+    <a id="lucky" href="javascript:luckyNum(8, 0, 11);" title="Lucky"><i class='material-icons'>casino</i> Lucky</a><br/>
     <a id="sound_on" href="javascript:setup();" alt="Sound on" title="Sound on"><i class='material-icons'>power_settings_new</i>️ Sound on</a><br/>
     <a id="tab_edit" href="javascript:showTab();" alt="Tab editor" title="Tab editor"><i class='material-icons'>border_left</i> Tab editor</a><br/>
     <a id="lyrics" href="javascript:showLyrics();" alt="Mobile view" title="Mobile view"><i class='material-icons'>preview</i> Mobile view</a><br/>
     <a id="help_" href="javascript:showHelp();" alt="Help" title="Help"><i class='material-icons'>help_outline</i> Help</a><br/>
-    <a id="credits_" href="javascript:showCredits();" alt="Credits" title="Credits"><i class='material-icons'>copyright</i> Credits</a>
+    <a id="credits_" href="javascript:showCredits();" alt="Credits" title="Credits"><i class='material-icons'>copyright</i> Credits</a><br/>
+    <a id="share" href="javascript:window.open('https://www.blogger.com/blog-this.g?t='+res.value, 'blog');" alt="Share" title="Share"><i class='material-icons'>share</i> Share</a><br/>
   </div>
 
 <script>
@@ -661,6 +662,7 @@ var tab_new = document.getElementById("tab_new");
 var tab = document.getElementById("tab");
 var sh = false;
 var regexp = [];
+var ks_ = [];
 var ctl = rs;
 
 for (var i=0; i<keys.length; i++) {
@@ -683,6 +685,7 @@ for (var i=0; i<keys.length; i++) {
   regexp[i] = [];
   regexp[i][0] = new RegExp(ks[1]+"[_012]", "g");
   regexp[i][1] = "hsl(" + ks[2] + ", 100%, 75%)";
+  ks_[i] = ks[1];
 }
 
 for (var i=0; i<keys_.length; i++) {
@@ -970,6 +973,37 @@ function loadIndex(f, v) {
 }
 loadIndex("index_freq.csv", "v");
 loadIndex("index_c_freq.csv", "c");
+
+
+function luckyNum(n, min, max) {
+  var data = {
+    "jsonrpc": "2.0",
+    "method": "generateIntegers",
+    "params": {
+        "apiKey": "c4548205-2230-40d0-9732-ee732bd7ff2f",
+        "n": n,
+        "min": min,
+        "max": max,
+        "replacement": true,
+        "base": 10
+    },
+    "id": 42
+  }
+
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      d = JSON.parse(this.responseText).result.random.data;
+      for (var i=0; i<d.length; i++) {
+        addPhoneme(ks_[d[i]]+'_', 'transparent');
+      }
+    }
+  };
+  xhttp.open("POST", "https://api.random.org/json-rpc/2/invoke", true);
+  xhttp.setRequestHeader("Content-type", "application/json");
+  xhttp.send(JSON.stringify(data));
+}
+
 
 function initTune() {
   rs.value+=" ___ ___ ___ ___ ___ ___ ___ ___\n ___ ___ ___ ___ ___ ___ ___ ___\n ___ ___ ___ ___ ___ ___ ___ ___\n ___ ___ ___ ___ ___ ___ ___ ___\n \n    ___ ___ ___ ___ ___ ___ ___ ___\n    ___ ___ ___ ___ ___ ___ ___ ___\n    ___ ___ ___ ___ ___ ___ ___ ___\n    ___ ___ ___ ___ ___ ___ ___ ___\n \n ___ ___ ___ ___ ___ ___ ___ ___\n ___ ___ ___ ___ ___ ___ ___ ___\n ___ ___ ___ ___ ___ ___ ___ ___\n ___ ___ ___ ___ ___ ___ ___ ___\n \n ___ ___ ___ ___ ___ ___ ___ ___\n ___ ___ ___ ___ ___ ___ ___ ___\n ___ ___ ___ ___ ___ ___ ___ ___\n ___ ___ ___ ___ ___ ___ ___ ___\n \n ___ ___ ___ ___ ___ ___ ___ ___\n ___ ___ ___ ___ ___ ___ ___ ___\n ___ ___ ___ ___ ___ ___ ___ ___\n ___ ___ ___ ___ ___ ___ ___ ___\n";
