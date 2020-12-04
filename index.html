@@ -292,7 +292,7 @@ pre {
   <div id="highlight"></div>
   <textarea placeholder="Lyrics" id="res" onkeyup="syllables();" onmouseup="syllables();" ontouchup="syllables();" onfocus="syllables();ctl=this;" onscroll="highlight.scrollTop = this.scrollTop;highlight.scrollLeft = this.scrollLeft;" style="visibility:visible;"></textarea>
   <div id="highlight_"></div>
-  <textarea placeholder="Phonetic pattern" id="rs" onkeyup="colorPhonemes();" onmouseup="colorPhonemes();" ontouchup="colorPhonemes();" onfocus="colorPhonemes();ctl=this;" onscroll="highlight_.scrollTop = this.scrollTop;highlight_.scrollLeft = this.scrollLeft;" style="visibility:visible;"></textarea>
+  <textarea placeholder="Phonetic pattern" id="rs" onkeydown="if(event.key.length==1 && !event.ctrlKey && !event.metaKey){event.preventDefault();}" onkeyup="if(event.key.length==1 && kbrd[event.key] && !event.ctrlKey && !event.metaKey){addPhoneme(kbrd[event.key], 0);}colorPhonemes();" onmouseup="colorPhonemes();" ontouchup="colorPhonemes();" onfocus="colorPhonemes();ctl=this;" onscroll="highlight_.scrollTop = this.scrollTop;highlight_.scrollLeft = this.scrollLeft;" style="visibility:visible;"></textarea>
 </div>
 
   <div id="help">
@@ -484,6 +484,58 @@ var keys_ = [
   "ŋ ,NG,0.1000",
   "h ,HH,0.1739",
 ];
+
+var kbrd = {
+  '`': 'NG',
+  '1': 'IY_',
+  '2': 'IH_',
+  '3': 'EY_',
+  '4': 'EH_',
+  '5': 'AE_',
+  '6': 'ER_',
+  '7': 'AH_',
+  '8': 'AA_',
+  '9': 'AO_',
+  '0': 'OW_',
+  '-': 'UH_',
+  '=': 'UW_',
+  'q': 'TH',
+  'w': 'W',
+  'e': '',
+  'r': 'R',
+  't': 'T',
+  'y': 'Y',
+  'u': '',
+  'i': '',
+  'o': '',
+  'p': 'P',
+  '[': 'AY_',
+  ']': 'OY_',
+  '\\': 'AW_',
+  'a': '',
+  's': 'S',
+  'd': 'D',
+  'f': 'F',
+  'g': 'G',
+  'h': 'HH',
+  'j': 'JH',
+  'k': 'K',
+  'l': 'L',
+  ';': 'SH',
+  '\'': 'ZH',
+  'z': 'Z',
+  'x': 'DH',
+  'c': 'CH',
+  'v': 'V',
+  'b': 'B',
+  'n': 'N',
+  'm': 'M',
+  ',': '0',
+  '.': '1',
+  '/': '2',
+  '_': '_',
+  ' ': ' ',
+}
 
 var frets = {
   "|":["-2", ""],
@@ -705,7 +757,7 @@ function note(event) {
     } else {
       fret = frets[event.key][1];
     }
-    addNote(" ", 0);
+    addNote(fret, 0);
   } else if (event.key == "ArrowUp" || event.key == "ArrowDown" || event.key == "ArrowRight" || event.key == "ArrowLeft") {
     addNote("", 0);
   } else {
@@ -797,8 +849,7 @@ function addNote(n, clr) {
   if (b == d) {
     if (n == "") {
       n = tab_new.value.substr(b-1, 1);
-    } else if (n == " ") {
-      n = tab_new.value.substr(b-1, 1);
+    } else if (n == tab_new.value.substr(b-1, 1)) {
       d++;
     }
     var before = tab_new.value.substr(0, b-1);
