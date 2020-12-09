@@ -195,7 +195,7 @@ pre {
   float:right;
 }
 #h_fret {
-  width:32px;
+  width:16px;
   text-align:right;
 }
 #tab {
@@ -296,11 +296,11 @@ pre {
 </div>
 
   <div id="help">
-    <p>Search words or phonemes and add the results to lyrics and <i>phonetic pattern</i>.</p>
-    <p>Spell them or look up rhymes and alliterations separately for vowels and consonants.</p>
+    <p>Search <i>keywords</i> or phonemes and add the results to lyrics and phonetic pattern.</p>
+    <p>Look up <i>rhymes and alliterations</i> with wildcards, separate for vowels and consonants.</p>
     <p>They can be in any syllables wherever in the text, not necessarily the end of the line.</p>
-    <p>Use the wildcards and stresses for the rest of your lines to fit the <i>form</i> and <i>rhythm</i>.</p>
-    <span id="mobile">On mobile, switch native keyboard to one-handed mode.</span>
+    <p>Use the placeholders and stresses for the rest of your lines to fit the <i>form</i> and <i>rhythm</i>.</p>
+    <span id="mobile">On mobile, switch the system keyboard to floating mode.</span>
   </div>
   
   <div id="credits">
@@ -405,7 +405,7 @@ pre {
       <option value="f# "></option>
       <option value="f  "></option>
     </select>
-    Frets<input type="text" size="1" id="h_fret" value="9"/>
+    Frets <input type="text" size="1" id="h_fret" value="9"/>
     </div>
   </div>
 
@@ -428,7 +428,7 @@ pre {
   <div id="links">
     <a id="show_links" href="javascript:showLinks();" alt="Show links" title="Show links"><i class='material-icons'>chevron_right</i></a><br/>
     <a id="undo" href="javascript:undo();" alt="Undo" title="Undo"><i class='material-icons'>undo</i> Undo</a><br/>
-    <a id="lucky" href="javascript:luckyNum(8, 0, 2);" title="Lucky"><i class='material-icons'>casino</i> Lucky</a><br/>
+    <a id="lucky" href="javascript:luckyNum(1, 0, 13767);luckyNum(1, 0, 49775);" title="Lucky"><i class='material-icons'>casino</i> Lucky</a><br/>
     <a id="sound_on" href="javascript:setup();" alt="Sound on" title="Sound on"><i class='material-icons'>power_settings_new</i>️ Sound on</a><br/>
     <a id="tab_edit" href="javascript:showTab();" alt="Tab editor" title="Tab editor"><i class='material-icons'>border_left</i> Tab editor</a><br/>
     <a id="lyrics" href="javascript:showLyrics();" alt="Mobile view" title="Mobile view"><i class='material-icons'>preview</i> Mobile view</a><br/>
@@ -1045,10 +1045,13 @@ function luckyNum(n, min, max) {
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       d = JSON.parse(this.responseText).result.random.data;
-      for (var i=0; i<d.length; i++) {
-        //addPhoneme(ks_[d[i]]+'_', 'transparent');
-        addPhoneme('__'+d[i], 'transparent');
+      //for (var i=0; i<d.length; i++) {
+      if (max < 20000) {
+        vowels.value = vowels_.options[d[0]].value;
+      } else {
+        consonants.value = consonants_.options[d[0]].value;
       }
+      //}
     }
   };
   xhttp.open("POST", "https://api.random.org/json-rpc/2/invoke", true);
@@ -1058,7 +1061,7 @@ function luckyNum(n, min, max) {
 
 
 function initTune() {
-  rs.value+=" ___ ___ ___ ___ ___ ___ ___ ___\n ___ ___ ___ ___ ___ ___ ___ ___\n ___ ___ ___ ___ ___ ___ ___ ___\n ___ ___ ___ ___ ___ ___ ___ ___\n \n    ___ ___ ___ ___ ___ ___ ___ ___\n    ___ ___ ___ ___ ___ ___ ___ ___\n    ___ ___ ___ ___ ___ ___ ___ ___\n    ___ ___ ___ ___ ___ ___ ___ ___\n \n ___ ___ ___ ___ ___ ___ ___ ___\n ___ ___ ___ ___ ___ ___ ___ ___\n ___ ___ ___ ___ ___ ___ ___ ___\n ___ ___ ___ ___ ___ ___ ___ ___\n \n ___ ___ ___ ___ ___ ___ ___ ___\n ___ ___ ___ ___ ___ ___ ___ ___\n ___ ___ ___ ___ ___ ___ ___ ___\n ___ ___ ___ ___ ___ ___ ___ ___\n \n ___ ___ ___ ___ ___ ___ ___ ___\n ___ ___ ___ ___ ___ ___ ___ ___\n ___ ___ ___ ___ ___ ___ ___ ___\n ___ ___ ___ ___ ___ ___ ___ ___\n";
+  rs.value+=" ___ ___ ___ ___ ___ ___ ___ ___\n";
   var d_tuning = ["c` ", "g# ", "e  ", "c  ", "G# ", "E  "];
   tab_new.value = "";
   for (var j=0; j<6; j++) {
