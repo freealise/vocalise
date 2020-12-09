@@ -4,6 +4,6 @@ Dictionary by <a href="http://www.speech.cs.cmu.edu/cgi-bin/cmudict" title="Carn
 
 <p><b>TODO:</b><br/> 
 - optimize to search and load faster;<br/>
-- add sound for diphtongs, British pronounciation and IPA transcription;<br/>
+- add sound for diphtongs, British pronounciation (use a dictionary from the defining) and IPA transcription;<br/>
 - underline only pronounced vowels.
 </p>
