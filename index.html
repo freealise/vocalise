@@ -50,7 +50,6 @@ a {
   padding:3px 1.5px;
 }
 #keys_ span a {
-  background: #eeeeee;
   border-left:1px solid darkgray;
   padding:0px;
   margin:0px -1px 0px 0px;
@@ -416,7 +415,7 @@ pre {
     
     <pre oncontextmenu="return false;" id="keys_">
 <span class="u"><a title="B">  </a><a title="P">  </a></span>          <span class="u"><a title="D">  </a><a title="T">  </a></span>          <span class="u"><a title="G">  </a><a title="K">  </a></span>
-    <span class="u"><a title="V">  </a><a title="F">  </a></span> <span class="u"><a title="DH">  </a><a title="TH">  </a></span> <span class="u"><a title="Z">  </a><a title="S">  </a></span> <span class="u"><a title="ZH">  </a><a title="SH">  </a></span> <span class="u"><a title="JH">  </a><a title="CH">  </a></span>
+    <span class="u"><a title="V">  </a><a title="F">  </a></span> <span class="u"><a title="DH">  </a><a title="TH">  </a></span> <span class="u"><a title="Z">  </a><a title="S">  </a></span> <span class="u"><a title="JH">  </a><a title="CH">  </a></span> <span class="u"><a title="ZH">  </a><a title="SH">  </a></span>
 <span class="u"><a title="M">  </a><a title="N">  </a></span>  <a title="_">_ </a> <span class="u"><a title="W">  </a><a title="Y">  </a></span>      <span class="u"><a title="L">  </a><a title="R">  </a></span>     <span class="u"><a title="NG">  </a><a title="HH">  </a></span>
               <a title="Space" href="javascript:" onclick="addPhoneme(' ', 'transparent');">␣ </a> <a id="br" title="Newline" href="javascript:" onclick="addPhoneme('\n', 'transparent');">↵ </a>      <a title="Wildcard" href="javascript:" onclick="addPhoneme('*', 'transparent');">* </a></pre>
     <pre oncontextmenu="return false;" id="keys">
@@ -470,10 +469,10 @@ var keys_ = [
   "θ ,TH,0.0758",
   "z ,Z,0.4163",
   "s ,S,0.5710",
-  "ʒ ,ZH,0.0086",
-  "ʃ ,SH,0.1072",
   "dʒ,JH,0.0791",
   "tʃ,CH,0.0717",
+  "ʒ ,ZH,0.0086",
+  "ʃ ,SH,0.1072",
   "m ,M,0.3173",
   "n ,N,1.0000",
   "_ ,_,1",
@@ -746,8 +745,8 @@ for (var i=0; i<keys_.length; i++) {
   lnk.onclick=function(e){/*addConsonant(e.target.title);*/if(ctl!=vowels){addPhoneme(e.target.title, 'transparent');}};
   lnk.href="javascript:";
   lnk.innerText = ks[0];
-  var bg = Math.pow(parseFloat(ks[2]), 1/3);
-  lnk.style.color = "rgba(0,0,0," + bg + ")";
+  var bg = 100 - Math.pow(parseFloat(ks[2]), 1/3)*100;
+  lnk.style.color = "hsl(0, 0%, " + bg + "%)";
 }
 
 function note(event) {
