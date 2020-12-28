@@ -427,7 +427,6 @@ pre {
   <div id="links">
     <a id="show_links" href="javascript:showLinks();" alt="Show links" title="Show links"><i class='material-icons'>chevron_right</i></a><br/>
     <a id="undo" href="javascript:undo();" alt="Undo" title="Undo"><i class='material-icons'>undo</i> Undo</a><br/>
-    <a id="lucky" href="javascript:luckyNum(1, 0, 13767);luckyNum(1, 0, 49775);" title="Lucky"><i class='material-icons'>casino</i> Lucky</a><br/>
     <a id="sound_on" href="javascript:setup();" alt="Sound on" title="Sound on"><i class='material-icons'>power_settings_new</i>️ Sound on</a><br/>
     <a id="tab_edit" href="javascript:showTab();" alt="Tab editor" title="Tab editor"><i class='material-icons'>border_left</i> Tab editor</a><br/>
     <a id="lyrics" href="javascript:showLyrics();" alt="Mobile view" title="Mobile view"><i class='material-icons'>preview</i> Mobile view</a><br/>
@@ -1023,41 +1022,6 @@ function loadIndex(f, v) {
 }
 loadIndex("index_freq.csv", "v");
 loadIndex("index_c_freq.csv", "c");
-
-
-function luckyNum(n, min, max) {
-  var data = {
-    "jsonrpc": "2.0",
-    "method": "generateIntegers",
-    "params": {
-        "apiKey": "c4548205-2230-40d0-9732-ee732bd7ff2f",
-        "n": n,
-        "min": min,
-        "max": max,
-        "replacement": true,
-        "base": 10
-    },
-    "id": 42
-  }
-
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      d = JSON.parse(this.responseText).result.random.data;
-      //for (var i=0; i<d.length; i++) {
-      if (max < 20000) {
-        vowels.value = vowels_.options[d[0]].value;
-      } else {
-        consonants.value = consonants_.options[d[0]].value;
-      }
-      //}
-    }
-  };
-  xhttp.open("POST", "https://api.random.org/json-rpc/2/invoke", true);
-  xhttp.setRequestHeader("Content-type", "application/json");
-  xhttp.send(JSON.stringify(data));
-}
-
 
 function initTune() {
   rs.value+=" ___ ___ ___ ___ ___ ___ ___ ___\n";
