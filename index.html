@@ -397,58 +397,6 @@ var kbrd = {
   ' ': ' ',
 }
 
-/*
-˥˦˧˨˩
-These are combined in sequence for contour tones.
-
-꜒꜓꜔꜕꜖
-꜈꜉꜊꜋꜌꜑꜐꜏꜎꜍
-*/
-
-var frets = {
-  0:["꜈"],
-  1:["꜉"],
-  2:["꜊"],
-  3:["꜋"],
-  4:["꜌"],
-  5:["꜑"],
-  6:["꜐"],
-  7:["꜏"],
-  8:["꜎"],
-  9:["꜍"],
-  10:[".꜈"],
-  11:[".꜉"],
-  12:[".꜊"],
-  13:[".꜋"],
-  14:[".꜌"],
-  15:[".꜑"],
-  16:[".꜐"],
-  17:[".꜏"],
-  18:[".꜎"],
-  19:[".꜍"],
-  20:[":꜈"],
-  21:[":꜉"],
-  22:[":꜊"],
-  23:[":꜋"],
-  24:[":꜌"],
-}
-
-function tuning(tab) {
-  var d_tuning = ["c` ", "g# ", "e  ", "c  ", "G# ", "E  "];
-  var add_tuning = [4, 3, 3, 2, 1, 0];
-  var replace_tuning = [];
-  var tab_strings = tab.split("\n");
-  for (var i=0; i<6; i++) { //string from highest
-    replace_tuning[i] = [];
-    for (var j=20; j>=0; j--) { //fret from highest
-      replace_tuning[i][j] = j+add_tuning[i];
-      tab_strings[i] = tab_strings[i].replace(new RegExp(""+j, "g"), frets[replace_tuning[i][j]]);
-    }
-  }
-  tab = tab_strings.join("\n");
-  return tab;
-}
-
 var audioCtx, oscillator, biquadFilter, biquadFilter_, biquadFilter__, gainNode = null;
 
 function setup() {
