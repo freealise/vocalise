@@ -2,7 +2,7 @@
 <html>
 <head>
 <title>
-  Reverse phonetic dictionary based on CMUDict, includes a lyrics / tab editor and vowel sound synthesizer
+  Reverse phonetic dictionary based on CMUDict, includes a lyrics editor and vowel sound synthesizer
 </title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script type="text/javascript" src="piano.js"></script>
@@ -168,44 +168,6 @@ pre {
   display:block;
   white-space: pre;
 }
-#tab_new {
-  width:100%;
-  height:65vh;
-  font-size:13.5px;
-  cursor: default;
-  overflow-y: scroll;
-  overflow-x: auto;
-  font-family:'FiraCode', monospace;
-  white-space: pre;
-  word-wrap:normal;
-  word-break: normal;
-}
-#tab_old {
-  background:lightgray;
-  white-space: pre;
-  word-wrap:normal;
-  word-break: normal;
-  overflow-y: scroll;
-  overflow-x: auto;
-  width:100%;
-  height:15vh;
-}
-#tuning {
-  float:right;
-}
-#h_fret {
-  width:16px;
-  text-align:right;
-}
-#tab {
-  width:100%;
-  height:100vh;
-  position:fixed;
-  top:0px;
-  background:white;
-  visibility:hidden;
-  z-index:1;
-}
 #dict, #help, #credits {
   width:256px;
   position:fixed;
@@ -303,109 +265,10 @@ pre {
   </div>
   
   <div id="credits">
-    <p>Reverse phonetic dictionary, includes a lyrics / tab editor and vowel sound synthesizer. Licensed under the GNU GPL-3.0, hosted on <a href="https://github.com/freealise/phonetic" title="Github" target="_blank"><u>GitHub</u></a> and <a href="https://script.google.com" title="Google Script" target="_blank"><u>Google Script</u></a>.</p>
+    <p>Reverse phonetic dictionary, includes a lyrics editor and vowel sound synthesizer. Licensed under the GNU GPL-3.0, hosted on <a href="https://github.com/freealise/phonetic" title="Github" target="_blank"><u>GitHub</u></a> and <a href="https://script.google.com" title="Google Script" target="_blank"><u>Google Script</u></a>.</p>
     <p>Dictionary by <a href="http://www.speech.cs.cmu.edu/cgi-bin/cmudict" title="Carnegie Mellon University" target="_blank"><u>CMU</u></a>, sorted by frequency based on <a href="https://books.google.com/ngrams" title="Google Books Ngrams" target="_blank"><u>Google Books Ngrams</u></a> with <a href="https://phrasefinder.io/" title="PhraseFinder" target="_blank"><u>PhraseFinder</u></a> API.</p>
     <p>Thanks to <a href="https://www.gearslutz.com/board/showpost.php?p=11559456&amp;postcount=10" title="jerry123 from GearSlutz" target="_blank"><u>jerry123 from GearSlutz</u></a> for the idea of phonetic songwriting, <a href="https://englishwithkim.com/" title="English with Kim" target="_blank"><u>English with Kim</u></a> for clarifying that a tune is contained in natural speech.</p>
     <p>Separating vowels and consonants, along with slant rhyme or alliteration within a line, is common in Hebrew poetry and rap.</p>
-  </div>
-
-  <div id="tab">
-    <!-- TODO: can be used to transpose from any tuning to any, specifying how many frets down it goes on each string -->
-    <textarea wrap="soft" id="tab_old" placeholder="Paste a standard 6-string guitar tab here to convert it to custom tuning for any instrument, and edit with keyboard or click / touch."></textarea>
-    <textarea oncontextmenu="return false;" wrap="soft" id="tab_new" placeholder="New tab" onmouseup="addNote(fret, 0);" ontouchup="addNote(fret, 0);" onkeyup="note(event);" onkeydown="tab_backup=tab_new.value;" onmousedown="tab_backup=tab_new.value;" onfocus="ctl=this;"></textarea>
-    <div id="tuning">
-    <button onclick="transpose()">EADGBE→</button>
-    <select>
-      <option selected value="E  "></option>
-      <option value="D# "></option>
-      <option value="D  "></option>
-      <option value="C# "></option>
-      <option value="C  "></option>
-      <option value="B. "></option>
-      <option value="A#."></option>
-      <option value="A. "></option>
-      <option value="G#."></option>
-      <option value="G. "></option>
-      <option value="F#."></option>
-      <option value="F. "></option>
-    </select>
-    
-    <select>
-      <option value="A  "></option>
-      <option selected value="G# "></option>
-      <option value="G  "></option>
-      <option value="F# "></option>
-      <option value="F  "></option>
-      <option value="E  "></option>
-      <option value="D# "></option>
-      <option value="D  "></option>
-      <option value="C# "></option>
-      <option value="C  "></option>
-      <option value="B. "></option>
-      <option value="A#."></option>
-    </select>
-    
-    <select>
-      <option value="d  "></option>
-      <option value="c# "></option>
-      <option selected value="c  "></option>
-      <option value="B  "></option>
-      <option value="A# "></option>
-      <option value="A  "></option>
-      <option value="G# "></option>
-      <option value="G  "></option>
-      <option value="F# "></option>
-      <option value="F  "></option>
-      <option value="E  "></option>
-      <option value="D# "></option>
-    </select>
-    
-    <select>
-      <option value="g  "></option>
-      <option value="f# "></option>
-      <option value="f  "></option>
-      <option selected value="e  "></option>
-      <option value="d# "></option>
-      <option value="d  "></option>
-      <option value="c# "></option>
-      <option value="c  "></option>
-      <option value="B  "></option>
-      <option value="A# "></option>
-      <option value="A  "></option>
-      <option value="G# "></option>
-    </select>
-    
-    <select>
-      <option value="b  "></option>
-      <option value="a# "></option>
-      <option value="a  "></option>
-      <option selected value="g# "></option>
-      <option value="g  "></option>
-      <option value="f# "></option>
-      <option value="f  "></option>
-      <option value="e  "></option>
-      <option value="d# "></option>
-      <option value="d  "></option>
-      <option value="c# "></option>
-      <option value="c  "></option>
-    </select>
-    
-    <select>
-      <option value="e` "></option>
-      <option value="d#`"></option>
-      <option value="d` "></option>
-      <option value="c#`"></option>
-      <option selected value="c` "></option>
-      <option value="b  "></option>
-      <option value="a# "></option>
-      <option value="a  "></option>
-      <option value="g# "></option>
-      <option value="g  "></option>
-      <option value="f# "></option>
-      <option value="f  "></option>
-    </select>
-    Frets <input type="text" size="1" id="h_fret" value="9"/>
-    </div>
   </div>
 
   <div id="dict">
@@ -428,7 +291,6 @@ pre {
     <a id="show_links" href="javascript:showLinks();" alt="Show links" title="Show links"><i class='material-icons'>chevron_right</i></a><br/>
     <a id="undo" href="javascript:undo();" alt="Undo" title="Undo"><i class='material-icons'>undo</i> Undo</a><br/>
     <a id="sound_on" href="javascript:setup();" alt="Sound on" title="Sound on"><i class='material-icons'>power_settings_new</i>️ Sound on</a><br/>
-    <a id="tab_edit" href="javascript:showTab();" alt="Tab editor" title="Tab editor"><i class='material-icons'>border_left</i> Tab editor</a><br/>
     <a id="lyrics" href="javascript:showLyrics();" alt="Mobile view" title="Mobile view"><i class='material-icons'>preview</i> Mobile view</a><br/>
     <a id="help_" href="javascript:showHelp();" alt="Help" title="Help"><i class='material-icons'>help_outline</i> Help</a><br/>
     <a id="credits_" href="javascript:showCredits();" alt="Credits" title="Credits"><i class='material-icons'>copyright</i> Credits</a><br/>
@@ -540,79 +402,27 @@ var kbrd = {
 These are combined in sequence for contour tones.
 
 ꜒꜓꜔꜕꜖
-
-The dotted tone letters are:
-U+A708 ꜈ MODIFIER LETTER EXTRA-HIGH DOTTED TONE BAR (HTML &#42760;)
-U+A709 ꜉ MODIFIER LETTER HIGH DOTTED TONE BAR (HTML &#42761;)
-U+A70A ꜊ MODIFIER LETTER MID DOTTED TONE BAR (HTML &#42762;)
-U+A70B ꜋ MODIFIER LETTER LOW DOTTED TONE BAR (HTML &#42763;)
-U+A70C ꜌ MODIFIER LETTER EXTRA-LOW DOTTED TONE BAR (HTML &#42764;)
-U+A70D ꜍ MODIFIER LETTER EXTRA-HIGH DOTTED LEFT-STEM TONE BAR (HTML &#42765;)
-U+A70E ꜎ MODIFIER LETTER HIGH TONE DOTTED LEFT-STEM BAR (HTML &#42766;)
-U+A70F ꜏ MODIFIER LETTER MID TONE DOTTED LEFT-STEM BAR (HTML &#42767;)
-U+A710 ꜐ MODIFIER LETTER LOW TONE DOTTED LEFT-STEM BAR (HTML &#42768;)
-U+A711 ꜑ MODIFIER LETTER EXTRA-LOW DOTTED LEFT-STEM TONE BAR (HTML &#42769;)
+꜈꜉꜊꜋꜌꜑꜐꜏꜎꜍
 */
 
 var frets = {
+  "_":["-3", ""],
   "|":["-2", ""],
   "-":["-1", ""],
-  "0":["0", "ǀ"],
-  "1":["1", "˥"],
-  "2":["2", "˦"],
-  "3":["3", "˧"],
-  "4":["4", "˨"],
-  "5":["5", "˩"],
-  "6":["6", "ǀ̲"],
-  "7":["7", "˥̲"],
-  "8":["8", "˦̲"],
-  "9":["9", "˧̲"],
-  "q":["10", "˨̲"],
-  "w":["11", "˩̲"],
-  "e":["12", " ̅ǀ"],
-  "r":["13", "꜈"],
-  "t":["14", "꜉"],
-  "y":["15", "꜊"],
-  "u":["16", "꜋"],
-  "i":["17", "꜌"],
-  "o":["18", "!"],
-  "p":["19", "꜍"],
-  "a":["20", "꜎"],
-  "s":["21", "꜏"],
-  "d":["22", "꜐"],
-  "f":["23", "꜑"],
-  "g":["24", "_"],
+  "0":["0", "꜈"],
+  "1":["1", "꜉"],
+  "2":["2", "꜊"],
+  "3":["3", "꜋"],
+  "4":["4", "꜌"],
+  "5":["5", "꜑"],
+  "6":["6", "꜐"],
+  "7":["7", "꜏"],
+  "8":["8", "꜎"],
+  "9":["9", "꜍"],
 }
 
-var SUPERSCRIPTS = {
-  '-2': '|',
-  '-1': '-',
-  '0': '0',
-  '1': '⒈',
-  '2': '⒉',
-  '3': '⒊',
-  '4': '⒋',
-  '5': '⒌',
-  '6': '⒍',
-  '7': '⒎',
-  '8': '⒏',
-  '9': '⒐',
-  '10': '⒑',
-  '11': '⒒',
-  '12': '⒓',
-  '13': '⒔',
-  '14': '⒕',
-  '15': '⒖',
-  '16': '⒗',
-  '17': '⒘',
-  '18': '⒙',
-  '19': '⒚',
-  '20': '⒛',
-  '21': '⒈',
-  '22': '⒉',
-  '23': '⒊',
-  '24': '⒋',
-}
+var d_tuning = ["c` ", "g# ", "e  ", "c  ", "G# ", "E  "];
+var add_tuning = [4, 3, 3, 2, 1, 0];
 
 var audioCtx, oscillator, biquadFilter, biquadFilter_, biquadFilter__, gainNode = null;
 
@@ -702,11 +512,9 @@ var freq = "";
 var words_ = [];
 var freq_ = [];
 var w = [];
-var dl = false;
 var f1 = [];
 var f2 = [];
 var f3 = [];
-var fret = "";
 var s = ["·", "'", "ˌ"];
 
 var k = document.getElementById("keys");
@@ -726,10 +534,6 @@ var res = document.getElementById("res");
 var rs = document.getElementById("rs");
 var res_old = "";
 var rs_old = "";
-var tab_backup = "";
-var tab_new = document.getElementById("tab_new");
-var tab = document.getElementById("tab");
-var sh = false;
 var regexp = [];
 var ks_ = [];
 var ctl = rs;
@@ -765,27 +569,6 @@ for (var i=0; i<keys_.length; i++) {
   lnk.innerText = ks[0];
   var bg = 100 - Math.pow(parseFloat(ks[2]), 1/3)*100;
   lnk.style.color = "hsl(0, 0%, " + bg + "%)";
-}
-
-function note(event) {
-  if (event.key.length == 1) {
-    if (!sh) {
-      fret = frets[event.key][0];
-    } else {
-      fret = frets[event.key][1];
-    }
-    addNote(fret, 0);
-  } else if (event.key == "ArrowUp" || event.key == "ArrowDown" || event.key == "ArrowRight" || event.key == "ArrowLeft") {
-    addNote("", 0);
-  } else {
-    if (event.key.includes("Shift")) {
-      if (sh === false) {
-        sh = true;
-      } else {
-        sh = false;
-      }
-    }
-  }
 }
 
 function findCursor(v) {
@@ -852,40 +635,6 @@ function addPhoneme(p, clr) {
   ctl.value = ctl.value.substr(0, b) + p + " " + ctl.value.substr(d);
   ctl.focus();
   ctl.setSelectionRange(b+p.length+1, b+p.length+1);
-}
-
-function addNote(n, clr) {
-  //t.innerHTML += "<span style='background-color:" + clr + ";'>" + v + "</span> ";
-  var cPos = findCursor(tab_new).split(",");
-  var b = parseInt(cPos[0]);
-  var d = parseInt(cPos[1]);
-  if (d == 0) {
-    b = tab_new.value.length;
-    d = tab_new.value.length;
-  }
-  if (b == d) {
-    if (n == "") {
-      n = tab_new.value.substr(b-1, 1);
-    } else if (n == tab_new.value.substr(b-1, 1)) {
-      d++;
-    }
-    var before = tab_new.value.substr(0, b-1);
-    var n_ = parseInt(n);
-    if (n_ > 9 || n_ < 0) {
-      n = SUPERSCRIPTS[n];
-    }
-    tab_new.value = before + n + tab_new.value.substr(d);
-    var b_ = before.lastIndexOf("\n");
-    var string = before.substr(b_+1, 3);
-    string = string.replace("|", " ");
-    string = string.replace("-", " ");
-    if (n_ >= 0) {
-      var f = piano[string.trim()][0]*Math.pow(1.05946309436, n_);
-      play(f, 0, 0, 0);
-      setTimeout(stop, 250);
-    }
-    tab_new.setSelectionRange(b, b);
-  }
 }
 
 function findWords(w_, q, q_) {
@@ -983,11 +732,6 @@ function undo() {
   } else if (ctl == res) {
     res.value = res_old;
     syllables();
-  } else if (ctl == tab_new) {
-    tab_old.value = tab_new.value;
-    tab_new.value = tab_backup;
-    tab_backup = tab_old.value;
-    tab_old.value = "";
   }
 }
 
@@ -1042,116 +786,8 @@ function loadIndex(f, v) {
 loadIndex("index_freq.csv", "v");
 loadIndex("index_c_freq.csv", "c");
 
-function initTune() {
-  rs.value+=" ___ ___ ___ ___ ___ ___ ___ ___\n";
-  var d_tuning = ["c` ", "g# ", "e  ", "c  ", "G# ", "E  "];
-  tab_new.value = "";
-  for (var j=0; j<6; j++) {
-    tab_new.value+= d_tuning[j] + "|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|\n";
-  }
-}
-initTune();
+rs.value+=" ___ ___ ___ ___ ___ ___ ___ ___\n";
 
-function toSuperScript(x) {
-  return x.split('').map(function(c) {
-    if(c in SUPERSCRIPTS) {
-      return SUPERSCRIPTS[c]
-    }
-    return ''
-  }).join('')
-}
-
-var dd = document.getElementById("tuning").querySelectorAll("select");
-function transpose() {
-  var hf = parseInt(document.getElementById("h_fret").value);
-  if (hf) {
-    if (hf > 24) {
-      hf = 24;
-    } else if (hf < 0) {
-      hf = 0;
-    }
-  } else {
-    hf = 9;
-  }
-  var tab = document.getElementById("tab_old").value.split("\n");
-  var tab_new = document.getElementById("tab_new");
-  tab_new.value = "";
-  var s = 0;
-  var p = false;
-  for (var i=0; i<tab.length; i++) {
-    if (tab[i].length > 0 && (tab[i].charAt(0).match(/[a-g]/i) || tab[i].charAt(0) == "|") && !tab[i].charAt(1).match(/[a-z]/i)) {
-      p = true;
-    } else {
-      s = -1;
-      tab_new.value += " ";
-      p = false;
-    }
-    for (var j=0; j<tab[i].length; j++) {
-      var c = tab[i].charAt(j);
-      var n = 0 + parseInt(c);
-      var two_digits = false;
-      if (!parseInt(tab[i].charAt(j+2)) && tab[i].charAt(j+2) != "0" && !parseInt(tab[i].charAt(j-1)) && tab[i].charAt(j-1) != "0") {
-        two_digits = true;
-      }
-      if (n && (parseInt(tab[i].charAt(j+1)) || tab[i].charAt(j+1) == "0") && two_digits === true) {
-        c += tab[i].charAt(j+1);
-        if (parseInt(c) <= hf) {
-          n = parseInt(c);
-        } else {
-          c = tab[i].charAt(j);
-        }
-      }
-      var t;
-      if (s >= 0 && s < 6) {
-        t = dd[5-s].selectedIndex;
-      } else {
-        t = 0;
-      }
-      if (n >= 0) {
-        var d = parseInt(tab[i].charAt(j-1));
-        var two_digits = false;
-        if (!parseInt(tab[i].charAt(j+1)) && tab[i].charAt(j+1) != "0" && !parseInt(tab[i].charAt(j-2)) && tab[i].charAt(j-2) != "0") {
-          two_digits = true;
-        }
-        if (d && (d*10+n <= hf) && two_digits === true) {
-          tab_new.value += "-";
-        } else {
-          var n = n+t;
-          if (n > 9) {
-            tab_new.value += toSuperScript(""+n);
-          } else {
-            tab_new.value += n;
-          }
-        }
-      } else if (c == "0") {
-        tab_new.value += t;
-      } else if (j == 0 && p === true) {
-        if (c.match(/[a-g]/i)) {
-          tab_new.value += dd[5-s].value;
-        } else {
-          tab_new.value += c;
-        }
-      } else {
-        tab_new.value += c;
-      }
-    }
-    tab_new.value += "\n";
-    s++;
-  }
-}
-for (var i=0; i<dd.length; i++) {
-  for (var j=0; j<dd[i].options.length; j++) {
-    dd[i].options[j].text = dd[i].options[j].value;
-  }
-}
-
-function showTab() {
-  if (tab.style.visibility!='visible') {
-    tab.style.visibility='visible';
-  } else {
-    tab.style.visibility='hidden';
-  }
-}
 
 function showLyrics() {
   if (res.style.display!='none') {
@@ -1164,9 +800,6 @@ function showLyrics() {
     highlight_.style.minWidth='100%';
     highlight_.style.minHeight='256px';
     highlight_.style.top='0px';
-    
-    tab_old.style.display='none';
-    tab_new.style.minHeight='80vh';
   } else {
     highlight.style.display='block';
     res.style.display='block';
@@ -1177,9 +810,6 @@ function showLyrics() {
     highlight_.style.minWidth='50%';
     highlight_.style.minHeight='128px';
     highlight_.style.top='';
-    
-    tab_old.style.display='block';
-    tab_new.style.minHeight='40vh';
   }
 }
 
