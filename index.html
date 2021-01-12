@@ -9,18 +9,28 @@
 <link href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet'/>
 <style>
 @font-face {
-  font-family: FiraCode;
-  src: url(FiraCode-Regular.ttf);
+    font-family: 'Fira Code';
+    src: url('https://raw.githubusercontent.com/tonsky/FiraCode/master/distr/eot/FiraCode-Regular.eot') format('embedded-opentype'),
+         url('https://raw.githubusercontent.com/tonsky/FiraCode/master/distr/woff2/FiraCode-Regular.woff2') format('woff2'),
+         url('https://raw.githubusercontent.com/tonsky/FiraCode/master/distr/woff/FiraCode-Regular.woff') format('woff'),
+         url('https://raw.githubusercontent.com/tonsky/FiraCode/master/distr/ttf/FiraCode-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+* {
+    -webkit-font-feature-settings: "liga" on, "calt" on;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-family: 'Fira Code', monospace;
+    font-variant: oldstyle-nums;
 }
 body, html {
   margin:0px;
   padding: 0;
-  font-family:'FiraCode', monospace;
   overflow:hidden;
 }
 textarea, input, datalist, button {
-  font-family:'FiraCode', monospace;
-  font-size: 13.5px;
+  font-size: 13px;
 }
 input, datalist, button {
   margin:0px;
@@ -30,13 +40,12 @@ input, datalist, button {
 #keys {
   width: 200px;
   margin:0px;
-  font-family:'FiraCode', monospace;
+  font-size:13px;
 }
 #keys_ {
   width: 200px;
   margin:0px;
-  font-family:'FiraCode', monospace;
-  font-size:13.5px;
+  font-size:13px;
 }
 .u {
    text-decoration:underline;
@@ -55,8 +64,7 @@ a {
   margin:0px -1px 0px 0px;
 }
 select {
-  font-size:13.5px;
-  font-family:'FiraCode', monospace;
+  font-size:13px;
   width:21px;
   margin:0px;
   padding:2px 0px;
@@ -94,7 +102,7 @@ option {
   padding:2px;
   background:#eeeeee;
   float:left;
-  font-size:13.5px;
+  font-size:13px;
 }
 #search i {
   margin-top:-2px;
@@ -117,7 +125,7 @@ pre {
   padding:0px;
   margin:0px;
   letter-spacing:0px;
-  font-family:'FiraCode', monospace;
+
 }
 #highlight, #highlight_ {
   width:50%;
@@ -130,7 +138,7 @@ pre {
   margin:0px;
   padding:0px;
   min-height:128px;
-  font-size:13.5px;
+  font-size:13px;
   letter-spacing: 0px;
   color:transparent;
 }
@@ -188,6 +196,7 @@ pre {
   overflow:hidden;
   white-space:nowrap;
   background:white;
+  font-size:13px;
 }
 #links i {
   font-size:20px;
@@ -201,10 +210,10 @@ pre {
   top:0px;
 }
 #help {
-  font-size: 15px;
+  font-size: 13px;
 }
 #credits {
-  font-size: 14px;
+  font-size: 12px;
 }
 #mobile {
   background-color:lightgray;
@@ -446,6 +455,13 @@ gainNode.gain.setValueAtTime(0, audioCtx.currentTime+0.001);
 }
 
 /*
+
+̵˥̵˦̵˧̵˨̵˩̵
+˥˦˧˨˩
+These are combined in sequence for contour tones.
+
+꜒꜓꜔꜕꜖
+꜈꜉꜊꜋꜌꜑꜐꜏꜎꜍
 
 use CMU->IPA / add Britfone ?
 ˈaɪ
