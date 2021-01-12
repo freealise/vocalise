@@ -9,18 +9,18 @@
 <link href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet'/>
 <style>
 @font-face {
-  font-family: Fixedsys;
-  src: url(FSEX302.ttf);
+  font-family: FiraCode;
+  src: url(FiraCode-Regular.ttf);
 }
 body, html {
   margin:0px;
   padding: 0;
-  font-family:'Fixedsys', monospace;
+  font-family:'FiraCode', monospace;
   overflow:hidden;
 }
 textarea, input, datalist, button {
-  font-family:'Fixedsys', monospace;
-  font-size: 16px;
+  font-family:'FiraCode', monospace;
+  font-size: 13.5px;
 }
 input, datalist, button {
   margin:0px;
@@ -30,13 +30,13 @@ input, datalist, button {
 #keys {
   width: 200px;
   margin:0px;
-  font-family:'Fixedsys', monospace;
+  font-family:'FiraCode', monospace;
 }
 #keys_ {
   width: 200px;
   margin:0px;
-  font-family:'Fixedsys', monospace;
-  font-size:16px;
+  font-family:'FiraCode', monospace;
+  font-size:13.5px;
 }
 .u {
    text-decoration:underline;
@@ -55,8 +55,8 @@ a {
   margin:0px -1px 0px 0px;
 }
 select {
-  font-size:16px;
-  font-family:'Fixedsys', monospace;
+  font-size:13.5px;
+  font-family:'FiraCode', monospace;
   width:21px;
   margin:0px;
   padding:2px 0px;
@@ -94,7 +94,7 @@ option {
   padding:2px;
   background:#eeeeee;
   float:left;
-  font-size:16px;
+  font-size:13.5px;
 }
 #search i {
   margin-top:-2px;
@@ -117,7 +117,7 @@ pre {
   padding:0px;
   margin:0px;
   letter-spacing:0px;
-  font-family:'Fixedsys', monospace;
+  font-family:'FiraCode', monospace;
 }
 #highlight, #highlight_ {
   width:50%;
@@ -130,7 +130,7 @@ pre {
   margin:0px;
   padding:0px;
   min-height:128px;
-  font-size:16px;
+  font-size:13.5px;
   letter-spacing: 0px;
   color:transparent;
 }
@@ -170,12 +170,12 @@ pre {
 }
 #tab_new {
   width:100%;
-  height:40vh;
-  font-size:16px;
+  height:65vh;
+  font-size:13.5px;
   cursor: default;
   overflow-y: scroll;
   overflow-x: auto;
-  font-family:'Fixedsys', monospace;
+  font-family:'FiraCode', monospace;
   white-space: pre;
   word-wrap:normal;
   word-break: normal;
@@ -188,7 +188,7 @@ pre {
   overflow-y: scroll;
   overflow-x: auto;
   width:100%;
-  height:40vh;
+  height:15vh;
 }
 #tuning {
   float:right;
@@ -312,7 +312,7 @@ pre {
   <div id="tab">
     <!-- TODO: can be used to transpose from any tuning to any, specifying how many frets down it goes on each string -->
     <textarea wrap="soft" id="tab_old" placeholder="Paste a standard 6-string guitar tab here to convert it to custom tuning for any instrument, and edit with keyboard or click / touch."></textarea>
-    <textarea oncontextmenu="return false;" wrap="soft" id="tab_new" placeholder="Tune" onmouseup="addNote(fret, 0);" ontouchup="addNote(fret, 0);" onkeyup="note(event);" onkeydown="tab_backup=tab_new.value;" onmousedown="tab_backup=tab_new.value;" onfocus="ctl=this;"></textarea>
+    <textarea oncontextmenu="return false;" wrap="soft" id="tab_new" placeholder="New tab" onmouseup="addNote(fret, 0);" ontouchup="addNote(fret, 0);" onkeyup="note(event);" onkeydown="tab_backup=tab_new.value;" onmousedown="tab_backup=tab_new.value;" onfocus="ctl=this;"></textarea>
     <div id="tuning">
     <button onclick="transpose()">EADGBE→</button>
     <select>
@@ -535,6 +535,25 @@ var kbrd = {
   ' ': ' ',
 }
 
+/*
+˥˦˧˨˩
+These are combined in sequence for contour tones.
+
+꜒꜓꜔꜕꜖
+
+The dotted tone letters are:
+U+A708 ꜈ MODIFIER LETTER EXTRA-HIGH DOTTED TONE BAR (HTML &#42760;)
+U+A709 ꜉ MODIFIER LETTER HIGH DOTTED TONE BAR (HTML &#42761;)
+U+A70A ꜊ MODIFIER LETTER MID DOTTED TONE BAR (HTML &#42762;)
+U+A70B ꜋ MODIFIER LETTER LOW DOTTED TONE BAR (HTML &#42763;)
+U+A70C ꜌ MODIFIER LETTER EXTRA-LOW DOTTED TONE BAR (HTML &#42764;)
+U+A70D ꜍ MODIFIER LETTER EXTRA-HIGH DOTTED LEFT-STEM TONE BAR (HTML &#42765;)
+U+A70E ꜎ MODIFIER LETTER HIGH TONE DOTTED LEFT-STEM BAR (HTML &#42766;)
+U+A70F ꜏ MODIFIER LETTER MID TONE DOTTED LEFT-STEM BAR (HTML &#42767;)
+U+A710 ꜐ MODIFIER LETTER LOW TONE DOTTED LEFT-STEM BAR (HTML &#42768;)
+U+A711 ꜑ MODIFIER LETTER EXTRA-LOW DOTTED LEFT-STEM TONE BAR (HTML &#42769;)
+*/
+
 var frets = {
   "|":["-2", ""],
   "-":["-1", ""],
@@ -550,18 +569,18 @@ var frets = {
   "9":["9", "˧̲"],
   "q":["10", "˨̲"],
   "w":["11", "˩̲"],
-  "e":["12", "ǀ̅"],
-  "r":["13", "˥̅"],
-  "t":["14", "˦̅"],
-  "y":["15", "˧̅"],
-  "u":["16", "˨̅"],
-  "i":["17", "˩̅"],
-  "o":["18", "ǀ̲̅"],
-  "p":["19", "˥̲̅"],
-  "a":["20", "˦̲̅"],
-  "s":["21", "˧̲̅"],
-  "d":["22", "˨̲̅"],
-  "f":["23", "˩̲̅"],
+  "e":["12", " ̅ǀ"],
+  "r":["13", "꜈"],
+  "t":["14", "꜉"],
+  "y":["15", "꜊"],
+  "u":["16", "꜋"],
+  "i":["17", "꜌"],
+  "o":["18", "!"],
+  "p":["19", "꜍"],
+  "a":["20", "꜎"],
+  "s":["21", "꜏"],
+  "d":["22", "꜐"],
+  "f":["23", "꜑"],
   "g":["24", "_"],
 }
 
