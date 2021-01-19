@@ -63,8 +63,22 @@ a {
   padding:0px;
   margin:0px -1px 0px 0px;
 }
+#pitch {
+  width:200px;
+  float:left;
+  clear:none;
+  margin-bottom:1em;
+}
 #pitch a {
-  margin:0px 2.5px;
+  padding:0px 6.5px;
+}
+#left {
+  float:left;
+  margin:5px;
+}
+#right {
+  float:right;
+  margin:5px;
 }
 select {
   font-size:13px;
@@ -296,8 +310,7 @@ pre {
     <pre oncontextmenu="return false;" id="keys">
 <select title="IY"></select><select title="IH"></select><select title="EY"></select><select title="EH"></select><select title="AE"></select><select title="ER"></select><select title="AH"></select><select title="AA"></select><select title="AO"></select><select title="OW"></select><select title="UH"></select><select title="UW"></select>
 <a title="Any stress" href="javascript:" onclick="addPhoneme('___', 'transparent');">__</a><a title="No stress" href="javascript:" onclick="addPhoneme('__0', 'transparent');">_·</a><a title="Primary stress" href="javascript:" onclick="addPhoneme('__1', 'transparent');">_'</a><a title="Secondary stress" href="javascript:" onclick="addPhoneme('__2', 'transparent');">_ˌ</a><select title="AY"></select><select title="OY"></select><select title="AW"></select></pre>
-<div id="pitch"></div>
-<br/>
+<input id="left" type="radio" checked="checked" name="pitch" onfocus="pitchKeys(true);"/><div id="pitch"></div><input id="right" type="radio" name="pitch" onfocus="pitchKeys(false);"/>
   </div>
   
   <div id="links">
@@ -569,9 +582,19 @@ for (var i=0; i<keys_.length; i++) {
   lnk.style.color = "hsl(0, 0%, " + bg + "%)";
 }
 
-for (var i=0; i<p.length; i++) {
-  pitch.innerHTML += "<a href='javascript:' onclick='addPhoneme(this.innerText, 256);'>"+p[i]+"</a>";
+function pitchKeys(d) {
+  pitch.innerHTML = "";
+  if (d === true) {
+    for (var i=0; i<p.length/2; i++) {
+      pitch.innerHTML += "<a href='javascript:' onclick='addPhoneme(this.innerText, 256);'>"+p[i]+"</a>";
+    }
+  } else {
+    for (var i=p.length/2; i<p.length; i++) {
+      pitch.innerHTML += "<a href='javascript:' onclick='addPhoneme(this.innerText, 256);'>"+p[i]+"</a>";
+    }
+  }
 }
+pitchKeys(true);
 
 function findCursor(v) {
     var startPos = v.selectionStart;
