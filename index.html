@@ -108,10 +108,10 @@ option {
 }
 #word_ {
   height:24px;
-  width:227px;
+  width:198px;
   padding:2px;
 }
-#split, #search {
+#split, #search, #define {
   width:29px;
   height:24px;
   border:1px solid darkgray;
@@ -123,6 +123,9 @@ option {
 }
 #search i {
   margin-top:-2px;
+}
+#define i {
+  font-size:20px;
 }
 .l {
   width:100%;
@@ -193,7 +196,7 @@ pre {
   display:block;
   white-space: pre;
 }
-#dict, #help, #credits {
+#dict, #help, #credits, #entry {
   width:256px;
   position:fixed;
   right:50%;
@@ -218,19 +221,28 @@ pre {
 #links i {
   font-size:20px;
 }
-#help, #credits {
+#help, #credits, #entry {
   border:1px solid lightgray;
   padding:2px 4px 2px 4px;
   visibility:hidden;
   z-index:2;
-  height:320px;
   top:0px;
+}
+#entry {
+  font-size: 12px;
+  height:256px;
+}
+#def {
+  height:128px;
+  overflow:scroll;
 }
 #help {
   font-size: 13px;
+  height:320px;
 }
 #credits {
   font-size: 12px;
+  height:320px;
 }
 #mobile {
   background-color:lightgray;
@@ -292,14 +304,20 @@ pre {
   
   <div id="credits">
     <p>Reverse phonetic dictionary, includes a lyrics editor and vowel sound synthesizer. Licensed under the GNU GPL-3.0, hosted on <a href="https://github.com/freealise/phonetic" title="Github" target="_blank"><u>GitHub</u></a> and <a href="https://script.google.com" title="Google Script" target="_blank"><u>Google Script</u></a>.</p>
-    <p>Dictionary by <a href="http://www.speech.cs.cmu.edu/cgi-bin/cmudict" title="Carnegie Mellon University" target="_blank"><u>CMU</u></a>, sorted by frequency based on <a href="https://books.google.com/ngrams" title="Google Books Ngrams" target="_blank"><u>Google Books Ngrams</u></a> with <a href="https://phrasefinder.io/" title="PhraseFinder" target="_blank"><u>PhraseFinder</u></a> API.</p>
-    <p>Thanks to <a href="https://www.gearslutz.com/board/showpost.php?p=11559456&amp;postcount=10" title="jerry123 from GearSlutz" target="_blank"><u>jerry123 from GearSlutz</u></a> for the idea of phonetic songwriting, <a href="https://englishwithkim.com/" title="English with Kim" target="_blank"><u>English with Kim</u></a> for clarifying that a tune is contained in natural speech.</p>
+    <p>Dictionary by <a href="http://www.speech.cs.cmu.edu/cgi-bin/cmudict" title="Carnegie Mellon University" target="_blank"><u>CMU</u></a>, sorted by frequency based on <a href="https://books.google.com/ngrams" title="Google Books Ngrams" target="_blank"><u>Google Books Ngrams</u></a> with <a href="https://phrasefinder.io/" title="PhraseFinder" target="_blank"><u>PhraseFinder</u></a> API, <a href="https://dictionaryapi.dev/" title="DictionaryAPI" target="_blank"><u>definitions</u></a> by <a href="https://www.lexico.com/" title="Oxford Dictionary" target="_blank"><u>Oxford</u></a>.</p>
+    <p>Thanks to <a href="https://www.gearslutz.com/board/showpost.php?p=11559456&amp;postcount=10" title="jerry123 from GearSlutz" target="_blank"><u>jerry123 from GearSlutz</u></a> for the idea of phonetic songwriting, <a href="https://englishwithkim.com/" title="English with Kim" target="_blank"><u>English with Kim</u></a> for clarifying that natural speech contains a tune.</p>
     <p>Separating vowels and consonants, along with slant rhyme or alliteration within a line, is common in Hebrew poetry and rap.</p>
+  </div>
+  
+  <div id="entry">
+    <div id="def"></div>
+    <iframe id="ngram_chart" name="ngram_chart" src="" width=256 height=128 marginwidth=0 marginheight=0 hspace=0 vspace=0 frameborder=0 scrolling=yes></iframe>
   </div>
 
   <div id="dict">
-    <div class="l"><input type="text" id="word" placeholder="Word or phonemes" onfocus="ctl=this;" onchange="findWords(word.value, vowels.value, consonants.value);"/><button onclick="findWords(word.value, vowels.value, consonants.value);" id="search" title="Find"><i class='material-icons'>search</i></button></div>
-    <div class="l"><select id="word_" onchange="addWord(this.options[this.selectedIndex].text, this.options[this.selectedIndex].value);"><option>Search results will be here</option></select><button onclick="splitWord();" id="split" title="Split">↙↘</button></div>
+    <div class="l"><input type="text" id="word" placeholder="Word or phonemes" onfocus="ctl=this;"/><button onclick="findWords(word.value, vowels.value, consonants.value);" id="search" title="Search"><i class='material-icons'>search</i></button></div>
+    <div class="l"><select id="word_" onchange="addWord(this.options[this.selectedIndex].text, this.options[this.selectedIndex].value);"><option>Results will be here</option></select><button onclick="splitWord();" id="split" title="Split">↙↘</button>
+    <button onclick="pos(word_.options[word_.selectedIndex].text.split(' ')[0]);" id="define" title="Define"><i class='material-icons'>query_stats</i></button></div>
     <div class="l"><input type="text" id="vowels" list="vowels_" placeholder="Vowels" onfocus="ctl=this;"/><datalist id="_vowels"></datalist><datalist id="vowels_"></datalist><input type="text" id="consonants" list="consonants_" placeholder="Consonants" onfocus="ctl=this;"/><datalist id="_consonants"></datalist><datalist id="consonants_"></datalist></div>
     
     <pre oncontextmenu="return false;" id="keys_">
@@ -318,6 +336,7 @@ pre {
     <a id="undo" href="javascript:undo();" alt="Undo" title="Undo"><i class='material-icons'>undo</i> Undo</a><br/>
     <a id="sound_on" href="javascript:setup();" alt="Sound on" title="Sound on"><i class='material-icons'>power_settings_new</i>️ Sound on</a><br/>
     <a id="lyrics" href="javascript:showLyrics();" alt="Mobile view" title="Mobile view"><i class='material-icons'>preview</i> Mobile view</a><br/>
+    <a id="entry_" href="javascript:showEntry();" alt="Definition" title="Definition"><i class='material-icons'>wysiwyg</i> Definition</a><br/>
     <a id="help_" href="javascript:showHelp();" alt="Help" title="Help"><i class='material-icons'>help_outline</i> Help</a><br/>
     <a id="credits_" href="javascript:showCredits();" alt="Credits" title="Credits"><i class='material-icons'>copyright</i> Credits</a><br/>
     <a id="share" href="javascript:window.open('https://www.blogger.com/blog-this.g?t='+res.value, 'blog');" alt="Share" title="Share"><i class='material-icons'>share</i> Share</a><br/>
@@ -543,6 +562,9 @@ var word_ = document.getElementById("word_");
 var highlight = document.getElementById("highlight");
 var res = document.getElementById("res");
 var rs = document.getElementById("rs");
+var entry = document.getElementById("entry");
+var ngram = document.getElementById("ngram_chart");
+var def = document.getElementById("def");
 var res_old = "";
 var rs_old = "";
 var regexp = [];
@@ -760,9 +782,29 @@ function undo() {
   }
 }
 
-function synonyms() {
-  //var sel = document.getSelection().toString();
-  //window.open("https://www.wordandphrase.info/syns.asp?w=1&n=1&s=1&w1="+sel+"&c1=n", "synonyms", "");
+function pos(w_) {
+  entry.style.visibility = "visible";
+  ngram.src = "https://books.google.com/ngrams/interactive_chart?content="+w_+"_%2A&year_start=1800&year_end=2019&corpus=26&smoothing=0&case_insensitive=true";
+
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      if (this.responseText != "") {
+        var json = JSON.parse(this.responseText)[0];
+        def.innerHTML = "";
+        for (var i=0; i<json.meanings.length; i++) {
+          def.innerHTML += "<i>" + json.meanings[i].partOfSpeech + "</i><br/>";
+          for (var j=0; j<json.meanings[i].definitions.length; j++) {
+            def.innerHTML += json.meanings[i].definitions[j].definition + "<br/>";
+          }
+        }
+      } else {
+        def.innerHTML = "Unknown word";
+      }
+    }
+  };
+  xhttp.open("GET", "https://api.dictionaryapi.dev/api/v2/entries/en/" + w_, true);
+  xhttp.send();
 }
 
 function loadIndex(f, v) {
@@ -835,6 +877,14 @@ function showLyrics() {
     highlight_.style.minWidth='50%';
     highlight_.style.minHeight='128px';
     highlight_.style.top='';
+  }
+}
+
+function showEntry() {
+  if (entry.style.visibility!='visible') {
+    entry.style.visibility='visible';
+  } else {
+    entry.style.visibility='hidden';
   }
 }
 
