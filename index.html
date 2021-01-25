@@ -63,23 +63,6 @@ a {
   padding:0px;
   margin:0px -1px 0px 0px;
 }
-#pitch {
-  width:200px;
-  float:left;
-  clear:none;
-  margin-bottom:1em;
-}
-#pitch a {
-  padding:0px 6.5px;
-}
-#left {
-  float:left;
-  margin:5px;
-}
-#right {
-  float:right;
-  margin:5px;
-}
 select {
   font-size:13px;
   width:21px;
@@ -327,8 +310,8 @@ pre {
            <a title="Wildcard" href="javascript:" onclick="addPhoneme('*', 'transparent');">* </a>        <a title="Space" href="javascript:" onclick="addPhoneme(' ', 'transparent');">␣ </a> <a id="br" title="Newline" href="javascript:" onclick="addPhoneme('\n', 'transparent');">↵ </a></pre>
     <pre oncontextmenu="return false;" id="keys">
 <select title="IY"></select><select title="IH"></select><select title="EY"></select><select title="EH"></select><select title="AE"></select><select title="ER"></select><select title="AH"></select><select title="AA"></select><select title="AO"></select><select title="OW"></select><select title="UH"></select><select title="UW"></select>
-<a title="Any stress" href="javascript:" onclick="addPhoneme('___', 'transparent');">__</a><a title="No stress" href="javascript:" onclick="addPhoneme('__0', 'transparent');">_·</a><a title="Primary stress" href="javascript:" onclick="addPhoneme('__1', 'transparent');">_'</a><a title="Secondary stress" href="javascript:" onclick="addPhoneme('__2', 'transparent');">_ˌ</a><select title="AY"></select><select title="OY"></select><select title="AW"></select></pre>
-<input id="left" type="radio" checked="checked" name="pitch" onfocus="pitchKeys(true);"/><div id="pitch"></div><input id="right" type="radio" name="pitch" onfocus="pitchKeys(false);"/>
+<a title="Any stress" href="javascript:" onclick="addPhoneme('___', 'transparent');">__</a><a title="No stress" href="javascript:" onclick="addPhoneme('__0', 'transparent');">_·</a><a title="Primary stress" href="javascript:" onclick="addPhoneme('__1', 'transparent');">_'</a><a title="Secondary stress" href="javascript:" onclick="addPhoneme('__2', 'transparent');">_ˌ</a><select title="AY"></select><select title="OY"></select><select title="AW"></select>
+    </pre>
   </div>
   
   <div id="links">
@@ -522,16 +505,6 @@ Diphtong sound
 |    2100      1400               700 | Hz
 
 Intelligibility is preserved across a fairly wide range when F0 and FFs are scaled up or down in proportionate amounts (e.g., Chiba and Kajiyama, 1941; Daniloff et al., 1968). However, F0 and FFs do not scale proportionately in natural speech. For example, the F0 difference between adult male and adult female voices is about 80%–90%, while FFs increase only 12%–15% (Peterson and Barney, 1952).
-  
-______
-˦˦꜊˦˦꜊ - chord with strumming direction
-__________
-|   ꜈   ꜉  ꜉    string (empty line is thumb on lowest string)
-˥˥ .˧ `˨˨ ˦˩ - tune with frets shift
-__________
-
-These are combined in sequence for contour tones.
-˥˦˧˨˩
 
 */
 
@@ -544,13 +517,11 @@ var f1 = [];
 var f2 = [];
 var f3 = [];
 var s = ["·", "'", "ˌ"];
-var p = ["˥", "˦", "˧", "˨", "˩", "꜈", "꜉", "꜊", "꜋", "꜌", "꜒", "꜓", "꜔", "꜕", "꜖", "꜍", "꜎", "꜏", "꜐", "꜑"];
 
 var k = document.getElementById("keys");
 var k_ = document.getElementById("keys_");
 var v = document.getElementById("keys").querySelectorAll("select");
 var c_ = document.getElementById("keys_").querySelectorAll("a");
-var pitch = document.getElementById("pitch");
 var vowels = document.getElementById("vowels");
 var consonants = document.getElementById("consonants");
 var vowels_ = document.getElementById("vowels_");
@@ -603,20 +574,6 @@ for (var i=0; i<keys_.length; i++) {
   var bg = 100 - Math.pow(parseFloat(ks[2]), 1/3)*100;
   lnk.style.color = "hsl(0, 0%, " + bg + "%)";
 }
-
-function pitchKeys(d) {
-  pitch.innerHTML = "";
-  if (d === true) {
-    for (var i=0; i<p.length/2; i++) {
-      pitch.innerHTML += "<a href='javascript:' onclick='addPhoneme(this.innerText, 256);'>"+p[i]+"</a>";
-    }
-  } else {
-    for (var i=p.length/2; i<p.length; i++) {
-      pitch.innerHTML += "<a href='javascript:' onclick='addPhoneme(this.innerText, 256);'>"+p[i]+"</a>";
-    }
-  }
-}
-pitchKeys(true);
 
 function findCursor(v) {
     var startPos = v.selectionStart;
