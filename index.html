@@ -224,6 +224,12 @@ pre {
   height:128px;
   overflow:scroll;
 }
+#def .material-icons {
+  font-size: 16px;
+  color: gray;
+  top: 3px;
+  position: relative;
+}
 #help {
   font-size: 13px;
   height:320px;
@@ -477,6 +483,10 @@ gainNode.gain.setValueAtTime(0.25, audioCtx.currentTime+0.001);
 
 function stop() {
 gainNode.gain.setValueAtTime(0, audioCtx.currentTime+0.001);
+}
+
+function playAudio() {
+  document.getElementsByTagName('audio')[0].play();
 }
 
 /*
@@ -775,9 +785,12 @@ function pos(w_) {
     if (this.readyState == 4 && this.status == 200) {
       if (this.responseText != "") {
         var json = JSON.parse(this.responseText)[0];
-        def.innerHTML = "";
+        def.innerHTML = "<i class='material-icons'>volume_up</i> ";
+        for (var i=0; i<json.phonetics.length; i++) {
+          def.innerHTML += "<audio><source src='"+json.phonetics[i].audio+"' type='audio/mpeg'></audio><a href='javascript:playAudio();'>" + json.phonetics[i].text + "</a> ";
+        }
         for (var i=0; i<json.meanings.length; i++) {
-          def.innerHTML += "<br/><b>" + json.meanings[i].partOfSpeech + "</b>";
+          def.innerHTML += "<hr/><b>" + json.meanings[i].partOfSpeech + "</b>";
           for (var j=0; j<json.meanings[i].definitions.length; j++) {
             def.innerHTML += "<br/><br/>" + json.meanings[i].definitions[j].definition + "<br/>";
             for (var k=0; k<json.meanings[i].definitions[j].synonyms.length; k++) {
