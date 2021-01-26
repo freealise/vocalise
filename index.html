@@ -58,12 +58,17 @@ a {
   border: 1px solid darkgray;
   padding:3px 1.5px;
 }
+#pitch {
+  position:relative;
+  top:4px;
+}
 #keys_ span a {
   border-left:1px solid darkgray;
   padding:0px;
   margin:0px -1px 0px 0px;
 }
 select {
+  height:24px;
   font-size:13px;
   width:21px;
   margin:0px;
@@ -299,8 +304,8 @@ pre {
 
   <div id="dict">
     <div class="l"><input type="text" id="word" placeholder="Word or phonemes" onfocus="ctl=this;"/><button onclick="findWords(word.value, vowels.value, consonants.value);" id="search" title="Search"><i class='material-icons'>search</i></button></div>
-    <div class="l"><select id="word_" onchange="addWord(this.options[this.selectedIndex].text, this.options[this.selectedIndex].value);"><option>Results will be here</option></select><button onclick="splitWord();" id="split" title="Split">↙↘</button>
-    <button onclick="pos(word_.options[word_.selectedIndex].text.split(' ')[0]);" id="define" title="Define"><i class='material-icons'>query_stats</i></button></div>
+    <div class="l"><select id="word_" onchange="if(this.selectedIndex!=0){addWord(this.options[this.selectedIndex].text, this.options[this.selectedIndex].value);}"><option>Results will be here</option></select><button onclick="splitWord();" id="split" title="Split">↙↘</button>
+    <button onclick="if(word_.selectedIndex!=0){pos(word_.options[word_.selectedIndex].text.split(' ')[0]);}else{pos(word.value);}" id="define" title="Define"><i class='material-icons'>query_stats</i></button></div>
     <div class="l"><input type="text" id="vowels" list="vowels_" placeholder="Vowels" onfocus="ctl=this;"/><datalist id="_vowels"></datalist><datalist id="vowels_"></datalist><input type="text" id="consonants" list="consonants_" placeholder="Consonants" onfocus="ctl=this;"/><datalist id="_consonants"></datalist><datalist id="consonants_"></datalist></div>
     
     <pre oncontextmenu="return false;" id="keys_">
@@ -310,7 +315,8 @@ pre {
            <a title="Wildcard" href="javascript:" onclick="addPhoneme('*', 'transparent');">* </a>        <a title="Space" href="javascript:" onclick="addPhoneme(' ', 'transparent');">␣ </a> <a id="br" title="Newline" href="javascript:" onclick="addPhoneme('\n', 'transparent');">↵ </a></pre>
     <pre oncontextmenu="return false;" id="keys">
 <select title="IY"></select><select title="IH"></select><select title="EY"></select><select title="EH"></select><select title="AE"></select><select title="ER"></select><select title="AH"></select><select title="AA"></select><select title="AO"></select><select title="OW"></select><select title="UH"></select><select title="UW"></select>
-<a title="Any stress" href="javascript:" onclick="addPhoneme('___', 'transparent');">__</a><a title="No stress" href="javascript:" onclick="addPhoneme('__0', 'transparent');">_·</a><a title="Primary stress" href="javascript:" onclick="addPhoneme('__1', 'transparent');">_'</a><a title="Secondary stress" href="javascript:" onclick="addPhoneme('__2', 'transparent');">_ˌ</a><select title="AY"></select><select title="OY"></select><select title="AW"></select>
+<a title="Any stress" href="javascript:" onclick="addPhoneme('___', 'transparent');">__</a><a title="No stress" href="javascript:" onclick="addPhoneme('__0', 'transparent');">_·</a><a title="Primary stress" href="javascript:" onclick="addPhoneme('__1', 'transparent');">_ˈ</a><a title="Secondary stress" href="javascript:" onclick="addPhoneme('__2', 'transparent');">_ˌ</a><select title="AY"></select><select title="OY"></select><select title="AW"></select>
+<span id="pitch"></span>
     </pre>
   </div>
   
@@ -327,18 +333,18 @@ pre {
 
 <script>
 var keys = [
-  "i ;IY;330;0.1664;0.3341;0.1498;0.0153;293.6648;2489.016;3135.963",
-  "ɪ ;IH;300;0.3084;0.5288;0.3583;0.0380;349.2282;2217.461;3135.963",
+  " i;IY;330;0.1664;0.3341;0.1498;0.0153;293.6648;2489.016;3135.963",
+  " ɪ;IH;300;0.3084;0.5288;0.3583;0.0380;349.2282;2217.461;3135.963",
   "eɪ;EY;270;0.0699;0.0026;0.1882;0.0188;440;1975.533;2959.955",
-  "ɛ ;EH;240;0.1077;0.0145;0.2819;0.0266;622.2540;1760.000;2959.955",
-  "æ ;AE;210;0.1024;0.0084;0.2871;0.0118;698.4565;1567.982;2793.826",
-  "ɝ ;ER;180;0.1080;0.2535;0.0684;0.0021;783.9909;1396.913;2793.826",
-  "ʌ ;AH;150;0.4567;1.0000;0.3641;0.0060;783.9909;1244.508;2637.02",
-  "ɑ ;AA;120;0.0612;0.0046;0.1674;0.0115;698.4565;1108.731;2637.02",
-  "ɔ ;AO;90;0.0557;0.0048;0.1554;0.0070;622.2540;987.7666;2489.016",
+  " ɛ;EH;240;0.1077;0.0145;0.2819;0.0266;622.2540;1760.000;2959.955",
+  " æ;AE;210;0.1024;0.0084;0.2871;0.0118;698.4565;1567.982;2793.826",
+  " ɝ;ER;180;0.1080;0.2535;0.0684;0.0021;783.9909;1396.913;2793.826",
+  " ʌ;AH;150;0.4567;1.0000;0.3641;0.0060;783.9909;1244.508;2637.02",
+  " ɑ;AA;120;0.0612;0.0046;0.1674;0.0115;698.4565;1108.731;2637.02",
+  " ɔ;AO;90;0.0557;0.0048;0.1554;0.0070;622.2540;987.7666;2489.016",
   "oʊ;OW;60;0.0371;0.0182;0.0857;0.0075;440;880;2489.016",
-  "ʊ ;UH;30;0.0112;0.0008;0.0310;0.0018;349.2282;783.9909;2349.318",
-  "u ;UW;0;0.0605;0.0202;0.1523;0.0089;293.6648;698.4565;2349.318",
+  " ʊ;UH;30;0.0112;0.0008;0.0310;0.0018;349.2282;783.9909;2349.318",
+  " u;UW;0;0.0605;0.0202;0.1523;0.0089;293.6648;698.4565;2349.318",
   "aɪ;AY;210;0.0483;0.0066;0.1246;0.0138;0;0",
   "ɔɪ;OY;180;0.0034;0.0001;0.0098;0.0004;0;0",
   "aʊ;AW;90;0.0156;0.0006;0.0442;0.0021;0;0",
@@ -506,6 +512,17 @@ Diphtong sound
 
 Intelligibility is preserved across a fairly wide range when F0 and FFs are scaled up or down in proportionate amounts (e.g., Chiba and Kajiyama, 1941; Daniloff et al., 1968). However, F0 and FFs do not scale proportionately in natural speech. For example, the F0 difference between adult male and adult female voices is about 80%–90%, while FFs increase only 12%–15% (Peterson and Barney, 1952).
 
+______
+˥˥˧˥˥˧<  chord with strumming direction
+__________
+    ˩˧˥
+  ˩˧     octave with string or position on it indicated by row for major thirds tuning
+˩˧       (lowest is the same as highest on lower line)
+__________
+
+These are combined in sequence for contour tones.
+˥˦˧˨˩
+
 */
 
 var url = "https://script.google.com/macros/s/AKfycbz5br4wnfSGtucWKwGQq1Tb07eshJez6uVaFatn4xJAc_rcrcA/exec"; //"http://192.168.0.61:8080/";
@@ -516,12 +533,14 @@ var w = [];
 var f1 = [];
 var f2 = [];
 var f3 = [];
-var s = ["·", "'", "ˌ"];
+var s = ["·", "ˈ", "ˌ"];
+var p = ["˥", "˦", "˧", "˨", "˩"];
 
 var k = document.getElementById("keys");
 var k_ = document.getElementById("keys_");
 var v = document.getElementById("keys").querySelectorAll("select");
 var c_ = document.getElementById("keys_").querySelectorAll("a");
+var pitch = document.getElementById("pitch");
 var vowels = document.getElementById("vowels");
 var consonants = document.getElementById("consonants");
 var vowels_ = document.getElementById("vowels_");
@@ -573,6 +592,14 @@ for (var i=0; i<keys_.length; i++) {
   lnk.innerText = ks[0];
   var bg = 100 - Math.pow(parseFloat(ks[2]), 1/3)*100;
   lnk.style.color = "hsl(0, 0%, " + bg + "%)";
+}
+
+for (var i=0; i<p.length; i++) {
+  pitch.innerHTML += "<a></a>";
+  var lnk = document.getElementById("pitch").querySelectorAll("a")[i];
+  lnk.href="javascript:if(ctl==res||ctl==rs){addPhoneme('"+p[i]+"', 'transparent');}";
+  lnk.innerText = p[i]+" ";
+  lnk.title = p[i];
 }
 
 function findCursor(v) {
@@ -750,9 +777,12 @@ function pos(w_) {
         var json = JSON.parse(this.responseText)[0];
         def.innerHTML = "";
         for (var i=0; i<json.meanings.length; i++) {
-          def.innerHTML += "<i>" + json.meanings[i].partOfSpeech + "</i><br/>";
+          def.innerHTML += "<br/><b>" + json.meanings[i].partOfSpeech + "</b>";
           for (var j=0; j<json.meanings[i].definitions.length; j++) {
-            def.innerHTML += json.meanings[i].definitions[j].definition + "<br/>";
+            def.innerHTML += "<br/><br/>" + json.meanings[i].definitions[j].definition + "<br/>";
+            for (var k=0; k<json.meanings[i].definitions[j].synonyms.length; k++) {
+              def.innerHTML += "<i><u><a href='javascript:' onclick='word.value=this.innerText;'>" + json.meanings[i].definitions[j].synonyms[k] + "</a></u></i> ";
+            }
           }
         }
       } else {
