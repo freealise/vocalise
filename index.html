@@ -4,25 +4,16 @@
 <title>
   Reverse phonetic dictionary based on CMUDict, includes a lyrics editor and vowel sound synthesizer
 </title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <script type="text/javascript" src="piano.js"></script>
+<link rel="preconnect" href="https://fonts.gstatic.com"/>
 <link href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet'/>
+<link href='https://fonts.googleapis.com/css2?family=Cousine&amp;display=swap' rel='stylesheet'/>
 <style>
-@font-face {
-    font-family: 'Fira Code';
-    src: url('https://raw.githubusercontent.com/tonsky/FiraCode/master/distr/eot/FiraCode-Regular.eot') format('embedded-opentype'),
-         url('https://raw.githubusercontent.com/tonsky/FiraCode/master/distr/woff2/FiraCode-Regular.woff2') format('woff2'),
-         url('https://raw.githubusercontent.com/tonsky/FiraCode/master/distr/woff/FiraCode-Regular.woff') format('woff'),
-         url('https://raw.githubusercontent.com/tonsky/FiraCode/master/distr/ttf/FiraCode-Regular.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
 * {
-    -webkit-font-feature-settings: "liga" on, "calt" on;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-    font-family: 'Fira Code', monospace;
-    font-variant: oldstyle-nums;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-family: 'Cousine', monospace;
 }
 body, html {
   margin:0px;
@@ -56,11 +47,7 @@ a {
 }
 #keys a {
   border: 1px solid darkgray;
-  padding:3px 1.5px;
-}
-#pitch {
-  position:relative;
-  top:4px;
+  padding:4px 1.75px;
 }
 #keys_ span a {
   border-left:1px solid darkgray;
@@ -97,7 +84,7 @@ option {
 #word_ {
   height:24px;
   width:198px;
-  padding:2px;
+  padding:1px;
 }
 #split, #search, #define {
   width:29px;
@@ -108,6 +95,10 @@ option {
   background:#eeeeee;
   float:left;
   font-size:13px;
+}
+#split b {
+  letter-spacing:-4px;
+  margin-left:-4px;
 }
 #search i {
   margin-top:-2px;
@@ -221,7 +212,7 @@ pre {
   height:256px;
 }
 #def {
-  height:128px;
+  height:156px;
   overflow:scroll;
 }
 #def .material-icons {
@@ -304,13 +295,13 @@ pre {
   </div>
   
   <div id="entry">
-    <div id="def"></div>
-    <iframe id="ngram_chart" name="ngram_chart" src="" width=256 height=128 marginwidth=0 marginheight=0 hspace=0 vspace=0 frameborder=0 scrolling=yes></iframe>
+    <div id="def">Word definitions and usage data will be here</div>
+    <iframe id="ngram_chart" name="ngram_chart" src="" width=256 height=100 marginwidth=0 marginheight=0 hspace=0 vspace=0 frameborder=0 scrolling=yes></iframe>
   </div>
 
   <div id="dict">
     <div class="l"><input type="text" id="word" placeholder="Word or phonemes" onfocus="ctl=this;"/><button onclick="findWords(word.value, vowels.value, consonants.value);" id="search" title="Search"><i class='material-icons'>search</i></button></div>
-    <div class="l"><select id="word_" onchange="if(this.selectedIndex!=0){addWord(this.options[this.selectedIndex].text, this.options[this.selectedIndex].value);}"><option>Results will be here</option></select><button onclick="splitWord();" id="split" title="Split">↙↘</button>
+    <div class="l"><select id="word_" onchange="if(this.selectedIndex!=0){addWord(this.options[this.selectedIndex].text, this.options[this.selectedIndex].value);}"><option>Results will be here</option></select><button onclick="splitWord();" id="split" title="Split"><b>↙↘</b></button>
     <button onclick="if(word_.selectedIndex!=0){pos(word_.options[word_.selectedIndex].text.split(' ')[0]);}else{pos(word.value);}" id="define" title="Define"><i class='material-icons'>query_stats</i></button></div>
     <div class="l"><input type="text" id="vowels" list="vowels_" placeholder="Vowels" onfocus="ctl=this;"/><datalist id="_vowels"></datalist><datalist id="vowels_"></datalist><input type="text" id="consonants" list="consonants_" placeholder="Consonants" onfocus="ctl=this;"/><datalist id="_consonants"></datalist><datalist id="consonants_"></datalist></div>
     
@@ -321,8 +312,7 @@ pre {
            <a title="Wildcard" href="javascript:" onclick="addPhoneme('*', 'transparent');">* </a>        <a title="Space" href="javascript:" onclick="addPhoneme(' ', 'transparent');">␣ </a> <a id="br" title="Newline" href="javascript:" onclick="addPhoneme('\n', 'transparent');">↵ </a></pre>
     <pre oncontextmenu="return false;" id="keys">
 <select title="IY"></select><select title="IH"></select><select title="EY"></select><select title="EH"></select><select title="AE"></select><select title="ER"></select><select title="AH"></select><select title="AA"></select><select title="AO"></select><select title="OW"></select><select title="UH"></select><select title="UW"></select>
-<a title="Any stress" href="javascript:" onclick="addPhoneme('___', 'transparent');">__</a><a title="No stress" href="javascript:" onclick="addPhoneme('__0', 'transparent');">_·</a><a title="Primary stress" href="javascript:" onclick="addPhoneme('__1', 'transparent');">_ˈ</a><a title="Secondary stress" href="javascript:" onclick="addPhoneme('__2', 'transparent');">_ˌ</a><select title="AY"></select><select title="OY"></select><select title="AW"></select>
-<span id="pitch"></span>
+<a title="Any stress" href="javascript:" onclick="addPhoneme('___', 'transparent');">__</a><a title="No stress" href="javascript:" onclick="addPhoneme('__0', 'transparent');">_·</a><a title="Primary stress" href="javascript:" onclick="addPhoneme('__1', 'transparent');">_'</a><a title="Secondary stress" href="javascript:" onclick="addPhoneme('__2', 'transparent');">_,</a><select title="AY"></select><select title="OY"></select><select title="AW"></select>
     </pre>
   </div>
   
@@ -522,17 +512,6 @@ Diphtong sound
 
 Intelligibility is preserved across a fairly wide range when F0 and FFs are scaled up or down in proportionate amounts (e.g., Chiba and Kajiyama, 1941; Daniloff et al., 1968). However, F0 and FFs do not scale proportionately in natural speech. For example, the F0 difference between adult male and adult female voices is about 80%–90%, while FFs increase only 12%–15% (Peterson and Barney, 1952).
 
-______
-˥˥˧˥˥˧<  chord with strumming direction
-__________
-    ˩˧˥
-  ˩˧     octave with string or position on it indicated by row for major thirds tuning
-˩˧       (lowest is the same as highest on lower line)
-__________
-
-These are combined in sequence for contour tones.
-˥˦˧˨˩
-
 */
 
 var url = "https://script.google.com/macros/s/AKfycbz5br4wnfSGtucWKwGQq1Tb07eshJez6uVaFatn4xJAc_rcrcA/exec"; //"http://192.168.0.61:8080/";
@@ -543,14 +522,12 @@ var w = [];
 var f1 = [];
 var f2 = [];
 var f3 = [];
-var s = ["·", "ˈ", "ˌ"];
-var p = ["˥", "˦", "˧", "˨", "˩"];
+var s = ["·", "'", ","];
 
 var k = document.getElementById("keys");
 var k_ = document.getElementById("keys_");
 var v = document.getElementById("keys").querySelectorAll("select");
 var c_ = document.getElementById("keys_").querySelectorAll("a");
-var pitch = document.getElementById("pitch");
 var vowels = document.getElementById("vowels");
 var consonants = document.getElementById("consonants");
 var vowels_ = document.getElementById("vowels_");
@@ -602,14 +579,6 @@ for (var i=0; i<keys_.length; i++) {
   lnk.innerText = ks[0];
   var bg = 100 - Math.pow(parseFloat(ks[2]), 1/3)*100;
   lnk.style.color = "hsl(0, 0%, " + bg + "%)";
-}
-
-for (var i=0; i<p.length; i++) {
-  pitch.innerHTML += "<a></a>";
-  var lnk = document.getElementById("pitch").querySelectorAll("a")[i];
-  lnk.href="javascript:if(ctl==res||ctl==rs){addPhoneme('"+p[i]+"', 'transparent');}";
-  lnk.innerText = p[i]+" ";
-  lnk.title = p[i];
 }
 
 function findCursor(v) {
