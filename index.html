@@ -8,35 +8,52 @@
 <script type="text/javascript" src="piano.js"></script>
 <link rel="preconnect" href="https://fonts.gstatic.com"/>
 <link href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet'/>
-<link href='https://fonts.googleapis.com/css2?family=Cousine&amp;display=swap' rel='stylesheet'/>
 <style>
+@font-face {
+  font-family: "DejaVu";
+  src: url("fonts/dejavu/DejaVuSansMono.ttf") format("truetype");
+}
+@font-face {
+  font-family: "DejaVuBold";
+  src: url("fonts/dejavu/DejaVuSansMono-Bold.ttf") format("truetype");
+}
 * {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  font-family: 'Cousine', monospace;
+  font-family: 'DejaVu', monospace;
 }
 body, html {
   margin:0px;
   padding: 0;
   overflow:hidden;
+  font-size: 16px;
 }
-textarea, input, datalist, button {
-  font-size: 13px;
+textarea, input, datalist, button, pre {
+  font-size: 16px;
 }
 input, datalist, button {
   margin:0px;
   padding:0px 2px;
-  border:1px solid darkgray;
+  border:1px solid lightgray;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+li {
+  cursor: pointer;
 }
 #keys {
-  width: 200px;
+  width: 288px;
   margin:0px;
-  font-size:13px;
+  font-size:16px;
 }
 #keys_ {
-  width: 200px;
+  width: 288px;
   margin:0px;
-  font-size:13px;
+  font-size:16px;
+  letter-spacing:-0.05px;
 }
 .u {
    text-decoration:underline;
@@ -46,20 +63,39 @@ a {
   text-decoration:none;
 }
 #keys a {
-  border: 1px solid darkgray;
-  padding:4px 1.75px;
+  border-left: 1px solid lightgray;
+  margin: 0px -1px 0px 0px;
+  padding:2.4px;
+  font-family:'DejaVuBold';
 }
 #keys_ span a {
-  border-left:1px solid darkgray;
+  border-left:1px solid lightgray;
   padding:0px;
   margin:0px -1px 0px 0px;
+  font-family:'DejaVuBold';
+}
+#keys_ a {
+  font-family:'DejaVuBold';
+}
+#tone {
+  width:288px;
+  height:1.5em;
+  line-height:1.5em;
+  overflow:scroll;
+  margin-bottom:1em;
+  background-color:transparent;
+}
+#tone a {
+  font-family:'DejaVuBold';
+  padding:0px 5px;
 }
 select {
   height:24px;
-  font-size:13px;
-  width:21px;
+  font-size:16px;
+  width:24px;
   margin:0px;
-  padding:2px 0px;
+  padding:2px 1px;
+  border: 0px;
   -o-appearance: none;
   -ms-appearance: none;
   -webkit-appearance: none;
@@ -71,34 +107,44 @@ option {
   padding:0px;
 }
 #word, #word_ {
-  border:1px solid darkgray;
+  border:1px solid lightgray;
   margin:0px;
   background:white;
   float:left;
 }
 #word {
   height:20px;
-  width:223px;
-  padding:1px;
+  width:253px;
+  padding:1px 2px;
 }
 #word_ {
-  height:24px;
-  width:198px;
-  padding:1px;
+  overflow:scroll;
+  height:18px;
+  width:224px;
+  padding:2px;
+}
+#word_ div {
+  cursor: pointer;
+  height: 22px;
+  border-bottom: 1px solid darkgray;
 }
 #split, #search, #define {
   width:29px;
   height:24px;
-  border:1px solid darkgray;
+  border:1px solid lightgray;
   margin:0px;
   padding:2px;
   background:#eeeeee;
-  float:left;
-  font-size:13px;
+  float:right;
+  font-size:14px;
 }
-#split b {
+#split i {
+  font-size:14px;
+  margin-top:4px;
+  position:relative;
+  right:2px;
   letter-spacing:-4px;
-  margin-left:-4px;
+  font-weight:bold;
 }
 #search i {
   margin-top:-2px;
@@ -113,18 +159,17 @@ option {
   clear:both;
 }
 #vowels {
-  width:144px;
+  width:148px;
   height:22px;
 }
 #consonants {
-  width:100px;
+  width:128px;
   height:22px;
 }
 pre {
   padding:0px;
   margin:0px;
   letter-spacing:0px;
-
 }
 #highlight, #highlight_ {
   width:50%;
@@ -137,7 +182,7 @@ pre {
   margin:0px;
   padding:0px;
   min-height:128px;
-  font-size:13px;
+  font-size:16px;
   letter-spacing: 0px;
   color:transparent;
 }
@@ -157,7 +202,7 @@ pre {
   overflow-x:hidden;
   margin:-1px;
   padding:0px;
-  border:1px solid darkgray;
+  border:1px solid lightgray;
   letter-spacing: 0px;
   background:transparent;
   min-height:128px;
@@ -168,48 +213,54 @@ pre {
   text-align:left;
   display:block;
   white-space: pre;
+  line-height:18px;
+  font-family:'DejaVuBold';
 }
 #highlight_, #rs {
   right:0px;
   text-align:left;
   display:block;
   white-space: pre;
-}
-#dict, #help, #credits, #entry {
-  width:256px;
-  position:fixed;
-  right:50%;
-  margin-right:-128px;
-  background:white;
+  line-height:18px;
 }
 #dict {
+  width:288px;
+  position:fixed;
+  left:50%;
+  margin-left:-128px;
+  background:white;
   bottom:0px;
 }
 #links {
   position:fixed;
   z-index:10;
-  bottom:10px;
+  bottom:16px;
   left:0px;
   width:28px;
   padding-left:4px;
   overflow:hidden;
   white-space:nowrap;
   background:white;
-  font-size:13px;
+  font-size:16px;
 }
 #links i {
   font-size:20px;
 }
 #help, #credits, #entry {
+  overflow:scroll;
+  font-size: 14px;
+  height:286px;
+  position:fixed;
+  left:50%;
+  margin-left:-160px;
+  background:white;
+  width:310px;
+  max-width:100vw;
   border:1px solid lightgray;
   padding:2px 4px 2px 4px;
   visibility:hidden;
-  z-index:2;
+  z-index:11;
   top:0px;
-}
-#entry {
-  font-size: 12px;
-  height:256px;
 }
 #def {
   height:156px;
@@ -220,14 +271,6 @@ pre {
   color: gray;
   top: 3px;
   position: relative;
-}
-#help {
-  font-size: 13px;
-  height:320px;
-}
-#credits {
-  font-size: 12px;
-  height:320px;
 }
 #mobile {
   background-color:lightgray;
@@ -296,30 +339,29 @@ pre {
   
   <div id="entry">
     <div id="def">Word definitions and usage data will be here</div>
-    <iframe id="ngram_chart" name="ngram_chart" src="" width=256 height=100 marginwidth=0 marginheight=0 hspace=0 vspace=0 frameborder=0 scrolling=yes></iframe>
+    <iframe id="ngram_chart" name="ngram_chart" src="" width=288 height=100 marginwidth=0 marginheight=0 hspace=0 vspace=0 frameborder=0 scrolling=yes></iframe>
   </div>
 
   <div id="dict">
     <div class="l"><input type="text" id="word" placeholder="Word or phonemes" onfocus="ctl=this;"/><button onclick="findWords(word.value, vowels.value, consonants.value);" id="search" title="Search"><i class='material-icons'>search</i></button></div>
-    <div class="l"><select id="word_" onchange="if(this.selectedIndex!=0){addWord(this.options[this.selectedIndex].text, this.options[this.selectedIndex].value);}"><option>Results will be here</option></select><button onclick="splitWord();" id="split" title="Split"><b>↙↘</b></button>
-    <button onclick="if(word_.selectedIndex!=0){pos(word_.options[word_.selectedIndex].text.split(' ')[0]);}else{pos(word.value);}" id="define" title="Define"><i class='material-icons'>query_stats</i></button></div>
+    <div class="l"><div id="word_" onclick="if(event.target.title){addWord(event.target.innerText, event.target.title);}"><div>Results will be here</div></div>
+    <button onclick="pos(word_.firstChild.innerText);" id="define" title="Define"><i class='material-icons'>query_stats</i></button><button onclick="splitWord();" id="split" title="Split"><i class='material-icons'>south_west</i><i class='material-icons'>south_east</i></button></div>
     <div class="l"><input type="text" id="vowels" list="vowels_" placeholder="Vowels" onfocus="ctl=this;"/><datalist id="_vowels"></datalist><datalist id="vowels_"></datalist><input type="text" id="consonants" list="consonants_" placeholder="Consonants" onfocus="ctl=this;"/><datalist id="_consonants"></datalist><datalist id="consonants_"></datalist></div>
     
     <pre oncontextmenu="return false;" id="keys_">
-<span class="u"><a title="B">  </a><a title="P">  </a></span>          <span class="u"><a title="D">  </a><a title="T">  </a></span>          <span class="u"><a title="G">  </a><a title="K">  </a></span>
-<span class="u"><a title="V">  </a><a title="F">  </a></span> <span class="u"><a title="DH">  </a><a title="TH">  </a></span> <span class="u"><a title="Z">  </a><a title="S">  </a></span>    <span class="u"><a title="JH">  </a><a title="CH">  </a></span> <span class="u"><a title="ZH">  </a><a title="SH">  </a></span> <span class="u"><a title="NG">  </a><a title="HH">  </a></span>
-<span class="u"><a title="W">  </a><a title="M">  </a></span>   <span class="u"><a title="_">  </a></span>     <span class="u"><a title="L">  </a><a title="N">  </a></span>          <span class="u"><a title="R">  </a><a title="Y">  </a></span>
-           <a title="Wildcard" href="javascript:" onclick="addPhoneme('*', 'transparent');">* </a>        <a title="Space" href="javascript:" onclick="addPhoneme(' ', 'transparent');">␣ </a> <a id="br" title="Newline" href="javascript:" onclick="addPhoneme('\n', 'transparent');">↵ </a></pre>
+<span class="u"><a title="B">  </a><a title="P">  </a></span>         <span class="u"><a title="D">  </a><a title="T">  </a></span>         <span class="u"><a title="G">  </a><a title="K">  </a></span>
+<span class="u"><a title="V">  </a><a title="F">  </a></span> <span class="u"><a title="DH">  </a><a title="TH">  </a></span> <span class="u"><a title="Z">  </a><a title="S">  </a></span>  <span class="u"><a title="JH">  </a><a title="CH">  </a></span> <span class="u"><a title="ZH">  </a><a title="SH">  </a></span> <span class="u"><a title="NG">  </a><a title="HH">  </a></span>
+<span class="u"><a title="W">  </a><a title="M">  </a></span>  <span class="u"><a title="_">  </a></span>     <span class="u"><a title="L">  </a><a title="N">  </a></span>         <span class="u"><a title="R">  </a><a title="Y">  </a></span>
+         <a title="Wildcard" href="javascript:" onclick="addPhoneme('*', 'transparent');">* </a><a title="Left bracket" href="javascript:" onclick="addPhoneme('[', 'transparent');">[ </a>     <a title="Right bracket" href="javascript:" onclick="addPhoneme(']', 'transparent');">] </a> <a title="Space" href="javascript:" onclick="addPhoneme(' ', 'transparent');">␣ </a> <a id="br" title="Newline" href="javascript:" onclick="addPhoneme('\n', 'transparent');">↵ </a></pre>
     <pre oncontextmenu="return false;" id="keys">
 <select title="IY"></select><select title="IH"></select><select title="EY"></select><select title="EH"></select><select title="AE"></select><select title="ER"></select><select title="AH"></select><select title="AA"></select><select title="AO"></select><select title="OW"></select><select title="UH"></select><select title="UW"></select>
-<a title="Any stress" href="javascript:" onclick="addPhoneme('___', 'transparent');">__</a><a title="No stress" href="javascript:" onclick="addPhoneme('__0', 'transparent');">_·</a><a title="Primary stress" href="javascript:" onclick="addPhoneme('__1', 'transparent');">_'</a><a title="Secondary stress" href="javascript:" onclick="addPhoneme('__2', 'transparent');">_,</a><select title="AY"></select><select title="OY"></select><select title="AW"></select>
-    </pre>
+<a title="Any stress" href="javascript:" onclick="addPhoneme('___', 'transparent');">__</a><a title="No stress" href="javascript:" onclick="addPhoneme('__0', 'transparent');">_·</a><a title="Primary stress" href="javascript:" onclick="addPhoneme('__1', 'transparent');">_ˈ</a><a title="Secondary stress" href="javascript:" onclick="addPhoneme('__2', 'transparent');">_ˌ</a><select title="AY"></select><select title="OY"></select><select title="AW"></select></pre>
+  <div id="tone"></div>
   </div>
   
   <div id="links">
     <a id="show_links" href="javascript:showLinks();" alt="Show links" title="Show links"><i class='material-icons'>chevron_right</i></a><br/>
     <a id="undo" href="javascript:undo();" alt="Undo" title="Undo"><i class='material-icons'>undo</i> Undo</a><br/>
-    <a id="sound_on" href="javascript:setup();" alt="Sound on" title="Sound on"><i class='material-icons'>power_settings_new</i>️ Sound on</a><br/>
     <a id="lyrics" href="javascript:showLyrics();" alt="Mobile view" title="Mobile view"><i class='material-icons'>preview</i> Mobile view</a><br/>
     <a id="entry_" href="javascript:showEntry();" alt="Definition" title="Definition"><i class='material-icons'>wysiwyg</i> Definition</a><br/>
     <a id="help_" href="javascript:showHelp();" alt="Help" title="Help"><i class='material-icons'>help_outline</i> Help</a><br/>
@@ -427,6 +469,13 @@ var kbrd = {
   ' ': ' ',
 }
 
+var tone = [
+  '˥', '˦', '˧', '˨', '˩',
+  '꜒', '꜓', '꜔', '꜕', '꜖',
+  '꜈', '꜉', '꜊', '꜋', '꜌',
+  '꜍', '꜎', '꜏', '꜐', '꜑'
+];
+
 var audioCtx, oscillator, biquadFilter, biquadFilter_, biquadFilter__, gainNode = null;
 
 function setup() {
@@ -464,15 +513,18 @@ function setup() {
 }
 
 function play(f0, f1_, f2_, f3_) {
-oscillator.frequency.setValueAtTime(f0, audioCtx.currentTime);
-biquadFilter.frequency.setValueAtTime(parseFloat(f1_), audioCtx.currentTime);
-biquadFilter_.frequency.setValueAtTime(parseFloat(f2_), audioCtx.currentTime);
-biquadFilter__.frequency.setValueAtTime(parseFloat(f3_), audioCtx.currentTime);
-gainNode.gain.setValueAtTime(0.25, audioCtx.currentTime+0.001);
+  if (!audioCtx) {
+    setup();
+  }
+  oscillator.frequency.setValueAtTime(f0, audioCtx.currentTime);
+  biquadFilter.frequency.setValueAtTime(parseFloat(f1_), audioCtx.currentTime);
+  biquadFilter_.frequency.setValueAtTime(parseFloat(f2_), audioCtx.currentTime);
+  biquadFilter__.frequency.setValueAtTime(parseFloat(f3_), audioCtx.currentTime);
+  gainNode.gain.setValueAtTime(0.25, audioCtx.currentTime+0.001);
 }
 
 function stop() {
-gainNode.gain.setValueAtTime(0, audioCtx.currentTime+0.001);
+  gainNode.gain.setValueAtTime(0, audioCtx.currentTime+0.001);
 }
 
 function playAudio() {
@@ -512,6 +564,23 @@ Diphtong sound
 
 Intelligibility is preserved across a fairly wide range when F0 and FFs are scaled up or down in proportionate amounts (e.g., Chiba and Kajiyama, 1941; Daniloff et al., 1968). However, F0 and FFs do not scale proportionately in natural speech. For example, the F0 difference between adult male and adult female voices is about 80%–90%, while FFs increase only 12%–15% (Peterson and Barney, 1952).
 
+
+People have a tendency to think of intonation as being directly linked to the speaker's emotions. In fact, the meaning of intonation contours is as conventionalized as any other aspect of language. Different languages can use different conventions, giving rise to the potential for cross-cultural misunderstandings.
+
+reading the one language with the intonation pattern appropriate to the other can give rise to entirely unintentional effects: English with Russian intonation sounds unfriendly, rude or threatening, to the native speaker of English; Russian with an English intonation sounds affected or hypocritical to the native speaker of Russian.
+Comrie (1984); "Interrogativity in Russian"
+
+
+whistled language
+In a non-tonal language, segments may be differentiated as follows:
+-Vowels are replaced by a set of relative pitch ranges generally tracking the f2 formant of spoken language.
+-Stress is expressed by higher pitch or increased length
+-Consonants are produced by pitch transitions of different lengths and height, plus the presence or absence of occlusion. ("Labial stops are replaced by diaphragm or glottal occlusions.")
+
+
+noun, adjective, verb, adverb, pronoun,
+determiner, preposition, conjunction, and interjection
+
 */
 
 var url = "https://script.google.com/macros/s/AKfycbz5br4wnfSGtucWKwGQq1Tb07eshJez6uVaFatn4xJAc_rcrcA/exec"; //"http://192.168.0.61:8080/";
@@ -522,12 +591,13 @@ var w = [];
 var f1 = [];
 var f2 = [];
 var f3 = [];
-var s = ["·", "'", ","];
+var s = ["·", "ˈ", "ˌ"];
 
 var k = document.getElementById("keys");
 var k_ = document.getElementById("keys_");
 var v = document.getElementById("keys").querySelectorAll("select");
 var c_ = document.getElementById("keys_").querySelectorAll("a");
+var tone_ = document.getElementById("tone");
 var vowels = document.getElementById("vowels");
 var consonants = document.getElementById("consonants");
 var vowels_ = document.getElementById("vowels_");
@@ -579,6 +649,11 @@ for (var i=0; i<keys_.length; i++) {
   lnk.innerText = ks[0];
   var bg = 100 - Math.pow(parseFloat(ks[2]), 1/3)*100;
   lnk.style.color = "hsl(0, 0%, " + bg + "%)";
+}
+
+for (var i=0; i<tone.length; i++) {
+  var ks = tone[i];
+  tone_.innerHTML += "<a title='"+ks+"' href='javascript:' onclick='addPhoneme(this.innerText, &apos;transparent&apos;);'>" + ks +"</a> ";
 }
 
 function findCursor(v) {
@@ -635,6 +710,8 @@ function addWord(w_, _w) {
   rs.setSelectionRange(b+_w.length+2, b+_w.length+2);
   res.focus();
   res.setSelectionRange(b_+w_.length+1, b_+w_.length+1);
+  word.value = _w;
+  word_.firstChild.innerText = w_.split(' ')[0];
 }
 
 function addPhoneme(p, clr) {
@@ -662,27 +739,23 @@ function findWords(w_, q, q_) {
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
         if (this.responseText != "") {
-          word_.innerHTML = "<option selected value=''>=> Click for results</option>\n" + this.responseText;
+          word_.innerHTML = "<div onclick='showList();'>=> Click for results</div>" + this.responseText;
         } else {
-          word_.innerHTML = "<option selected value=''>!= Nothing found</option>";
+          word_.innerHTML = "<div>!= Nothing found</div>";
         }
         word_.focus();
       }
     };
     xhttp.open("GET", url + "?w=" + w_ + "&q=" + q + "&q_=" + q_, true);
     xhttp.send();
-    word_.innerHTML = "<option selected value=''>Searching...</option>";
+    word_.innerHTML = "<div>Searching...</div>";
   }
 }
 
 function splitWord() {
   vowels.value = "";
   consonants.value = "";
-  if (word.value.search(/[*_012 ]/) != -1) {
-    var wrd = word.value.split(" ");
-  } else {
-    var wrd = word_.value.split(" ");
-  }
+  var wrd = word.value.split(" ");
   for (var i=0; i<wrd.length; i++) {
     var num = wrd[i].charAt(2);
     if (num == "_" || num == "0" || num == "1" || num == "2") {
@@ -874,10 +947,20 @@ function showCredits() {
 }
 
 function showLinks() {
-  if (links.style.width!='128px') {
-    links.style.width='128px';
+  if (links.style.width!='144px') {
+    links.style.width='144px';
   } else {
-    links.style.width='24px';
+    links.style.width='28px';
+  }
+}
+
+function showList() {
+  if (word_.style.position!='absolute') {
+    word_.style.position='absolute';
+    word_.style.height='180px';
+  } else {
+    word_.style.position='relative';
+    word_.style.height='18px';
   }
 }
 
