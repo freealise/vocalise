@@ -5,5 +5,6 @@ Dictionary by <a href="http://www.speech.cs.cmu.edu/cgi-bin/cmudict" title="Carn
 <p><b>TODO:</b><br/> 
 - optimize to search and load faster with indexes;<br/>
 - add sound for diphtongs, British pronounciation (use a dictionary from the defining) and IPA transcription;<br/>
-- underline only pronounced vowels.
+- underline only pronounced vowels.<br/>
+- app for android (also with ordinary keyboard sorted by sound)
 </p>
