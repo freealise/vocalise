@@ -246,10 +246,10 @@ pre {
 #links i {
   font-size:20px;
 }
-#help, #credits, #entry {
+#help, #credits, #entry, #mobile {
   overflow:scroll;
   font-size: 14px;
-  height:286px;
+  height:264px;
   position:fixed;
   left:50%;
   margin-left:-160px;
@@ -274,6 +274,7 @@ pre {
 }
 #mobile {
   background-color:lightgray;
+  height:4em;
 }
 @media only screen and (max-height: 511px) {
   #highlight, #highlight_, #res, #rs {
@@ -323,18 +324,19 @@ pre {
 </div>
 
   <div id="help">
+    <p>Use the pitch symbols and groups of vowels to fit the <i>form</i>, <i>rhythm</i> and <i>melody</i>.</p>
     <p>Search <i>keywords</i> or phonemes and add the results to lyrics and phonetic pattern.</p>
     <p>Look up <i>rhymes and alliterations</i> with wildcards, separate for vowels and consonants.</p>
     <p>They can be in any syllables wherever in the text, not necessarily the end of the line.</p>
-    <p>Use the placeholders and stresses for the rest of your lines to fit the <i>form</i> and <i>rhythm</i>.</p>
-    <span id="mobile">On mobile, switch the system keyboard to floating mode.</span>
   </div>
+  
+  <div id="mobile">On mobile, switch the system keyboard to floating mode.</div>
   
   <div id="credits">
     <p>Reverse phonetic dictionary, includes a lyrics editor and vowel sound synthesizer. Licensed under the GNU GPL-3.0, hosted on <a href="https://github.com/freealise/phonetic" title="Github" target="_blank"><u>GitHub</u></a> and <a href="https://script.google.com" title="Google Script" target="_blank"><u>Google Script</u></a>.</p>
     <p>Dictionary by <a href="http://www.speech.cs.cmu.edu/cgi-bin/cmudict" title="Carnegie Mellon University" target="_blank"><u>CMU</u></a>, sorted by frequency based on <a href="https://books.google.com/ngrams" title="Google Books Ngrams" target="_blank"><u>Google Books Ngrams</u></a> with <a href="https://phrasefinder.io/" title="PhraseFinder" target="_blank"><u>PhraseFinder</u></a> API, <a href="https://dictionaryapi.dev/" title="DictionaryAPI" target="_blank"><u>definitions</u></a> by <a href="https://www.lexico.com/" title="Oxford Dictionary" target="_blank"><u>Oxford</u></a>.</p>
-    <p>Thanks to <a href="https://www.gearslutz.com/board/showpost.php?p=11559456&amp;postcount=10" title="jerry123 from GearSlutz" target="_blank"><u>jerry123 from GearSlutz</u></a> for the idea of phonetic songwriting, <a href="https://englishwithkim.com/" title="English with Kim" target="_blank"><u>English with Kim</u></a> for clarifying that natural speech contains a tune.</p>
-    <p>Separating vowels and consonants, along with slant rhyme or alliteration within a line, is common in Hebrew poetry and rap.</p>
+    <p>Thanks to <a href="https://www.gearslutz.com/board/showpost.php?p=11559456&amp;postcount=10" title="jerry123 from GearSlutz" target="_blank"><u>jerry123 from GearSlutz</u></a> for the idea of phonetic songwriting, <a href="https://englishwithkim.com/" title="English with Kim" target="_blank"><u>English with Kim</u></a> for clarifying that natural speech contains a tune, <a href="https://storygrid.com/" title="Storygrid" target="_blank"><u>Storygrid</u></a> and <a href="https://savethecat.com/" title="Save the Cat" target="_blank"><u>Save the Cat</u></a> for making it obvious that the soundtrack represents the value shift of a story.</p>
+    <p>Separating vowels and consonants for slant rhyme and alliteration within a line was inspired by rap and Hebrew poetry.</p>
   </div>
   
   <div id="entry">
@@ -352,11 +354,11 @@ pre {
 <span class="u"><a title="B">  </a><a title="P">  </a></span>         <span class="u"><a title="D">  </a><a title="T">  </a></span>         <span class="u"><a title="G">  </a><a title="K">  </a></span>
 <span class="u"><a title="V">  </a><a title="F">  </a></span> <span class="u"><a title="DH">  </a><a title="TH">  </a></span> <span class="u"><a title="Z">  </a><a title="S">  </a></span>  <span class="u"><a title="JH">  </a><a title="CH">  </a></span> <span class="u"><a title="ZH">  </a><a title="SH">  </a></span> <span class="u"><a title="NG">  </a><a title="HH">  </a></span>
 <span class="u"><a title="W">  </a><a title="M">  </a></span>  <span class="u"><a title="_">  </a></span>     <span class="u"><a title="L">  </a><a title="N">  </a></span>         <span class="u"><a title="R">  </a><a title="Y">  </a></span>
-         <a title="Wildcard" href="javascript:" onclick="addPhoneme('*', 'transparent');">* </a><a title="Left bracket" href="javascript:" onclick="addPhoneme('[', 'transparent');">[ </a>     <a title="Right bracket" href="javascript:" onclick="addPhoneme(']', 'transparent');">] </a> <a title="Space" href="javascript:" onclick="addPhoneme(' ', 'transparent');">␣ </a> <a id="br" title="Newline" href="javascript:" onclick="addPhoneme('\n', 'transparent');">↵ </a></pre>
+         <a title="Wildcard" href="javascript:" onclick="addPhoneme('*', 'transparent');">* </a><a title="Left bracket to group phonemes into words and sentences according to pitch, can be nested for structure" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme('[', 'transparent');">[ </a>     <a title="Left bracket to group phonemes into words and sentences according to pitch, can be nested for structure" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme(']', 'transparent');">] </a> <a title="Space" href="javascript:" onclick="addPhoneme(' ', 'transparent');">␣ </a> <a id="br" title="Newline" href="javascript:" onclick="addPhoneme('\n', 'transparent');">↵ </a></pre>
     <pre oncontextmenu="return false;" id="keys">
 <select title="IY"></select><select title="IH"></select><select title="EY"></select><select title="EH"></select><select title="AE"></select><select title="ER"></select><select title="AH"></select><select title="AA"></select><select title="AO"></select><select title="OW"></select><select title="UH"></select><select title="UW"></select>
-<a title="Any stress" href="javascript:" onclick="addPhoneme('___', 'transparent');">__</a><a title="No stress" href="javascript:" onclick="addPhoneme('__0', 'transparent');">_·</a><a title="Primary stress" href="javascript:" onclick="addPhoneme('__1', 'transparent');">_ˈ</a><a title="Secondary stress" href="javascript:" onclick="addPhoneme('__2', 'transparent');">_ˌ</a><select title="AY"></select><select title="OY"></select><select title="AW"></select></pre>
-  <div id="tone"></div>
+<a title="Any stress with any vowel" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme('___', 'transparent');">__</a><a title="No stress with any vowel" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme('__0', 'transparent');">_·</a><a title="Primary stress with any vowel" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme('__1', 'transparent');">_ˈ</a><a title="Secondary stress with any vowel" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme('__2', 'transparent');">_ˌ</a><select title="AY"></select><select title="OY"></select><select title="AW"></select></pre>
+  <div id="tone" title="Pitch symbols for word and syllable stress, span octave (12 semitones) in two rows plus underscores" onmousedown="mobile.innerText=this.title;"></div>
   </div>
   
   <div id="links">
@@ -365,6 +367,7 @@ pre {
     <a id="lyrics" href="javascript:showLyrics();" alt="Mobile view" title="Mobile view"><i class='material-icons'>preview</i> Mobile view</a><br/>
     <a id="entry_" href="javascript:showEntry();" alt="Definition" title="Definition"><i class='material-icons'>wysiwyg</i> Definition</a><br/>
     <a id="help_" href="javascript:showHelp();" alt="Help" title="Help"><i class='material-icons'>help_outline</i> Help</a><br/>
+    <a id="tooltips" href="javascript:showTooltips();" alt="Tooltips" title="Tooltips"><i class='material-icons'>live_help</i> Tooltips</a><br/>
     <a id="credits_" href="javascript:showCredits();" alt="Credits" title="Credits"><i class='material-icons'>copyright</i> Credits</a><br/>
     <a id="share" href="javascript:window.open('https://www.blogger.com/blog-this.g?t='+res.value, 'blog');" alt="Share" title="Share"><i class='material-icons'>share</i> Share</a><br/>
   </div>
@@ -612,6 +615,7 @@ var rs = document.getElementById("rs");
 var entry = document.getElementById("entry");
 var ngram = document.getElementById("ngram_chart");
 var def = document.getElementById("def");
+var mobile = document.getElementById("mobile");
 var res_old = "";
 var rs_old = "";
 var regexp = [];
@@ -895,8 +899,6 @@ function loadIndex(f, v) {
 loadIndex("index_freq.csv", "v");
 loadIndex("index_c_freq.csv", "c");
 
-rs.value+=" ___ ___ ___ ___ ___ ___ ___ ___\n";
-
 
 function showLyrics() {
   if (res.style.display!='none') {
@@ -943,6 +945,14 @@ function showCredits() {
     credits.style.visibility='visible';
   } else {
     credits.style.visibility='hidden';
+  }
+}
+
+function showTooltips() {
+  if (mobile.style.visibility!='visible') {
+    mobile.style.visibility='visible';
+  } else {
+    mobile.style.visibility='hidden';
   }
 }
 
