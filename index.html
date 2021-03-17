@@ -335,7 +335,7 @@ pre {
   <div id="credits">
     <p>Reverse phonetic dictionary, includes a lyrics editor and vowel sound synthesizer. Licensed under the GNU GPL-3.0, hosted on <a href="https://github.com/freealise/phonetic" title="Github" target="_blank"><u>GitHub</u></a> and <a href="https://script.google.com" title="Google Script" target="_blank"><u>Google Script</u></a>.</p>
     <p>Dictionary by <a href="http://www.speech.cs.cmu.edu/cgi-bin/cmudict" title="Carnegie Mellon University" target="_blank"><u>CMU</u></a>, sorted by frequency based on <a href="https://books.google.com/ngrams" title="Google Books Ngrams" target="_blank"><u>Google Books Ngrams</u></a> with <a href="https://phrasefinder.io/" title="PhraseFinder" target="_blank"><u>PhraseFinder</u></a> API, <a href="https://dictionaryapi.dev/" title="DictionaryAPI" target="_blank"><u>definitions</u></a> by <a href="https://www.lexico.com/" title="Oxford Dictionary" target="_blank"><u>Oxford</u></a>.</p>
-    <p>Thanks to <a href="https://www.gearslutz.com/board/showpost.php?p=11559456&amp;postcount=10" title="jerry123 from GearSlutz" target="_blank"><u>jerry123 from GearSlutz</u></a> for the idea of phonetic songwriting, <a href="https://englishwithkim.com/" title="English with Kim" target="_blank"><u>English with Kim</u></a> for clarifying that natural speech contains a tune which represents the stress pattern (and value shift of a story).</p>
+    <p>Thanks to <a href="https://www.gearslutz.com/board/showpost.php?p=11559456&amp;postcount=10" title="jerry123 from GearSlutz" target="_blank"><u>jerry123 from GearSlutz</u></a> for the idea of phonetic songwriting, <a href="https://englishwithkim.com/" title="English with Kim" target="_blank"><u>English with Kim</u></a> for clarifying that natural speech contains a tune, <a href="https://storygrid.com/" title="Storygrid" target="_blank"><u>Storygrid</u></a> and <a href="https://savethecat.com/" title="Save the Cat" target="_blank"><u>Save the Cat</u></a> for making it obvious that the soundtrack represents the value shift of a story.</p>
     <p>Separating vowels and consonants for slant rhyme and alliteration within a line was inspired by rap and Hebrew poetry.</p>
   </div>
   
@@ -345,10 +345,10 @@ pre {
   </div>
 
   <div id="dict">
-    <div class="l"><input type="text" id="word" placeholder="Word or phonemes" onfocus="ctl=this;"/><button onclick="findWords(word.value, vowels.value, consonants.value);" id="search" title="Search"><i class='material-icons'>search</i></button></div>
+    <div class="l"><input type="text" id="word" list="_word" placeholder="Word or phonemes" onfocus="ctl=this;"/><datalist id="_word"></datalist><button onclick="findWords(word.value, vowels.value, consonants.value);" id="search" title="Search"><i class='material-icons'>search</i></button></div>
     <div class="l"><div id="word_" onclick="if(event.target.title){addWord(event.target.innerText, event.target.title);}"><div>Results will be here</div></div>
     <button onclick="pos(word_.firstChild.innerText);" id="define" title="Define"><i class='material-icons'>query_stats</i></button><button onclick="splitWord();" id="split" title="Split"><i class='material-icons'>south_west</i><i class='material-icons'>south_east</i></button></div>
-    <div class="l"><input type="text" id="vowels" list="vowels_" placeholder="Vowels" onfocus="ctl=this;"/><datalist id="_vowels"></datalist><datalist id="vowels_"></datalist><input type="text" id="consonants" list="consonants_" placeholder="Consonants" onfocus="ctl=this;"/><datalist id="_consonants"></datalist><datalist id="consonants_"></datalist></div>
+    <div class="l"><input type="text" id="vowels" list="vowels_" placeholder="Vowels" onfocus="ctl=this;loadIndex('vowels.csv', 'v');"/><datalist id="_vowels"></datalist><datalist id="vowels_"></datalist><input type="text" id="consonants" list="consonants_" placeholder="Consonants" onfocus="ctl=this;loadIndex('consonants.csv', 'c');"/><datalist id="_consonants"></datalist><datalist id="consonants_"></datalist></div>
     
     <pre oncontextmenu="return false;" id="keys_">
 <span class="u"><a title="B">  </a><a title="P">  </a></span>         <span class="u"><a title="D">  </a><a title="T">  </a></span>         <span class="u"><a title="G">  </a><a title="K">  </a></span>
@@ -608,6 +608,7 @@ var consonants_ = document.getElementById("consonants_");
 var _vowels = document.getElementById("_vowels");
 var _consonants = document.getElementById("_consonants");
 var word = document.getElementById("word");
+var _word = document.getElementById("_word");
 var word_ = document.getElementById("word_");
 var highlight = document.getElementById("highlight");
 var res = document.getElementById("res");
@@ -859,45 +860,39 @@ function loadIndex(f, v) {
     if (this.readyState == 4 && this.status == 200) {
       w = this.responseText.split("\n");
       var options = "";
-      var o_v = "";
-      var o_c = "";
       if (v == "v") {
         vowels_.innerHTML = "";
         for (var i=0; i<w.length; i++) {
-          var wrd = w[i].split(",");
-          options += "<option value='" + wrd[0] + "'/>";
+          //var wrd = w[i].split(",");
+          options += "<option value='" + w[i] + "'/>";
         }
+        _word.innerHTML = '';
+        consonants_.innerHTML = '';
         vowels_.innerHTML = options;
       } else if (v == "c") {
         consonants_.innerHTML = "";
         for (var i=0; i<w.length; i++) {
-          var wrd = w[i].split(",");
-          options += "<option value='" + wrd[0] + "'/>";
+          //var wrd = w[i].split(",");
+          options += "<option value='" + w[i] + "'/>";
         }
+        _word.innerHTML = '';
+        vowels_.innerHTML = '';
         consonants_.innerHTML = options;
       } else if (v == "w") {
-        word_.innerHTML = "";
-        //_vowels.innerHTML = "";
-        //_consonants.innerHTML = "";
+        _word.innerHTML = "";
         for (var i=0; i<w.length; i++) {
           var wrd = w[i].split(",");
-          var freq = wrd[4]/100000;
-          var o = Math.pow(parseFloat(freq), 1/4)/4;
-          options += '<option value="' + wrd[0] + '  ' + wrd[1] + '"></option>\n';
-          //o_v += '<option value="' + wrd[2] + '">' + wrd[0] + '</option>';
-          //o_c += '<option value="' + wrd[3] + '">' + wrd[0] + '</option>';
+          options += "<option value='" + wrd[1] + "'/>";
         }
-        word_.innerHTML = options;
-        //_vowels.innerHTML = o_v;
-        //_consonants.innerHTML = o_c;
+        vowels_.innerHTML = '';
+        consonants_.innerHTML = '';
+        _word.innerHTML = options;
       }
     }
   };
   xhttp.open("GET", f, true);
   xhttp.send();
 }
-loadIndex("index_freq.csv", "v");
-loadIndex("index_c_freq.csv", "c");
 
 
 function showLyrics() {
