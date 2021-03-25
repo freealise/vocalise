@@ -335,7 +335,7 @@ pre {
   <div id="credits">
     <p>Reverse phonetic dictionary, includes a lyrics editor and vowel sound synthesizer. Licensed under the GNU GPL-3.0, hosted on <a href="https://github.com/freealise/phonetic" title="Github" target="_blank"><u>GitHub</u></a> and <a href="https://script.google.com" title="Google Script" target="_blank"><u>Google Script</u></a>.</p>
     <p>Dictionary by <a href="http://www.speech.cs.cmu.edu/cgi-bin/cmudict" title="Carnegie Mellon University" target="_blank"><u>CMU</u></a>, sorted by frequency based on <a href="https://books.google.com/ngrams" title="Google Books Ngrams" target="_blank"><u>Google Books Ngrams</u></a> with <a href="https://phrasefinder.io/" title="PhraseFinder" target="_blank"><u>PhraseFinder</u></a> API, <a href="https://dictionaryapi.dev/" title="DictionaryAPI" target="_blank"><u>definitions</u></a> by <a href="https://www.lexico.com/" title="Oxford Dictionary" target="_blank"><u>Oxford</u></a>.</p>
-    <p>Thanks to <a href="https://www.gearslutz.com/board/showpost.php?p=11559456&amp;postcount=10" title="jerry123 from GearSlutz" target="_blank"><u>jerry123 from GearSlutz</u></a> for the idea of phonetic songwriting, <a href="https://englishwithkim.com/" title="English with Kim" target="_blank"><u>English with Kim</u></a> for clarifying that natural speech contains a tune, <a href="https://storygrid.com/" title="Storygrid" target="_blank"><u>Storygrid</u></a> and <a href="https://savethecat.com/" title="Save the Cat" target="_blank"><u>Save the Cat</u></a> for making it obvious that the soundtrack represents the value shift of a story.</p>
+    <p>Thanks to <a href="https://www.gearslutz.com/board/showpost.php?p=11559456&amp;postcount=10" title="jerry123 from GearSlutz" target="_blank"><u>jerry123 from GearSlutz</u></a> for the idea of phonetic songwriting, <a href="https://englishwithkim.com/" title="English with Kim" target="_blank"><u>English with Kim</u></a> for clarifying that natural speech contains a tune (that represents the value shift of a story).</p>
     <p>Separating vowels and consonants for slant rhyme and alliteration within a line was inspired by rap and Hebrew poetry.</p>
   </div>
   
@@ -348,13 +348,13 @@ pre {
     <div class="l"><input type="text" id="word" list="_word" placeholder="Word or phonemes" onfocus="ctl=this;"/><datalist id="_word"></datalist><button onclick="findWords(word.value, vowels.value, consonants.value);" id="search" title="Search"><i class='material-icons'>search</i></button></div>
     <div class="l"><div id="word_" onclick="if(event.target.title){addWord(event.target.innerText, event.target.title);}"><div>Results will be here</div></div>
     <button onclick="pos(word_.firstChild.innerText);" id="define" title="Define"><i class='material-icons'>query_stats</i></button><button onclick="splitWord();" id="split" title="Split"><i class='material-icons'>south_west</i><i class='material-icons'>south_east</i></button></div>
-    <div class="l"><input type="text" id="vowels" list="vowels_" placeholder="Vowels" onfocus="ctl=this;loadIndex('vowels.csv', 'v');"/><datalist id="_vowels"></datalist><datalist id="vowels_"></datalist><input type="text" id="consonants" list="consonants_" placeholder="Consonants" onfocus="ctl=this;loadIndex('consonants.csv', 'c');"/><datalist id="_consonants"></datalist><datalist id="consonants_"></datalist></div>
+    <div class="l"><input type="text" id="vowels" list="vowels_" placeholder="Vowels" onfocus="ctl=this;"/><datalist id="_vowels"></datalist><datalist id="vowels_"></datalist><input type="text" id="consonants" list="consonants_" placeholder="Consonants" onfocus="ctl=this;"/><datalist id="_consonants"></datalist><datalist id="consonants_"></datalist></div>
     
     <pre oncontextmenu="return false;" id="keys_">
 <span class="u"><a title="B">  </a><a title="P">  </a></span>         <span class="u"><a title="D">  </a><a title="T">  </a></span>         <span class="u"><a title="G">  </a><a title="K">  </a></span>
 <span class="u"><a title="V">  </a><a title="F">  </a></span> <span class="u"><a title="DH">  </a><a title="TH">  </a></span> <span class="u"><a title="Z">  </a><a title="S">  </a></span>  <span class="u"><a title="JH">  </a><a title="CH">  </a></span> <span class="u"><a title="ZH">  </a><a title="SH">  </a></span> <span class="u"><a title="NG">  </a><a title="HH">  </a></span>
 <span class="u"><a title="W">  </a><a title="M">  </a></span>  <span class="u"><a title="_">  </a></span>     <span class="u"><a title="L">  </a><a title="N">  </a></span>         <span class="u"><a title="R">  </a><a title="Y">  </a></span>
-         <a title="Wildcard" href="javascript:" onclick="addPhoneme('*', 'transparent');">* </a><a title="Left bracket to group phonemes into words and sentences according to pitch, can be nested for structure" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme('[', 'transparent');">[ </a>     <a title="Left bracket to group phonemes into words and sentences according to pitch, can be nested for structure" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme(']', 'transparent');">] </a> <a title="Space" href="javascript:" onclick="addPhoneme(' ', 'transparent');">␣ </a> <a id="br" title="Newline" href="javascript:" onclick="addPhoneme('\n', 'transparent');">↵ </a></pre>
+          <a title="Wildcard" href="javascript:" onclick="addPhoneme('-', 'transparent');">- </a>       <a title="Extra pitch level" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme('`', 'transparent');">` </a> <a title="Word divider" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme('|', 'transparent');">| </a></pre>
     <pre oncontextmenu="return false;" id="keys">
 <select title="IY"></select><select title="IH"></select><select title="EY"></select><select title="EH"></select><select title="AE"></select><select title="ER"></select><select title="AH"></select><select title="AA"></select><select title="AO"></select><select title="OW"></select><select title="UH"></select><select title="UW"></select>
 <a title="Any stress with any vowel" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme('___', 'transparent');">__</a><a title="No stress with any vowel" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme('__0', 'transparent');">_·</a><a title="Primary stress with any vowel" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme('__1', 'transparent');">_ˈ</a><a title="Secondary stress with any vowel" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme('__2', 'transparent');">_ˌ</a><select title="AY"></select><select title="OY"></select><select title="AW"></select></pre>
@@ -866,8 +866,8 @@ function loadIndex(f, v) {
           //var wrd = w[i].split(",");
           options += "<option value='" + w[i] + "'/>";
         }
-        _word.innerHTML = '';
-        consonants_.innerHTML = '';
+        //_word.innerHTML = '';
+        //consonants_.innerHTML = '';
         vowels_.innerHTML = options;
       } else if (v == "c") {
         consonants_.innerHTML = "";
@@ -875,8 +875,8 @@ function loadIndex(f, v) {
           //var wrd = w[i].split(",");
           options += "<option value='" + w[i] + "'/>";
         }
-        _word.innerHTML = '';
-        vowels_.innerHTML = '';
+        //_word.innerHTML = '';
+        //vowels_.innerHTML = '';
         consonants_.innerHTML = options;
       } else if (v == "w") {
         _word.innerHTML = "";
@@ -884,8 +884,8 @@ function loadIndex(f, v) {
           var wrd = w[i].split(",");
           options += "<option value='" + wrd[1] + "'/>";
         }
-        vowels_.innerHTML = '';
-        consonants_.innerHTML = '';
+        //vowels_.innerHTML = '';
+        //consonants_.innerHTML = '';
         _word.innerHTML = options;
       }
     }
@@ -893,6 +893,8 @@ function loadIndex(f, v) {
   xhttp.open("GET", f, true);
   xhttp.send();
 }
+loadIndex('vowels.csv', 'v');
+loadIndex('consonants.csv', 'c');
 
 
 function showLyrics() {
