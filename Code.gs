@@ -33,8 +33,8 @@ function pos(word) {
 function doGet(e) {
   var r = "<ul>";
   var word_ = new RegExp(e.parameter.w, "i");
-  var query = new RegExp(e.parameter.q.replace(/_/g, ".").replace(/\*/g, ".*"), "i");
-  var query_ = new RegExp(e.parameter.q_.replace(/_/g, ".{1,2}").replace(/\*/g, ".*"), "i");
+  var query = new RegExp(e.parameter.q.replace(/-/g, ".{0,}").replace(/_/g, "."), "i");
+  var query_ = new RegExp(e.parameter.q_.replace(/-/g, ".{0,}").replace(/_/g, ".{1,2}"), "i");
   
   for (var i = 0; i < d.length; i++) {
       /*var a = arr[i][1].split(" ");
