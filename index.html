@@ -335,7 +335,7 @@ pre {
   <div id="credits">
     <p>Reverse phonetic dictionary, includes a lyrics editor and vowel sound synthesizer. Licensed under the GNU GPL-3.0, hosted on <a href="https://github.com/freealise/phonetic" title="Github" target="_blank"><u>GitHub</u></a> and <a href="https://script.google.com" title="Google Script" target="_blank"><u>Google Script</u></a>.</p>
     <p>Dictionary by <a href="http://www.speech.cs.cmu.edu/cgi-bin/cmudict" title="Carnegie Mellon University" target="_blank"><u>CMU</u></a>, sorted by frequency based on <a href="https://books.google.com/ngrams" title="Google Books Ngrams" target="_blank"><u>Google Books Ngrams</u></a> with <a href="https://phrasefinder.io/" title="PhraseFinder" target="_blank"><u>PhraseFinder</u></a> API, <a href="https://dictionaryapi.dev/" title="DictionaryAPI" target="_blank"><u>definitions</u></a> by <a href="https://www.lexico.com/" title="Oxford Dictionary" target="_blank"><u>Oxford</u></a>.</p>
-    <p>Thanks to <a href="https://www.gearslutz.com/board/showpost.php?p=11559456&amp;postcount=10" title="jerry123 from GearSlutz" target="_blank"><u>jerry123 from GearSlutz</u></a> for the idea of phonetic songwriting, <a href="https://englishwithkim.com/" title="English with Kim" target="_blank"><u>English with Kim</u></a> for clarifying that natural speech contains a tune (that represents the value shift of a story).</p>
+    <p>Thanks to <a href="https://www.gearspace.com/board/showpost.php?p=11559456&amp;postcount=10" title="jerry123 from GearSpace" target="_blank"><u>jerry123 from GearSpace</u></a> for the idea of phonetic songwriting, <a href="https://englishwithkim.com/" title="English with Kim" target="_blank"><u>English with Kim</u></a> for clarifying that natural speech contains a tune (that represents the value shift of a story).</p>
     <p>Separating vowels and consonants for slant rhyme and alliteration within a line was inspired by rap and Hebrew poetry.</p>
   </div>
   
@@ -351,9 +351,9 @@ pre {
     <div class="l"><input type="text" id="vowels" list="vowels_" placeholder="Vowels" onfocus="ctl=this;"/><datalist id="_vowels"></datalist><datalist id="vowels_"></datalist><input type="text" id="consonants" list="consonants_" placeholder="Consonants" onfocus="ctl=this;"/><datalist id="_consonants"></datalist><datalist id="consonants_"></datalist></div>
     
     <pre oncontextmenu="return false;" id="keys_">
-<span class="u"><a title="B">  </a><a title="P">  </a></span>         <span class="u"><a title="D">  </a><a title="T">  </a></span>         <span class="u"><a title="G">  </a><a title="K">  </a></span>
-<span class="u"><a title="V">  </a><a title="F">  </a></span> <span class="u"><a title="DH">  </a><a title="TH">  </a></span> <span class="u"><a title="Z">  </a><a title="S">  </a></span>  <span class="u"><a title="JH">  </a><a title="CH">  </a></span> <span class="u"><a title="ZH">  </a><a title="SH">  </a></span> <span class="u"><a title="NG">  </a><a title="HH">  </a></span>
-<span class="u"><a title="W">  </a><a title="M">  </a></span>  <span class="u"><a title="_">  </a></span>     <span class="u"><a title="L">  </a><a title="N">  </a></span>         <span class="u"><a title="R">  </a><a title="Y">  </a></span>
+<span class="u"><a title="B">  </a><a title="P">  </a></span>         <span class="u"><a title="D">  </a><a title="T">  </a></span>  <span class="u"><a title="JH">  </a><a title="CH">  </a></span>   <span class="u"><a title="G">  </a><a title="K">  </a></span>
+<span class="u"><a title="V">  </a><a title="F">  </a></span>  <span class="u"><a title="DH">  </a><a title="TH">  </a></span>   <span class="u"><a title="Z">  </a><a title="S">  </a></span>  <span class="u"><a title="ZH">  </a><a title="SH">  </a></span>   <span class="u"><a title="R">  </a><a title="HH">  </a></span>
+<span class="u"><a title="W">  </a><a title="M">  </a></span>  <span class="u"><a title="_">  </a></span>     <span class="u"><a title="L">  </a><a title="N">  </a></span>         <span class="u"><a title="Y">  </a><a title="NG">  </a></span>
           <a title="Wildcard" href="javascript:" onclick="addPhoneme('-', 'transparent');">- </a>       <a title="Extra pitch level" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme('`', 'transparent');">` </a> <a title="Word divider" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme('|', 'transparent');">| </a></pre>
     <pre oncontextmenu="return false;" id="keys">
 <select title="IY"></select><select title="IH"></select><select title="EY"></select><select title="EH"></select><select title="AE"></select><select title="ER"></select><select title="AH"></select><select title="AA"></select><select title="AO"></select><select title="OW"></select><select title="UH"></select><select title="UW"></select>
@@ -397,6 +397,8 @@ var keys_ = [
   "p ,P,0.2477",
   "d ,D,0.5656",
   "t ,T,0.9327",
+  "dʒ,JH,0.0791",
+  "tʃ,CH,0.0717",
   "ɡ ,G,0.0920",
   "k ,K,0.3811",
   "v ,V,0.2394",
@@ -405,19 +407,17 @@ var keys_ = [
   "θ ,TH,0.0758",
   "z ,Z,0.4163",
   "s ,S,0.5710",
-  "dʒ,JH,0.0791",
-  "tʃ,CH,0.0717",
   "ʒ ,ZH,0.0086",
   "ʃ ,SH,0.1072",
-  "ŋ ,NG,0.1000",
+  "ɹ ,R,0.5663",
   "h ,HH,0.1739",
   "w ,W,0.2890",
   "m ,M,0.3173",
   "  ,_,1",
   "l ,L,0.4471",
   "n ,N,1.0000",
-  "ɹ ,R,0.5663",
   "j ,Y,0.0911",
+  "ŋ ,NG,0.1000",
 ];
 
 var kbrd = {
@@ -582,7 +582,7 @@ In a non-tonal language, segments may be differentiated as follows:
 
 
 noun, adjective, verb, adverb, pronoun,
-determiner, preposition, conjunction, and interjection
+determiner, preposition, conjunction, interjection
 
 */
 
