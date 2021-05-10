@@ -17,10 +17,18 @@
   font-family: "DejaVuBold";
   src: url("fonts/dejavu/DejaVuSansMono-Bold.ttf") format("truetype");
 }
+@font-face {
+  font-family: "DejaVuSans";
+  src: url("fonts/dejavu/DejaVuSans.ttf") format("truetype");
+}
+@font-face {
+  font-family: "DejaVuSansBold";
+  src: url("fonts/dejavu/DejaVuSans-Bold.ttf") format("truetype");
+}
 * {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  font-family: 'DejaVu', monospace;
+  font-family: 'DejaVu', 'DejaVuSans', monospace;
 }
 body, html {
   margin:0px;
@@ -214,7 +222,7 @@ pre {
   display:block;
   white-space: pre;
   line-height:18px;
-  font-family:'DejaVuBold';
+  font-weight:bold;
 }
 #highlight_, #rs {
   right:0px;
