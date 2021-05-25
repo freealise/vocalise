@@ -31,10 +31,10 @@
   font-family: 'DejaVu', 'DejaVuSans', monospace;
 }
 body, html {
-  margin:0px;
-  padding: 0;
+  margin:0;
+  padding:0;
   overflow:hidden;
-  font-size: 16px;
+  font-size:16px;
 }
 textarea, input, datalist, button, pre {
   font-size: 16px;
@@ -51,6 +51,76 @@ ul {
 }
 li {
   cursor: pointer;
+}
+#spectrogram {
+  padding:0;
+}
+#b {
+  line-height:1.1em;
+  letter-spacing:-0.15em;
+  width:99%;
+  height:224px;
+  font-weight:bold;
+  white-space:nowrap;
+  overflow:scroll;
+  background-color:white;
+  color:black;
+  margin:0;
+  padding:2px;
+  text-align:left;
+}
+#buttons {
+  height:32px;
+  margin-left:3px;
+  text-align:left;
+}
+#buttons button {
+  width:32px;
+  height:32px;
+  font-weight:bold;
+  font-size:16px;
+  margin:0px -3px;
+}
+#buttons button i {
+  margin-top:3px;
+}
+#checkboxes {
+  width:72px;
+  position:fixed;
+  top:25vh;
+  right:0px;
+  left:auto;
+  padding-right:4px;
+  background-color:white;
+}
+#p, #ch {
+  position: absolute;
+  right: -0.067em;
+  top: 0.025em;
+  font-size: 128px;
+  font-weight: bold;
+  line-height: 1em;
+  z-index:-1;
+}
+#p {
+  color:lightgray;
+}
+#left {
+  width:32px;
+  float:left;
+  padding:2px;
+}
+#right {
+  width:32px;
+  float:right;
+  padding:2px;
+}
+.cb {
+  width:32px;
+  height:32px;
+  margin:0;
+  padding:0;
+  opacity:0;
 }
 #keys {
   width: 288px;
@@ -254,7 +324,7 @@ pre {
 #links i {
   font-size:20px;
 }
-#help, #credits, #entry, #mobile {
+#help, #credits, #entry, #mobile, #spectrogram {
   overflow:scroll;
   font-size: 14px;
   height:264px;
@@ -331,6 +401,38 @@ pre {
   <textarea placeholder="Phonetic pattern" id="rs" onkeydown="if(event.key.length==1 && !event.ctrlKey && !event.metaKey){event.preventDefault();}" onkeyup="if(event.key.length==1 && kbrd[event.key] && !event.ctrlKey && !event.metaKey){addPhoneme(kbrd[event.key], 0);}colorPhonemes();" onmouseup="colorPhonemes();" ontouchup="colorPhonemes();" onfocus="colorPhonemes();ctl=this;" onscroll="highlight_.scrollTop = this.scrollTop;highlight_.scrollLeft = this.scrollLeft;" style="visibility:visible;"></textarea>
 </div>
 
+  <div id="spectrogram">
+    <textarea id="b" onkeydown="if(event.key!='ArrowRight' && event.key!='ArrowLeft' && event.key!='ArrowUp' && event.key!='ArrowDown' && event.key!='Enter' && event.key!='Backspace' && event.key!='Delete' && event.ctrlKey!==true || event.key==' '){event.preventDefault();keysPressed[kbrd[event.key]]=true;addBinary();}" onkeyup="if(event.key!='ArrowRight' && event.key!='ArrowLeft' && event.key!='ArrowUp' && event.key!='ArrowDown' && event.key!='Enter' && event.key!='Backspace' && event.key!='Delete' && event.ctrlKey!==true || event.key==' '){keysPressed[kbrd[event.key]]=false;}else if(event.key=='ArrowRight'||event.key=='ArrowLeft'){showColumn();playColumn();}else if(event.key=='ArrowUp'||event.key=='ArrowDown'){showColumn();}"></textarea>
+    
+    <div id="checkboxes" oncontextmenu="return false;">
+      <div id="left">
+        <input type="checkbox" class="cb" onchange="addBinary();" ontouchend="this.click();"/>
+        <input type="checkbox" class="cb" onchange="addBinary();" ontouchend="this.click();"/>
+        <input type="checkbox" class="cb" onchange="addBinary();" ontouchend="this.click();"/>
+        <input type="checkbox" class="cb" onchange="addBinary();" ontouchend="this.click();"/>
+      </div>
+      <div id="right">
+        <input type="checkbox" class="cb" onchange="addBinary();" ontouchend="this.click();"/>
+        <input type="checkbox" class="cb" onchange="addBinary();" ontouchend="this.click();"/>
+        <input type="checkbox" class="cb" onchange="addBinary();" ontouchend="this.click();"/>
+        <input type="checkbox" class="cb" onchange="addBinary();" ontouchend="this.click();"/>
+      </div>
+      <span id="p">⣿</span>
+      <span id="ch">⠀</span>
+    </div>
+    
+    <div id="buttons">
+      <button type="button" id="play_all" onclick="if(playNow===true){pause();}else{playAll();}" title="Play / Pause"><i class='material-icons'>play_arrow</i></button>
+      <button type="button" id="zoom_in" onclick="zoom(1);" title="Zoom in"><i class='material-icons'>zoom_in</i></button>
+      <button type="button" id="zoom_out" onclick="zoom(-1);" title="Zoom out"><i class='material-icons'>zoom_out</i></button>
+      <button type="button" id="save" onclick="save();" title="Save as text"><i class='material-icons'>save_alt</i></button>
+      <!--<button type="button" id="log_scale" onclick="logScale();" title="Export to image"><i class='material-icons'>gradient</i></button>-->
+      <button type="button" id="draw" onclick="window.open('https://loveeevee.github.io/Dots-Converter/');" title="Import a drawing"><i class='material-icons'>draw</i></button>
+      <button type="button" id="space" onclick="addBinary();" title="Add space"><i class='material-icons'>space_bar</i></button>
+      <button type="button" id="swap" onclick="swap();" title="Move pattern to left or right"><i class='material-icons'>swap_horiz</i></button>
+    </div>
+  </div>
+
   <div id="help">
     <p>Use the pitch symbols and groups of vowels to fit the <i>form</i>, <i>rhythm</i> and <i>melody</i>.</p>
     <p>Search <i>keywords</i> or phonemes and add the results to lyrics and phonetic pattern.</p>
@@ -343,7 +445,7 @@ pre {
   <div id="credits">
     <p>Reverse phonetic dictionary, includes a lyrics editor and vowel sound synthesizer. Licensed under the GNU GPL-3.0, hosted on <a href="https://github.com/freealise/phonetic" title="Github" target="_blank"><u>GitHub</u></a> and <a href="https://script.google.com" title="Google Script" target="_blank"><u>Google Script</u></a>.</p>
     <p>Dictionary by <a href="http://www.speech.cs.cmu.edu/cgi-bin/cmudict" title="Carnegie Mellon University" target="_blank"><u>CMU</u></a>, sorted by frequency based on <a href="https://books.google.com/ngrams" title="Google Books Ngrams" target="_blank"><u>Google Books Ngrams</u></a> with <a href="https://phrasefinder.io/" title="PhraseFinder" target="_blank"><u>PhraseFinder</u></a> API, <a href="https://dictionaryapi.dev/" title="DictionaryAPI" target="_blank"><u>definitions</u></a> by <a href="https://www.lexico.com/" title="Oxford Dictionary" target="_blank"><u>Oxford</u></a>.</p>
-    <p>Thanks to <a href="https://www.gearspace.com/board/showpost.php?p=11559456&amp;postcount=10" title="jerry123 from GearSpace" target="_blank"><u>jerry123 from GearSpace</u></a> for the idea of phonetic songwriting, <a href="https://englishwithkim.com/" title="English with Kim" target="_blank"><u>English with Kim</u></a> for clarifying that natural speech contains a tune (that represents the value shift of a story).</p>
+    <p>Thanks to <a href="https://www.gearspace.com/board/showpost.php?p=11559456&amp;postcount=10" title="jerry123 from GearSpace" target="_blank"><u>jerry123 from GearSpace</u></a> for the idea of phonetic songwriting, <a href="https://englishwithkim.com/" title="English with Kim" target="_blank"><u>English with Kim</u></a> for clarifying that words and syllables are stressed with not only volume but also pitch variation.</p>
     <p>Separating vowels and consonants for slant rhyme and alliteration within a line was inspired by rap and Hebrew poetry.</p>
   </div>
   
@@ -372,6 +474,7 @@ pre {
   <div id="links">
     <a id="show_links" href="javascript:showLinks();" alt="Show links" title="Show links"><i class='material-icons'>chevron_right</i></a><br/>
     <a id="undo" href="javascript:undo();" alt="Undo" title="Undo"><i class='material-icons'>undo</i> Undo</a><br/>
+    <a id="pattern" href="javascript:showSpectrogram();" alt="Spectrogram" title="Spectrogram"><i class='material-icons'>app_registration</i> Spectrogram</a><br/>
     <a id="lyrics" href="javascript:showLyrics();" alt="Mobile view" title="Mobile view"><i class='material-icons'>preview</i> Mobile view</a><br/>
     <a id="entry_" href="javascript:showEntry();" alt="Definition" title="Definition"><i class='material-icons'>wysiwyg</i> Definition</a><br/>
     <a id="help_" href="javascript:showHelp();" alt="Help" title="Help"><i class='material-icons'>help_outline</i> Help</a><br/>
@@ -487,6 +590,296 @@ var tone = [
   '꜍', '꜎', '꜏', '꜐', '꜑'
 ];
 
+var dots = (
+	"⠀⢀⠠⢠⠐⢐⠰⢰⠈⢈⠨⢨⠘⢘⠸⢸" +
+	"⡀⣀⡠⣠⡐⣐⡰⣰⡈⣈⡨⣨⡘⣘⡸⣸" +
+	"⠄⢄⠤⢤⠔⢔⠴⢴⠌⢌⠬⢬⠜⢜⠼⢼" +
+	"⡄⣄⡤⣤⡔⣔⡴⣴⡌⣌⡬⣬⡜⣜⡼⣼" +
+	"⠂⢂⠢⢢⠒⢒⠲⢲⠊⢊⠪⢪⠚⢚⠺⢺" +
+	"⡂⣂⡢⣢⡒⣒⡲⣲⡊⣊⡪⣪⡚⣚⡺⣺" +
+	"⠆⢆⠦⢦⠖⢖⠶⢶⠎⢎⠮⢮⠞⢞⠾⢾" +
+	"⡆⣆⡦⣦⡖⣖⡶⣶⡎⣎⡮⣮⡞⣞⡾⣾" +
+	"⠁⢁⠡⢡⠑⢑⠱⢱⠉⢉⠩⢩⠙⢙⠹⢹" +
+	"⡁⣁⡡⣡⡑⣑⡱⣱⡉⣉⡩⣩⡙⣙⡹⣹" +
+	"⠅⢅⠥⢥⠕⢕⠵⢵⠍⢍⠭⢭⠝⢝⠽⢽" +
+	"⡅⣅⡥⣥⡕⣕⡵⣵⡍⣍⡭⣭⡝⣝⡽⣽" +
+	"⠃⢃⠣⢣⠓⢓⠳⢳⠋⢋⠫⢫⠛⢛⠻⢻" +
+	"⡃⣃⡣⣣⡓⣓⡳⣳⡋⣋⡫⣫⡛⣛⡻⣻" +
+	"⠇⢇⠧⢧⠗⢗⠷⢷⠏⢏⠯⢯⠟⢟⠿⢿" +
+	"⡇⣇⡧⣧⡗⣗⡷⣷⡏⣏⡯⣯⡟⣟⡿⣿"
+).split("");
+
+var keysPressed = new Array(8);
+var kbrd = {
+  '1': 0,
+  '2': 4,
+  'q': 1,
+  'w': 5,
+  'a': 2,
+  's': 6,
+  'z': 3,
+  'x': 7,
+}
+for (var i=0; i<keysPressed.length; i++) {
+  keysPressed[i] = false;
+}
+
+var h_ = 2048;
+var real = new Float32Array(h_);
+var imag = new Float32Array(h_);
+var fund = 128;
+var freq = 4.0; //max.freq is 4*2048=8192
+var offset = fund / freq;
+var formant_w = Math.round(512 / freq);
+var vol = 1.0;
+var ac = null;
+var osc, gain, osc_, gain_;
+var i_, _i, t;
+var a_ = [];
+var playNow = false;
+var h = 16;
+
+function init() {
+  ac = new AudioContext({latencyHint:"interactive",sampleRate: 48000});
+  osc = ac.createOscillator();
+  osc.frequency.setValueAtTime(freq, ac.currentTime); // value in hertz
+  gain = ac.createGain();
+  gain.gain.setValueAtTime(0, ac.currentTime);
+  osc.connect(gain);
+  gain.connect(ac.destination);
+  osc.start();
+  osc_ = ac.createOscillator();
+  osc_.frequency.setValueAtTime(freq, ac.currentTime); // value in hertz
+  gain_ = ac.createGain();
+  gain_.gain.setValueAtTime(0, ac.currentTime);
+  osc_.connect(gain_);
+  gain_.connect(ac.destination);
+  osc_.start();
+  i_ = 0;
+  _i = 0;
+}
+
+function play() {
+  var ph = a_[i_].split("").reverse();
+  for (var i=0; i<offset; i++) {
+    real[i] = 0;
+    imag[i] = 0;
+  }
+  for (var j=0; j<ph.length; j++) {
+    if (ph[0]=="1" || ph.indexOf("1")==ph.lastIndexOf("1")) {
+      if (ph[j]=="1") {
+        for (var i=j*formant_w+offset; i<(j+1)*formant_w+offset; i++) {
+          if (parseInt(i/offset) == i/offset) {
+            real[i] = vol;
+          	imag[i] = vol;
+          } else {
+            real[i] = 0;
+        	  imag[i] = 0;
+          }
+        }
+      } else {
+        for (var i=j*formant_w+offset; i<(j+1)*formant_w+offset; i++) {
+          real[i] = 0;
+        	imag[i] = 0;
+        }
+      }
+    } else {
+      if (ph[j]=="1") {
+        for (var i=j*formant_w+offset; i<(j+1)*formant_w+offset; i++) {
+        	real[i] = Math.random()*vol;
+        	imag[i] = Math.random()*vol;
+        }
+      } else {
+        for (var i=j*formant_w+offset; i<(j+1)*formant_w+offset; i++) {
+          real[i] = 0;
+        	imag[i] = 0;
+        }
+      }
+    }
+  }
+  var wave = ac.createPeriodicWave(real, imag, {disableNormalization: true});
+  if (parseInt(i_/2) == i_/2) {
+    gain.gain.value = 0.0;
+    osc.setPeriodicWave(wave);
+    gain.gain.linearRampToValueAtTime(1.0, ac.currentTime+1.0 / freq);
+    gain_.gain.linearRampToValueAtTime(0.0, ac.currentTime+1.0 / freq);
+  } else {
+    gain_.gain.value = 0.0;
+    osc_.setPeriodicWave(wave);
+    if (a_[i_-1].indexOf("1")>-1) {
+      gain_.gain.linearRampToValueAtTime(1.0, ac.currentTime+1.0 / freq);
+      gain.gain.linearRampToValueAtTime(0.0, ac.currentTime+1.0 / freq);
+    } else {
+      gain_.gain.linearRampToValueAtTime(1.0, ac.currentTime);
+      gain_.gain.linearRampToValueAtTime(0.0, ac.currentTime+0.5 / freq);
+      gain.gain.linearRampToValueAtTime(0.0, ac.currentTime);
+    }
+  }
+  i_++;
+  if (i_ < _i) {
+    if (parseInt(i_/2) == i_/2) {
+      b.focus();
+      b.setSelectionRange(i_/2, i_/2);
+    }
+    t = setTimeout(play, 1000 / freq);
+  } else {
+    pause();
+  }
+}
+
+function toBinary() {
+  var a = b.value.split("\n");
+  a_ = [];
+  for (var i=0; i<a.length; i++) {
+    a[i] = a[i].split("");
+    for (var j=0; j<a[i].length; j++) {
+      if (!a_[j*2]) {
+        a_[j*2] = "";
+        a_[j*2+1] = "";
+      }
+      var b_ = dots.indexOf(a[i][j]).toString(2);
+      while (b_.length<8) {
+        b_ = "0" + b_;
+      }
+      a_[j*2] += b_.slice(0,4);
+      a_[j*2+1] += b_.slice(-4);
+    }
+  }
+  for (var i=0; i<a_.length; i++) {
+    while (a_[i].length<16) {
+      a_[i] = "0" + a_[i];
+    }
+  }
+  console.log(a_.join("\n"));
+}
+
+function showColumn() {
+  var b_ = parseInt(b.selectionStart);
+  var d_ = parseInt(b.selectionEnd);
+  var ch_ = b.value.charAt(b_);
+  ch.innerHTML = ch_;
+  var c = dots.indexOf(ch_);
+  if (c == -1) {
+    c = 0;
+  }
+  var p = c.toString(2);
+  while (p.length < cb.length) {
+    p = "0" + p;
+  }
+  for (var i=0; i<p.length; i++) {
+    if (p.charAt(i) == "1") {
+      cb[i].checked = true;
+    } else {
+      cb[i].checked = false;
+    }
+  }
+}
+
+function playColumn() {
+  i_ = findC(b)*2;
+  _i = i_+2;
+  toBinary();
+  if (a_[i_]) {
+    play();
+  }
+}
+
+function playAll() {
+  i_ = findC(b)*2;
+  _i = a_.length;
+  toBinary();
+  if (a_[0]) {
+    play();
+  }
+  playNow = true;
+  document.getElementById("play_all").firstChild.innerText='pause';
+}
+
+function pause() {
+  clearTimeout(t);
+  gain_.gain.linearRampToValueAtTime(0.0, ac.currentTime+1.0 / freq);
+  gain.gain.linearRampToValueAtTime(0.0, ac.currentTime+1.0 / freq);
+  playNow = false;
+  document.getElementById("play_all").firstChild.innerText='play_arrow';
+}
+
+function findC(v) {
+    var b_ = parseInt(v.selectionStart);
+    var d_ = parseInt(v.selectionEnd);
+    var l = v.value.substr(0, b_).split("\n");
+    var c = l[l.length-1].length;
+    v.focus();
+    v.setSelectionRange(b_, d_);
+    return c;
+}
+
+function addBinary() {
+  var b_ = parseInt(b.selectionStart);
+  var d_ = parseInt(b.selectionEnd);
+  var p = "";
+  for (var i=0; i<keysPressed.length; i++) {
+    if (keysPressed[i]===true) {
+      p += "1";
+    } else {
+      p += "0";
+    }
+  }
+  if (p=="00000000") {
+    p = "";
+    for (var i=0; i<cb.length; i++) {
+      if (cb[i].checked === true) {
+        p += "1";
+      } else {
+        p += "0";
+      }
+    }
+  } else {
+    for (var i=0; i<cb.length; i++) {
+      if (p.charAt(i)=="1") {
+        cb[i].checked = true;
+      } else {
+        cb[i].checked = false;
+      }
+    }
+  }
+  var i = parseInt(p, 2);
+  b.value = b.value.substr(0, b_) + dots[i] + b.value.substr(d_+1);
+  b.focus();
+  b.setSelectionRange(b_, b_);
+  var ch_ = b.value.charAt(b_);
+  ch.innerHTML = ch_;
+}
+
+function zoom(v) {
+  var z = parseInt(b.style.fontSize.slice(0,-2)) + v;
+  b.style.fontSize = z+"px";
+}
+
+function swap() {
+  if (checkboxes.style.left=="0px") {
+    checkboxes.style.right="0px";
+    checkboxes.style.left="auto";
+    b.style.textAlign="left";
+    buttons.style.textAlign="left";
+  } else {
+    checkboxes.style.right="auto";
+    checkboxes.style.left="0px";
+    b.style.textAlign="right";
+    buttons.style.textAlign="right";
+  }
+}
+
+function save() {
+    var filename = "phonetic_pattern.txt";
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(b.value));
+    element.setAttribute('download', filename);
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+}
+
 var audioCtx, oscillator, biquadFilter, biquadFilter_, biquadFilter__, gainNode = null;
 
 function setup() {
@@ -523,7 +916,7 @@ function setup() {
   oscillator.start();
 }
 
-function play(f0, f1_, f2_, f3_) {
+function play_(f0, f1_, f2_, f3_) {
   if (!audioCtx) {
     setup();
   }
@@ -595,9 +988,7 @@ determiner, preposition, conjunction, interjection
 */
 
 var url = "https://script.google.com/macros/s/AKfycbz5br4wnfSGtucWKwGQq1Tb07eshJez6uVaFatn4xJAc_rcrcA/exec"; //"http://192.168.0.61:8080/";
-var freq = "";
 var words_ = [];
-var freq_ = [];
 var w = [];
 var f1 = [];
 var f2 = [];
@@ -625,6 +1016,14 @@ var entry = document.getElementById("entry");
 var ngram = document.getElementById("ngram_chart");
 var def = document.getElementById("def");
 var mobile = document.getElementById("mobile");
+var spectrogram = document.getElementById("spectrogram");
+var b = document.getElementById("b");
+b.style.fontSize = "16px";
+var d = document.getElementById("d");
+var buttons = document.getElementById("buttons");
+var checkboxes = document.getElementById("checkboxes");
+var cb = document.getElementsByClassName("cb");
+var ch = document.getElementById("ch");
 var res_old = "";
 var rs_old = "";
 var regexp = [];
@@ -636,7 +1035,7 @@ for (var i=0; i<keys.length; i++) {
   var lnk = v[i];
   lnk.id = i;
   lnk.title = ks[1];
-  lnk.onfocus = function(e){this.selectedIndex=-1;play(parseFloat(f2[this.id])/4, f1[this.id], f2[this.id], f3[this.id]);};
+  lnk.onfocus = function(e){this.selectedIndex=-1;play_(parseFloat(f2[this.id])/4, f1[this.id], f2[this.id], f3[this.id]);};
   lnk.onchange = function(e){/*addVowel(e.target.value, e.target.style.backgroundColor);*/if(ctl!=consonants){addPhoneme(e.target.value, e.target.style.backgroundColor);}this.blur();stop();};
   var bg = 100 - Math.pow(parseFloat(ks[3]), 1/3)*50;
   lnk.style.backgroundColor = "hsl(" + ks[2] + ", 100%, " + bg + "%)";
@@ -976,6 +1375,15 @@ function showList() {
   } else {
     word_.style.position='relative';
     word_.style.height='18px';
+  }
+}
+
+function showSpectrogram() {
+  if (spectrogram.style.visibility!='visible') {
+    if(ac==null){init();}
+    spectrogram.style.visibility='visible';
+  } else {
+    spectrogram.style.visibility='hidden';
   }
 }
 
