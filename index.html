@@ -486,22 +486,22 @@ pre {
 
 <script>
 var keys = [
-  " i;IY;330;0.1664;0.3341;0.1498;0.0153;293.6648;2489.016;3135.963",
-  " ɪ;IH;300;0.3084;0.5288;0.3583;0.0380;349.2282;2217.461;3135.963",
-  "eɪ;EY;270;0.0699;0.0026;0.1882;0.0188;440;1975.533;2959.955",
-  " ɛ;EH;240;0.1077;0.0145;0.2819;0.0266;622.2540;1760.000;2959.955",
-  " æ;AE;210;0.1024;0.0084;0.2871;0.0118;698.4565;1567.982;2793.826",
-  " ɝ;ER;180;0.1080;0.2535;0.0684;0.0021;783.9909;1396.913;2793.826",
-  " ʌ;AH;150;0.4567;1.0000;0.3641;0.0060;783.9909;1244.508;2637.02",
-  " ɑ;AA;120;0.0612;0.0046;0.1674;0.0115;698.4565;1108.731;2637.02",
-  " ɔ;AO;90;0.0557;0.0048;0.1554;0.0070;622.2540;987.7666;2489.016",
-  "oʊ;OW;60;0.0371;0.0182;0.0857;0.0075;440;880;2489.016",
-  " ʊ;UH;30;0.0112;0.0008;0.0310;0.0018;349.2282;783.9909;2349.318",
-  " u;UW;0;0.0605;0.0202;0.1523;0.0089;293.6648;698.4565;2349.318",
-  "aɪ;AY;210;0.0483;0.0066;0.1246;0.0138;0;0",
-  "ɔɪ;OY;180;0.0034;0.0001;0.0098;0.0004;0;0",
-  "aʊ;AW;90;0.0156;0.0006;0.0442;0.0021;0;0",
-  //"__;__;0;0.0000;0.0000;0.0000;0.0000;0;0",
+  " i;IY;330;0.1664;0.3341;0.1498;0.0153;11",
+  " ɪ;IH;300;0.3084;0.5288;0.3583;0.0380;10",
+  "eɪ;EY;270;0.0699;0.0026;0.1882;0.0188;9",
+  " ɛ;EH;240;0.1077;0.0145;0.2819;0.0266;8",
+  " æ;AE;210;0.1024;0.0084;0.2871;0.0118;7",
+  " ɝ;ER;180;0.1080;0.2535;0.0684;0.0021;6",
+  " ʌ;AH;150;0.4567;1.0000;0.3641;0.0060;5",
+  " ɑ;AA;120;0.0612;0.0046;0.1674;0.0115;4",
+  " ɔ;AO;90;0.0557;0.0048;0.1554;0.0070;3",
+  "oʊ;OW;60;0.0371;0.0182;0.0857;0.0075;2",
+  " ʊ;UH;30;0.0112;0.0008;0.0310;0.0018;1",
+  " u;UW;0;0.0605;0.0202;0.1523;0.0089;0",
+  "aɪ;AY;210;0.0483;0.0066;0.1246;0.0138;0",
+  "ɔɪ;OY;180;0.0034;0.0001;0.0098;0.0004;0",
+  "aʊ;AW;90;0.0156;0.0006;0.0442;0.0021;0",
+  //"__;__;0;0.0000;0.0000;0.0000;0.0000;0",
 ];
 
 var keys_ = [
@@ -610,6 +610,12 @@ var dots = (
 	"⡇⣇⡧⣧⡗⣗⡷⣷⡏⣏⡯⣯⡟⣟⡿⣿"
 ).split("");
 
+var phonemes =
+  "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡇⡇⡇⡇⡇⡇⡇⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⢸⠀⠀⠀⠀⠀⠀⠀" + "\n" +
+  "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠃⠃⡇⡇⡇⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⢸⠀⠀⠀⠀⠀⠀⠀" + "\n" +
+  "⠀⠀⠀⠀⠀⠀⠀⣀⣀⣤⠤⠶⠀⠀⠀⠂⠂⠃⠃⡇⡇⠀⠀⠆⠀⠀⠀⡂⡂⠂⠂⠀⠘⠘⠀⠀⠀⢀⢀⠐⠐" + "\n" +
+  "⣀⣤⠤⠶⠒⠛⠉⠉⠀⠀⠀⠀⠀⠀⡀⠃⡃⠀⡀⠇⡇⠀⡄⡀⡆⡁⠀⡄⡂⡁⠅⠀⠀⢀⠀⢰⠰⢐⠐⢈⠈";
+
 var keysPressed = new Array(8);
 var kbrd = {
   '1': 0,
@@ -662,12 +668,13 @@ function init() {
 
 function play() {
   var ph = a_[i_].split("").reverse();
+  var n = a_[i_].replace(/0/g, "").length;
   for (var i=0; i<offset; i++) {
     real[i] = 0;
     imag[i] = 0;
   }
   for (var j=0; j<ph.length; j++) {
-    if (ph[0]=="1" || ph.indexOf("1")==ph.lastIndexOf("1")) {
+    if (ph[0]=="1" || n<=2) {
       if (ph[j]=="1") {
         for (var i=j*formant_w+offset; i<(j+1)*formant_w+offset; i++) {
           if (parseInt(i/offset) == i/offset) {
@@ -728,8 +735,8 @@ function play() {
   }
 }
 
-function toBinary() {
-  var a = b.value.split("\n");
+function toBinary(v) {
+  var a = v.split("\n");
   a_ = [];
   for (var i=0; i<a.length; i++) {
     a[i] = a[i].split("");
@@ -776,10 +783,20 @@ function showColumn() {
   }
 }
 
+function playPhoneme(p) {
+  i_ = p*2;
+  _i = i_+2;
+  toBinary(phonemes);
+  if (a_[i_]) {
+    if(ac==null){init();}
+    play();
+  }
+}
+
 function playColumn() {
   i_ = findC(b)*2;
   _i = i_+2;
-  toBinary();
+  toBinary(b.value);
   if (a_[i_]) {
     play();
   }
@@ -788,7 +805,7 @@ function playColumn() {
 function playAll() {
   i_ = findC(b)*2;
   _i = a_.length;
-  toBinary();
+  toBinary(b.value);
   if (a_[0]) {
     play();
   }
@@ -881,57 +898,6 @@ function save() {
     document.body.removeChild(element);
 }
 
-var audioCtx, oscillator, biquadFilter, biquadFilter_, biquadFilter__, gainNode = null;
-
-function setup() {
-  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  oscillator = audioCtx.createOscillator();
-  biquadFilter = audioCtx.createBiquadFilter();
-  biquadFilter_ = audioCtx.createBiquadFilter();
-  biquadFilter__ = audioCtx.createBiquadFilter();
-  gainNode = audioCtx.createGain();
-  
-  oscillator.type = 'triangle';
-  oscillator.frequency.setValueAtTime(440, audioCtx.currentTime); // value in hertz
-  biquadFilter.type = "peaking";
-  biquadFilter_.type = "peaking";
-  biquadFilter__.type = "peaking";
-  biquadFilter.Q.value = 500;
-  biquadFilter_.Q.value = 500;
-  biquadFilter__.Q.value = 500;
-  biquadFilter.frequency.setValueAtTime(8000, audioCtx.currentTime);
-  biquadFilter.gain.setValueAtTime(50, audioCtx.currentTime);
-  biquadFilter_.frequency.setValueAtTime(8000, audioCtx.currentTime);
-  biquadFilter_.gain.setValueAtTime(100, audioCtx.currentTime);
-  biquadFilter__.frequency.setValueAtTime(8000, audioCtx.currentTime);
-  biquadFilter__.gain.setValueAtTime(50, audioCtx.currentTime);
-  gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
-  
-  oscillator.connect(biquadFilter);
-  oscillator.connect(biquadFilter_);
-  oscillator.connect(biquadFilter__);
-  biquadFilter.connect(gainNode);
-  biquadFilter_.connect(gainNode);
-  biquadFilter__.connect(gainNode);
-  gainNode.connect(audioCtx.destination);
-  oscillator.start();
-}
-
-function play_(f0, f1_, f2_, f3_) {
-  if (!audioCtx) {
-    setup();
-  }
-  oscillator.frequency.setValueAtTime(f0, audioCtx.currentTime);
-  biquadFilter.frequency.setValueAtTime(parseFloat(f1_), audioCtx.currentTime);
-  biquadFilter_.frequency.setValueAtTime(parseFloat(f2_), audioCtx.currentTime);
-  biquadFilter__.frequency.setValueAtTime(parseFloat(f3_), audioCtx.currentTime);
-  gainNode.gain.setValueAtTime(0.25, audioCtx.currentTime+0.001);
-}
-
-function stop() {
-  gainNode.gain.setValueAtTime(0, audioCtx.currentTime+0.001);
-}
-
 function playAudio() {
   document.getElementsByTagName('audio')[0].play();
 }
@@ -991,9 +957,7 @@ determiner, preposition, conjunction, interjection
 var url = "https://script.google.com/macros/s/AKfycbz5br4wnfSGtucWKwGQq1Tb07eshJez6uVaFatn4xJAc_rcrcA/exec"; //"http://192.168.0.61:8080/";
 var words_ = [];
 var w = [];
-var f1 = [];
-var f2 = [];
-var f3 = [];
+var phoneme = [];
 var s = ["·", "ˈ", "ˌ"];
 
 var k = document.getElementById("keys");
@@ -1036,8 +1000,8 @@ for (var i=0; i<keys.length; i++) {
   var lnk = v[i];
   lnk.id = i;
   lnk.title = ks[1];
-  lnk.onfocus = function(e){this.selectedIndex=-1;play_(parseFloat(f2[this.id])/4, f1[this.id], f2[this.id], f3[this.id]);};
-  lnk.onchange = function(e){/*addVowel(e.target.value, e.target.style.backgroundColor);*/if(ctl!=consonants){addPhoneme(e.target.value, e.target.style.backgroundColor);}this.blur();stop();};
+  lnk.onfocus = function(e){this.selectedIndex=-1;};
+  lnk.onchange = function(e){if(ctl!=consonants){addPhoneme(e.target.value, e.target.style.backgroundColor);}playPhoneme(parseInt(phoneme[this.id]));this.blur();};
   var bg = 100 - Math.pow(parseFloat(ks[3]), 1/3)*50;
   lnk.style.backgroundColor = "hsl(" + ks[2] + ", 100%, " + bg + "%)";
   lnk.innerHTML += "<option style='background-color:hsl("+ks[2]+", 100%, "+bg+"%);' value='"+ks[1]+"_'>"+ks[0]+"</option>";
@@ -1045,9 +1009,7 @@ for (var i=0; i<keys.length; i++) {
     var bg = 100 - Math.pow(parseFloat(ks[4+j]), 1/3)*50;
     lnk.innerHTML += "<option style='background-color:hsl("+ks[2]+", 100%, "+bg+"%);' value='"+ks[1]+j+"'>"+ks[0]+s[j]+"</option>";
   }
-  f1[i] = ks[7];
-  f2[i] = ks[8];
-  f3[i] = ks[9];
+  phoneme[i] = ks[7];
   regexp[i] = [];
   regexp[i][0] = new RegExp(ks[1]+"[_012]", "g");
   regexp[i][1] = "hsl(" + ks[2] + ", 100%, 75%)";
