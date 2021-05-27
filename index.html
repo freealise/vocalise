@@ -403,7 +403,7 @@ pre {
 </div>
 
   <div id="spectrogram">
-    <textarea id="b" onkeydown="if(event.key!='ArrowRight' && event.key!='ArrowLeft' && event.key!='ArrowUp' && event.key!='ArrowDown' && event.key!='Enter' && event.key!='Backspace' && event.key!='Delete' && event.ctrlKey!==true || event.key==' '){event.preventDefault();keysPressed[kbrd[event.key]]=true;addBinary();}" onkeyup="if(event.key!='ArrowRight' && event.key!='ArrowLeft' && event.key!='ArrowUp' && event.key!='ArrowDown' && event.key!='Enter' && event.key!='Backspace' && event.key!='Delete' && event.ctrlKey!==true || event.key==' '){keysPressed[kbrd[event.key]]=false;}else if(event.key=='ArrowRight'||event.key=='ArrowLeft'){showColumn();playColumn();}else if(event.key=='ArrowUp'||event.key=='ArrowDown'){showColumn();}"></textarea>
+    <textarea id="b" onkeydown="if(event.key!='ArrowRight' && event.key!='ArrowLeft' && event.key!='ArrowUp' && event.key!='ArrowDown' && event.key!='Enter' && event.key!='Backspace' && event.key!='Delete' && event.ctrlKey!==true || event.key==' '){event.preventDefault();keysPressed[kbrd[event.key]]=true;addBinary();}" onkeyup="if(event.key!='ArrowRight' && event.key!='ArrowLeft' && event.key!='ArrowUp' && event.key!='ArrowDown' && event.key!='Enter' && event.key!='Backspace' && event.key!='Delete' && event.ctrlKey!==true || event.key==' '){keysPressed[kbrd[event.key]]=false;}else if(event.key=='ArrowRight'||event.key=='ArrowLeft'){showColumn();playColumn();}else if(event.key=='ArrowUp'||event.key=='ArrowDown'){showColumn();}" onfocus="ctl=this;"></textarea>
     
     <div id="checkboxes" oncontextmenu="return false;">
       <div id="left">
@@ -463,7 +463,7 @@ pre {
     
     <pre oncontextmenu="return false;" id="keys_">
 <span class="u"><a title="B">  </a><a title="P">  </a></span>         <span class="u"><a title="D">  </a><a title="T">  </a></span>  <span class="u"><a title="JH">  </a><a title="CH">  </a></span>   <span class="u"><a title="G">  </a><a title="K">  </a></span>
-<span class="u"><a title="V">  </a><a title="F">  </a></span>  <span class="u"><a title="DH">  </a><a title="TH">  </a></span>   <span class="u"><a title="Z">  </a><a title="S">  </a></span>  <span class="u"><a title="ZH">  </a><a title="SH">  </a></span>   <span class="u"><a title="R">  </a><a title="HH">  </a></span>
+<span class="u"><a title="V">  </a><a title="F">  </a></span>  <span class="u"><a title="DH">  </a><a title="TH">  </a></span>   <span class="u"><a title="ZH">  </a><a title="SH">  </a></span>  <span class="u"><a title="Z">  </a><a title="S">  </a></span>   <span class="u"><a title="R">  </a><a title="HH">  </a></span>
 <span class="u"><a title="W">  </a><a title="M">  </a></span>  <span class="u"><a title="_">  </a></span>     <span class="u"><a title="L">  </a><a title="N">  </a></span>         <span class="u"><a title="Y">  </a><a title="NG">  </a></span>
           <a title="Wildcard" href="javascript:" onclick="addPhoneme('-', 'transparent');">- </a>       <a title="Extra pitch level" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme('`', 'transparent');">` </a> <a title="Word divider" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme('|', 'transparent');">| </a></pre>
     <pre oncontextmenu="return false;" id="keys">
@@ -505,31 +505,31 @@ var keys = [
 ];
 
 var keys_ = [
-  "b ,B,0.2141",
-  "p ,P,0.2477",
-  "d ,D,0.5656",
-  "t ,T,0.9327",
-  "dʒ,JH,0.0791",
-  "tʃ,CH,0.0717",
-  "ɡ ,G,0.0920",
-  "k ,K,0.3811",
-  "v ,V,0.2394",
-  "f ,F,0.2387",
-  "ð ,DH,0.6531",
-  "θ ,TH,0.0758",
-  "z ,Z,0.4163",
-  "s ,S,0.5710",
-  "ʒ ,ZH,0.0086",
-  "ʃ ,SH,0.1072",
-  "ɹ ,R,0.5663",
-  "h ,HH,0.1739",
-  "w ,W,0.2890",
-  "m ,M,0.3173",
+  "b ,B,0.2141,35",
+  "p ,P,0.2477,36",
+  "d ,D,0.5656,37",
+  "t ,T,0.9327,38",
+  "dʒ,JH,0.0791,33",
+  "tʃ,CH,0.0717,32",
+  "ɡ ,G,0.0920,39",
+  "k ,K,0.3811,40",
+  "v ,V,0.2394,20",
+  "f ,F,0.2387,19",
+  "ð ,DH,0.6531,16",
+  "θ ,TH,0.0758,15",
+  "ʒ ,ZH,0.0086,18",
+  "ʃ ,SH,0.1072,17",
+  "z ,Z,0.4163,14",
+  "s ,S,0.5710,13",
+  "ɹ ,R,0.5663,24",
+  "h ,HH,0.1739,30",
+  "w ,W,0.2890,22",
+  "m ,M,0.3173,27",
   "  ,_,1",
-  "l ,L,0.4471",
-  "n ,N,1.0000",
-  "j ,Y,0.0911",
-  "ŋ ,NG,0.1000",
+  "l ,L,0.4471,25",
+  "n ,N,1.0000,28",
+  "j ,Y,0.0911,23",
+  "ŋ ,NG,0.1000,29",
 ];
 
 var kbrd = {
@@ -615,6 +615,16 @@ var phonemes =
   "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠃⠃⡇⡇⡇⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⢸⠀⠀⠀⠀⠀⠀⠀" + "\n" +
   "⠀⠀⠀⠀⠀⠀⠀⣀⣀⣤⠤⠶⠀⠀⠀⠂⠂⠃⠃⡇⡇⠀⠀⠆⠀⠀⠀⡂⡂⠂⠂⠀⠘⠘⠀⠀⠀⢀⢀⠐⠐" + "\n" +
   "⣀⣤⠤⠶⠒⠛⠉⠉⠀⠀⠀⠀⠀⠀⡀⠃⡃⠀⡀⠇⡇⠀⡄⡀⡆⡁⠀⡄⡂⡁⠅⠀⠀⢀⠀⢰⠰⢐⠐⢈⠈";
+  
+/*
+uuooaaeaeeii sztdszfv wyrl mnnh cj bpdtgk
+: : : re : :   hhhh          g  hh
+*/
+
+var phonemes_ = phonemes.split("\n");
+for (var i=0; i<phonemes_.length; i++) {
+  phonemes_[i] = phonemes_[i].split("");
+}
 
 var keysPressed = new Array(8);
 var kbrd = {
@@ -783,10 +793,31 @@ function showColumn() {
   }
 }
 
+function addColumn() {
+  var b_ = parseInt(b.selectionStart);
+  var d_ = parseInt(b.selectionEnd);
+  var l = b.value.substr(0, b_).split("\n");
+  var c = l[l.length-1].length; //distance from the left
+  
+  var a = b.value.split("\n");
+  for (var i=0; i<phonemes_.length; i++) {
+    a[i] = a[i].substr(0, c) + phonemes_[i][i_/2] + a[i].substr(c+1);
+  }
+  b.value = a.join("\n");
+  
+  b.focus();
+  b.setSelectionRange(b_, b_);
+  var ch_ = b.value.charAt(b_);
+  ch.innerHTML = ch_;
+}
+
 function playPhoneme(p) {
   i_ = p*2;
   _i = i_+2;
   toBinary(phonemes);
+  if (ctl==b) {
+    addColumn();
+  }
   if (a_[i_]) {
     if(ac==null){init();}
     play();
@@ -983,7 +1014,6 @@ var def = document.getElementById("def");
 var mobile = document.getElementById("mobile");
 var spectrogram = document.getElementById("spectrogram");
 var b = document.getElementById("b");
-b.style.fontSize = "16px";
 var d = document.getElementById("d");
 var buttons = document.getElementById("buttons");
 var checkboxes = document.getElementById("checkboxes");
@@ -995,13 +1025,17 @@ var regexp = [];
 var ks_ = [];
 var ctl = rs;
 
+b.style.fontSize = "16px";
+b.value = "⠀\n⠀\n⠀\n⠀\n";
+
 for (var i=0; i<keys.length; i++) {
   var ks = keys[i].split(";");
   var lnk = v[i];
   lnk.id = i;
   lnk.title = ks[1];
+  phoneme[i] = ks[7];
   lnk.onfocus = function(e){this.selectedIndex=-1;};
-  lnk.onchange = function(e){if(ctl!=consonants){addPhoneme(e.target.value, e.target.style.backgroundColor);}playPhoneme(parseInt(phoneme[this.id]));this.blur();};
+  lnk.onchange = function(e){if(ctl!=consonants && ctl!=b){addPhoneme(e.target.value, e.target.style.backgroundColor);}playPhoneme(parseInt(phoneme[this.id]));this.blur();};
   var bg = 100 - Math.pow(parseFloat(ks[3]), 1/3)*50;
   lnk.style.backgroundColor = "hsl(" + ks[2] + ", 100%, " + bg + "%)";
   lnk.innerHTML += "<option style='background-color:hsl("+ks[2]+", 100%, "+bg+"%);' value='"+ks[1]+"_'>"+ks[0]+"</option>";
@@ -1009,7 +1043,6 @@ for (var i=0; i<keys.length; i++) {
     var bg = 100 - Math.pow(parseFloat(ks[4+j]), 1/3)*50;
     lnk.innerHTML += "<option style='background-color:hsl("+ks[2]+", 100%, "+bg+"%);' value='"+ks[1]+j+"'>"+ks[0]+s[j]+"</option>";
   }
-  phoneme[i] = ks[7];
   regexp[i] = [];
   regexp[i][0] = new RegExp(ks[1]+"[_012]", "g");
   regexp[i][1] = "hsl(" + ks[2] + ", 100%, 75%)";
@@ -1019,7 +1052,9 @@ for (var i=0; i<keys.length; i++) {
 for (var i=0; i<keys_.length; i++) {
   var ks = keys_[i].split(",");
   var lnk = c_[i];
-  lnk.onclick=function(e){/*addConsonant(e.target.title);*/if(ctl!=vowels){addPhoneme(e.target.title, 'transparent');}};
+  lnk.id = keys.length+i;
+  phoneme[keys.length+i] = ks[3];
+  lnk.onclick=function(e){if(ctl!=vowels && ctl!=b){addPhoneme(e.target.title, 'transparent');}playPhoneme(parseInt(phoneme[this.id]));};
   lnk.href="javascript:";
   lnk.innerText = ks[0];
   var bg = 100 - Math.pow(parseFloat(ks[2]), 1/3)*100;
