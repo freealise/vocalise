@@ -794,6 +794,7 @@ function showColumn() {
 }
 
 function addColumn() {
+  b_old = b.value;
   var b_ = parseInt(b.selectionStart);
   var d_ = parseInt(b.selectionEnd);
   var l = b.value.substr(0, b_).split("\n");
@@ -863,6 +864,7 @@ function findC(v) {
 }
 
 function addBinary() {
+  b_old = b.value;
   var b_ = parseInt(b.selectionStart);
   var d_ = parseInt(b.selectionEnd);
   var p = "";
@@ -1021,6 +1023,7 @@ var cb = document.getElementsByClassName("cb");
 var ch = document.getElementById("ch");
 var res_old = "";
 var rs_old = "";
+var b_old = "";
 var regexp = [];
 var ks_ = [];
 var ctl = rs;
@@ -1225,6 +1228,8 @@ function undo() {
   } else if (ctl == res) {
     res.value = res_old;
     syllables();
+  } else if (ctl == b) {
+    b.value = b_old;
   }
 }
 
