@@ -9,5 +9,6 @@ Dictionary by <a href="http://www.speech.cs.cmu.edu/cgi-bin/cmudict" title="Carn
 - add sound for diphtongs, British pronounciation (use a dictionary from the defining) and IPA transcription;<br/>
 - highlight short and long vowels (in British version)<br/>
 - underline only pronounced vowels.<br/>
+- calligraphy (touch sensitivity)<br/>
 - app for android (also with ordinary keyboard sorted by sound)
 </p>
