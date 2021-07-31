@@ -11,5 +11,6 @@ Dictionary by <a href="http://www.speech.cs.cmu.edu/cgi-bin/cmudict" title="Carn
 - highlight short and long vowels (in British version)<br/>
 - underline only pronounced vowels<br/>
 - calligraphy (touch sensitivity)<br/>
-- app for android (also with ordinary keyboard sorted by sound)
+- app for android (also with ordinary keyboard sorted by sound)<br/>
+- general Storygrid / BS structure (json)
 </p>
