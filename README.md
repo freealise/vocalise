@@ -12,5 +12,6 @@ Dictionary by <a href="http://www.speech.cs.cmu.edu/cgi-bin/cmudict" title="Carn
 - underline only pronounced vowels<br/>
 - calligraphy (touch sensitivity)<br/>
 - app for android (also with ordinary keyboard sorted by sound)<br/>
-- general Storygrid / BS structure (json)
+- general Storygrid / BS structure (json)<br/>
+- lyrics library with explicit / overused / repetitive word filter
 </p>
