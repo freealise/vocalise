@@ -4,6 +4,7 @@ Dictionary by <a href="http://www.speech.cs.cmu.edu/cgi-bin/cmudict" title="Carn
 
 <p><b>TODO:</b><br/>
 - upgrade to general language learning app to complete the randomly missing words and phrases in word definitions for interactive grammar (combine letters and phonemes, syllables, words, phrases and sentences) and common vocabulary (look up by word or several (in specific order or not), sentence construction by Google Cloud NL parser and Google Books Ngrams with several queries or DictionaryAPI examples / phrasebook / Sefaria multilingual in json (https://github.com/Sefaria/Sefaria-Export/blob/master/json/Tanakh/Torah/Genesis/English/))<br/>
+- add grammar description for languages<br/>
 - is highlighting letters or phonemes with color a mnemonic device ?<br/>
 - input formant patterns from keyboard like chords<br/>
 - optimize to search and load faster with indexes for words based on consonants and vowels (release node.js scripts)<br/>
