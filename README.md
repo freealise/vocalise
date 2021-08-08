@@ -9,6 +9,7 @@ Dictionary by <a href="http://www.speech.cs.cmu.edu/cgi-bin/cmudict" title="Carn
 - optimize to search and load faster with indexes for words based on consonants and vowels (release node.js scripts)<br/>
 - add sound for diphtongs, British pronounciation (use a dictionary from the defining) and IPA transcription<br/>
 - highlight short and long vowels (in British version)<br/>
+- definitions in several languages (Google provides some but not all)<br/>
 - underline only pronounced vowels<br/>
 - calligraphy (touch sensitivity)<br/>
 - app for android (also with ordinary keyboard sorted by sound)<br/>
