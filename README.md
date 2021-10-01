@@ -3,6 +3,7 @@
 Dictionary by <a href="http://www.speech.cs.cmu.edu/cgi-bin/cmudict" title="Carnegie Mellon University" target="_blank"><u>CMU</u></a>, sorted by frequency based on <a href="https://books.google.com/ngrams" title="Google Books Ngrams" target="_blank"><u>Google Books Ngrams</u></a> with <a href="https://phrasefinder.io/" title="PhraseFinder" target="_blank"><u>PhraseFinder</u></a> API.</p>
 
 <p><b>TODO:</b><br/>
+- better defining dictionary and example sentences (english wiktionary / voa instead of oxford/mcmillan/longman) ?
 - highlighting with color as a mnemonic device (not in the order of reading but same frequent words, letters or phonemes all over the text)<br/>
 - input formant patterns from keyboard like chords<br/>
 - optimize to search and load faster with indexes for words based on consonants and vowels (release node.js scripts)<br/>
