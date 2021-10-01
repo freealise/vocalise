@@ -4,7 +4,7 @@ Dictionary by <a href="http://www.speech.cs.cmu.edu/cgi-bin/cmudict" title="Carn
 
 <p><b>TODO:</b><br/>
 - reverse dictionary with AI and several dictionaries with defining vocabulary<br/>
-- better defining dictionary and example sentences (english wiktionary / voa instead of oxford/mcmillan/longman)<br/>
+- better defining dictionary and example sentences (english wiktionary / voa instead of oxford)<br/>
 - highlighting with color as a mnemonic device (not in the order of reading but same frequent words, letters or phonemes all over the text)<br/>
 - input formant patterns from keyboard like chords<br/>
 - optimize to search and load faster with indexes for words based on consonants and vowels (release node.js scripts)<br/>
