@@ -84,11 +84,11 @@ function translate(words, tl, sl) {
     var d = [];
     if (parsed.dict) {
       for (var i=0; i<parsed.dict.length; i++) {
-        d[i] = "<b>" + parsed.dict[i].base_form + "</b> <i>" + parsed.dict[i].pos + "</i><br/>" + parsed.dict[i].terms.join(', ');
+        d[i] = "<b class='notranslate'>" + parsed.dict[i].base_form + "</b> <i>" + parsed.dict[i].pos + "</i><div class='notranslate'>" + parsed.dict[i].terms.join(', ') + "</div>";
       }
     }
   //Logger.log(d.join("<br/><br/>") + "\n" + inf.join(","));
-    return d.join("<br/><br/>") + "\n" + inf.join(",");
+    return d.join("<br/>") + "\n" + inf.join(",");
   }
 }
 
