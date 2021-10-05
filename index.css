@@ -1,0 +1,529 @@
+@font-face {
+  font-family: "DejaVu";
+  src: url("fonts/dejavu/DejaVuSansMono.ttf") format("truetype");
+}
+@font-face {
+  font-family: "DejaVuBold";
+  src: url("fonts/dejavu/DejaVuSansMono-Bold.ttf") format("truetype");
+}
+@font-face {
+  font-family: "DejaVuSans";
+  src: url("fonts/dejavu/DejaVuSans.ttf") format("truetype");
+}
+@font-face {
+  font-family: "DejaVuSansBold";
+  src: url("fonts/dejavu/DejaVuSans-Bold.ttf") format("truetype");
+}
+* {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-family: 'DejaVu', 'DejaVuSans', monospace;
+}
+body, html {
+  margin:0;
+  padding:0;
+  overflow:hidden;
+  font-size:16px;
+}
+textarea, input, datalist, button, pre {
+  font-size: 16px;
+}
+input, datalist, button {
+  margin:0px;
+  padding:0px 2px;
+  border:1px solid lightgray;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+li {
+  cursor: pointer;
+  min-width:51%;
+  float:left;
+}
+ul .d {
+  color: darkgray;
+  cursor: pointer;
+  min-width:0%;
+  max-width:16%;
+  float:left;
+  padding:0 4px;
+}
+sub {
+  color: darkgray;
+}
+hr {
+  margin:0;
+  padding:0;
+  border:1px solid black;
+}
+table {
+  width:100%;
+}
+table, tbody, tr, td {
+  border:0;
+  padding:0;
+  margin:0;
+}
+#spectrogram {
+  padding:0;
+}
+#b {
+  line-height:1.1em;
+  letter-spacing:-0.15em;
+  width:99%;
+  height:224px;
+  font-weight:bold;
+  white-space:nowrap;
+  overflow:scroll;
+  background-color:white;
+  color:black;
+  margin:0;
+  padding:2px;
+  text-align:left;
+}
+#buttons {
+  height:32px;
+  margin-left:3px;
+  text-align:left;
+}
+#buttons button {
+  width:32px;
+  height:32px;
+  font-weight:bold;
+  font-size:16px;
+  margin:0px -3px;
+}
+#buttons button i {
+  margin-top:3px;
+}
+#checkboxes {
+  width:72px;
+  position:fixed;
+  top:25vh;
+  right:0px;
+  left:auto;
+  padding-right:4px;
+  background-color:white;
+}
+#p, #ch {
+  position: absolute;
+  right: -0.067em;
+  top: 0.025em;
+  font-size: 128px;
+  font-weight: bold;
+  line-height: 1em;
+  z-index:-1;
+}
+#p {
+  color:lightgray;
+}
+#left {
+  width:32px;
+  float:left;
+  padding:2px;
+}
+#right {
+  width:32px;
+  float:right;
+  padding:2px;
+}
+.cb {
+  width:32px;
+  height:32px;
+  margin:0;
+  padding:0;
+  opacity:0;
+}
+#keys {
+  width: 288px;
+  margin:0px;
+  font-size:16px;
+}
+#keys_ {
+  width: 288px;
+  margin:0px;
+  font-size:16px;
+  letter-spacing:-0.05px;
+}
+.u {
+   text-decoration:underline;
+}
+a {
+  color:black;
+  text-decoration:none;
+}
+#keys a {
+  border-left: 1px solid lightgray;
+  margin: 0px -1px 0px 0px;
+  padding:2.4px;
+  font-family:'DejaVuBold';
+}
+#keys_ span a {
+  border-left:1px solid lightgray;
+  padding:0px;
+  margin:0px -1px 0px 0px;
+  font-family:'DejaVuBold';
+}
+#keys_ a {
+  font-family:'DejaVuBold';
+}
+#tone {
+  width:288px;
+  height:1.5em;
+  line-height:1.5em;
+  overflow:scroll;
+  background-color:transparent;
+  margin-bottom:0.5em;
+}
+#tone a {
+  text-decoration:underline;
+  font-weight:bold;
+  font-family:'DejaVuBold';
+  padding:0px 1.8px;
+}
+select {
+  height:24px;
+  font-size:16px;
+  width:24px;
+  margin:0px;
+  padding:2px 1px;
+  border: 0px;
+  -o-appearance: none;
+  -ms-appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+option {
+  margin:0px;
+  padding:0px;
+}
+#word, #word_ {
+  border:1px solid lightgray;
+  margin:0px;
+  background:white;
+  float:left;
+}
+#word {
+  height:20px;
+  width:224px;
+  padding:1px 2px;
+}
+#word_ {
+  overflow:scroll;
+  height:18px;
+  width:50%;
+  padding:2px;
+  margin:0px -4px;
+}
+#word_ div {
+  padding:2px;
+  cursor: pointer;
+  height: 22px;
+  border-bottom: 1px solid darkgray;
+}
+#word_ i {
+  float: left;
+  font-size: 16px;
+}
+#split, #search, #translate, #complete {
+  width:29px;
+  height:24px;
+  border:1px solid lightgray;
+  margin:0px;
+  padding:2px;
+  background:#eeeeee;
+  float:right;
+  font-size:14px;
+}
+#split i {
+  font-size:14px;
+  margin-top:4px;
+  position:relative;
+  right:2px;
+  letter-spacing:-4px;
+  font-weight:bold;
+}
+#search i {
+  margin-top:-2px;
+}
+.l {
+  width:100%;
+  padding:0px;
+  margin:0px;
+  clear:both;
+}
+#vowels {
+  width:148px;
+  height:22px;
+}
+#consonants {
+  width:128px;
+  height:22px;
+}
+pre {
+  padding:0px;
+  margin:0px;
+  letter-spacing:0px;
+}
+#highlight, #sidebar {
+  width:50%;
+  overflow-y:scroll;
+  overflow-x:hidden;
+  top:0px;
+  position:fixed;
+  z-index:-1;
+  background:transparent;
+  margin:0px;
+  padding:0px;
+  min-height:128px;
+  font-size:16px;
+  letter-spacing: 0px;
+  line-height:1em;
+}
+#hl {
+  margin:0px;
+  padding:0px;
+  border:none;
+  color:transparent;
+}
+#hl b {
+  position:relative;
+  top:1px;
+}
+#hl i {
+  position:relative;
+  top:-8px;
+  margin-bottom:-4px;
+}
+#hl sup {
+  color:darkgray;
+  line-height:0;
+  position: relative;
+  top: 0.5em;
+}
+#res {
+  position:fixed;
+  overflow-y:scroll;
+  overflow-x:hidden;
+  margin:-1px;
+  padding:0px;
+  border:1px solid lightgray;
+  letter-spacing: 0px;
+  background:transparent;
+  min-height:128px;
+  z-index:0;
+  line-height:1em;
+}
+#highlight, #res {
+  left:0px;
+  text-align:left;
+  display:block;
+  white-space: pre;
+}
+#sidebar {
+  right:0px;
+  text-align:left;
+  display:block;
+}
+#dict {
+  width:288px;
+  position:fixed;
+  left:50%;
+  margin-left:-159px;
+  background:white;
+  bottom:0px;
+  visibility:hidden;
+}
+#links {
+  border:1px solid lightgray;
+  position:fixed;
+  z-index:10;
+  bottom:0px;
+  right:0px;
+  width:24px;
+  padding-left:4px;
+  overflow:hidden;
+  white-space:nowrap;
+  background:white;
+  font-size:16px;
+}
+#links i {
+  font-size:20px;
+}
+#resources, #credits, #spectrogram {
+  overflow:scroll;
+  font-size: 14px;
+  height:264px;
+  position:fixed;
+  left:50%;
+  margin-left:-160px;
+  background:white;
+  width:310px;
+  max-width:100vw;
+  border:1px solid lightgray;
+  padding:2px 4px 2px 4px;
+  visibility:hidden;
+  z-index:11;
+  top:0px;
+}
+#gt-nvframe {
+  display:none;
+}
+#translation .material-icons {
+  font-size: 16px;
+  color: gray;
+  top: 3px;
+  position: relative;
+}
+#words {
+  width:50%;
+  float:left;
+}
+#translation {
+  float:right;
+  width:50%;
+  max-height:128px;
+  overflow:scroll;
+}
+#translation_ {
+  float:right;
+}
+#chart_ {
+  float:left;
+  width:40%;
+  max-height:128px;
+  margin:0;
+  overflow:scroll;
+}
+#chart_ a {
+  float:right;
+  position:relative;
+  top:-128px;
+}
+#phrase {
+  padding:2px;
+  margin:0;
+  border:1px;
+  height:20px;
+  width:100%;
+  float:left;
+}
+#pos {
+  width:36px;
+  padding:2px;
+  position:absolute;
+  right:28px;
+}
+#translate {
+  position:absolute;
+  right:0px;
+}
+#languages, #corpus {
+  width:100%;
+}
+#ngram {
+  width:50%;
+  float:right;
+  background-color:white;
+  border:1px solid lightgray;
+}
+#syntax {
+  width:100%;
+  overflow:scroll;
+  visibility:visible;
+}
+#translation, #translation_, #syntax_chart, #examples {
+  margin-right:30px;
+}
+.tree {
+  background-color:transparent;
+  border:0;
+  margin:0;
+  padding:0;
+}
+.tree_selected {
+  text-decoration:underline;
+  border:0;
+  margin:0;
+  padding:0;
+}
+#syntax * {
+  border-color:darkgray;
+}
+#syntax_chart select {
+  width: 3.4em;
+  font-size: inherit;
+  background-color:white;
+}
+#examples {
+  max-height:256px;
+  overflow:scroll;
+  font-size:14px;
+}
+#examples iframe {
+  border:1px solid lightgray;
+}
+#complete {
+  font-weight:bold;
+}
+#mobile {
+  position:absolute;
+  background-color:white;
+  border:1px solid lightgray;
+  height:2.5em;
+  width:128px;
+  margin-left:-128px;
+  margin-top:-3em;
+  visibility:hidden;
+  z-index:11;
+  overflow:hidden;
+  font-size:12px;
+}
+@media only screen and (max-height: 511px) {
+  #highlight, #res {
+    height:128px;
+    width:100%;
+  }
+  #sidebar {
+    top:128px;
+    height:350px;
+    width:100%;
+  }
+}
+@media only screen and (min-height: 512px) {
+  #highlight, #res {
+    height:25vh;
+    width:100%;
+  }
+  #sidebar {
+    top:25vh;
+    height:75vh;
+    width:100%;
+  }
+}
+@media only screen and (max-width: 511px) {
+  #highlight, #res {
+    height:128px;
+    width:100%;
+  }
+  #sidebar {
+    top:128px;
+    height:350px;
+    width:100%;
+  }
+}
+@media only screen and (min-width: 512px) {
+  #highlight, #res {
+    height:100vh;
+    width:50%;
+  }
+  #sidebar {
+    top:0px;
+    height:100vh;
+    width:50%;
+  }
+}
