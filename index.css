@@ -269,6 +269,10 @@ pre {
   margin:0px;
   letter-spacing:0px;
 }
+#area {
+  position:fixed;
+  top:0px;
+}
 #highlight, #sidebar {
   width:50%;
   overflow-y:scroll;
@@ -328,6 +332,7 @@ pre {
   right:0px;
   text-align:left;
   display:block;
+  z-index:0;
 }
 #dict {
   width:288px;
@@ -341,8 +346,8 @@ pre {
 #links {
   border:1px solid lightgray;
   position:fixed;
-  z-index:10;
-  bottom:0px;
+  z-index:11;
+  bottom:24px;
   right:0px;
   width:24px;
   padding-left:4px;
@@ -353,6 +358,10 @@ pre {
 }
 #links i {
   font-size:20px;
+}
+#show_links {
+  float:left;
+  margin-right:10px;
 }
 #resources, #credits, #spectrogram {
   overflow:scroll;
@@ -371,7 +380,26 @@ pre {
   top:0px;
 }
 .skiptranslate {
-  display:none;
+  position: fixed;
+  width: 32px;
+  height: 32px;
+  right: -2px;
+  bottom: 0;
+  overflow: hidden;
+  z-index: 10;
+}
+.goog-te-gadget {
+  position:relative;
+  width:auto;
+  height:auto;
+  right:auto;
+  bottom:auto;
+}
+.skiptranslate iframe {
+  position: relative;
+  width: 420px;
+  height: 40px;
+  float:right;
 }
 #translation .material-icons {
   font-size: 16px;
@@ -422,7 +450,7 @@ pre {
   position:absolute;
   right:0px;
 }
-#languages, #corpus {
+#languages, #corpus, .goog-te-combo {
   width:100%;
 }
 #ngram {

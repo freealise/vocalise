@@ -12,7 +12,7 @@
 <link href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet'/>
 <link rel="stylesheet" href="index.css"/>
 </head>
-<body onload="loadLanguages();loadWords();" onclick="var tg=event.target;mobile.style.top=event.pageY+'px';mobile.style.left=event.pageX+'px';while(!tg.title){tg=tg.parentNode;}if(tg.tagName){mobile.innerText=tg.title;}">
+<body onload="loadWords();" onclick="var tg=event.target;mobile.style.top=event.pageY+'px';mobile.style.left=event.pageX+'px';while(!tg.title){tg=tg.parentNode;}if(tg.tagName){mobile.innerText=tg.title;}">
 <!-- https://en.m.wiktionary.org/w/api.php?action=query&prop=revisions&titles=door&rvslots=*&rvprop=content&formatversion=2 -->
 <!--https://etherpad.wikimedia.org/p/RYC4rG0XlnKEz-bbj3YO-->
 
@@ -153,10 +153,10 @@
     <a id="tooltips" href="javascript:showMobile();" title="Tooltips"><i class='material-icons notranslate'>wysiwyg</i> Tooltips</a><br/>
     <a id="resources_" href="javascript:showResources();" title="Resources"><i class='material-icons notranslate'>link</i> Resources</a><br/>
     <a id="credits_" href="javascript:showCredits();" title="Credits"><i class='material-icons notranslate'>copyright</i> Credits</a><br/>
-    <a id="share" href="javascript:window.open('https://www.blogger.com/blog-this.g?t='+res.value, 'blog');" title="Share"><i class='material-icons notranslate'>share</i> Share</a><br/>
-    <a id="show_language" href="javascript:showLinks();" title="Language"><i class='material-icons notranslate'>language</i></a> <select id="languages" size="1" onchange="sl=this.options[this.selectedIndex].value;"></select><br/>
-    <a id="show_links" href="javascript:showLinks();" title="Show links"><i class='material-icons notranslate'>menu_open</i></a> <select id="corpus" size="1" onchange="">
+    <!--<a id="share" href="javascript:window.open('https://www.blogger.com/blog-this.g?t='+res.value, 'blog');" title="Share"><i class='material-icons notranslate'>share</i> Share</a><br/>-->
+    <a id="show_language" href="javascript:showLinks();" title="Language"><i class='material-icons notranslate'>language</i></a> <!--<select id="languages" size="1" onchange="sl=this.options[this.selectedIndex].value;"></select>--><select id="corpus" size="1" onchange="">
           <option value="26">English 2019</option>
+          <!--
           <option value="28">American English 2019</option>
           <option value="29">British English 2019</option>
           <option value="27">English Fiction 2019</option>
@@ -189,8 +189,9 @@
           <option value="9">Hebrew 2009</option>
           <option value="12">Russian 2009</option>
           <option value="10">Spanish 2009</option>
+          -->
         </select><br/>
-        <div id="google_translate_element"></div>
+    <a id="show_links" href="javascript:showLinks();" title="Show links"><i class='material-icons notranslate'>menu_open</i></a><div id="google_translate_element"></div>
   </div>
 
 <script type="text/javascript" src="index.js"></script>

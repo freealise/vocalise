@@ -593,7 +593,8 @@ var corpus = document.getElementById("corpus");
 var chart_ = document.getElementById("chart_");
 var translation = document.getElementById("translation");
 var translation_ = document.getElementById("translation_");
-var languages = document.getElementById("languages");
+var languages = null; //document.getElementById("languages");
+var it = null;
 var pos = document.getElementById("pos");
 var pos_ = document.getElementById("pos_");
 var syntax = document.getElementById("syntax");
@@ -615,8 +616,8 @@ var ks_ = [];
 var ctl = res;
 var ln = 20;
 var wn = 0;
-var tl = ["en", "nl"]; //fy
-var sl = "cs";
+var tl = ["en", "nl"]; //fy, af
+var sl = "en";
 var orig, corr;
 var a_c = false;
 
@@ -955,10 +956,13 @@ function loadWords() {
 }
 
 function loadLanguages() {
+  /*
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       languages.innerHTML = this.responseText;
+  */
+    if (languages.options.length > 0) {
       for (var i=0; i<languages.options.length; i++) {
         if (navigator.language.indexOf(languages.options[i].value) >= 0 && navigator.language.indexOf(tl[0]) == -1) {
         		languages.options[i].selected = true;
@@ -967,10 +971,14 @@ function loadLanguages() {
             languages.options[i].selected = true;
         }
       }
+      clearInterval(it);
+    }
+  /*
     }
   };
   xhttp.open("GET", url + "?a=languages&tl=" + navigator.language, true);
   xhttp.send();
+  */
 }
 
 
@@ -1352,5 +1360,7 @@ function showWords() {
 
 function googleTranslateElementInit() {
   var gt = new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL}, 'google_translate_element');
-  gt.onload = function(e){document.body.style.top='0px'};
+  languages = document.getElementsByClassName("goog-te-combo")[0];
+  languages.onchange = function(e){sl=e.target.options[e.target.selectedIndex].value;};
+  it = setInterval(loadLanguages, 1000);
 }
