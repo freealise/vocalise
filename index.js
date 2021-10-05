@@ -963,7 +963,6 @@ function loadLanguages() {
         if (navigator.language.indexOf(languages.options[i].value) >= 0 && navigator.language.indexOf(tl[0]) == -1) {
         		languages.options[i].selected = true;
         		sl = languages.options[i].value;
-        		langRedirect(false);
         } else if (languages.options[i].value.indexOf(sl) >= 0) {
             languages.options[i].selected = true;
         }
@@ -972,24 +971,6 @@ function loadLanguages() {
   };
   xhttp.open("GET", url + "?a=languages&tl=" + navigator.language, true);
   xhttp.send();
-}
-
-
-function langRedirect(u) {
-  if (sl != tl[0]) {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        document.write(this.responseText);
-      }
-    };
-    xhttp.open("GET", url + "?a=translate_interface&tl=" + sl, true);
-    xhttp.send();
-  }
-  /*if (location.href.split("?")[0] != "https://freeali-se.translate.goog/phonetic/" || u===true) {
-    window.location.replace("https://freeali-se.translate.goog/phonetic/?_x_tr_sch=http&_x_tr_sl=en&_x_tr_tl="+sl+"&_x_tr_hl="+sl+"&_x_tr_pto=ajax,nv,elem");
-    //to detect by location: https://translate.googleusercontent.com/translate_p?anno=2&sl=auto&tl=en&u=http://freeali.se/phonetic&depth=1&rurl=translate.google.com&nv=1&sp=nmt4&pto=aue,ajax,boq&usg=ALkJrhgAAAAAYUnyEmwT_dUC6o42XdaOjdrM0pUIZtG3
-  }*/
 }
 
 
@@ -1367,4 +1348,9 @@ function showWords() {
   } else {
     translations.style.display='block';
   }
+}
+
+function googleTranslateElementInit() {
+  var gt = new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL}, 'google_translate_element');
+  gt.onload = function(e){document.body.style.top='0px'};
 }

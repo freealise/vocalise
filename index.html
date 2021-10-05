@@ -154,7 +154,7 @@
     <a id="resources_" href="javascript:showResources();" title="Resources"><i class='material-icons notranslate'>link</i> Resources</a><br/>
     <a id="credits_" href="javascript:showCredits();" title="Credits"><i class='material-icons notranslate'>copyright</i> Credits</a><br/>
     <a id="share" href="javascript:window.open('https://www.blogger.com/blog-this.g?t='+res.value, 'blog');" title="Share"><i class='material-icons notranslate'>share</i> Share</a><br/>
-    <a id="show_language" href="javascript:showLinks();" title="Language"><i class='material-icons notranslate'>language</i></a> <select id="languages" size="1" onchange="sl=this.options[this.selectedIndex].value;langRedirect(true);"></select><br/>
+    <a id="show_language" href="javascript:showLinks();" title="Language"><i class='material-icons notranslate'>language</i></a> <select id="languages" size="1" onchange="sl=this.options[this.selectedIndex].value;"></select><br/>
     <a id="show_links" href="javascript:showLinks();" title="Show links"><i class='material-icons notranslate'>menu_open</i></a> <select id="corpus" size="1" onchange="">
           <option value="26">English 2019</option>
           <option value="28">American English 2019</option>
@@ -190,8 +190,10 @@
           <option value="12">Russian 2009</option>
           <option value="10">Spanish 2009</option>
         </select><br/>
+        <div id="google_translate_element"></div>
   </div>
 
 <script type="text/javascript" src="index.js"></script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
