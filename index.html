@@ -2,11 +2,12 @@
 <html>
 <head>
 <title>
-  Reverse phonetic dictionary based on CMUDict, includes a lyrics editor and speech formant synthesizer
+  Compose your own song lyrics, poetry or rap and improve your English - with an advanced rhyming dictionary based on CMUDict and speech formant synthesizer, as well as definition and translation, lookup of word forms or common phrases by part of speech, sentence parser and text editor with spell and grammar checking.
 </title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <script type="text/javascript" src="piano.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <link rel="preconnect" href="https://fonts.gstatic.com"/>
 <link href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet'/>
 <style>
@@ -52,6 +53,32 @@ ul {
 }
 li {
   cursor: pointer;
+  min-width:51%;
+  float:left;
+}
+ul .d {
+  color: darkgray;
+  cursor: pointer;
+  min-width:0%;
+  max-width:16%;
+  float:left;
+  padding:0 4px;
+}
+sub {
+  color: darkgray;
+}
+hr {
+  margin:0;
+  padding:0;
+  border:1px solid black;
+}
+table {
+  width:100%;
+}
+table, tbody, tr, td {
+  border:0;
+  padding:0;
+  margin:0;
 }
 #spectrogram {
   padding:0;
@@ -165,8 +192,10 @@ a {
   margin-bottom:0.5em;
 }
 #tone a {
+  text-decoration:underline;
+  font-weight:bold;
   font-family:'DejaVuBold';
-  padding:0px 5px;
+  padding:0px 1.8px;
 }
 select {
   height:24px;
@@ -193,21 +222,27 @@ option {
 }
 #word {
   height:20px;
-  width:253px;
+  width:224px;
   padding:1px 2px;
 }
 #word_ {
   overflow:scroll;
   height:18px;
-  width:224px;
+  width:50%;
   padding:2px;
+  margin:0px -4px;
 }
 #word_ div {
+  padding:2px;
   cursor: pointer;
   height: 22px;
   border-bottom: 1px solid darkgray;
 }
-#split, #search, #define {
+#word_ i {
+  float: left;
+  font-size: 16px;
+}
+#split, #search, #translate, #complete {
   width:29px;
   height:24px;
   border:1px solid lightgray;
@@ -228,9 +263,6 @@ option {
 #search i {
   margin-top:-2px;
 }
-#define i {
-  font-size:20px;
-}
 .l {
   width:100%;
   padding:0px;
@@ -250,7 +282,7 @@ pre {
   margin:0px;
   letter-spacing:0px;
 }
-#highlight, #highlight_ {
+#highlight, #sidebar {
   width:50%;
   overflow-y:scroll;
   overflow-x:hidden;
@@ -263,19 +295,30 @@ pre {
   min-height:128px;
   font-size:16px;
   letter-spacing: 0px;
+  line-height:1em;
+}
+#hl {
+  margin:0px;
+  padding:0px;
+  border:none;
   color:transparent;
 }
-#highlight i {
-   margin:0px -3px -2px 0px;
-   padding:0px 3px 0px 0px;
-   border-bottom:2px solid lightgray;
+#hl b {
+  position:relative;
+  top:1px;
 }
-#highlight_ i {
-   margin:0px;
-   padding:0px;
-   border:none;
+#hl i {
+  position:relative;
+  top:-8px;
+  margin-bottom:-4px;
 }
-#res, #rs {
+#hl sup {
+  color:darkgray;
+  line-height:0;
+  position: relative;
+  top: 0.5em;
+}
+#res {
   position:fixed;
   overflow-y:scroll;
   overflow-x:hidden;
@@ -286,36 +329,35 @@ pre {
   background:transparent;
   min-height:128px;
   z-index:0;
+  line-height:1em;
 }
 #highlight, #res {
   left:0px;
   text-align:left;
   display:block;
   white-space: pre;
-  line-height:18px;
-  font-weight:bold;
 }
-#highlight_, #rs {
+#sidebar {
   right:0px;
   text-align:left;
   display:block;
-  white-space: pre;
-  line-height:18px;
 }
 #dict {
   width:288px;
   position:fixed;
   left:50%;
-  margin-left:-128px;
+  margin-left:-159px;
   background:white;
   bottom:0px;
+  visibility:hidden;
 }
 #links {
+  border:1px solid lightgray;
   position:fixed;
   z-index:10;
-  bottom:16px;
-  left:0px;
-  width:28px;
+  bottom:0px;
+  right:0px;
+  width:24px;
   padding-left:4px;
   overflow:hidden;
   white-space:nowrap;
@@ -325,7 +367,7 @@ pre {
 #links i {
   font-size:20px;
 }
-#help, #credits, #entry, #mobile, #spectrogram {
+#resources, #credits, #spectrogram {
   overflow:scroll;
   font-size: 14px;
   height:264px;
@@ -341,69 +383,176 @@ pre {
   z-index:11;
   top:0px;
 }
-#def {
-  height:156px;
-  overflow:scroll;
+#gt-nvframe {
+  display:none;
 }
-#def .material-icons {
+#translation .material-icons {
   font-size: 16px;
   color: gray;
   top: 3px;
   position: relative;
 }
+#words {
+  width:50%;
+  float:left;
+}
+#translation {
+  float:right;
+  width:50%;
+  max-height:128px;
+  overflow:scroll;
+}
+#translation_ {
+  float:right;
+}
+#chart_ {
+  float:left;
+  width:40%;
+  max-height:128px;
+  margin:0;
+  overflow:scroll;
+}
+#chart_ a {
+  float:right;
+  position:relative;
+  top:-128px;
+}
+#phrase {
+  padding:2px;
+  margin:0;
+  border:1px;
+  height:20px;
+  width:100%;
+  float:left;
+}
+#pos {
+  width:36px;
+  padding:2px;
+  position:absolute;
+  right:28px;
+}
+#translate {
+  position:absolute;
+  right:0px;
+}
+#languages, #corpus {
+  width:100%;
+}
+#ngram {
+  width:50%;
+  float:right;
+  background-color:white;
+  border:1px solid lightgray;
+}
+#syntax {
+  width:100%;
+  overflow:scroll;
+  visibility:visible;
+}
+#translation, #translation_, #syntax_chart, #examples {
+  margin-right:30px;
+}
+.tree {
+  background-color:transparent;
+  border:0;
+  margin:0;
+  padding:0;
+}
+.tree_selected {
+  text-decoration:underline;
+  border:0;
+  margin:0;
+  padding:0;
+}
+#syntax * {
+  border-color:darkgray;
+}
+#syntax_chart select {
+  width: 3.4em;
+  font-size: inherit;
+  background-color:white;
+}
+#examples {
+  max-height:256px;
+  overflow:scroll;
+  font-size:14px;
+}
+#examples iframe {
+  border:1px solid lightgray;
+}
+#complete {
+  font-weight:bold;
+}
 #mobile {
-  background-color:lightgray;
-  height:4em;
+  position:absolute;
+  background-color:white;
+  border:1px solid lightgray;
+  height:2.5em;
+  width:128px;
+  margin-left:-128px;
+  margin-top:-3em;
+  visibility:hidden;
+  z-index:11;
+  overflow:hidden;
+  font-size:12px;
 }
 @media only screen and (max-height: 511px) {
-  #highlight, #highlight_, #res, #rs {
+  #highlight, #res {
     height:128px;
     width:100%;
   }
-  #rs, #highlight_ {
+  #sidebar {
     top:128px;
+    height:350px;
+    width:100%;
   }
 }
 @media only screen and (min-height: 512px) {
-  #highlight, #highlight_, #res, #rs {
+  #highlight, #res {
     height:25vh;
     width:100%;
   }
-  #rs, #highlight_ {
+  #sidebar {
     top:25vh;
+    height:75vh;
+    width:100%;
   }
 }
 @media only screen and (max-width: 511px) {
-  #highlight, #highlight_, #res, #rs {
+  #highlight, #res {
     height:128px;
     width:100%;
   }
-  #rs, #highlight_ {
+  #sidebar {
     top:128px;
+    height:350px;
+    width:100%;
   }
 }
 @media only screen and (min-width: 512px) {
-  #highlight, #highlight_, #res, #rs {
+  #highlight, #res {
     height:100vh;
     width:50%;
   }
-  #rs, #highlight_ {
+  #sidebar {
     top:0px;
+    height:100vh;
+    width:50%;
   }
 }
 </style>
 </head>
-<body>
+<body onload="loadLanguages();loadWords();" onclick="var tg=event.target;mobile.style.top=event.pageY+'px';mobile.style.left=event.pageX+'px';while(!tg.title){tg=tg.parentNode;}if(tg.tagName){mobile.innerText=tg.title;}">
+<!-- https://en.m.wiktionary.org/w/api.php?action=query&prop=revisions&titles=door&rvslots=*&rvprop=content&formatversion=2 -->
+<!--https://etherpad.wikimedia.org/p/RYC4rG0XlnKEz-bbj3YO-->
 
 <div id="area">
-  <div id="highlight"></div>
-  <textarea placeholder="Lyrics" id="res" onkeyup="syllables();" onmouseup="syllables();" ontouchup="syllables();" onfocus="syllables();ctl=this;" onscroll="highlight.scrollTop = this.scrollTop;highlight.scrollLeft = this.scrollLeft;" style="visibility:visible;"></textarea>
-  <div id="highlight_"></div>
-  <textarea placeholder="Phonetic pattern" id="rs" onkeydown="if(event.key.length==1 && !event.ctrlKey && !event.metaKey){event.preventDefault();}" onkeyup="if(event.key.length==1 && kbrd[event.key] && !event.ctrlKey && !event.metaKey){addPhoneme(kbrd[event.key], 0);}colorPhonemes();" onmouseup="colorPhonemes();" ontouchup="colorPhonemes();" onfocus="colorPhonemes();ctl=this;" onscroll="highlight_.scrollTop = this.scrollTop;highlight_.scrollLeft = this.scrollLeft;" style="visibility:visible;"></textarea>
+  <div id="highlight"><pre id="hl"></pre></div>
+  <textarea placeholder="Lyrics" id="res" onkeyup="if(event.key=='Enter'){highlightText();}else if(event.key=='.' || event.key=='?' || event.key=='!'){getSentence();}else if(event.key==' ' || event.key=='Backspace' || event.key=='Delete' || event.ctrlKey || event.metaKey){colorPhonemes();}" onkeydown="if(event.key.length==1 && kbrd[event.key] && event.getModifierState('CapsLock') && !event.ctrlKey && !event.metaKey){addPhoneme(kbrd[event.key], 0);}" onmouseup="" ontouchup="" onfocus="ctl=this;" onscroll="highlight.scrollTop = this.scrollTop;highlight.scrollLeft = this.scrollLeft;" style="visibility:visible;"></textarea>
 </div>
 
   <div id="spectrogram">
-    <textarea id="b" onkeydown="if(event.key!='ArrowRight' && event.key!='ArrowLeft' && event.key!='ArrowUp' && event.key!='ArrowDown' && event.key!='Enter' && event.key!='Backspace' && event.key!='Delete' && event.ctrlKey!==true || event.key==' '){event.preventDefault();keysPressed[kbrd[event.key]]=true;addBinary();}" onkeyup="if(event.key!='ArrowRight' && event.key!='ArrowLeft' && event.key!='ArrowUp' && event.key!='ArrowDown' && event.key!='Enter' && event.key!='Backspace' && event.key!='Delete' && event.ctrlKey!==true || event.key==' '){keysPressed[kbrd[event.key]]=false;}else if(event.key=='ArrowRight'||event.key=='ArrowLeft'){showColumn();playColumn();}else if(event.key=='ArrowUp'||event.key=='ArrowDown'){showColumn();}" onfocus="ctl=this;"></textarea>
+    <textarea placeholder="Speech formant spectrum" id="b" onkeydown="if(event.key!='ArrowRight' && event.key!='ArrowLeft' && event.key!='ArrowUp' && event.key!='ArrowDown' && event.key!='Enter' && event.key!='Backspace' && event.key!='Delete' && event.ctrlKey!==true && event.metaKey!==true || event.key==' '){event.preventDefault();keysPressed[kbrd[event.key]]=true;addBinary();}" onkeyup="if(event.key!='ArrowRight' && event.key!='ArrowLeft' && event.key!='ArrowUp' && event.key!='ArrowDown' && event.key!='Enter' && event.key!='Backspace' && event.key!='Delete' && event.ctrlKey!==true && event.metaKey!==true || event.key==' '){keysPressed[kbrd[event.key]]=false;}else if(event.key=='ArrowRight'||event.key=='ArrowLeft'){showColumn();playColumn();}else if(event.key=='ArrowUp'||event.key=='ArrowDown'){showColumn();}" onfocus="ctl=this;"></textarea>
     
     <div id="checkboxes" oncontextmenu="return false;">
       <div id="left">
@@ -423,22 +572,26 @@ pre {
     </div>
     
     <div id="buttons">
-      <button type="button" id="play_all" onclick="if(playNow===true){pause();}else{playAll();}" title="Play / Pause"><i class='material-icons'>play_arrow</i></button>
-      <button type="button" id="zoom_in" onclick="zoom(1);" title="Zoom in"><i class='material-icons'>zoom_in</i></button>
-      <button type="button" id="zoom_out" onclick="zoom(-1);" title="Zoom out"><i class='material-icons'>zoom_out</i></button>
-      <button type="button" id="save" onclick="save();" title="Save as text"><i class='material-icons'>save_alt</i></button>
-      <!--<button type="button" id="log_scale" onclick="logScale();" title="Export to image"><i class='material-icons'>gradient</i></button>-->
-      <button type="button" id="draw" onclick="window.open('https://loveeevee.github.io/Dots-Converter/');" title="Import a drawing"><i class='material-icons'>draw</i></button>
-      <button type="button" id="space" onclick="addBinary();" title="Add space"><i class='material-icons'>space_bar</i></button>
-      <button type="button" id="swap" onclick="swap();" title="Move pattern to left or right"><i class='material-icons'>swap_horiz</i></button>
+      <button type="button" id="play_all" onclick="if(playNow===true){pause();}else{playAll();}" title="Play / Pause"><i class='material-icons notranslate'>play_arrow</i></button>
+      <button type="button" id="zoom_in" onclick="zoom(1);" title="Zoom in"><i class='material-icons notranslate'>zoom_in</i></button>
+      <button type="button" id="zoom_out" onclick="zoom(-1);" title="Zoom out"><i class='material-icons notranslate'>zoom_out</i></button>
+      <button type="button" id="save" onclick="save();" title="Save as text"><i class='material-icons notranslate'>save_alt</i></button>
+      <!--<button type="button" id="log_scale" onclick="logScale();" title="Export to image"><i class='material-icons notranslate'>gradient</i></button>-->
+      <button type="button" id="draw" onclick="window.open('https://katiefrogs.github.io/Dots-Converter/');" title="Import a drawing"><i class='material-icons notranslate'>draw</i></button>
+      <button type="button" id="space" onclick="addBinary();" title="Add space"><i class='material-icons notranslate'>space_bar</i></button>
+      <button type="button" id="swap" onclick="swap();" title="Move pattern to left or right"><i class='material-icons notranslate'>swap_horiz</i></button>
     </div>
   </div>
 
-  <div id="help">
-    <p>Use the pitch symbols and groups of vowels to fit the <i>form</i>, <i>rhythm</i> and <i>melody</i>.</p>
-    <p>Search <i>keywords</i> or phonemes and add the results to lyrics and phonetic pattern.</p>
-    <p>Look up <i>rhymes and alliterations</i> with wildcards, separate for vowels and consonants.</p>
-    <p>They can be in any syllables wherever in the text, not necessarily the end of the line.</p>
+  <div id="resources">
+    <p><a id="grammar_ref" href="javascript:window.open('https://simple.m.wikipedia.org/');" title="Simple English Wikipedia"><b><img src="icons/Wiki.svg" height="14" alt="Simple English Wikipedia"/> Simple English Wikipedia</b></a> is an English-language edition of the Wikipedia online encyclopedia written primarily in basic English. It was launched in 2001. Its simpler word structure and syntax can make the information easy to understand.
+    </p>
+    <p><a id="grammar_ref" href="javascript:window.open('https://www.bbc.co.uk/learningenglish/english/basic-grammar-guide');" title="Grammar"><b><img src="icons/BBC.svg" height="11" alt="British Broadcasting Corporation"/> Learning English</b></a> is a department of the BBC World Service devoted to English language teaching. It has won numerous awards, including two Eltons from the British Council and an English Speaking Union award for innovation in English language teaching. There were a number of series for teaching language comprehension with the help of song lyrics, such as Pop Words. It was usual for the major broadcasters in the 1950s to have a programme teaching the language of the country the broadcaster served.
+    </p>
+    <p><a id="vocabulary_ref" href="javascript:window.open('https://learningenglish.voanews.com/');" title="Vocabulary"><b><img src="icons/VOA.svg" height="11" alt="Voice of America"/> Learning English</b></a><br/>
+      is a controlled version of the English language first used on 19 October 1959, and still presented daily by the United States broadcasting service Voice of America. World news and other programs are read one-third slower than regular VOA English. Reporters avoid idioms and use a core vocabulary of about 1500 words, plus any terms needed to explain a story. The intended audience is intermediate to advanced learners of English. In 1962 the VOA published the first edition of the <a href='http://docs.voanews.eu/en-US-LEARN/2014/02/15/7f8de955-596b-437c-ba40-a68ed754c348.pdf' target='_blank'><u>Word Book</u></a>.
+    </p>
+    <!-- https://www.ldoceonline.com/exercise/, routledge ?, https://lyricstranslate.com/ -->
   </div>
   
   <div id="mobile">On mobile, switch the system keyboard to floating mode.</div>
@@ -450,38 +603,123 @@ pre {
     <p>Separating vowels and consonants for slant rhyme and alliteration within a line was inspired by rap and Hebrew poetry.</p>
   </div>
   
-  <div id="entry">
-    <div id="def">Word definitions and usage data will be here</div>
-    <iframe id="ngram_chart" name="ngram_chart" src="" width=288 height=100 marginwidth=0 marginheight=0 hspace=0 vspace=0 frameborder=0 scrolling=yes></iframe>
+  <div id="sidebar">
+    <div id="translations">
+      <button onclick="if(phrase.value.search(/\W/g)!=-1){loadPhrases();}else if(phrase.value!=''){loadTranslations(phrase.value);}" id="translate" title="Translate"><i class='material-icons notranslate'>search</i></button>
+      <input type="text" name="phrase" id="phrase" placeholder="Phrase" onfocus="ctl=this;" onkeydown="if(event.key=='_'){loadInflections(this.value);}"/>
+      <input title="Part of speech" type="text" id="pos" size="2" list="pos_" placeholder="*" onchange="if(this.value.length==1){phrase.value=this.value;phrase.focus();}this.value='';">
+      <datalist id="pos_" size="1">
+            <option value="Options"></option>
+            <option class="*" value="*">any word</option>
+            <option class="," value=",">several</option>
+            <option class="_INF" value="_">inflection</option>
+            <option value="Part of speech"></option>
+            <option class="_NOUN_" value="$">noun</option>
+            <option class="_VERB_" value="=">verb</option>
+            <option class="_ADJ_" value="%">adjective</option>
+            <option class="_ADV_" value="~">adverb</option>
+            <option class="_PRON_" value="|">pronoun</option>
+            <option class="_DET_" value="^">determiner</option>
+            <option class="_ADP_" value="@">adposition</option>
+            <option class="_NUM_" value="#">numeral</option>
+            <option class="_CONJ_" value=";">conjunction</option>
+            <option class="_PRT_" value="`">particle</option>
+            <option value="Sentence"></option>
+            <option class="_ROOT_=>" value=">">root</option>
+            <option class="_START_" value=":">start</option>
+            <option class="_END_" value=".">end</option>
+        </datalist>
+        <!--
+          _NOUN_		These tags can either stand alone or can be appended to a word (inflection always is)
+          _VERB_
+          _ADJ_	adjective
+          _ADV_	adverb
+          _PRON_	pronoun
+          _DET_	determiner or article
+          _ADP_	an adposition: either a preposition or a postposition
+          _NUM_	numeral
+          _CONJ_	conjunction
+          _PRT_	particle
+            _ROOT_	root of the parse tree	  These tags must stand alone (e.g., _START_)
+            _START_	start of a sentence
+            _END_	end of a sentence
+        -->
+      <div id="word_" class="notranslate" onclick="if(event.target.title){addWord(event.target.innerText, event.target.title);}"></div>
+      <select disabled id="ngram" size="1" onfocus="this.selectedIndex=-1" onblur="this.selectedIndex=0" onchange="loadTranslation(this.options[this.selectedIndex].innerText);loadExamples(this.options[this.selectedIndex].innerText);if(phrase.value.split(' ').length<5){phrase.value=this.options[this.selectedIndex].innerText+' *';loadPhrases();}">
+        <option selected>Phrasebook</option>
+      </select>
+      <div id="translation"><sub><i class='material-icons notranslate'>translate</i> Translation</sub></div>
+      <div id="chart_"><sub><i class='material-icons notranslate'>legend_toggle</i> Word usage</sub></div>
+    </div>
+    <div id="syntax">
+      <div id="translation_"></div>
+      <div id="syntax_chart"><sub><i class='material-icons notranslate'>spellcheck</i> Grammar</sub></div>
+    </div>
+    <div id="examples"><sub><i class='material-icons notranslate'>grading</i> Examples</sub></div>
   </div>
 
   <div id="dict">
-    <div class="l"><input type="text" id="word" list="_word" placeholder="Word or phonemes" onfocus="ctl=this;"/><datalist id="_word"></datalist><button onclick="findWords(word.value, vowels.value, consonants.value);" id="search" title="Search"><i class='material-icons'>search</i></button></div>
-    <div class="l"><div id="word_" onclick="if(event.target.title){addWord(event.target.innerText, event.target.title);}"><div>Results will be here</div></div>
-    <button onclick="pos(word_.firstChild.innerText);" id="define" title="Define"><i class='material-icons'>query_stats</i></button><button onclick="splitWord();" id="split" title="Split"><i class='material-icons'>south_west</i><i class='material-icons'>south_east</i></button></div>
-    <div class="l"><input type="text" id="vowels" list="vowels_" placeholder="Vowels" onfocus="ctl=this;"/><datalist id="_vowels"></datalist><datalist id="vowels_"></datalist><input type="text" id="consonants" list="consonants_" placeholder="Consonants" onfocus="ctl=this;"/><datalist id="_consonants"></datalist><datalist id="consonants_"></datalist></div>
+    <div class="l"><input type="text" id="word" list="_word" placeholder="Word or phonemes" onkeyup="if(a_c===false && this.value.length>2 && event.key!='ArrowRight' && event.key!='ArrowLeft'){autoCompleter(this.value);}" onfocus="ctl=this;"/><datalist id="_word"></datalist><button onclick="findWords();" id="search" title="Search"><i class='material-icons notranslate'>manage_search</i></button><button onclick="splitWord();" id="split" title="Split"><i class='material-icons notranslate'>south_west</i><i class='material-icons notranslate'>south_east</i></button></div>
+    <div class="l"><input type="text" id="vowels" list="vowels_" placeholder="Vowels" onkeyup="if(a_c===false && this.value.length>1 && event.key!='ArrowRight' && event.key!='ArrowLeft'){loadIndex(this.value,'A');}" onfocus="ctl=this;"/><datalist id="_vowels"></datalist><datalist id="vowels_"></datalist><input type="text" id="consonants" list="consonants_" placeholder="Consonants" onkeyup="if(a_c===false && this.value.length>1 && event.key!='ArrowRight' && event.key!='ArrowLeft'){loadIndex(this.value,'B');}" onfocus="ctl=this;"/><datalist id="_consonants"></datalist><datalist id="consonants_"></datalist></div>
     
     <pre oncontextmenu="return false;" id="keys_">
-<span class="u"><a title="B">  </a><a title="P">  </a></span>         <span class="u"><a title="D">  </a><a title="T">  </a></span>  <span class="u"><a title="JH">  </a><a title="CH">  </a></span>   <span class="u"><a title="G">  </a><a title="K">  </a></span>
-<span class="u"><a title="V">  </a><a title="F">  </a></span>  <span class="u"><a title="DH">  </a><a title="TH">  </a></span>   <span class="u"><a title="ZH">  </a><a title="SH">  </a></span>  <span class="u"><a title="Z">  </a><a title="S">  </a></span>   <span class="u"><a title="R">  </a><a title="HH">  </a></span>
-<span class="u"><a title="W">  </a><a title="M">  </a></span>  <span class="u"><a title="_">  </a></span>     <span class="u"><a title="L">  </a><a title="N">  </a></span>         <span class="u"><a title="Y">  </a><a title="NG">  </a></span>
-          <a title="Wildcard" href="javascript:" onclick="addPhoneme('-', 'transparent');">- </a>       <a title="Extra pitch level" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme('`', 'transparent');">` </a> <a title="Word divider" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme('|', 'transparent');">| </a></pre>
-    <pre oncontextmenu="return false;" id="keys">
-<select title="IY"></select><select title="IH"></select><select title="EY"></select><select title="EH"></select><select title="AE"></select><select title="ER"></select><select title="AH"></select><select title="AA"></select><select title="AO"></select><select title="OW"></select><select title="UH"></select><select title="UW"></select>
-<a title="Any stress with any vowel" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme('___', 'transparent');">__</a><a title="No stress with any vowel" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme('__0', 'transparent');">_·</a><a title="Primary stress with any vowel" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme('__1', 'transparent');">_ˈ</a><a title="Secondary stress with any vowel" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme('__2', 'transparent');">_ˌ</a><select title="AY"></select><select title="OY"></select><select title="AW"></select></pre>
-  <div id="tone" title="Pitch symbols for word and syllable stress, span octave (12 semitones) in two rows plus underscores" onmousedown="mobile.innerText=this.title;"></div>
+<span class="notranslate"><span class="u"><a title="b">  </a><a title="p">  </a></span>         <span class="u"><a title="d">  </a><a title="t">  </a></span>  <span class="u"><a title="ʤ">  </a><a title="ʧ">  </a></span>   <span class="u"><a title="g">  </a><a title="k">  </a></span>
+<span class="u"><a title="v">  </a><a title="f">  </a></span>  <span class="u"><a title="ð">  </a><a title="θ">  </a></span>   <span class="u"><a title="ʒ">  </a><a title="ʃ">  </a></span>  <span class="u"><a title="z">  </a><a title="s">  </a></span>   <span class="u"><a title="ɹ">  </a><a title="h">  </a></span>
+<span class="u"><a title="w">  </a><a title="m">  </a></span>  <span class="u"><a title="_">  </a></span>     <span class="u"><a title="l">  </a><a title="n">  </a></span>         <span class="u"><a title="j">  </a><a title="ŋ">  </a></span></span>
+          <a title="Wildcard" href="javascript:" onclick="addPhoneme('*', 'transparent');">* </a>       <a title="Non-breaking space" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme(' ', 'transparent');">⎵ </a></pre>
+    <pre oncontextmenu="return false;" id="keys"><span class="notranslate"><select title="i"></select><select title="ɪ"></select><select title="eɪ"></select><select title="ɛ"></select><select title="æ"></select><select title="ə"></select><select title="ʌ"></select><select title="ɑ"></select><select title="ɔ"></select><select title="oʊ"></select><select title="ʊ"></select><select title="u"></select></span>
+<a title="Any stress with any vowel" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme('_', 'transparent');"><span class="notranslate">_ </span></a><a title="No stress with any vowel" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme('_·', 'transparent');"><span class="notranslate">_·</span></a><a title="Primary stress with any vowel" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme('_ˈ', 'transparent');"><span class="notranslate">_ˈ</span></a><a title="Secondary stress with any vowel" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme('_ˌ', 'transparent');"><span class="notranslate">_ˌ</span></a><span class="notranslate"><select title="aɪ"></select><select title="ɔɪ"></select><select title="aʊ"></select></span></pre>
+  <div title="Pitch symbols for word and syllable stress, span octave (12 semitones)" onmousedown="mobile.innerText=this.title;"><span id="tone" class="notranslate"></span></div>
   </div>
   
   <div id="links">
-    <a id="show_links" href="javascript:showLinks();" alt="Show links" title="Show links"><i class='material-icons'>chevron_right</i></a><br/>
-    <a id="undo" href="javascript:undo();" alt="Undo" title="Undo"><i class='material-icons'>undo</i> Undo</a><br/>
-    <a id="pattern" href="javascript:showSpectrogram();" alt="Spectrogram" title="Spectrogram"><i class='material-icons'>app_registration</i> Spectrogram</a><br/>
-    <a id="lyrics" href="javascript:showLyrics();" alt="Mobile view" title="Mobile view"><i class='material-icons'>preview</i> Mobile view</a><br/>
-    <a id="entry_" href="javascript:showEntry();" alt="Definition" title="Definition"><i class='material-icons'>wysiwyg</i> Definition</a><br/>
-    <a id="help_" href="javascript:showHelp();" alt="Help" title="Help"><i class='material-icons'>help_outline</i> Help</a><br/>
-    <a id="tooltips" href="javascript:showTooltips();" alt="Tooltips" title="Tooltips"><i class='material-icons'>live_help</i> Tooltips</a><br/>
-    <a id="credits_" href="javascript:showCredits();" alt="Credits" title="Credits"><i class='material-icons'>copyright</i> Credits</a><br/>
-    <a id="share" href="javascript:window.open('https://www.blogger.com/blog-this.g?t='+res.value, 'blog');" alt="Share" title="Share"><i class='material-icons'>share</i> Share</a><br/>
+    <a id="undo" href="javascript:undo();" title="Undo"><i class='material-icons notranslate'>undo</i> Undo</a><br/>
+    <a id="_examples" href="javascript:loadQuiz(false);" title="Quiz"><i class='material-icons notranslate'>grading</i> Quiz</a><br/>
+    <a id="_syntax" href="javascript:showSyntax();" title="Sentences"><i class='material-icons notranslate' id='spellcheck'>spellcheck</i> Sentences</a><br/>
+    <a id="show_words" href="javascript:showWords();" title="Words"><i class='material-icons notranslate'>translate</i> Words</a><br/>
+    <a id="show_ph" href="javascript:showPhonemes();" title="Phonemes"><i class='material-icons notranslate'>keyboard_hide</i> Phonemes</a><br/>
+    <a id="pattern" href="javascript:showSpectrogram();" title="Formants"><i class='material-icons notranslate'>app_registration</i> Formants</a><br/>
+    <a id="mobile_view" href="javascript:showLyrics();" title="Mobile view"><i class='material-icons notranslate'>devices</i> Mobile view</a><br/>
+    <a id="tooltips" href="javascript:showMobile();" title="Tooltips"><i class='material-icons notranslate'>wysiwyg</i> Tooltips</a><br/>
+    <a id="resources_" href="javascript:showResources();" title="Resources"><i class='material-icons notranslate'>link</i> Resources</a><br/>
+    <a id="credits_" href="javascript:showCredits();" title="Credits"><i class='material-icons notranslate'>copyright</i> Credits</a><br/>
+    <a id="share" href="javascript:window.open('https://www.blogger.com/blog-this.g?t='+res.value, 'blog');" title="Share"><i class='material-icons notranslate'>share</i> Share</a><br/>
+    <a id="show_language" href="javascript:showLinks();" title="Language"><i class='material-icons notranslate'>language</i></a> <select id="languages" size="1" onchange="sl=this.options[this.selectedIndex].value;langRedirect(true);"></select><br/>
+    <a id="show_links" href="javascript:showLinks();" title="Show links"><i class='material-icons notranslate'>menu_open</i></a> <select id="corpus" size="1" onchange="">
+          <option value="26">English 2019</option>
+          <option value="28">American English 2019</option>
+          <option value="29">British English 2019</option>
+          <option value="27">English Fiction 2019</option>
+          <option value="34">Chinese (simplified) 2019</option>
+          <option value="30">French 2019</option>
+          <option value="31">German 2019</option>
+          <option value="35">Hebrew 2019</option>
+          <option value="33">Italian 2019</option>
+          <option value="36">Russian 2019</option>
+          <option value="32">Spanish 2019</option>
+          <option value="17">American English 2012</option>
+          <option value="18">British English 2012</option>
+          <option value="23">Chinese (simplified) 2012</option>
+          <option value="15">English 2012</option>
+          <option value="16">English Fiction 2012</option>
+          <option value="19">French 2012</option>
+          <option value="20">German 2012</option>
+          <option value="24">Hebrew 2012</option>
+          <option value="22">Italian 2012</option>
+          <option value="25">Russian 2012</option>
+          <option value="21">Spanish 2012</option>
+          <option value="5">American English 2009</option>
+          <option value="6">British English 2009</option>
+          <option value="11">Chinese (simplified) 2009</option>
+          <option value="0">English 2009</option>
+          <option value="4">English Fiction 2009</option>
+          <option value="1">English One Million 2009</option>
+          <option value="7">French 2009</option>
+          <option value="8">German 2009</option>
+          <option value="9">Hebrew 2009</option>
+          <option value="12">Russian 2009</option>
+          <option value="10">Spanish 2009</option>
+        </select><br/>
   </div>
 
 <script>
@@ -491,7 +729,7 @@ var keys = [
   "eɪ;EY;270;0.0699;0.0026;0.1882;0.0188;9",
   " ɛ;EH;240;0.1077;0.0145;0.2819;0.0266;8",
   " æ;AE;210;0.1024;0.0084;0.2871;0.0118;7",
-  " ɝ;ER;180;0.1080;0.2535;0.0684;0.0021;6",
+  " ə;ER;180;0.1080;0.2535;0.0684;0.0021;6",
   " ʌ;AH;150;0.4567;1.0000;0.3641;0.0060;5",
   " ɑ;AA;120;0.0612;0.0046;0.1674;0.0115;4",
   " ɔ;AO;90;0.0557;0.0048;0.1554;0.0070;3",
@@ -505,84 +743,136 @@ var keys = [
 ];
 
 var keys_ = [
-  "b ,B,0.2141,35",
-  "p ,P,0.2477,36",
-  "d ,D,0.5656,37",
-  "t ,T,0.9327,38",
-  "dʒ,JH,0.0791,33",
-  "tʃ,CH,0.0717,32",
-  "ɡ ,G,0.0920,39",
-  "k ,K,0.3811,40",
-  "v ,V,0.2394,20",
-  "f ,F,0.2387,19",
-  "ð ,DH,0.6531,16",
-  "θ ,TH,0.0758,15",
-  "ʒ ,ZH,0.0086,18",
-  "ʃ ,SH,0.1072,17",
-  "z ,Z,0.4163,14",
-  "s ,S,0.5710,13",
-  "ɹ ,R,0.5663,24",
-  "h ,HH,0.1739,30",
-  "w ,W,0.2890,22",
-  "m ,M,0.3173,27",
-  "  ,_,1",
-  "l ,L,0.4471,25",
-  "n ,N,1.0000,28",
-  "j ,Y,0.0911,23",
-  "ŋ ,NG,0.1000,29",
+  "b,B,0.2141,35",
+  "p,P,0.2477,36",
+  "d,D,0.5656,37",
+  "t,T,0.9327,38",
+  "ʤ,JH,0.0791,33",
+  "ʧ,CH,0.0717,32",
+  "ɡ,G,0.0920,39",
+  "k,K,0.3811,40",
+  "v,V,0.2394,20",
+  "f,F,0.2387,19",
+  "ð,DH,0.6531,16",
+  "θ,TH,0.0758,15",
+  "ʒ,ZH,0.0086,18",
+  "ʃ,SH,0.1072,17",
+  "z,Z,0.4163,14",
+  "s,S,0.5710,13",
+  "ɹ,R,0.5663,24",
+  "h,HH,0.1739,30",
+  "w,W,0.2890,22",
+  "m,M,0.3173,27",
+  "_,_,1",
+  "l,L,0.4471,25",
+  "n,N,1.0000,28",
+  "j,Y,0.0911,23",
+  "ŋ,NG,0.1000,29",
 ];
 
 var kbrd = {
   '`': '_',
-  '1': 'IY_',
-  '2': 'IH_',
-  '3': 'EY_',
-  '4': 'EH_',
-  '5': 'AE_',
-  '6': 'ER_',
-  '7': 'AH_',
-  '8': 'AA_',
-  '9': 'AO_',
-  '0': 'OW_',
-  '-': 'UH_',
-  '=': 'UW_',
-  'q': 'TH',
-  'w': 'W',
-  'e': 'SH',
-  'r': 'R',
-  't': 'T',
-  'y': 'Y',
-  'u': 'NG',
-  'i': '1',
-  'o': '0',
-  'p': 'P',
-  '[': 'AY_',
-  ']': 'OY_',
-  '\\': 'AW_',
-  'a': 'ZH',
-  's': 'S',
-  'd': 'D',
-  'f': 'F',
-  'g': 'G',
-  'h': 'HH',
-  'j': 'JH',
-  'k': 'K',
-  'l': 'L',
-  ';': '2',
+  '1': 'i_',
+  '2': 'ɪ_',
+  '3': 'eɪ_',
+  '4': 'ɛ_',
+  '5': 'æ_',
+  '6': 'ə_',
+  '7': 'ʌ_',
+  '8': 'ɑ_',
+  '9': 'ɔ_',
+  '0': 'oʊ_',
+  '-': 'ʊ_',
+  '=': 'u_',
+  'q': 'θ',
+  'w': 'w',
+  'e': 'ʃ',
+  'r': 'ɹ',
+  't': 't',
+  'y': 'ʤ',
+  'u': 'ŋ',
+  'i': 'ˈ',
+  'o': '·',
+  'p': 'p',
+  '[': 'aɪ_',
+  ']': 'ɔɪ_',
+  '\\': 'aʊ_',
+  'a': 'ʒ',
+  's': 's',
+  'd': 'd',
+  'f': 'f',
+  'g': 'g',
+  'h': 'h',
+  'j': 'j',
+  'k': 'k',
+  'l': 'l',
+  ';': 'ˌ',
   '\'': '_',
-  'z': 'Z',
-  'x': 'DH',
-  'c': 'CH',
-  'v': 'V',
-  'b': 'B',
-  'n': 'N',
-  'm': 'M',
+  'z': 'z',
+  'x': 'ð',
+  'c': 'ʧ',
+  'v': 'v',
+  'b': 'b',
+  'n': 'n',
+  'm': 'm',
   ',': '_',
   '.': '_',
   '/': '_',
   '_': '_',
   ' ': ' ',
-}
+};
+
+var superscript = {
+  '·':'',
+  'ˈ':'ˊ',
+  'ˌ':'`',
+  'a':'ᵃ',
+  'i':'ⁱ',
+  'ɪ':'ᶦ',
+  'e':'ᵉ',
+  'ɛ':'ᵋ',
+  'æ':'ᵆ',
+  'ə':'ᵊ',
+  'ʌ':'ᶺ',
+  'ɑ':'ᵅ',
+  'ɔ':'ᵓ',
+  'o':'ᵒ',
+  'ʊ':'ᶷ',
+  'u':'ᵘ',
+  'b':'ᵇ',
+  'p':'ᵖ',
+  'd':'ᵈ',
+  't':'ᵗ',
+  'ʤ':'ᵈᶾ',
+  'ʧ':'ᵗᶴ',
+  'g':'ᶢ',
+  'k':'ᵏ',
+  'v':'ᵛ',
+  'f':'ᶠ',
+  'ð':'ᶞ',
+  'θ':'ᶿ',
+  'ʒ':'ᶾ',
+  'ʃ':'ᶴ',
+  'z':'ᶻ',
+  's':'ˢ',
+  'ɹ':'ʴ',
+  'h':'ʰ',
+  'w':'ʷ',
+  'm':'ᵐ',
+  'l':'ˡ',
+  'n':'ⁿ',
+  'j':'ʲ',
+  'ŋ':'ᵑ',
+  'y':'ʸ',
+  'x':'ˣ',
+  'c':'ᶜ',
+  'r':'ʳ',
+  'q':'٩'
+};
+//https://en.wikipedia.org/wiki/Spacing_Modifier_Letters
+//https://en.wikipedia.org/wiki/Secondary_articulation
+
+var s = ["·", "ˈ", "ˌ"];
 
 var tone = [
   '˥', '˦', '˧', '˨', '˩',
@@ -590,6 +880,11 @@ var tone = [
   '꜈', '꜉', '꜊', '꜋', '꜌',
   '꜍', '꜎', '꜏', '꜐', '꜑'
 ];
+//https://en.wikipedia.org/wiki/Tone_letter
+
+var colors = [0,1,0,1,0,0,1,0,1,0,1,0,0];
+var spaces = "　 ⠀          ";
+//https://en.wikipedia.org/wiki/Whitespace_character
 
 var dots = (
 	"⠀⢀⠠⢠⠐⢐⠰⢰⠈⢈⠨⢨⠘⢘⠸⢸" +
@@ -921,7 +1216,7 @@ function swap() {
 }
 
 function save() {
-    var filename = "phonetic_pattern.txt";
+    var filename = "formants.txt";
     var element = document.createElement('a');
     element.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(b.value));
     element.setAttribute('download', filename);
@@ -987,11 +1282,16 @@ determiner, preposition, conjunction, interjection
 
 */
 
+google.charts.load('current', {packages:["orgchart"]});
+
 var url = "https://script.google.com/macros/s/AKfycbz5br4wnfSGtucWKwGQq1Tb07eshJez6uVaFatn4xJAc_rcrcA/exec"; //"http://192.168.0.61:8080/";
+var fbase = "https://freealise-181308.firebaseio.com/cmudict/";
+var base = "https://docs.google.com/spreadsheets/d/1lx3voPc-GWdzkhiCetUh0UGtU5FzdnAVMH6YZ4qBQrQ/gviz/tq?tqx=out:csv&gid=";
+var gid = "2110937646";
+var gid_ = "841483007";
 var words_ = [];
 var w = [];
 var phoneme = [];
-var s = ["·", "ˈ", "ˌ"];
 
 var k = document.getElementById("keys");
 var k_ = document.getElementById("keys_");
@@ -1008,48 +1308,67 @@ var word = document.getElementById("word");
 var _word = document.getElementById("_word");
 var word_ = document.getElementById("word_");
 var highlight = document.getElementById("highlight");
+var sidebar = document.getElementById("sidebar");
+var translations = document.getElementById("translations");
+var dict = document.getElementById("dict");
 var res = document.getElementById("res");
-var rs = document.getElementById("rs");
-var entry = document.getElementById("entry");
-var ngram = document.getElementById("ngram_chart");
-var def = document.getElementById("def");
+var phrase = document.getElementById("phrase");
+var ngram = document.getElementById("ngram");
+var corpus = document.getElementById("corpus");
+var chart_ = document.getElementById("chart_");
+var translation = document.getElementById("translation");
+var translation_ = document.getElementById("translation_");
+var languages = document.getElementById("languages");
+var pos = document.getElementById("pos");
+var pos_ = document.getElementById("pos_");
+var syntax = document.getElementById("syntax");
+var syntax_chart = document.getElementById("syntax_chart");
+var spellcheck = document.getElementById("spellcheck");
+var examples = document.getElementById("examples");
+var wiki = document.getElementById("wiki");
 var mobile = document.getElementById("mobile");
 var spectrogram = document.getElementById("spectrogram");
 var b = document.getElementById("b");
-var d = document.getElementById("d");
 var buttons = document.getElementById("buttons");
 var checkboxes = document.getElementById("checkboxes");
 var cb = document.getElementsByClassName("cb");
 var ch = document.getElementById("ch");
 var res_old = "";
-var rs_old = "";
 var b_old = "";
 var regexp = [];
 var ks_ = [];
-var ctl = rs;
+var ctl = res;
+var ln = 20;
+var wn = 0;
+var tl = ["en", "nl"]; //fy
+var sl = "cs";
+var orig, corr;
+var a_c = false;
 
 b.style.fontSize = "16px";
 b.value = "⠀\n⠀\n⠀\n⠀\n";
+var r_ = new RegExp("("+Object.keys(superscript).join("|")+")", "g");
 
 for (var i=0; i<keys.length; i++) {
   var ks = keys[i].split(";");
   var lnk = v[i];
   lnk.id = i;
-  lnk.title = ks[1];
+  ks_[i] = ks[0].trim();
+  lnk.title = ks_[i];
   phoneme[i] = ks[7];
   lnk.onfocus = function(e){this.selectedIndex=-1;};
+  lnk.onblur = function(e){this.selectedIndex=0;};
   lnk.onchange = function(e){if(ctl!=consonants && ctl!=b){addPhoneme(e.target.value, e.target.style.backgroundColor);}playPhoneme(parseInt(phoneme[this.id]));this.blur();};
   var bg = 100 - Math.pow(parseFloat(ks[3]), 1/3)*50;
   lnk.style.backgroundColor = "hsl(" + ks[2] + ", 100%, " + bg + "%)";
-  lnk.innerHTML += "<option style='background-color:hsl("+ks[2]+", 100%, "+bg+"%);' value='"+ks[1]+"_'>"+ks[0]+"</option>";
+  lnk.innerHTML += "<option style='background-color:hsl("+ks[2]+", 100%, "+bg+"%);' value='"+ks_[i]+"_'>"+ks[0]+"</option>";
   for (var j=0; j<=2; j++) {
     var bg = 100 - Math.pow(parseFloat(ks[4+j]), 1/3)*50;
-    lnk.innerHTML += "<option style='background-color:hsl("+ks[2]+", 100%, "+bg+"%);' value='"+ks[1]+j+"'>"+ks[0]+s[j]+"</option>";
+    lnk.innerHTML += "<option style='background-color:hsl("+ks[2]+", 100%, "+bg+"%);' value='"+ks_[i]+s[j]+"'>"+ks[0]+s[j]+"</option>";
   }
   regexp[i] = [];
-  regexp[i][0] = new RegExp(ks[1]+"[_012]", "g");
+  regexp[i][0] = new RegExp("("+ks_[i]+"[_·ˈˌ]*|"+superscript[ks_[i]]+"[ˊ`]*)", "g");
   regexp[i][1] = "hsl(" + ks[2] + ", 100%, 75%)";
-  ks_[i] = ks[1];
 }
 
 for (var i=0; i<keys_.length; i++) {
@@ -1059,14 +1378,15 @@ for (var i=0; i<keys_.length; i++) {
   phoneme[keys.length+i] = ks[3];
   lnk.onclick=function(e){if(ctl!=vowels && ctl!=b){addPhoneme(e.target.title, 'transparent');}playPhoneme(parseInt(phoneme[this.id]));};
   lnk.href="javascript:";
-  lnk.innerText = ks[0];
+  lnk.innerText = ks[0] + " ";
+  lnk.title = ks[0];
   var bg = 100 - Math.pow(parseFloat(ks[2]), 1/3)*100;
   lnk.style.color = "hsl(0, 0%, " + bg + "%)";
 }
 
-for (var i=0; i<tone.length; i++) {
-  var ks = tone[i];
-  tone_.innerHTML += "<a title='"+ks+"' href='javascript:' onclick='addPhoneme(this.innerText, &apos;transparent&apos;);'>" + ks +"</a> ";
+for (var i=0; i<spaces.length; i++) {
+  var ks = spaces.charAt(i);
+  tone_.innerHTML += "<a title='"+ks+"' href='javascript:' onclick='addPhoneme(this.title);colorPhonemes();' style='position:relative;top:-"+i+"px;color:rgba(0,0,0,"+(colors[i]*0.75+0.25)+");'>_</a> ";
 }
 
 function findCursor(v) {
@@ -1090,41 +1410,18 @@ function selectText() {
     return txt;
 }
 
-function addVowel(v, clr) {
-  //t.innerHTML += "<span style='background-color:" + clr + ";'>" + v + "</span> ";
-  var cPos = findCursor(vowels).split(",");
-  var b = parseInt(cPos[0]);
-  var d = parseInt(cPos[1]);
-  vowels.value = vowels.value.substr(0, b) + v + " " + vowels.value.substr(d);
-  vowels.focus();
-  vowels.setSelectionRange(b+v.length+1, b+v.length+1);
-}
-
-function addConsonant(c) {
-  var cPos = findCursor(consonants).split(",");
-  var b = parseInt(cPos[0]);
-  var d = parseInt(cPos[1]);
-  consonants.value = consonants.value.substr(0, b) + c + " " + consonants.value.substr(d);
-  consonants.focus();
-  consonants.setSelectionRange(b+c.length+1, b+c.length+1);
-}
-
 function addWord(w_, _w) {
   //t.innerHTML += "<span style='background-color:" + clr + ";'>" + v + "</span> ";
-  var cPos = findCursor(rs).split(",");
-  var cPos_ = findCursor(res).split(",");
+  var cPos = findCursor(phrase).split(",");
   var b = parseInt(cPos[0]);
   var d = parseInt(cPos[1]);
-  var b_ = parseInt(cPos_[0]);
-  var d_ = parseInt(cPos_[1]);
-  rs.value = rs.value.substr(0, b) + " " + _w + " " + rs.value.substr(d);
-  res.value = res.value.substr(0, b_) + w_ + " " + res.value.substr(d_);
-  rs.focus();
-  rs.setSelectionRange(b+_w.length+2, b+_w.length+2);
-  res.focus();
-  res.setSelectionRange(b_+w_.length+1, b_+w_.length+1);
+  if (w_.search(/\D/g) != -1) {
+    phrase.value = phrase.value.substr(0, b) + w_.split(' ')[0] + phrase.value.substr(d);
+    phrase.focus();
+    phrase.setSelectionRange(d+w_.length+1, d+w_.length+1);
+    word_.firstChild.innerText = w_.split(' ')[0];
+  }
   word.value = _w;
-  word_.firstChild.innerText = w_.split(' ')[0];
 }
 
 function addPhoneme(p, clr) {
@@ -1132,36 +1429,47 @@ function addPhoneme(p, clr) {
   var cPos = findCursor(ctl).split(",");
   var b = parseInt(cPos[0]);
   var d = parseInt(cPos[1]);
-  ctl.value = ctl.value.substr(0, b) + p + " " + ctl.value.substr(d);
+  ctl.value = ctl.value.substr(0, b) + p + ctl.value.substr(d);
   ctl.focus();
   ctl.setSelectionRange(b+p.length+1, b+p.length+1);
 }
 
-function findWords(w_, q, q_) {
-  if (w_ != "" || q != "" || q_ != "") {
-    if (w_.trim().search(/[*_012 ]/) != -1) {
-      splitWord();
-      w_ = "";
-      q = vowels.value;
-      q_ = consonants.value;
+function findWords() {
+  //https://developers.google.com/chart/interactive/docs/querylanguage#where
+  var query = null;
+  if (word.value != "" && word.value.trim().search(/[_·ˈˌ ]/) != -1) {
+    var w_ = word.value.replace(/\s+/g, " ").replace(/_/g, "[^ ]+").replace(/\*/g, ".*").trim();
+    query = "select A, D where A matches '" + w_ + "'";
+  } else if (vowels.value != "" || consonants.value != "") {
+    if (vowels.value != "") {
+      var q = vowels.value.replace(/[_·ˈˌ]/g, function(x){return x+" ";}).replace(/\s+/g, " ").replace(/_/g, "[^ ]+").replace(/\*/g, ".*").trim();
+    } else {
+      var q = ".*";
     }
-    w_ = ""+w_.replace(/\n/g, " ").replace(/\s+/g, " ").trim();
-    q = ""+q.replace(/\n/g, " ").replace(/\s+/g, " ").trim();
-    q_ = ""+q_.replace(/\n/g, " ").replace(/\s+/g, " ").trim();
+    if (consonants.value != "") {
+      var q_ = consonants.value.split("").join(" ").replace(/\s+/g, " ").replace(/_/g, "[^ ]").replace(/\*/g, ".*").trim();
+    } else {
+      var q_ = ".*";
+    }
+    query = "select A, D where B matches '" + q + "' and C matches '" + q_ + "'";
+  }
+  if (query != null) {
+    word_.innerHTML = "<div>Searching...</div>";
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
         if (this.responseText != "") {
-          word_.innerHTML = "<div onclick='showList();'>=> Click for results</div>" + this.responseText;
+          var r = this.responseText.slice(1,-1).replace(/","/g, "'>").replace(/"\n"/g, "</li><li title='");
+          word_.innerHTML = "<div onclick='showList();'>=> Results</div><ul><li title='" + r + "</li></ul>";
+          r = null;
         } else {
           word_.innerHTML = "<div>!= Nothing found</div>";
         }
         word_.focus();
       }
     };
-    xhttp.open("GET", url + "?w=" + w_ + "&q=" + q + "&q_=" + q_, true);
+    xhttp.open("GET", base + gid + "&tq=" + encodeURIComponent(query), true);
     xhttp.send();
-    word_.innerHTML = "<div>Searching...</div>";
   }
 }
 
@@ -1170,11 +1478,10 @@ function splitWord() {
   consonants.value = "";
   var wrd = word.value.split(" ");
   for (var i=0; i<wrd.length; i++) {
-    var num = wrd[i].charAt(2);
-    if (num == "_" || num == "0" || num == "1" || num == "2") {
-      vowels.value += wrd[i] + " ";
+    if (wrd[i].search(/[_·ˈˌ]/) != -1) {
+      vowels.value += wrd[i];
     } else {
-      consonants.value += wrd[i] + " ";
+      consonants.value += wrd[i];
     }
   }
   vowels.value = vowels.value.trim();
@@ -1182,81 +1489,109 @@ function splitWord() {
   word.value = "";
 }
 
-function syllables() {
-  var str = res.value.replace(/\n/gi, " \n");
-  var lines = str.split("\n");
-  str = "";
-  for (var j=0; j<lines.length; j++) {
-    lines[j] = lines[j].replace(/ /gi, function (x) {
-        return x;
-    });
-    lines[j] = lines[j].replace(/[ieaouy]/gi, function (x) {
-      return "<i>"+x+"</i>";
-    });
-    str += lines[j]+"\n";
+function highlightText() {
+  var d = findCursor(res).split(',')[1];
+  var b_ = res.value.substr(0, d).split("\n");
+  var ln = b_[b_.length-2];
+  
+  if (ln.search(/\w/gi) >= 0 && ln.search(/[ˊ`_·ˈˌ]/g) == -1) {
+    var wrd_ = ln.replace(/[\,\.\?\!]/g, "").split(" ");
+    res.value = res.value.substr(0, d) + "…" + res.value.substr(d);
+    loadTranscription(ln, wrd_, wrd_.length-1);
   }
-  str = str.slice(0, -1);
-  res_old = highlight.innerText;
-  highlight.innerHTML = "<pre>"+str+"</pre>";
-  highlight.scrollTop = res.scrollTop;
-  highlight.scrollLeft = res.scrollLeft;
+  
+  hl.scrollTop = res.scrollTop;
+  hl.scrollLeft = res.scrollLeft;
+}
+
+function loadTranscription(ln, wrd_, count) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      if (this.responseText != "") {
+        var r = this.responseText.replace(r_, function (x){return superscript[x];}).replace(/[\s\"]/g, "");
+        res.value = res.value.replace(ln+"\n…", ln+"\n…"+r+" ");
+        count--;
+        if (count>=0) {
+          loadTranscription(ln, wrd_, count);
+        } else {
+          res.value = res.value.replace(ln+"\n…", ln+"\n");
+          colorPhonemes();
+        }
+      }
+    }
+  };
+  //var query = "select A where D = '" + wrd_[count].toLowerCase() + "' limit 1";
+  //xhttp.open("GET", base + gid_ + "&tq=" + encodeURIComponent(query), true);
+  xhttp.open("GET", fbase + wrd_[count].toLowerCase() + "/0.json", true);
+  xhttp.send();
 }
 
 function colorPhonemes() {
-  var str = rs.value;
+  res_old = res.value;
+  var str = res.value;
+  var r = new RegExp("["+spaces+"]", "g");
   var lines = str.split("\n");
   str = "";
   for (var j=0; j<lines.length; j++) {
-    for (var i=0; i<regexp.length; i++) {
-      lines[j] = lines[j].replace(regexp[i][0], function (x) {
-          return "<i style='background-color:" + regexp[i][1] + ";margin-right:-4px;border-right:4px solid " + regexp[i][1] + ";'>"+x+"</i>";
+    if (lines[j].search(/[^\s⠀]/g) == -1) {
+      lines[j] = lines[j].replace(r, function (x) {
+        var i_ = spaces.indexOf(x);
+        var x_ = spaces.length - i_;
+        x = "_";
+        for (var i=0; i<x_; i++) {
+          x = "<b>"+x+"</b>";
+        }
+        return "<span style='color:rgba(0,0,0,"+(colors[i_]*0.75+0.25)+");'>"+x+"</span>";
       });
+    } else if (lines[j].search(/[ˊ`_·ˈˌ]/g) != -1) {
+      for (var i=0; i<regexp.length; i++) {
+        lines[j] = lines[j].replace(regexp[i][0], function (x) {
+            return "<i style='border-bottom:4px solid " + regexp[i][1] + ";'>"+x+"</i>";
+        });
+      }
+      var k = Object.keys(superscript);
     }
     str += lines[j]+"\n";
   }
   str = str.slice(0, -1);
-  rs_old = highlight_.innerText;
-  highlight_.innerHTML = "<pre>"+str+"</pre>";
-  highlight_.scrollTop = rs.scrollTop;
-  highlight_.scrollLeft = rs.scrollLeft;
+  hl.innerHTML = str;
+  hl.scrollTop = res.scrollTop;
+  hl.scrollLeft = res.scrollLeft;
 }
 
 function undo() {
-  if (ctl == rs) {
-    rs.value = rs_old;
-    colorPhonemes();
-  } else if (ctl == res) {
+  if (ctl == res) {
     res.value = res_old;
-    syllables();
+    highlightText();
   } else if (ctl == b) {
     b.value = b_old;
   }
 }
 
-function pos(w_) {
-  entry.style.visibility = "visible";
-  ngram.src = "https://books.google.com/ngrams/interactive_chart?content="+w_+"_%2A&year_start=1800&year_end=2019&corpus=26&smoothing=0&case_insensitive=true";
-
+function loadDefinition(w_) {
+  translations.style.visibility='visible';
+  chart_.innerHTML = '<iframe id="chart_iframe" src="https://books.google.com/ngrams/interactive_chart?content='+w_+'_*&year_start=1500&year_end=2019&corpus=26&smoothing=0&case_insensitive=" width="100%" height="128" marginwidth=0 marginheight=0 hspace=0 vspace=0 frameborder=0 scrolling=no></iframe><br/><a href="https://books.google.com/ngrams/graph?content='+w_+'_*&year_start=1500&year_end=2019&corpus=26&smoothing=0&case_insensitive=" target="_blank"><i class="material-icons notranslate">fullscreen</i></a>';
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       if (this.responseText != "") {
         var json = JSON.parse(this.responseText)[0];
-        def.innerHTML = "<i class='material-icons'>volume_up</i> ";
+        translation.innerHTML = "<b>" + json.word + "</b><i class='material-icons notranslate'>volume_up</i> ";
         for (var i=0; i<json.phonetics.length; i++) {
-          def.innerHTML += "<audio><source src='"+json.phonetics[i].audio+"' type='audio/mpeg'></audio><a href='javascript:playAudio();'>" + json.phonetics[i].text + "</a> ";
+          translation.innerHTML += "<audio><source src='"+json.phonetics[i].audio+"' type='audio/mpeg'></audio><a href='javascript:playAudio();'>" + json.phonetics[i].text + "</a> ";
         }
         for (var i=0; i<json.meanings.length; i++) {
-          def.innerHTML += "<hr/><b>" + json.meanings[i].partOfSpeech + "</b>";
+          translation.innerHTML += "<hr/><b>" + json.meanings[i].partOfSpeech + "</b>";
           for (var j=0; j<json.meanings[i].definitions.length; j++) {
-            def.innerHTML += "<br/><br/>" + json.meanings[i].definitions[j].definition + "<br/>";
+            translation.innerHTML += "<br/><br/>" + json.meanings[i].definitions[j].definition + "<br/>";
             for (var k=0; k<json.meanings[i].definitions[j].synonyms.length; k++) {
-              def.innerHTML += "<i><u><a href='javascript:' onclick='word.value=this.innerText;'>" + json.meanings[i].definitions[j].synonyms[k] + "</a></u></i> ";
+              translation.innerHTML += "<i><u><a href='javascript:' onclick='word.value=this.innerText;'>" + json.meanings[i].definitions[j].synonyms[k] + "</a></u></i> ";
             }
           }
         }
       } else {
-        def.innerHTML = "Unknown word";
+        translation.innerHTML = "Unknown word";
       }
     }
   };
@@ -1264,86 +1599,417 @@ function pos(w_) {
   xhttp.send();
 }
 
-function loadIndex(f, v) {
+
+function loadInflections(txt) {
+  var tl_ = corpus.options[corpus.selectedIndex].value;
+  ngram.innerHTML = "<option>Loading...</option>";
+  var txt_ = txt.split('_')[0].split(' ');
+  txt = txt_[txt_.length-1];
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-      w = this.responseText.split("\n");
-      var options = "";
-      if (v == "v") {
-        vowels_.innerHTML = "";
-        for (var i=0; i<w.length; i++) {
-          //var wrd = w[i].split(",");
-          options += "<option value='" + w[i] + "'/>";
+      ngram.innerHTML = this.responseText;
+      ngram.disabled=false;
+    }
+  };
+  xhttp.open("GET", url + "?a=phrases&w=" + txt + "_INF&tl=" + tl_, true);
+  xhttp.send();
+}
+
+
+function loadIndex(txt, i) {
+  if (txt.indexOf(" ") == -1) {
+    a_c = true;
+    vowels.blur();
+    consonants.blur();
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        var r = this.responseText.slice(1,-1).replace(/"\n"/g, "</option><option>");
+        if (i=="A") {
+          vowels_.innerHTML = "<option>" + r + "</option>";
+          vowels.focus();
+        } else {
+          consonants_.innerHTML = "<option>" + r + "</option>";
+          consonants.focus();
         }
-        //_word.innerHTML = '';
-        //consonants_.innerHTML = '';
-        vowels_.innerHTML = options;
-      } else if (v == "c") {
-        consonants_.innerHTML = "";
-        for (var i=0; i<w.length; i++) {
-          //var wrd = w[i].split(",");
-          options += "<option value='" + w[i] + "'/>";
+      	r = null;
+      	a_c = false;
+      }
+    };
+    var query = "select "+i+" where "+i+" contains '" + txt + "'";
+    xhttp.open("GET", base + gid_ + "&tq=" + encodeURIComponent(query), true);
+    xhttp.send();
+  }
+}
+
+
+function autoCompleter(txt) {
+  if (txt.indexOf(" ") == -1) {
+    a_c = true;
+    word.blur();
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        var r = this.responseText.slice(1,-1).replace(/","/g, "'>").replace(/"\n"/g, "</option><option value='");
+        _word.innerHTML = "<option value='" + r + "</option>";
+      	r = null;
+      	a_c = false;
+      	word.focus();
+      }
+    };
+    var query = "select A, D where D contains '" + txt + "'";
+    xhttp.open("GET", base + gid + "&tq=" + encodeURIComponent(query), true);
+    xhttp.send();
+  }
+}
+
+
+function loadWords() {
+  word_.innerHTML = "<div>Loading...</div>";
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var r = this.responseText.slice(1,-1).replace(/","/g, "'>").replace(/"\n"/g, "</li><li title='").replace(/>\w+ /g, " class='d'>");
+      word_.innerHTML = "<div onclick='showList();'><i class='material-icons notranslate'>bookmark_border</i>&nbsp;Dictionary</div><hr size='2' width='"+(wn/ln)+"'><ul><li title='' onclick='if(wn>0){wn-=ln;loadWords();}'>…</li><li title='" + r + "</li><li title='' onclick='wn+=ln;loadWords();'>…</li></ul>";
+      words_ = this.responseText.replace(/".+",/g, "").replace(/".+\s\d"\n?/g, "").replace(/"/g, "").split("\n");
+    }
+  };
+  var query = "select A, D limit " + ln + " offset " + wn;
+  xhttp.open("GET", base + gid + "&tq=" + encodeURIComponent(query), true);
+  xhttp.send();
+}
+
+function loadLanguages() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      languages.innerHTML = this.responseText;
+      for (var i=0; i<languages.options.length; i++) {
+        if (navigator.language.indexOf(languages.options[i].value) >= 0 && navigator.language.indexOf(tl[0]) == -1) {
+        		languages.options[i].selected = true;
+        		sl = languages.options[i].value;
+        		langRedirect(false);
+        } else if (languages.options[i].value.indexOf(sl) >= 0) {
+            languages.options[i].selected = true;
         }
-        //_word.innerHTML = '';
-        //vowels_.innerHTML = '';
-        consonants_.innerHTML = options;
-      } else if (v == "w") {
-        _word.innerHTML = "";
-        for (var i=0; i<w.length; i++) {
-          var wrd = w[i].split(",");
-          options += "<option value='" + wrd[1] + "'/>";
-        }
-        //vowels_.innerHTML = '';
-        //consonants_.innerHTML = '';
-        _word.innerHTML = options;
       }
     }
   };
-  xhttp.open("GET", f, true);
+  xhttp.open("GET", url + "?a=languages&tl=" + navigator.language, true);
   xhttp.send();
 }
-loadIndex('vowels.csv', 'v');
-loadIndex('consonants.csv', 'c');
+
+
+function langRedirect(u) {
+  if (location.href.split("?")[0] != "https://freeali-se.translate.goog/phonetic/" || u===true) {
+    window.location.replace("https://freeali-se.translate.goog/phonetic/?_x_tr_sch=http&_x_tr_sl=en&_x_tr_tl="+sl+"&_x_tr_hl="+sl+"&_x_tr_pto=ajax,nv,elem");
+    //to detect by location: https://translate.googleusercontent.com/translate_p?anno=2&sl=auto&tl=en&u=http://freeali.se/phonetic&depth=1&rurl=translate.google.com&nv=1&sp=nmt4&pto=aue,ajax,boq&usg=ALkJrhgAAAAAYUnyEmwT_dUC6o42XdaOjdrM0pUIZtG3
+  }
+}
+
+
+function loadTranslations(wrd) {
+  if (sl != tl[0]) {
+    translation.innerHTML = "Translating...";
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        var r = this.responseText.split("\n");
+        if (r[0]) {
+          translation.innerHTML = r[0];
+          ngram.innerHTML = "<option>" + r[1].replace(/,/g, "</option><option>") + "</option>";
+          ngram.disabled=false;
+        } else {
+          translation.innerHTML = "";
+          loadTranslation(wrd);
+        }
+      }
+    };
+    xhttp.open("GET", url + "?a=translate&w=" + wrd + "&tl=" + sl + "&sl=" + tl[0], true);
+    xhttp.send();
+  } else {
+    loadDefinition(wrd);
+    return wrd;
+  }
+}
+
+
+function loadTranslation(wrd) {
+  if (sl != tl[0]) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        translation_.innerHTML = this.responseText + "<br/>";
+      }
+    };
+    xhttp.open("GET", url + "?a=translate_beta&w=" + wrd.replace(/ /g, "+") + "&tl=" + sl + "&sl=" + tl[0], true);
+    xhttp.send();
+  } else {
+    return wrd;
+  }
+}
+
+
+function getSentence() {
+  var d = findCursor(res).split(',')[1];
+  var b_ = res.value.substr(0, d).replace(/[\.\?\!]/g, function(x){return x+"+";}).split("+");
+  var wrd = b_[b_.length-2].trim();
+  var b = res.value.indexOf(wrd);
+  res.value = res.value.substr(0, b) + "…\n" + res.value.substr(b);
+  colorPhonemes();
+  syntax_chart.innerHTML = "Checking...";
+  var wrd_ = wrd.replace(/\n\W*\n/g, "\n").replace(/\n/g, " ").replace(/[\,\"\'\-\:\;]/g, "").replace(/\?/g, " \?").replace(/[\!\.]/, function(x){return " "+x;}).split(" ");
+  loadPunctuation(wrd_, 0, wrd);
+}
+
+
+function loadPunctuation(w, count, o) {
+  if (w.length>2) {
+    var q = w[count] + " * " + w[count+1];
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        var r = JSON.parse(this.responseText);
+        var p = "";
+        for (var i=r.phrases.length-1; i>=0; i--) {
+          if (r.phrases[i].tks[1].tt.search(/[\,\"\'\-\:\;]/) != -1) {
+            p = r.phrases[i].tks[1].tt;
+          } else if (r.phrases[i].tks[1].tt == w[count+1]) {
+            p = "";
+          }
+        }
+        w[count] = w[count] + p + " ";
+        count++;
+        if (w[count+2]) {
+          loadPunctuation(w, count, o);
+        } else {
+          w[count] = w[count] + w[count+1];
+          w[count+1] = "";
+          loadCorrection(w.join(""), o);
+        }
+      }
+    };
+    xhttp.open("GET", "https://api.phrasefinder.io/search?corpus=eng-us&format=json&nmax=3&query=" + encodeURIComponent(q), true);
+    xhttp.send();
+  } else {
+    loadCorrection(w.join(""), o);
+  }
+}
+
+
+function loadCorrection(wrd, o) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      if (this.responseText == o) {
+        hl.innerHTML = hl.innerHTML.replace("…\n", "");
+        res.value = res.value.replace("…\n", "");
+      } else {
+        hl.innerHTML = hl.innerHTML.replace("…\n", "<sup>"+this.responseText+"</sup>\n");
+        res.value = res.value.replace("…\n", "\n");
+      }
+      loadTranslation(o.replace(/\?/g, '%3F').replace(/\!/g, '%21'));
+      loadSyntaxTree(this.responseText);
+      
+      spellcheck.innerText = "spellcheck";
+      orig = null;
+      corr = null;
+      loadSyntaxPopularity(wrd);
+      loadSyntaxPopularity(this.responseText);
+    }
+  };
+  xhttp.open("GET", url + "?a=correct&w=" + wrd.replace(/ /g, "+") + "&tl=" + tl[0] + "&sl=" + tl[1], true);
+  xhttp.send();
+}
+
+
+function loadSyntaxTree(wrd) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var r = this.responseText.split("\n");
+      r[0] = r[0].replace(/\[{"/g, "<option>&nbsp;").replace(/"},{"/g, "</option>\n<option>&nbsp;").replace(/\w+":"\w+/g, function(x){var y=x.split('":"');return y[1]+' '+y[0];}).replace(/","/g, "</option><option>").replace(/"}\]/g, "</option>").split("\n");
+      r[1] = r[1].split(" ");
+      r[2] = r[2].split(" ");
+      var tree = [[]];
+      var wrd_ = wrd.trim().replace(/[^\w\s]/g, function(x){return " "+x;}).replace(/\s+/g, " ").split(" ");
+      for (var i=0; i<r[0].length*2; i+=2) {
+        tree[i] = [{'v':''+i, 'f':'<select onfocus="this.selectedIndex=-1" onblur="this.selectedIndex=0" onchange="loadWiki(this.options[this.selectedIndex].innerText);this.blur();"><optgroup label="'+r[2][i/2]+'">'+r[0][i/2]+'</optgroup></select>'}, ''+r[1][i/2]*2, ''+i];
+        var j = i+1;
+        tree[j] = [{'v':''+j, 'f':'<b>'+wrd_[i/2]+'</b>'}, ''+i, ''+j];
+      }
+      syntax_chart.innerHTML = "";
+      drawChart(tree);
+    }
+  };
+  xhttp.open("GET", url + "?a=syntax&w=" + wrd.replace(/ /g, "+") + "&tl=" + tl[0] + "&tl_=&c=1", true);
+  xhttp.send();
+}
+
+
+      function drawChart(tree) {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Index');
+        data.addColumn('string', 'Root');
+        data.addColumn('string', 'ToolTip');
+
+        // For each orgchart box, provide the name, manager, and tooltip to show.
+        data.addRows(tree);
+
+        // Create the chart.
+        var chart = new google.visualization.OrgChart(document.getElementById('syntax_chart'));
+        // Draw the chart, setting the allowHtml option to true for the tooltips.
+        chart.draw(data, {'allowHtml':true, 'allowCollapse':true, 'size':'small', 'nodeClass':'tree', 'selectedNodeClass':'tree_selected'});
+      }
+      
+      
+function loadSyntaxPopularity(wrd) {
+  var tl_ = corpus.options[corpus.selectedIndex].value;
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var r = this.responseText.split(",");
+      if (!orig) {
+        orig = r;
+      } else {
+        corr = r;
+      }
+      if (orig && corr) {
+        if (orig.length < corr.length) {
+          for (var i=orig.length; i<corr.length; i++) {
+            orig[i] = 1.0;
+          }
+        } else if (corr.length < orig.length) {
+          for (var i=corr.length; i<orig.length; i++) {
+            corr[i] = 1.0;
+          }
+        }
+        var avg = 0;
+        for (var i=0; i<corr.length; i++) {
+          avg += parseFloat(corr[i]) - parseFloat(orig[i]);
+        }
+        avg = avg / corr.length;
+        if (avg > 0) {
+          spellcheck.innerText = "cancel";
+        } else if (avg < 0) {
+          spellcheck.innerText = "flaky";
+        } else {
+          spellcheck.innerText = "task_alt";
+        }
+      }
+    }
+  };
+  xhttp.open("GET", url + "?a=syntax&w=" + wrd.replace(/ /g, "+") + "&tl=" + tl[0] + "&tl_=" + tl_ + "&c=0", true);
+  xhttp.send();
+}
+
+
+function loadPhrases() {
+  var wrd = phrase.value;
+  var tl_ = corpus.options[corpus.selectedIndex].value;
+  ngram.innerHTML = "<option>Searching...</option>";
+  for (var i=0; i<pos_.options.length; i++) {
+    var r = new RegExp("\\"+pos_.options[i].value, "g");
+    wrd = wrd.replace(r, pos_.options[i].className);
+  }
+  wrd = wrd.replace(/__/g, "_ _").replace(/\S_\w+_/g, function(x){return x.slice(0,-1);}).replace(/_\w+_/g, function(x){return "*"+x.slice(0,-1);}).replace(/\s/g, "+").replace(/,/g, "%2C").replace(/\*/g, "%2A");
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      ngram.innerHTML = this.responseText;
+      ngram.disabled=false;
+    }
+  };
+  xhttp.open("GET", url + "?a=phrases&w=" + wrd + "&tl=" + tl_, true);
+  xhttp.send();
+}
+
+
+function loadWiki(q) {
+  q = q.replace(/\s\w+\s/, '').replace(' ', '_').toLowerCase();
+  examples.innerHTML = "<iframe id='wiki' src='https://simple.m.wikipedia.org/wiki/"+q+"' width='100%' height='256'/>";
+}
+
+
+function loadExamples(q) {
+  examples.innerHTML = "<iframe id='wiki' src='https://en.m.wikipedia.org/w/index.php?ns0=1&search=%22"+encodeURIComponent(q)+"%22' width='100%' height='256'/>";
+}
+
+
+function loadQuiz(d) {
+  var q = words_[parseInt(Math.random()*words_.length)];
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      if (this.responseText != "") {
+        examples.innerHTML = "";
+        var r = JSON.parse(this.responseText)[0];
+        var r_ = [];
+        for (var i=0; i<r.meanings.length; i++) {
+          for (var j=0; j<r.meanings[i].definitions.length; j++) {
+            if (d === true) {
+              var e = r.meanings[i].definitions[j].definition;
+              if (e) {r_.push(" "+e+" "+r.word+" ");}
+            } else {
+              var e = r.meanings[i].definitions[j].example;
+              if (e) {r_.push(" "+e+" ");}
+            }
+          }
+        }
+        var q_ = new RegExp("\\W"+q+"\\W", "gi");
+        examples.innerHTML = "<form onsubmit='event.preventDefault();checkCompletion(&quot;"+q+"&quot;);'>"+r_.join("<br/><br/>").replace(q_, function(x) {
+       	  return x.slice(0,1)+"<input class='complete' type='text' size='"+(x.length-2)+"' style='width:"+(x.length-2)/1.67+"em' required/>"+x.slice(-1);
+        })+"<br/><input id='complete' type='submit' value='>'/></form>";
+        examples.scrollTop = 0;
+      } else {
+        examples.innerHTML = "Unknown word";
+      }
+    }
+  };
+  xhttp.open("GET", 'https://api.dictionaryapi.dev/api/v2/entries/en/'+q, true);
+  xhttp.send();
+}
+
+
+function checkCompletion(q) {
+  var completed = document.getElementsByClassName("complete");
+  for (var i=0; i<completed.length; i++) {
+    if (completed[i].value != q) {
+      completed[i].placeholder = completed[i].value;
+      completed[i].value = "";
+      completed[i].focus();
+      return false;
+    }
+  }
+  loadQuiz(false);
+  return true;
+}
 
 
 function showLyrics() {
-  if (res.style.display!='none') {
-    highlight.style.display='none';
-    res.style.display='none';
+  if (sidebar.style.display!='none') {
+    sidebar.style.display='none';
     
-    rs.style.top='0px';
-    rs.style.minWidth='100%';
-    rs.style.minHeight='256px';
-    highlight_.style.minWidth='100%';
-    highlight_.style.minHeight='256px';
-    highlight_.style.top='0px';
+    res.style.minWidth='100%';
+    res.style.minHeight='256px';
+    highlight.style.minWidth='100%';
+    highlight.style.minHeight='256px';
   } else {
-    highlight.style.display='block';
-    res.style.display='block';
+    sidebar.style.display='block';
 
-    rs.style.top='';
-    rs.style.minWidth='50%';
-    rs.style.minHeight='128px';
-    highlight_.style.minWidth='50%';
-    highlight_.style.minHeight='128px';
-    highlight_.style.top='';
+    res.style.minWidth='50%';
+    res.style.minHeight='128px';
+    highlight.style.minWidth='50%';
+    highlight.style.minHeight='128px';
   }
 }
 
-function showEntry() {
-  if (entry.style.visibility!='visible') {
-    entry.style.visibility='visible';
+function showResources() {
+  if (resources.style.visibility!='visible') {
+    resources.style.visibility='visible';
   } else {
-    entry.style.visibility='hidden';
-  }
-}
-
-function showHelp() {
-  if (help.style.visibility!='visible') {
-    help.style.visibility='visible';
-  } else {
-    help.style.visibility='hidden';
+    resources.style.visibility='hidden';
   }
 }
 
@@ -1355,7 +2021,15 @@ function showCredits() {
   }
 }
 
-function showTooltips() {
+function showLinks() {
+  if (links.style.width!='144px') {
+    links.style.width='144px';
+  } else {
+    links.style.width='24px';
+  }
+}
+
+function showMobile() {
   if (mobile.style.visibility!='visible') {
     mobile.style.visibility='visible';
   } else {
@@ -1363,21 +2037,25 @@ function showTooltips() {
   }
 }
 
-function showLinks() {
-  if (links.style.width!='144px') {
-    links.style.width='144px';
-  } else {
-    links.style.width='28px';
-  }
-}
-
 function showList() {
   if (word_.style.position!='absolute') {
     word_.style.position='absolute';
     word_.style.height='180px';
+    word_.style.top='24px';
+    word_.style.zIndex='1';
   } else {
     word_.style.position='relative';
     word_.style.height='18px';
+    word_.style.top='0px';
+    word_.style.zIndex='0';
+  }
+}
+
+function showPhonemes() {
+  if (dict.style.visibility!='visible') {
+    dict.style.visibility='visible';
+  } else {
+    dict.style.visibility='hidden';
   }
 }
 
@@ -1387,6 +2065,22 @@ function showSpectrogram() {
     spectrogram.style.visibility='visible';
   } else {
     spectrogram.style.visibility='hidden';
+  }
+}
+
+function showSyntax() {
+  if (syntax.style.visibility!='hidden') {
+    syntax.style.visibility='hidden';
+  } else {
+    syntax.style.visibility='visible';
+  }
+}
+
+function showWords() {
+  if (translations.style.display!='none') {
+    translations.style.display='none';
+  } else {
+    translations.style.display='block';
   }
 }
 
