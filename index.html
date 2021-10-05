@@ -16,7 +16,7 @@
 <!-- https://en.m.wiktionary.org/w/api.php?action=query&prop=revisions&titles=door&rvslots=*&rvprop=content&formatversion=2 -->
 <!--https://etherpad.wikimedia.org/p/RYC4rG0XlnKEz-bbj3YO-->
 
-<div id="area">
+<div id="area" class="notranslate">
   <div id="highlight"><pre id="hl"></pre></div>
   <textarea placeholder="Lyrics" id="res" onkeyup="if(event.key=='Enter'){highlightText();}else if(event.key=='.' || event.key=='?' || event.key=='!'){getSentence();}else if(event.key==' ' || event.key=='Backspace' || event.key=='Delete' || event.ctrlKey || event.metaKey){colorPhonemes();}" onkeydown="if(event.key.length==1 && kbrd[event.key] && event.getModifierState('CapsLock') && !event.ctrlKey && !event.metaKey){addPhoneme(kbrd[event.key], 0);}" onmouseup="" ontouchup="" onfocus="ctl=this;" onscroll="highlight.scrollTop = this.scrollTop;highlight.scrollLeft = this.scrollLeft;" style="visibility:visible;"></textarea>
 </div>
@@ -115,17 +115,17 @@
             _END_	end of a sentence
         -->
       <div id="word_" class="notranslate" onclick="if(event.target.title){addWord(event.target.innerText, event.target.title);}"></div>
-      <select disabled id="ngram" size="1" onfocus="this.selectedIndex=-1" onblur="this.selectedIndex=0" onchange="loadTranslation(this.options[this.selectedIndex].innerText);loadExamples(this.options[this.selectedIndex].innerText);if(phrase.value.split(' ').length<5){phrase.value=this.options[this.selectedIndex].innerText+' *';loadPhrases();}">
+      <select disabled class="notranslate" id="ngram" size="1" onfocus="this.selectedIndex=-1" onblur="this.selectedIndex=0" onchange="loadTranslation(this.options[this.selectedIndex].innerText);loadExamples(this.options[this.selectedIndex].innerText);if(phrase.value.split(' ').length<5){phrase.value=this.options[this.selectedIndex].innerText+' *';loadPhrases();}">
         <option selected>Phrasebook</option>
       </select>
       <div id="translation"><sub><i class='material-icons notranslate'>translate</i> Translation</sub></div>
       <div id="chart_"><sub><i class='material-icons notranslate'>legend_toggle</i> Word usage</sub></div>
     </div>
-    <div id="syntax">
+    <div id="syntax" class="notranslate">
       <div id="translation_"></div>
       <div id="syntax_chart"><sub><i class='material-icons notranslate'>spellcheck</i> Grammar</sub></div>
     </div>
-    <div id="examples"><sub><i class='material-icons notranslate'>grading</i> Examples</sub></div>
+    <div id="examples" class="notranslate"><sub><i class='material-icons notranslate'>grading</i> Examples</sub></div>
   </div>
 
   <div id="dict">
