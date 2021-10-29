@@ -398,6 +398,7 @@ pre {
 .skiptranslate iframe {
   position: relative;
   width: 100vw;
+  min-width: 480px;
   height: 40px;
   float:right;
 }
