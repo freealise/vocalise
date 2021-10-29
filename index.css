@@ -397,7 +397,7 @@ pre {
 }
 .skiptranslate iframe {
   position: relative;
-  width: 420px;
+  width: 100vw;
   height: 40px;
   float:right;
 }
