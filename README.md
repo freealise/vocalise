@@ -4,6 +4,7 @@ Dictionary by <a href="http://www.speech.cs.cmu.edu/cgi-bin/cmudict" title="Carn
 User is to be able to practice their writing and speaking, while reading and listening content is recommended or provided by the publisher.</p>
 
 <p><b>TODO:</b><br/>
+- writing and reading, speaking and listening with AI and Google Assistant<br/>
 - reverse dictionary with AI and several dictionaries with defining vocabulary<br/>
 - better defining dictionary and example sentences (english wiktionary / voa instead of oxford)<br/>
 - highlighting with color as a mnemonic device (not in the order of reading but same frequent words, letters or phonemes all over the text)<br/>
