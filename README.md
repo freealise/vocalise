@@ -16,5 +16,6 @@ Dictionary by <a href="http://www.speech.cs.cmu.edu/cgi-bin/cmudict" title="Carn
 - calligraphy (touch sensitivity)<br/>
 - app for android (also with ordinary keyboard sorted by sound)<br/>
 - general Storygrid / BS structure (json)<br/>
-- algorithmic filter for explicit / overused / repetitive words and synonyms suggestion
+- algorithmic filter for explicit / overused / repetitive words and synonyms suggestion<br/>
+- more languages (Hebrew, _)
 </p>
