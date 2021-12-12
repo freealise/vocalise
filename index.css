@@ -71,7 +71,7 @@ table, tbody, tr, td {
   padding:0;
 }
 #b {
-  line-height:1.1em;
+  line-height:0.96em;
   letter-spacing:-0.15em;
   width:99%;
   height:224px;
@@ -79,7 +79,7 @@ table, tbody, tr, td {
   white-space:nowrap;
   overflow:scroll;
   background-color:white;
-  color:black;
+  color:gray;
   margin:0;
   padding:2px;
   text-align:left;
@@ -100,39 +100,34 @@ table, tbody, tr, td {
   margin-top:3px;
 }
 #checkboxes {
-  width:72px;
+  width:24px;
+  overflow:hidden;
+  height:128px;
   position:fixed;
-  top:25vh;
-  right:0px;
+  bottom:345px;
+  right:0;
   left:auto;
+  top: auto;
   padding-right:4px;
   background-color:white;
 }
-#p, #ch {
+#ch {
   position: absolute;
-  right: -0.067em;
-  top: 0.025em;
-  font-size: 128px;
+  left: -0.37em;
+  top: -0.14em;
+  font-size: 132px;
   font-weight: bold;
-  line-height: 1em;
-  z-index:-1;
+  line-height: 1.125em;
+  z-index: -1;
+  max-width: 1em;
+  overflow-wrap: anywhere;
 }
-#p {
-  color:lightgray;
-}
-#left {
-  width:32px;
-  float:left;
-  padding:2px;
-}
-#right {
-  width:32px;
-  float:right;
-  padding:2px;
+#ch {
+  color:darkgray;
 }
 .cb {
-  width:32px;
-  height:32px;
+  width:18px;
+  height:18px;
   margin:0;
   padding:0;
   opacity:0;
@@ -397,8 +392,7 @@ pre {
 }
 .skiptranslate iframe {
   position: relative;
-  width: 100vw;
-  min-width: 480px;
+  width: 420px;
   height: 40px;
   float:right;
 }
