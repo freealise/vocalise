@@ -18,14 +18,14 @@ var keys = [
 ];
 
 var keys_ = [
-  "b,B,0.2141,35",
-  "p,P,0.2477,36",
-  "d,D,0.5656,37",
-  "t,T,0.9327,38",
+  "b,B,0.2141,36",
+  "p,P,0.2477,35",
+  "d,D,0.5656,38",
+  "t,T,0.9327,37",
   "ʤ,JH,0.0791,33",
   "ʧ,CH,0.0717,32",
-  "ɡ,G,0.0920,39",
-  "k,K,0.3811,40",
+  "ɡ,G,0.0920,40",
+  "k,K,0.3811,39",
   "v,V,0.2394,20",
   "f,F,0.2387,19",
   "ð,DH,0.6531,16",
@@ -161,33 +161,19 @@ var colors = [0,1,0,1,0,0,1,0,1,0,1,0,0];
 var spaces = "　 ⠀          ";
 //https://en.wikipedia.org/wiki/Whitespace_character
 
-var dots = (
-	"⠀⢀⠠⢠⠐⢐⠰⢰⠈⢈⠨⢨⠘⢘⠸⢸" +
-	"⡀⣀⡠⣠⡐⣐⡰⣰⡈⣈⡨⣨⡘⣘⡸⣸" +
-	"⠄⢄⠤⢤⠔⢔⠴⢴⠌⢌⠬⢬⠜⢜⠼⢼" +
-	"⡄⣄⡤⣤⡔⣔⡴⣴⡌⣌⡬⣬⡜⣜⡼⣼" +
-	"⠂⢂⠢⢢⠒⢒⠲⢲⠊⢊⠪⢪⠚⢚⠺⢺" +
-	"⡂⣂⡢⣢⡒⣒⡲⣲⡊⣊⡪⣪⡚⣚⡺⣺" +
-	"⠆⢆⠦⢦⠖⢖⠶⢶⠎⢎⠮⢮⠞⢞⠾⢾" +
-	"⡆⣆⡦⣦⡖⣖⡶⣶⡎⣎⡮⣮⡞⣞⡾⣾" +
-	"⠁⢁⠡⢡⠑⢑⠱⢱⠉⢉⠩⢩⠙⢙⠹⢹" +
-	"⡁⣁⡡⣡⡑⣑⡱⣱⡉⣉⡩⣩⡙⣙⡹⣹" +
-	"⠅⢅⠥⢥⠕⢕⠵⢵⠍⢍⠭⢭⠝⢝⠽⢽" +
-	"⡅⣅⡥⣥⡕⣕⡵⣵⡍⣍⡭⣭⡝⣝⡽⣽" +
-	"⠃⢃⠣⢣⠓⢓⠳⢳⠋⢋⠫⢫⠛⢛⠻⢻" +
-	"⡃⣃⡣⣣⡓⣓⡳⣳⡋⣋⡫⣫⡛⣛⡻⣻" +
-	"⠇⢇⠧⢧⠗⢗⠷⢷⠏⢏⠯⢯⠟⢟⠿⢿" +
-	"⡇⣇⡧⣧⡗⣗⡷⣷⡏⣏⡯⣯⡟⣟⡿⣿"
+var hex = (
+  "䷀䷫䷌䷠䷉䷅䷘䷋䷈䷸䷤䷴䷼䷺䷩䷓" +
+  "䷍䷱䷝䷷䷥䷿䷔䷢䷙䷑䷕䷳䷨䷃䷚䷖" +
+  "䷪䷛䷰䷞䷹䷮䷐䷬䷄䷯䷾䷦䷻䷜䷂䷇" +
+  "䷡䷟䷶䷽䷵䷧䷲䷏䷊䷭䷣䷎䷒䷆䷗䷁"
 ).split("");
 
 var phonemes =
-  "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡇⡇⡇⡇⡇⡇⡇⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⢸⠀⠀⠀⠀⠀⠀⠀" + "\n" +
-  "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠃⠃⡇⡇⡇⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⢸⠀⠀⠀⠀⠀⠀⠀" + "\n" +
-  "⠀⠀⠀⠀⠀⠀⠀⣀⣀⣤⠤⠶⠀⠀⠀⠂⠂⠃⠃⡇⡇⠀⠀⠆⠀⠀⠀⡂⡂⠂⠂⠀⠘⠘⠀⠀⠀⢀⢀⠐⠐" + "\n" +
-  "⣀⣤⠤⠶⠒⠛⠉⠉⠀⠀⠀⠀⠀⠀⡀⠃⡃⠀⡀⠇⡇⠀⡄⡀⡆⡁⠀⡄⡂⡁⠅⠀⠀⢀⠀⢰⠰⢐⠐⢈⠈";
-  
+"䷀䷀䷀䷀䷀䷀䷀䷀䷀䷀䷀䷫ ䷡䷡䷟䷟䷁䷁䷁䷁ ䷀䷫䷀䷀ ䷫䷫䷫䷌ ䷁䷁ ䷁䷁䷡䷡䷌䷫" + "\n" +
+"䷫䷠䷌䷘䷉䷼䷈䷙䷍䷡䷪䷪ ䷀䷫䷼䷺䷀䷫䷗䷁ ䷠䷛䷋䷸ ䷷䷿䷑䷾ ䷡䷟ ䷗䷁䷀䷫䷾䷑";
+
 /*
-uuooaaeaeeii sztdszfv wyrl mnnh cj bpdtgk
+uuooaaeaeeii sztdszfv wyrl mnnh cj pbtdkg
 : : : re : :   hhhh          g  hh
 */
 
@@ -196,16 +182,20 @@ for (var i=0; i<phonemes_.length; i++) {
   phonemes_[i] = phonemes_[i].split("");
 }
 
-var keysPressed = new Array(8);
+var keysPressed = new Array(12);
 var kbrd = {
-  '1': 0,
-  '2': 4,
-  'q': 1,
-  'w': 5,
-  'a': 2,
-  's': 6,
-  'z': 3,
-  'x': 7,
+  '1': 11,
+  '2': 10,
+  '3': 9,
+  '4': 8,
+  '5': 7,
+  '6': 6,
+  '7': 5,
+  '8': 4,
+  '9': 3,
+  '0': 2,
+  '-': 1,
+  '=': 0,
 }
 for (var i=0; i<keysPressed.length; i++) {
   keysPressed[i] = false;
@@ -224,7 +214,7 @@ var osc, gain, osc_, gain_;
 var i_, _i, t;
 var a_ = [];
 var playNow = false;
-var h = 16;
+var h = 12;
 
 function init() {
   ac = new AudioContext({latencyHint:"interactive",sampleRate: 48000});
@@ -325,16 +315,16 @@ function toBinary(v) {
         a_[j*2] = "";
         a_[j*2+1] = "";
       }
-      var b_ = dots.indexOf(a[i][j]).toString(2);
-      while (b_.length<8) {
+      var b_ = hex.indexOf(a[i][j]).toString(2);
+      while (b_.length<6) {
         b_ = "0" + b_;
       }
-      a_[j*2] += b_.slice(0,4);
-      a_[j*2+1] += b_.slice(-4);
+      a_[j*2] += b_;
+      a_[j*2+1] += "";
     }
   }
   for (var i=0; i<a_.length; i++) {
-    while (a_[i].length<16) {
+    while (a_[i].length<12) {
       a_[i] = "0" + a_[i];
     }
   }
@@ -346,7 +336,7 @@ function showColumn() {
   var d_ = parseInt(b.selectionEnd);
   var ch_ = b.value.charAt(b_);
   ch.innerHTML = ch_;
-  var c = dots.indexOf(ch_);
+  var c = hex.indexOf(ch_);
   if (c == -1) {
     c = 0;
   }
@@ -445,7 +435,7 @@ function addBinary() {
       p += "0";
     }
   }
-  if (p=="00000000") {
+  if (p=="000000") {
     p = "";
     for (var i=0; i<cb.length; i++) {
       if (cb[i].checked === true) {
@@ -463,12 +453,13 @@ function addBinary() {
       }
     }
   }
-  var i = parseInt(p, 2);
-  b.value = b.value.substr(0, b_) + dots[i] + b.value.substr(d_+1);
+  var i = parseInt(p.substr(0, 6), 2);
+  b.value = b.value.substr(0, b_) + hex[i] + b.value.substr(d_+1);
   b.focus();
   b.setSelectionRange(b_, b_);
   var ch_ = b.value.charAt(b_);
   ch.innerHTML = ch_;
+  playColumn();
 }
 
 function zoom(v) {
@@ -621,8 +612,9 @@ var sl = "en";
 var orig, corr;
 var a_c = false;
 
-b.style.fontSize = "16px";
-b.value = "⠀\n⠀\n⠀\n⠀\n";
+b.style.fontSize = "56px";
+b.value = "䷀\n䷀";
+b.setSelectionRange(2, 2);
 var r_ = new RegExp("("+Object.keys(superscript).join("|")+")", "g");
 
 for (var i=0; i<keys.length; i++) {
