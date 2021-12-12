@@ -25,20 +25,13 @@
     <textarea placeholder="Speech formant spectrum" id="b" onkeydown="if(event.key!='ArrowRight' && event.key!='ArrowLeft' && event.key!='ArrowUp' && event.key!='ArrowDown' && event.key!='Enter' && event.key!='Backspace' && event.key!='Delete' && event.ctrlKey!==true && event.metaKey!==true || event.key==' '){event.preventDefault();keysPressed[kbrd[event.key]]=true;addBinary();}" onkeyup="if(event.key!='ArrowRight' && event.key!='ArrowLeft' && event.key!='ArrowUp' && event.key!='ArrowDown' && event.key!='Enter' && event.key!='Backspace' && event.key!='Delete' && event.ctrlKey!==true && event.metaKey!==true || event.key==' '){keysPressed[kbrd[event.key]]=false;}else if(event.key=='ArrowRight'||event.key=='ArrowLeft'){showColumn();playColumn();}else if(event.key=='ArrowUp'||event.key=='ArrowDown'){showColumn();}" onfocus="ctl=this;"></textarea>
     
     <div id="checkboxes" oncontextmenu="return false;">
-      <div id="left">
-        <input type="checkbox" class="cb" onchange="addBinary();" ontouchend="this.click();"/>
-        <input type="checkbox" class="cb" onchange="addBinary();" ontouchend="this.click();"/>
-        <input type="checkbox" class="cb" onchange="addBinary();" ontouchend="this.click();"/>
-        <input type="checkbox" class="cb" onchange="addBinary();" ontouchend="this.click();"/>
-      </div>
-      <div id="right">
-        <input type="checkbox" class="cb" onchange="addBinary();" ontouchend="this.click();"/>
-        <input type="checkbox" class="cb" onchange="addBinary();" ontouchend="this.click();"/>
-        <input type="checkbox" class="cb" onchange="addBinary();" ontouchend="this.click();"/>
-        <input type="checkbox" class="cb" onchange="addBinary();" ontouchend="this.click();"/>
-      </div>
-      <span id="p">⣿</span>
-      <span id="ch">⠀</span>
+      <input type="checkbox" class="cb" onchange="addBinary();" ontouchend="this.click();"/>
+      <input type="checkbox" class="cb" onchange="addBinary();" ontouchend="this.click();"/>
+      <input type="checkbox" class="cb" onchange="addBinary();" ontouchend="this.click();"/>
+      <input type="checkbox" class="cb" onchange="addBinary();" ontouchend="this.click();"/>
+      <input type="checkbox" class="cb" onchange="addBinary();" ontouchend="this.click();"/>
+      <input type="checkbox" class="cb" onchange="addBinary();" ontouchend="this.click();"/>
+      <span id="ch">䷀</span>
     </div>
     
     <div id="buttons">
@@ -47,7 +40,7 @@
       <button type="button" id="zoom_out" onclick="zoom(-1);" title="Zoom out"><i class='material-icons notranslate'>zoom_out</i></button>
       <button type="button" id="save" onclick="save();" title="Save as text"><i class='material-icons notranslate'>save_alt</i></button>
       <!--<button type="button" id="log_scale" onclick="logScale();" title="Export to image"><i class='material-icons notranslate'>gradient</i></button>-->
-      <button type="button" id="draw" onclick="window.open('https://katiefrogs.github.io/Dots-Converter/');" title="Import a drawing"><i class='material-icons notranslate'>draw</i></button>
+      <!--<button type="button" id="draw" onclick="" title="Import a drawing"><i class='material-icons notranslate'>draw</i></button>-->
       <button type="button" id="space" onclick="addBinary();" title="Add space"><i class='material-icons notranslate'>space_bar</i></button>
       <button type="button" id="swap" onclick="swap();" title="Move pattern to left or right"><i class='material-icons notranslate'>swap_horiz</i></button>
     </div>
@@ -61,7 +54,9 @@
     <p><a id="vocabulary_ref" href="javascript:window.open('https://learningenglish.voanews.com/');" title="Vocabulary"><b><img src="icons/VOA.svg" height="11" alt="Voice of America"/> Learning English</b></a><br/>
       is a controlled version of the English language first used on 19 October 1959, and still presented daily by the United States broadcasting service Voice of America. World news and other programs are read one-third slower than regular VOA English. Reporters avoid idioms and use a core vocabulary of about 1500 words, plus any terms needed to explain a story. The intended audience is intermediate to advanced learners of English. In 1962 the VOA published the first edition of the <a href='http://docs.voanews.eu/en-US-LEARN/2014/02/15/7f8de955-596b-437c-ba40-a68ed754c348.pdf' target='_blank'><u>Word Book</u></a>.
     </p>
-    <!-- https://www.ldoceonline.com/exercise/, routledge ?, https://lyricstranslate.com/, http://magneticpoetryplayonline.com/ -->
+    <p><a id="grammar_bil" href="javascript:window.open('https://www.dict.com/');" title="Grammar and vocabulary in your language"><b>dict.com</b></a> - pronunciation, phrase books and grammar overviews for major European languages, comprehensive morphology tables (including all word forms), current example sentences and usage.
+    </p>
+    <!-- https://www.ldoceonline.com/exercise/, routledge ?, https://lyricstranslate.com/ -->
   </div>
   
   <div id="mobile">On mobile, switch the system keyboard to floating mode.</div>
