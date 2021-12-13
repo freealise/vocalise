@@ -435,7 +435,7 @@ function addBinary() {
       p += "0";
     }
   }
-  if (p=="000000") {
+  if (p=="000000000000") {
     p = "";
     for (var i=0; i<cb.length; i++) {
       if (cb[i].checked === true) {
