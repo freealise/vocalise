@@ -72,7 +72,7 @@ table, tbody, tr, td {
 }
 #b {
   line-height:0.96em;
-  letter-spacing:-0.15em;
+  letter-spacing:-0.45em;
   width:99%;
   height:224px;
   font-weight:bold;
@@ -165,6 +165,9 @@ a {
 #keys_ a {
   font-family:'DejaVuBold';
 }
+#tgl {
+  color:lightgray;
+}
 #tone {
   width:288px;
   height:1.5em;
@@ -174,10 +177,10 @@ a {
   margin-bottom:0.5em;
 }
 #tone a {
-  text-decoration:underline;
+  text-decoration:none;
   font-weight:bold;
   font-family:'DejaVuBold';
-  padding:0px 1.8px;
+  padding:0px 2.95px;
 }
 select {
   height:24px;
@@ -288,10 +291,6 @@ pre {
   padding:0px;
   border:none;
   color:transparent;
-}
-#hl b {
-  position:relative;
-  top:1px;
 }
 #hl i {
   position:relative;
