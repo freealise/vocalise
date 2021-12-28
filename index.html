@@ -22,7 +22,7 @@
 </div>
 
   <div id="spectrogram">
-    <textarea placeholder="Speech formant spectrum" id="b" onkeydown="if(event.key!='ArrowRight' && event.key!='ArrowLeft' && event.key!='ArrowUp' && event.key!='ArrowDown' && event.key!='Enter' && event.key!='Backspace' && event.key!='Delete' && event.ctrlKey!==true && event.metaKey!==true || event.key==' '){event.preventDefault();keysPressed[kbrd[event.key]]=true;addBinary();}" onkeyup="if(event.key!='ArrowRight' && event.key!='ArrowLeft' && event.key!='ArrowUp' && event.key!='ArrowDown' && event.key!='Enter' && event.key!='Backspace' && event.key!='Delete' && event.ctrlKey!==true && event.metaKey!==true || event.key==' '){keysPressed[kbrd[event.key]]=false;}else if(event.key=='ArrowRight'||event.key=='ArrowLeft'){showColumn();playColumn();}else if(event.key=='ArrowUp'||event.key=='ArrowDown'){showColumn();}" onfocus="ctl=this;"></textarea>
+    <textarea placeholder="Speech formant spectrum" id="b" onkeydown="if(event.key!='ArrowRight' && event.key!='ArrowLeft' && event.key!='ArrowUp' && event.key!='ArrowDown' && event.key!='Enter' && event.key!='Backspace' && event.key!='Delete' && event.ctrlKey!==true && event.metaKey!==true && keysPressed[kbrd[event.key]]!==true || event.key==' '){event.preventDefault();keysPressed[kbrd[event.key]]=true;addBinary();}else if(keysPressed[kbrd[event.key]] && keysPressed[kbrd[event.key]]===true){event.preventDefault();}" onkeyup="if(event.key!='ArrowRight' && event.key!='ArrowLeft' && event.key!='ArrowUp' && event.key!='ArrowDown' && event.key!='Enter' && event.key!='Backspace' && event.key!='Delete' && event.ctrlKey!==true && event.metaKey!==true || event.key==' '){keysPressed[kbrd[event.key]]=false;}else if(event.key=='ArrowRight'||event.key=='ArrowLeft'){showColumn();playColumn();}else if(event.key=='ArrowUp'||event.key=='ArrowDown'){showColumn();}" onfocus="ctl=this;"></textarea>
     
     <div id="checkboxes" oncontextmenu="return false;">
       <input type="checkbox" class="cb" onchange="addBinary();" ontouchend="this.click();"/>
@@ -47,16 +47,17 @@
   </div>
 
   <div id="resources">
-    <p><a id="grammar_ref" href="javascript:window.open('https://simple.m.wikipedia.org/');" title="Simple English Wikipedia"><b><img src="icons/Wiki.svg" height="14" alt="Simple English Wikipedia"/> Simple English Wikipedia</b></a> is an English-language edition of the Wikipedia online encyclopedia written primarily in basic English. It was launched in 2001. Its simpler word structure and syntax can make the information easy to understand.
+    <p><a id="grammar_ref" href="https://simple.m.wikipedia.org/" title="Simple English Wikipedia" target="_blank"><b><img src="icons/Wiki.svg" height="14" alt="Simple English Wikipedia"/> Simple English Wikipedia</b></a> is an English-language edition of the Wikipedia online encyclopedia written primarily in basic English. It was launched in 2001. Its simpler word structure and syntax can make the information easy to understand.
     </p>
-    <p><a id="grammar_ref" href="javascript:window.open('https://www.bbc.co.uk/learningenglish/english/basic-grammar-guide');" title="Grammar"><b><img src="icons/BBC.svg" height="11" alt="British Broadcasting Corporation"/> Learning English</b></a> is a department of the BBC World Service devoted to English language teaching. It has won numerous awards, including two Eltons from the British Council and an English Speaking Union award for innovation in English language teaching. There were a number of series for teaching language comprehension with the help of song lyrics, such as Pop Words. It was usual for the major broadcasters in the 1950s to have a programme teaching the language of the country the broadcaster served.
+    <p><a id="grammar_ref" href="https://www.bbc.co.uk/learningenglish/english/basic-grammar-guide" title="Grammar" target="_blank"><b><img src="icons/BBC.svg" height="11" alt="British Broadcasting Corporation"/> Learning English</b></a> is a department of the BBC World Service devoted to English language teaching. It has won numerous awards, including two Eltons from the British Council and an English Speaking Union award for innovation in English language teaching. There were a number of series for teaching language comprehension with the help of song lyrics, such as Pop Words. It was usual for the major broadcasters in the 1950s to have a programme teaching the language of the country the broadcaster served.
     </p>
-    <p><a id="vocabulary_ref" href="javascript:window.open('https://learningenglish.voanews.com/');" title="Vocabulary"><b><img src="icons/VOA.svg" height="11" alt="Voice of America"/> Learning English</b></a><br/>
+    <p><a id="vocabulary_ref" href="https://learningenglish.voanews.com/" title="Vocabulary" target="_blank"><b><img src="icons/VOA.svg" height="11" alt="Voice of America"/> Learning English</b></a><br/>
       is a controlled version of the English language first used on 19 October 1959, and still presented daily by the United States broadcasting service Voice of America. World news and other programs are read one-third slower than regular VOA English. Reporters avoid idioms and use a core vocabulary of about 1500 words, plus any terms needed to explain a story. The intended audience is intermediate to advanced learners of English. In 1962 the VOA published the first edition of the <a href='http://docs.voanews.eu/en-US-LEARN/2014/02/15/7f8de955-596b-437c-ba40-a68ed754c348.pdf' target='_blank'><u>Word Book</u></a>.
     </p>
-    <p><a id="grammar_bil" href="javascript:window.open('https://www.dict.com/');" title="Grammar and vocabulary in your language"><b>dict.com</b></a> - pronunciation, phrase books and grammar overviews for major European languages, comprehensive morphology tables (including all word forms), current example sentences and usage.
+    <p><a id="grammar_bil" href="https://www.dict.com/" target="_blank"><b>dict.com</b></a>Grammar and vocabulary in your language. Pronunciation, phrase books and grammar overviews for major European languages, comprehensive morphology tables (including all word forms), current example sentences and usage.
     </p>
-    <!-- https://www.ldoceonline.com/exercise/, routledge ?, https://lyricstranslate.com/ -->
+    <!-- https://www.ldoceonline.com/exercise/, oxford fill in the blanks, mad libs ? -->
+    <!-- pangrams: http://clagnut.com/blog/2380/ -->
   </div>
   
   <div id="mobile">On mobile, switch the system keyboard to floating mode.</div>
@@ -65,12 +66,12 @@
     <p>Reverse phonetic dictionary, includes a lyrics editor and vowel sound synthesizer. Licensed under the GNU GPL-3.0, hosted on <a href="https://github.com/freealise/phonetic" title="Github" target="_blank"><u>GitHub</u></a> and <a href="https://script.google.com" title="Google Script" target="_blank"><u>Google Script</u></a>.</p>
     <p>Dictionary by <a href="http://www.speech.cs.cmu.edu/cgi-bin/cmudict" title="Carnegie Mellon University" target="_blank"><u>CMU</u></a>, sorted by frequency based on <a href="https://books.google.com/ngrams" title="Google Books Ngrams" target="_blank"><u>Google Books Ngrams</u></a> with <a href="https://phrasefinder.io/" title="PhraseFinder" target="_blank"><u>PhraseFinder</u></a> API, <a href="https://dictionaryapi.dev/" title="DictionaryAPI" target="_blank"><u>definitions</u></a> by <a href="https://www.lexico.com/" title="Oxford Dictionary" target="_blank"><u>Oxford</u></a>.</p>
     <p>Thanks to <a href="https://www.gearspace.com/board/showpost.php?p=11559456&amp;postcount=10" title="jerry123 from GearSpace" target="_blank"><u>jerry123 from GearSpace</u></a> for the idea of phonetic songwriting, <a href="https://englishwithkim.com/" title="English with Kim" target="_blank"><u>English with Kim</u></a> for clarifying that words and syllables are stressed with not only volume but also pitch variation.</p>
-    <p>Separating vowels and consonants for slant rhyme and alliteration within a line was inspired by rap and Hebrew poetry.</p>
+    <p>Separating vowels and consonants for slant rhyme and alliteration within a line has been inspired by rap and the Hebrew language, vocal synthesis by <a href="https://dreamtonics.com/en/synthesizerv/" target="_blank"><u>SynthesizerV</u></a>.</p>
   </div>
   
   <div id="sidebar">
     <div id="translations">
-      <button onclick="if(phrase.value.search(/\W/g)!=-1){loadPhrases();}else if(phrase.value!=''){loadTranslations(phrase.value);}" id="translate" title="Translate"><i class='material-icons notranslate'>search</i></button>
+      <button onclick="if(phrase.value.search(/\W/g)!=-1){loadPhrases();}else if(phrase.value!=''){loadTranslations(phrase.value);}" id="translate" title="Translate"><i class='material-icons notranslate'>content_paste_search</i></button>
       <input type="text" name="phrase" id="phrase" placeholder="Phrase" onfocus="ctl=this;" onkeydown="if(event.key=='_'){loadInflections(this.value);}"/>
       <input title="Part of speech" type="text" id="pos" size="2" list="pos_" placeholder="*" onchange="if(this.value.length==1){phrase.value=this.value;phrase.focus();}this.value='';">
       <datalist id="pos_" size="1">
@@ -121,6 +122,8 @@
       <div id="syntax_chart"><sub><i class='material-icons notranslate'>spellcheck</i> Grammar</sub></div>
     </div>
     <div id="examples" class="notranslate"><sub><i class='material-icons notranslate'>grading</i> Examples</sub></div>
+    <!--<audio controls id="tts"><source id="tts_" type="audio/mp3"/></audio>
+    <button title='<phoneme alphabet="ipa" ph="ˌmæææænɪˈtoʊʊʊʊbəəəə"></phoneme>' onclick='speak(this.title);'>Say</button>-->
   </div>
 
   <div id="dict">
@@ -128,10 +131,10 @@
     <div class="l"><input type="text" id="vowels" list="vowels_" placeholder="Vowels" onkeyup="if(a_c===false && this.value.length>1 && event.key!='ArrowRight' && event.key!='ArrowLeft'){loadIndex(this.value,'A');}" onfocus="ctl=this;"/><datalist id="_vowels"></datalist><datalist id="vowels_"></datalist><input type="text" id="consonants" list="consonants_" placeholder="Consonants" onkeyup="if(a_c===false && this.value.length>1 && event.key!='ArrowRight' && event.key!='ArrowLeft'){loadIndex(this.value,'B');}" onfocus="ctl=this;"/><datalist id="_consonants"></datalist><datalist id="consonants_"></datalist></div>
     
     <pre oncontextmenu="return false;" id="keys_">
-<span class="notranslate"><span class="u"><a title="b">  </a><a title="p">  </a></span>         <span class="u"><a title="d">  </a><a title="t">  </a></span>  <span class="u"><a title="ʤ">  </a><a title="ʧ">  </a></span>   <span class="u"><a title="g">  </a><a title="k">  </a></span>
-<span class="u"><a title="v">  </a><a title="f">  </a></span>  <span class="u"><a title="ð">  </a><a title="θ">  </a></span>   <span class="u"><a title="ʒ">  </a><a title="ʃ">  </a></span>  <span class="u"><a title="z">  </a><a title="s">  </a></span>   <span class="u"><a title="ɹ">  </a><a title="h">  </a></span>
-<span class="u"><a title="w">  </a><a title="m">  </a></span>  <span class="u"><a title="_">  </a></span>     <span class="u"><a title="l">  </a><a title="n">  </a></span>         <span class="u"><a title="j">  </a><a title="ŋ">  </a></span></span>
-          <a title="Wildcard" href="javascript:" onclick="addPhoneme('*', 'transparent');">* </a>       <a title="Non-breaking space" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme(' ', 'transparent');">⎵ </a></pre>
+<span class="notranslate"><span class="u"><a title="b">  </a><a title="p">  </a></span>         <span class="u"><a title="d">  </a><a title="t">  </a></span>  <span class="u"><a data-alt="jh" title="ʤ">  </a><a data-alt="ch" title="ʧ">  </a></span>   <span class="u"><a title="g">  </a><a title="k">  </a></span>
+<span class="u"><a title="v">  </a><a title="f">  </a></span>  <span class="u"><a data-alt="dx" title="ð">  </a><a data-alt="th" title="θ">  </a></span>   <span class="u"><a data-alt="zh" title="ʒ">  </a><a data-alt="sh" title="ʃ">  </a></span>  <span class="u"><a title="z">  </a><a title="s">  </a></span>   <span class="u"><a data-alt="r " title="ɹ">  </a><a title="h">  </a></span>
+<span class="u"><a title="w">  </a><a title="m">  </a></span>  <span class="u"><a title="_">  </a></span>     <span class="u"><a title="l">  </a><a title="n">  </a></span>         <span class="u"><a data-alt="y " title="j">  </a><a data-alt="ng" title="ŋ">  </a></span></span>
+          <a title="Wildcard" href="javascript:" onclick="addPhoneme('*', 'transparent');">* </a>       <a title="Non-breaking space" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme(' ', 'transparent');">⎵ </a> <a title="Symbols to use" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="kb_symbols();"><i class='material-icons notranslate' id="tgl">toggle_off</i></a></pre>
     <pre oncontextmenu="return false;" id="keys"><span class="notranslate"><select title="i"></select><select title="ɪ"></select><select title="eɪ"></select><select title="ɛ"></select><select title="æ"></select><select title="ə"></select><select title="ʌ"></select><select title="ɑ"></select><select title="ɔ"></select><select title="oʊ"></select><select title="ʊ"></select><select title="u"></select></span>
 <a title="Any stress with any vowel" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme('_', 'transparent');"><span class="notranslate">_ </span></a><a title="No stress with any vowel" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme('_·', 'transparent');"><span class="notranslate">_·</span></a><a title="Primary stress with any vowel" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme('_ˈ', 'transparent');"><span class="notranslate">_ˈ</span></a><a title="Secondary stress with any vowel" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme('_ˌ', 'transparent');"><span class="notranslate">_ˌ</span></a><span class="notranslate"><select title="aɪ"></select><select title="ɔɪ"></select><select title="aʊ"></select></span></pre>
   <div title="Pitch symbols for word and syllable stress, span octave (12 semitones)" onmousedown="mobile.innerText=this.title;"><span id="tone" class="notranslate"></span></div>
@@ -139,6 +142,7 @@
   
   <div id="links">
     <a id="undo" href="javascript:undo();" title="Undo"><i class='material-icons notranslate'>undo</i> Undo</a><br/>
+    <a id="orig_link" href="javascript:" target="_blank" onfocus="orig_check();" title="Originality"><i class='material-icons notranslate'>search</i> Originality</a><br/>
     <a id="_examples" href="javascript:loadQuiz(false);" title="Quiz"><i class='material-icons notranslate'>grading</i> Quiz</a><br/>
     <a id="_syntax" href="javascript:showSyntax();" title="Sentences"><i class='material-icons notranslate' id='spellcheck'>spellcheck</i> Sentences</a><br/>
     <a id="show_words" href="javascript:showWords();" title="Words"><i class='material-icons notranslate'>translate</i> Words</a><br/>
@@ -148,6 +152,8 @@
     <a id="tooltips" href="javascript:showMobile();" title="Tooltips"><i class='material-icons notranslate'>wysiwyg</i> Tooltips</a><br/>
     <a id="resources_" href="javascript:showResources();" title="Resources"><i class='material-icons notranslate'>link</i> Resources</a><br/>
     <a id="credits_" href="javascript:showCredits();" title="Credits"><i class='material-icons notranslate'>copyright</i> Credits</a><br/>
+    <a id="show_" href="javascript:showLinks();" title="Share"><i class='material-icons notranslate'>share</i> Share</a> <a onfocus="this.href='https://www.facebook.com/sharer/sharer.php?u=https://freealise.com/&hashtag=%23freealise&quote='+res.value.split('\n').join(' / ');" href="javascript:" target="_blank" title="Facebook"><i class='material-icons notranslate'>facebook</i></a>
+    <a onfocus="this.href='https://twitter.com/intent/tweet/?url=https://freealise.com/&hashtags=freealise&text='+res.value.split('\n').join(' / ');" href="javascript:" target="_blank" title="Twitter"><svg width="20" height="20" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path fill="black" d="M1684 408q-67 98-162 167 1 14 1 42 0 130-38 259.5t-115.5 248.5-184.5 210.5-258 146-323 54.5q-271 0-496-145 35 4 78 4 225 0 401-138-105-2-188-64.5t-114-159.5q33 5 61 5 43 0 85-11-112-23-185.5-111.5t-73.5-205.5v-4q68 38 146 41-66-44-105-115t-39-154q0-88 44-163 121 149 294.5 238.5t371.5 99.5q-8-38-8-74 0-134 94.5-228.5t228.5-94.5q140 0 236 102 109-21 205-78-37 115-142 178 93-10 186-50z"></path></svg></a><br/>
     <!--<a id="share" href="javascript:window.open('https://www.blogger.com/blog-this.g?t='+res.value, 'blog');" title="Share"><i class='material-icons notranslate'>share</i> Share</a><br/>-->
     <a id="show_language" href="javascript:showLinks();" title="Language"><i class='material-icons notranslate'>language</i></a> <!--<select id="languages" size="1" onchange="sl=this.options[this.selectedIndex].value;"></select>--><select id="corpus" size="1" onchange="">
           <option value="26">English 2019</option>
