@@ -149,28 +149,25 @@ var superscript = {
 
 var s = ["·", "ˈ", "ˌ"];
 
-var tone = [
-  '˥', '˦', '˧', '˨', '˩',
-  '꜒', '꜓', '꜔', '꜕', '꜖',
-  '꜈', '꜉', '꜊', '꜋', '꜌',
-  '꜍', '꜎', '꜏', '꜐', '꜑'
-];
+var tone = [ '꜌', '꜋', '꜊', '꜉', '꜈', 'ˊ', '꜑', '꜐', '꜏', '꜎', '꜍', '`' ];
+//             '_', '˩', '˨', '˧', '˦', '˥', '꜖', '꜕', '꜔', '꜓', '꜒'];
 //https://en.wikipedia.org/wiki/Tone_letter
-
 var colors = [0,1,0,1,0,0,1,0,1,0,1,0,0];
-var spaces = "　 ⠀          ";
-//https://en.wikipedia.org/wiki/Whitespace_character
 
 var hex = (
-  "䷀䷫䷌䷠䷉䷅䷘䷋䷈䷸䷤䷴䷼䷺䷩䷓" +
-  "䷍䷱䷝䷷䷥䷿䷔䷢䷙䷑䷕䷳䷨䷃䷚䷖" +
-  "䷪䷛䷰䷞䷹䷮䷐䷬䷄䷯䷾䷦䷻䷜䷂䷇" +
-  "䷡䷟䷶䷽䷵䷧䷲䷏䷊䷭䷣䷎䷒䷆䷗䷁"
+  "䷀䷫䷌䷠䷉䷅䷘䷋" +
+  "䷈䷸䷤䷴䷼䷺䷩䷓" +
+  "䷍䷱䷝䷷䷥䷿䷔䷢" +
+  "䷙䷑䷕䷳䷨䷃䷚䷖" +
+  "䷪䷛䷰䷞䷹䷮䷐䷬" +
+  "䷄䷯䷾䷦䷻䷜䷂䷇" +
+  "䷡䷟䷶䷽䷵䷧䷲䷏" +
+  "䷊䷭䷣䷎䷒䷆䷗䷁"
 ).split("");
 
 var phonemes =
 "䷀䷀䷀䷀䷀䷀䷀䷀䷀䷀䷀䷫ ䷡䷡䷟䷟䷁䷁䷁䷁ ䷀䷫䷀䷀ ䷫䷫䷫䷌ ䷁䷁ ䷁䷁䷡䷡䷌䷫" + "\n" +
-"䷫䷠䷌䷘䷉䷼䷈䷙䷍䷡䷪䷪ ䷀䷫䷼䷺䷀䷫䷗䷁ ䷠䷛䷋䷸ ䷷䷿䷑䷾ ䷡䷟ ䷗䷁䷀䷫䷾䷑";
+"䷫䷠䷌䷘䷉䷼䷈䷙䷍䷡䷪䷪ ䷀䷫䷼䷺䷀䷫䷗䷁ ䷠䷛䷋䷽ ䷷䷿䷑䷾ ䷡䷟ ䷗䷁䷀䷫䷾䷑";
 
 /*
 uuooaaeaeeii sztdszfv wyrl mnnh cj pbtdkg
@@ -205,7 +202,7 @@ var h_ = 2048;
 var real = new Float32Array(h_);
 var imag = new Float32Array(h_);
 var fund = 128;
-var freq = 4.0; //max.freq is 4*2048=8192
+var freq = 4.0; //max.freq is 4*2048=8192 Hz
 var offset = fund / freq;
 var formant_w = Math.round(512 / freq);
 var vol = 1.0;
@@ -334,7 +331,7 @@ function toBinary(v) {
 function showColumn() {
   var b_ = parseInt(b.selectionStart);
   var d_ = parseInt(b.selectionEnd);
-  var ch_ = b.value.charAt(b_);
+  var ch_ = b.value.charAt(b_-1);
   ch.innerHTML = ch_;
   var c = hex.indexOf(ch_);
   if (c == -1) {
@@ -368,7 +365,7 @@ function addColumn() {
   
   b.focus();
   b.setSelectionRange(c, c);
-  var ch_ = b.value.charAt(b_);
+  var ch_ = b.value.charAt(b_-1);
   ch.innerHTML = ch_;
 }
 
@@ -386,7 +383,7 @@ function playPhoneme(p) {
 }
 
 function playColumn() {
-  i_ = findC(b)*2;
+  i_ = (findC(b)-1)*2;
   _i = i_+2;
   toBinary(b.value);
   if (a_[i_]) {
@@ -395,7 +392,7 @@ function playColumn() {
 }
 
 function playAll() {
-  i_ = findC(b)*2;
+  i_ = (findC(b)-1)*2;
   _i = a_.length;
   toBinary(b.value);
   if (a_[0]) {
@@ -454,10 +451,14 @@ function addBinary() {
     }
   }
   var i = parseInt(p.substr(0, 6), 2);
-  b.value = b.value.substr(0, b_) + hex[i] + b.value.substr(d_+1);
+  if (b.value.charAt(b_-1) && b.value.charAt(b_-1) != "\n") {
+    b.value = b.value.substr(0, b_-1) + hex[i] + b.value.substr(d_);
+  } else {
+    b.value = b.value.substr(0, b_) + hex[i] + b.value.substr(d_);
+  }
   b.focus();
   b.setSelectionRange(b_, b_);
-  var ch_ = b.value.charAt(b_);
+  var ch_ = b.value.charAt(b_-1);
   ch.innerHTML = ch_;
   playColumn();
 }
@@ -563,6 +564,7 @@ var k = document.getElementById("keys");
 var k_ = document.getElementById("keys_");
 var v = document.getElementById("keys").querySelectorAll("select");
 var c_ = document.getElementById("keys_").querySelectorAll("a");
+var tgl = document.getElementById("tgl");
 var tone_ = document.getElementById("tone");
 var vowels = document.getElementById("vowels");
 var consonants = document.getElementById("consonants");
@@ -600,6 +602,7 @@ var buttons = document.getElementById("buttons");
 var checkboxes = document.getElementById("checkboxes");
 var cb = document.getElementsByClassName("cb");
 var ch = document.getElementById("ch");
+var orig_link = document.getElementById("orig_link");
 var res_old = "";
 var b_old = "";
 var regexp = [];
@@ -652,9 +655,9 @@ for (var i=0; i<keys_.length; i++) {
   lnk.style.color = "hsl(0, 0%, " + bg + "%)";
 }
 
-for (var i=0; i<spaces.length; i++) {
-  var ks = spaces.charAt(i);
-  tone_.innerHTML += "<a title='"+ks+"' href='javascript:' onclick='addPhoneme(this.title);colorPhonemes();' style='position:relative;top:-"+i+"px;color:rgba(0,0,0,"+(colors[i]*0.75+0.25)+");'>_</a> ";
+for (var i=0; i<tone.length; i++) {
+  var ks = tone[i];
+  tone_.innerHTML += "<a title='"+ks+"' href='javascript:' onclick='addPhoneme(this.title);' style='color:rgba(0,0,0,"+(colors[i]*0.75+0.25)+");'>"+ks+"</a> ";
 }
 
 function findCursor(v) {
@@ -699,7 +702,7 @@ function addPhoneme(p, clr) {
   var d = parseInt(cPos[1]);
   ctl.value = ctl.value.substr(0, b) + p + ctl.value.substr(d);
   ctl.focus();
-  ctl.setSelectionRange(b+p.length+1, b+p.length+1);
+  ctl.setSelectionRange(b+p.length, b+p.length);
 }
 
 function findWords() {
@@ -798,21 +801,10 @@ function loadTranscription(ln, wrd_, count) {
 function colorPhonemes() {
   res_old = res.value;
   var str = res.value;
-  var r = new RegExp("["+spaces+"]", "g");
   var lines = str.split("\n");
   str = "";
   for (var j=0; j<lines.length; j++) {
-    if (lines[j].search(/[^\s⠀]/g) == -1) {
-      lines[j] = lines[j].replace(r, function (x) {
-        var i_ = spaces.indexOf(x);
-        var x_ = spaces.length - i_;
-        x = "_";
-        for (var i=0; i<x_; i++) {
-          x = "<b>"+x+"</b>";
-        }
-        return "<span style='color:rgba(0,0,0,"+(colors[i_]*0.75+0.25)+");'>"+x+"</span>";
-      });
-    } else if (lines[j].search(/[ˊ`_·ˈˌ]/g) != -1) {
+    if (lines[j].search(/[ˊ`_·ˈˌ]/g) != -1) {
       for (var i=0; i<regexp.length; i++) {
         lines[j] = lines[j].replace(regexp[i][0], function (x) {
             return "<i style='border-bottom:4px solid " + regexp[i][1] + ";'>"+x+"</i>";
@@ -1203,6 +1195,20 @@ function loadExamples(q) {
 }
 
 
+function orig_check() {
+  var cPos = findCursor(res).split(",");
+  var b = parseInt(cPos[0]);
+  var d = parseInt(cPos[1]);
+  if (b == d) {
+    var ln = res.value.substr(0, b).split("\n").length-1;
+    var q = res.value.split("\n")[ln];
+  } else {
+    var q = res.value.substring(b, d).replace(/\n/g, " ");
+  }
+  orig_link.href = "https://www.google.com/search?gl=ru&q=%22" + encodeURIComponent(q) + "%22";
+}
+
+
 function loadQuiz(d) {
   var q = words_[parseInt(Math.random()*words_.length)];
   var xhttp = new XMLHttpRequest();
@@ -1250,6 +1256,44 @@ function checkCompletion(q) {
   }
   loadQuiz(false);
   return true;
+}
+
+
+function speak(ssml) {
+  const xhttp = new XMLHttpRequest();
+  xhttp.onload = function() {
+    var snd = new Audio("data:audio/mp3;base64," + this.responseText);
+	  snd.play();
+    const byteCharacters = atob(this.responseText);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    const blob = new Blob([byteArray], {type: 'audio/mp3'});
+    var o_url = URL.createObjectURL(blob);
+    document.getElementById("tts_").src = o_url;
+    document.getElementById("tts").load();
+  }
+  xhttp.open("GET", "https://script.google.com/macros/s/AKfycbz5br4wnfSGtucWKwGQq1Tb07eshJez6uVaFatn4xJAc_rcrcA/exec?a=tts&txt="+ssml);
+  xhttp.send();
+}
+
+
+function kb_symbols() {
+  for (var i=0; i<c_.length; i++) {
+    if (c_[i].dataset.alt) {
+      if (c_[i].style.textDecoration == "underline") {
+        c_[i].style.textDecoration = "none";
+        c_[i].innerText = c_[i].title + " ";
+        tgl.innerText = "toggle_off";
+      } else {
+        c_[i].style.textDecoration = "underline";
+        c_[i].innerText = c_[i].dataset.alt;
+        tgl.innerText = "toggle_on";
+      }
+    }
+  }
 }
 
 
