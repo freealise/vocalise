@@ -1,3 +1,28 @@
+var hex = (
+  "䷀䷫䷌䷠䷉䷅䷘䷋" +
+  "䷈䷸䷤䷴䷼䷺䷩䷓" +
+  "䷍䷱䷝䷷䷥䷿䷔䷢" +
+  "䷙䷑䷕䷳䷨䷃䷚䷖" +
+  "䷪䷛䷰䷞䷹䷮䷐䷬" +
+  "䷄䷯䷾䷦䷻䷜䷂䷇" +
+  "䷡䷟䷶䷽䷵䷧䷲䷏" +
+  "䷊䷭䷣䷎䷒䷆䷗䷁"
+).split("");
+
+var phonemes =
+"䷀䷀䷀䷀䷀䷀䷀䷀䷀䷀䷀䷫ ䷡䷡䷁䷁䷟䷟䷁䷁ ䷀䷌ ䷀䷫䷫䷫䷀䷫ ䷁䷁ ䷁䷁䷡䷡䷌䷫" + "\n" +
+"䷫䷠䷌䷘䷉䷼䷈䷙䷍䷡䷪䷪ ䷀䷫䷀䷫䷼䷺䷗䷁ ䷋䷾ ䷠䷷䷿䷑䷽䷛ ䷡䷟ ䷗䷁䷀䷫䷾䷑";
+
+/*
+uuooaaeaeeii sztdszfv rh wmnnly cj pbtdkg
+: : : re : :   hhhh         g   hh
+*/
+
+var phonemes_ = phonemes.split("\n");
+for (var i=0; i<phonemes_.length; i++) {
+  phonemes_[i] = phonemes_[i].split("");
+}
+
 var keys = [
   " i;IY;330;0.1664;0.3341;0.1498;0.0153;11",
   " ɪ;IH;300;0.3084;0.5288;0.3583;0.0380;10",
