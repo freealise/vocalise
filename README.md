@@ -6,6 +6,7 @@
 Dictionary by <a href="http://www.speech.cs.cmu.edu/cgi-bin/cmudict" title="Carnegie Mellon University" target="_blank"><u>CMU</u></a>, sorted by frequency based on <a href="https://books.google.com/ngrams" title="Google Books Ngrams" target="_blank"><u>Google Books Ngrams</u></a> with <a href="https://phrasefinder.io/" title="PhraseFinder" target="_blank"><u>PhraseFinder</u></a>.</p>
 
 <p><b>TODO:</b><br/>
+- vocal synth with filters controlled in realtime<br/>
 - writing and reading, speaking and listening with AI and Google Assistant<br/>
 - reverse dictionary with AI and several dictionaries with defining vocabulary<br/>
 - better defining dictionary and example sentences (english wiktionary / voa instead of oxford)<br/>
