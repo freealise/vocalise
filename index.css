@@ -14,6 +14,17 @@
   font-family: "DejaVuSansBold";
   src: url("fonts/dejavu/DejaVuSans-Bold.ttf") format("truetype");
 }
+
+@font-face {
+  font-family: 'AndikaW';
+  src: url('fonts/andika/Andika-Regular.ttf') format("truetype");
+}
+@font-face {
+	font-family: 'AndikaWBold';
+	font-weight: bold;
+	src: url('fonts/andika/Andika-Bold.ttf') format("truetype");
+}
+
 * {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -66,71 +77,6 @@ table, tbody, tr, td {
   border:0;
   padding:0;
   margin:0;
-}
-#spectrogram {
-  padding:0;
-}
-#b {
-  line-height:0.96em;
-  letter-spacing:-0.45em;
-  width:99%;
-  height:224px;
-  font-weight:bold;
-  white-space:nowrap;
-  overflow:scroll;
-  background-color:white;
-  color:gray;
-  margin:0;
-  padding:2px;
-  text-align:left;
-}
-#buttons {
-  height:32px;
-  margin-left:3px;
-  text-align:left;
-}
-#buttons button {
-  width:32px;
-  height:32px;
-  font-weight:bold;
-  font-size:16px;
-  margin:0px -3px;
-}
-#buttons button i {
-  margin-top:3px;
-}
-#checkboxes {
-  width:24px;
-  overflow:hidden;
-  height:128px;
-  position:fixed;
-  bottom:345px;
-  right:0;
-  left:auto;
-  top: auto;
-  padding-right:4px;
-  background-color:white;
-}
-#ch {
-  position: absolute;
-  left: -0.37em;
-  top: -0.14em;
-  font-size: 132px;
-  font-weight: bold;
-  line-height: 1.125em;
-  z-index: -1;
-  max-width: 1em;
-  overflow-wrap: anywhere;
-}
-#ch {
-  color:darkgray;
-}
-.cb {
-  width:18px;
-  height:18px;
-  margin:0;
-  padding:0;
-  opacity:0;
 }
 #keys {
   width: 288px;
@@ -357,7 +303,7 @@ pre {
   float:left;
   margin-right:10px;
 }
-#resources, #credits, #spectrogram {
+#resources, #credits {
   overflow:scroll;
   font-size: 14px;
   height:264px;
@@ -391,7 +337,8 @@ pre {
 }
 .skiptranslate iframe {
   position: relative;
-  width: 420px;
+  width: 100vw;
+  min-width: 480px;
   height: 40px;
   float:right;
 }
@@ -447,6 +394,9 @@ pre {
 #languages, #corpus, .goog-te-combo {
   width:100%;
 }
+#languages, #corpus, #voice_select {
+  display:none;
+}
 #ngram {
   width:50%;
   float:right;
@@ -480,6 +430,48 @@ pre {
   width: 3.4em;
   font-size: inherit;
   background-color:white;
+}
+.piano {
+  height:4em;
+}
+#speech_chart {
+  max-height:4.8em;
+}
+#speech_chart, .piano {
+  overflow:hidden;
+  background-image: repeating-linear-gradient(white 0%, white 4.17%, lightgray 4.17%, lightgray 8.33%, white 8.33%, white 12.50%, lightgray 12.50%, lightgray 16.67%, white 16.67%, white 20.83%, lightgray 20.83%, lightgray 25.00%, white 25.00%, white 33.33%, lightgray 33.33%, lightgray 37.50%, white 37.50%, white 41.67%, lightgray 41.67%, lightgray 45.83%, white 45.83%, white 50%);
+}
+#speech_chart, #speech_chart span {
+  letter-spacing:0;
+  line-height: 1em;
+  font-weight: bold;
+  font-family: 'AndikaWBold';
+  -webkit-font-feature-settings: "cv92" 1;
+  -moz-font-feature-settings: "cv92" 1;
+  font-feature-settings: "cv92" 1;
+}
+#pronounciation {
+  position:fixed;
+  left:0;
+  bottom:0;
+  width:100%;
+}
+#pronounce, #speak, #record, #g_translate {
+  border:0;
+  padding:0;
+  width:32px;
+}
+#pronounce i, #speak i, #record i, #g_translate i {
+  font-size:1em;
+}
+#pronounce, #tts, #speak, #record, #g_translate {
+  height:16px;
+}
+#tts {
+  max-width:224px;
+}
+#voice_select {
+  width: 100%;
 }
 #examples {
   max-height:256px;
