@@ -1,17 +1,33 @@
-var hex = (
-  "䷀䷫䷌䷠䷉䷅䷘䷋" +
-  "䷈䷸䷤䷴䷼䷺䷩䷓" +
-  "䷍䷱䷝䷷䷥䷿䷔䷢" +
-  "䷙䷑䷕䷳䷨䷃䷚䷖" +
-  "䷪䷛䷰䷞䷹䷮䷐䷬" +
-  "䷄䷯䷾䷦䷻䷜䷂䷇" +
-  "䷡䷟䷶䷽䷵䷧䷲䷏" +
-  "䷊䷭䷣䷎䷒䷆䷗䷁"
+var dots = (
+"⠀⢀⠠⢠⠐⢐⠰⢰⠈⢈⠨⢨⠘⢘⠸⢸" +
+"⡀⣀⡠⣠⡐⣐⡰⣰⡈⣈⡨⣨⡘⣘⡸⣸" +
+"⠄⢄⠤⢤⠔⢔⠴⢴⠌⢌⠬⢬⠜⢜⠼⢼" +
+"⡄⣄⡤⣤⡔⣔⡴⣴⡌⣌⡬⣬⡜⣜⡼⣼" +
+"⠂⢂⠢⢢⠒⢒⠲⢲⠊⢊⠪⢪⠚⢚⠺⢺" +
+"⡂⣂⡢⣢⡒⣒⡲⣲⡊⣊⡪⣪⡚⣚⡺⣺" +
+"⠆⢆⠦⢦⠖⢖⠶⢶⠎⢎⠮⢮⠞⢞⠾⢾" +
+"⡆⣆⡦⣦⡖⣖⡶⣶⡎⣎⡮⣮⡞⣞⡾⣾" +
+"⠁⢁⠡⢡⠑⢑⠱⢱⠉⢉⠩⢩⠙⢙⠹⢹" +
+"⡁⣁⡡⣡⡑⣑⡱⣱⡉⣉⡩⣩⡙⣙⡹⣹" +
+"⠅⢅⠥⢥⠕⢕⠵⢵⠍⢍⠭⢭⠝⢝⠽⢽" +
+"⡅⣅⡥⣥⡕⣕⡵⣵⡍⣍⡭⣭⡝⣝⡽⣽" +
+"⠃⢃⠣⢣⠓⢓⠳⢳⠋⢋⠫⢫⠛⢛⠻⢻" +
+"⡃⣃⡣⣣⡓⣓⡳⣳⡋⣋⡫⣫⡛⣛⡻⣻" +
+"⠇⢇⠧⢧⠗⢗⠷⢷⠏⢏⠯⢯⠟⢟⠿⢿" +
+"⡇⣇⡧⣧⡗⣗⡷⣷⡏⣏⡯⣯⡟⣟⡿⣿"
 ).split("");
 
+/*sort by number of dots
+var bn = {};
+for (var i = 0; i<256; i++) {
+  bn[dots[i]] = i.toString(2).replace(/0/g, "").length;
+}
+dots.sort(function(a, b){return bn[a] - bn[b]});*/
+
 var phonemes =
-"䷀䷀䷀䷀䷀䷀䷀䷀䷀䷀䷀䷫ ䷡䷡䷁䷁䷟䷟䷁䷁ ䷀䷌ ䷀䷫䷫䷫䷀䷫ ䷁䷁ ䷁䷁䷡䷡䷌䷫" + "\n" +
-"䷫䷠䷌䷘䷉䷼䷈䷙䷍䷡䷪䷪ ䷀䷫䷀䷫䷼䷺䷗䷁ ䷋䷾ ䷠䷷䷿䷑䷽䷛ ䷡䷟ ䷗䷁䷀䷫䷾䷑";
+"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠛⠛⣿⣿⠛⠛⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⢸⠀⢸⢸⠘⠘⠀⠀" + "\n" +
+"⠀⠀⠀⠀⠀⠀⠀⣀⣀⣤⠤⠶⠀⠀⠀⠛⠛⠒⠒⣿⣿⠀⠀⠭⠀⠀⣒⣒⣒⣤⠶⠀⢸⢸⠀⢸⢸⠀⠀⠨⢐" + "\n" +
+"⣀⣤⠤⠶⠒⠛⠉⠉⠀⠀⠀⠀⠀⠀⣀⠀⣀⠛⣛⠿⣿⠀⣶⠭⠀⣤⣤⣒⣉⣤⣀⠀⠀⢀⠀⠸⢸⠀⢀⠨⢈";
 
 /*
 uuooaaeaeeii sztdszfv rh wmnnly cj pbtdkg
@@ -53,21 +69,21 @@ var keys_ = [
   "k,K,0.3811,39",
   "v,V,0.2394,20",
   "f,F,0.2387,19",
-  "ð,DH,0.6531,16",
-  "θ,TH,0.0758,15",
-  "ʒ,ZH,0.0086,18",
-  "ʃ,SH,0.1072,17",
+  "ð,DH,0.6531,18",
+  "θ,TH,0.0758,17",
+  "ʒ,ZH,0.0086,16",
+  "ʃ,SH,0.1072,15",
   "z,Z,0.4163,14",
   "s,S,0.5710,13",
-  "ɹ,R,0.5663,24",
-  "h,HH,0.1739,30",
-  "w,W,0.2890,22",
-  "m,M,0.3173,27",
+  "ɹ,R,0.5663,22",
+  "h,HH,0.1739,23",
+  "w,W,0.2890,25",
+  "m,M,0.3173,26",
   "_,_,1",
-  "l,L,0.4471,25",
-  "n,N,1.0000,28",
-  "j,Y,0.0911,23",
-  "ŋ,NG,0.1000,29",
+  "n,N,1.0000,27",
+  "ŋ,NG,0.1000,28",
+  "l,L,0.4471,29",
+  "j,Y,0.0911,30",
 ];
 
 var kbrd = {
@@ -175,348 +191,9 @@ var superscript = {
 var s = ["·", "ˈ", "ˌ"];
 
 var tone = [ '꜌', '꜋', '꜊', '꜉', '꜈', 'ˊ', '꜑', '꜐', '꜏', '꜎', '꜍', '`' ];
-//             '_', '˩', '˨', '˧', '˦', '˥', '꜖', '꜕', '꜔', '꜓', '꜒'];
+var tone_chart = [ '˩', '˨', '˧', '˦', '˥', '꜖', '꜕', '꜔', '꜓', '꜒' ];
 //https://en.wikipedia.org/wiki/Tone_letter
 var colors = [0,1,0,1,0,0,1,0,1,0,1,0,0];
-
-var hex = (
-  "䷀䷫䷌䷠䷉䷅䷘䷋" +
-  "䷈䷸䷤䷴䷼䷺䷩䷓" +
-  "䷍䷱䷝䷷䷥䷿䷔䷢" +
-  "䷙䷑䷕䷳䷨䷃䷚䷖" +
-  "䷪䷛䷰䷞䷹䷮䷐䷬" +
-  "䷄䷯䷾䷦䷻䷜䷂䷇" +
-  "䷡䷟䷶䷽䷵䷧䷲䷏" +
-  "䷊䷭䷣䷎䷒䷆䷗䷁"
-).split("");
-
-var phonemes =
-"䷀䷀䷀䷀䷀䷀䷀䷀䷀䷀䷀䷫ ䷡䷡䷟䷟䷁䷁䷁䷁ ䷀䷫䷀䷀ ䷫䷫䷫䷌ ䷁䷁ ䷁䷁䷡䷡䷌䷫" + "\n" +
-"䷫䷠䷌䷘䷉䷼䷈䷙䷍䷡䷪䷪ ䷀䷫䷼䷺䷀䷫䷗䷁ ䷠䷛䷋䷽ ䷷䷿䷑䷾ ䷡䷟ ䷗䷁䷀䷫䷾䷑";
-
-/*
-uuooaaeaeeii sztdszfv wyrl mnnh cj pbtdkg
-: : : re : :   hhhh          g  hh
-*/
-
-var phonemes_ = phonemes.split("\n");
-for (var i=0; i<phonemes_.length; i++) {
-  phonemes_[i] = phonemes_[i].split("");
-}
-
-var keysPressed = new Array(12);
-var kbrd = {
-  '1': 11,
-  '2': 10,
-  '3': 9,
-  '4': 8,
-  '5': 7,
-  '6': 6,
-  '7': 5,
-  '8': 4,
-  '9': 3,
-  '0': 2,
-  '-': 1,
-  '=': 0,
-}
-for (var i=0; i<keysPressed.length; i++) {
-  keysPressed[i] = false;
-}
-
-var h_ = 2048;
-var real = new Float32Array(h_);
-var imag = new Float32Array(h_);
-var fund = 128;
-var freq = 4.0; //max.freq is 4*2048=8192 Hz
-var offset = fund / freq;
-var formant_w = Math.round(512 / freq);
-var vol = 1.0;
-var ac = null;
-var osc, gain, osc_, gain_;
-var i_, _i, t;
-var a_ = [];
-var playNow = false;
-var h = 12;
-
-function init() {
-  ac = new AudioContext({latencyHint:"interactive",sampleRate: 48000});
-  osc = ac.createOscillator();
-  osc.frequency.setValueAtTime(freq, ac.currentTime); // value in hertz
-  gain = ac.createGain();
-  gain.gain.setValueAtTime(0, ac.currentTime);
-  osc.connect(gain);
-  gain.connect(ac.destination);
-  osc.start();
-  osc_ = ac.createOscillator();
-  osc_.frequency.setValueAtTime(freq, ac.currentTime); // value in hertz
-  gain_ = ac.createGain();
-  gain_.gain.setValueAtTime(0, ac.currentTime);
-  osc_.connect(gain_);
-  gain_.connect(ac.destination);
-  osc_.start();
-  i_ = 0;
-  _i = 0;
-}
-
-function play() {
-  var ph = a_[i_].split("").reverse();
-  var n = a_[i_].replace(/0/g, "").length;
-  for (var i=0; i<offset; i++) {
-    real[i] = 0;
-    imag[i] = 0;
-  }
-  for (var j=0; j<ph.length; j++) {
-    if (ph[0]=="1" || n<=2) {
-      if (ph[j]=="1") {
-        for (var i=j*formant_w+offset; i<(j+1)*formant_w+offset; i++) {
-          if (parseInt(i/offset) == i/offset) {
-            real[i] = vol;
-          	imag[i] = vol;
-          } else {
-            real[i] = 0;
-        	  imag[i] = 0;
-          }
-        }
-      } else {
-        for (var i=j*formant_w+offset; i<(j+1)*formant_w+offset; i++) {
-          real[i] = 0;
-        	imag[i] = 0;
-        }
-      }
-    } else {
-      if (ph[j]=="1") {
-        for (var i=j*formant_w+offset; i<(j+1)*formant_w+offset; i++) {
-        	real[i] = Math.random()*vol;
-        	imag[i] = Math.random()*vol;
-        }
-      } else {
-        for (var i=j*formant_w+offset; i<(j+1)*formant_w+offset; i++) {
-          real[i] = 0;
-        	imag[i] = 0;
-        }
-      }
-    }
-  }
-  var wave = ac.createPeriodicWave(real, imag, {disableNormalization: true});
-  if (parseInt(i_/2) == i_/2) {
-    gain.gain.value = 0.0;
-    osc.setPeriodicWave(wave);
-    gain.gain.linearRampToValueAtTime(1.0, ac.currentTime+1.0 / freq);
-    gain_.gain.linearRampToValueAtTime(0.0, ac.currentTime+1.0 / freq);
-  } else {
-    gain_.gain.value = 0.0;
-    osc_.setPeriodicWave(wave);
-    if (a_[i_-1].indexOf("1")>-1) {
-      gain_.gain.linearRampToValueAtTime(1.0, ac.currentTime+1.0 / freq);
-      gain.gain.linearRampToValueAtTime(0.0, ac.currentTime+1.0 / freq);
-    } else {
-      gain_.gain.linearRampToValueAtTime(1.0, ac.currentTime);
-      gain_.gain.linearRampToValueAtTime(0.0, ac.currentTime+0.5 / freq);
-      gain.gain.linearRampToValueAtTime(0.0, ac.currentTime);
-    }
-  }
-  i_++;
-  if (i_ < _i) {
-    if (parseInt(i_/2) == i_/2) {
-      b.focus();
-      b.setSelectionRange(i_/2, i_/2);
-    }
-    t = setTimeout(play, 1000 / freq);
-  } else {
-    pause();
-  }
-}
-
-function toBinary(v) {
-  var a = v.split("\n");
-  a_ = [];
-  for (var i=0; i<a.length; i++) {
-    a[i] = a[i].split("");
-    for (var j=0; j<a[i].length; j++) {
-      if (!a_[j*2]) {
-        a_[j*2] = "";
-        a_[j*2+1] = "";
-      }
-      var b_ = hex.indexOf(a[i][j]).toString(2);
-      while (b_.length<6) {
-        b_ = "0" + b_;
-      }
-      a_[j*2] += b_;
-      a_[j*2+1] += "";
-    }
-  }
-  for (var i=0; i<a_.length; i++) {
-    while (a_[i].length<12) {
-      a_[i] = "0" + a_[i];
-    }
-  }
-  console.log(a_.join("\n"));
-}
-
-function showColumn() {
-  var b_ = parseInt(b.selectionStart);
-  var d_ = parseInt(b.selectionEnd);
-  var ch_ = b.value.charAt(b_-1);
-  ch.innerHTML = ch_;
-  var c = hex.indexOf(ch_);
-  if (c == -1) {
-    c = 0;
-  }
-  var p = c.toString(2);
-  while (p.length < cb.length) {
-    p = "0" + p;
-  }
-  for (var i=0; i<p.length; i++) {
-    if (p.charAt(i) == "1") {
-      cb[i].checked = true;
-    } else {
-      cb[i].checked = false;
-    }
-  }
-}
-
-function addColumn() {
-  b_old = b.value;
-  var b_ = parseInt(b.selectionStart);
-  var d_ = parseInt(b.selectionEnd);
-  var l = b.value.substr(0, b_).split("\n");
-  var c = l[l.length-1].length; //distance from the left
-  
-  var a = b.value.split("\n");
-  for (var i=0; i<phonemes_.length; i++) {
-    a[i] = a[i].substr(0, c) + phonemes_[i][i_/2] + a[i].substr(c+1);
-  }
-  b.value = a.join("\n");
-  
-  b.focus();
-  b.setSelectionRange(c, c);
-  var ch_ = b.value.charAt(b_-1);
-  ch.innerHTML = ch_;
-}
-
-function playPhoneme(p) {
-  i_ = p*2;
-  _i = i_+2;
-  toBinary(phonemes);
-  if (ctl==b) {
-    addColumn();
-  }
-  if (a_[i_]) {
-    if(ac==null){init();}
-    play();
-  }
-}
-
-function playColumn() {
-  i_ = (findC(b)-1)*2;
-  _i = i_+2;
-  toBinary(b.value);
-  if (a_[i_]) {
-    play();
-  }
-}
-
-function playAll() {
-  i_ = (findC(b)-1)*2;
-  _i = a_.length;
-  toBinary(b.value);
-  if (a_[0]) {
-    play();
-  }
-  playNow = true;
-  document.getElementById("play_all").firstChild.innerText='pause';
-}
-
-function pause() {
-  clearTimeout(t);
-  gain_.gain.linearRampToValueAtTime(0.0, ac.currentTime+1.0 / freq);
-  gain.gain.linearRampToValueAtTime(0.0, ac.currentTime+1.0 / freq);
-  playNow = false;
-  document.getElementById("play_all").firstChild.innerText='play_arrow';
-}
-
-function findC(v) {
-    var b_ = parseInt(v.selectionStart);
-    var d_ = parseInt(v.selectionEnd);
-    var l = v.value.substr(0, b_).split("\n");
-    var c = l[l.length-1].length;
-    v.focus();
-    v.setSelectionRange(b_, d_);
-    return c;
-}
-
-function addBinary() {
-  b_old = b.value;
-  var b_ = parseInt(b.selectionStart);
-  var d_ = parseInt(b.selectionEnd);
-  var p = "";
-  for (var i=0; i<keysPressed.length; i++) {
-    if (keysPressed[i]===true) {
-      p += "1";
-    } else {
-      p += "0";
-    }
-  }
-  if (p=="000000000000") {
-    p = "";
-    for (var i=0; i<cb.length; i++) {
-      if (cb[i].checked === true) {
-        p += "1";
-      } else {
-        p += "0";
-      }
-    }
-  } else {
-    for (var i=0; i<cb.length; i++) {
-      if (p.charAt(i)=="1") {
-        cb[i].checked = true;
-      } else {
-        cb[i].checked = false;
-      }
-    }
-  }
-  var i = parseInt(p.substr(0, 6), 2);
-  if (b.value.charAt(b_-1) && b.value.charAt(b_-1) != "\n") {
-    b.value = b.value.substr(0, b_-1) + hex[i] + b.value.substr(d_);
-  } else {
-    b.value = b.value.substr(0, b_) + hex[i] + b.value.substr(d_);
-  }
-  b.focus();
-  b.setSelectionRange(b_, b_);
-  var ch_ = b.value.charAt(b_-1);
-  ch.innerHTML = ch_;
-  playColumn();
-}
-
-function zoom(v) {
-  var z = parseInt(b.style.fontSize.slice(0,-2)) + v;
-  b.style.fontSize = z+"px";
-}
-
-function swap() {
-  if (checkboxes.style.left=="0px") {
-    checkboxes.style.right="0px";
-    checkboxes.style.left="auto";
-    b.style.textAlign="left";
-    buttons.style.textAlign="left";
-  } else {
-    checkboxes.style.right="auto";
-    checkboxes.style.left="0px";
-    b.style.textAlign="right";
-    buttons.style.textAlign="right";
-  }
-}
-
-function save() {
-    var filename = "formants.txt";
-    var element = document.createElement('a');
-    element.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(b.value));
-    element.setAttribute('download', filename);
-    element.style.display = 'none';
-    document.body.appendChild(element);
-    element.click();
-    document.body.removeChild(element);
-}
 
 function playAudio() {
   document.getElementsByTagName('audio')[0].play();
@@ -617,32 +294,32 @@ var pos = document.getElementById("pos");
 var pos_ = document.getElementById("pos_");
 var syntax = document.getElementById("syntax");
 var syntax_chart = document.getElementById("syntax_chart");
+var speech_chart = document.getElementById("speech_chart");
 var spellcheck = document.getElementById("spellcheck");
 var examples = document.getElementById("examples");
 var wiki = document.getElementById("wiki");
 var mobile = document.getElementById("mobile");
-var spectrogram = document.getElementById("spectrogram");
-var b = document.getElementById("b");
-var buttons = document.getElementById("buttons");
-var checkboxes = document.getElementById("checkboxes");
-var cb = document.getElementsByClassName("cb");
-var ch = document.getElementById("ch");
 var orig_link = document.getElementById("orig_link");
+var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList;
+var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent;
+var record = document.querySelector('#record');
+var pronounce = document.querySelector('#pronounce');
+var synth = window.speechSynthesis;
+var voiceSelect = document.querySelector('#voice_select');
+var speak = document.querySelector('#speak');
+var voices = [];
 var res_old = "";
-var b_old = "";
 var regexp = [];
 var ks_ = [];
 var ctl = res;
 var ln = 20;
 var wn = 0;
-var tl = ["en", "nl"]; //fy, af
+var tl = ["en", "fy"];
 var sl = "en";
 var orig, corr;
 var a_c = false;
 
-b.style.fontSize = "56px";
-b.value = "䷀\n䷀";
-b.setSelectionRange(2, 2);
 var r_ = new RegExp("("+Object.keys(superscript).join("|")+")", "g");
 
 for (var i=0; i<keys.length; i++) {
@@ -654,7 +331,7 @@ for (var i=0; i<keys.length; i++) {
   phoneme[i] = ks[7];
   lnk.onfocus = function(e){this.selectedIndex=-1;};
   lnk.onblur = function(e){this.selectedIndex=0;};
-  lnk.onchange = function(e){if(ctl!=consonants && ctl!=b){addPhoneme(e.target.value, e.target.style.backgroundColor);}playPhoneme(parseInt(phoneme[this.id]));this.blur();};
+  lnk.onchange = function(e){if(ctl!=consonants){addPhoneme(e.target.value, e.target.style.backgroundColor);}this.blur();};
   var bg = 100 - Math.pow(parseFloat(ks[3]), 1/3)*50;
   lnk.style.backgroundColor = "hsl(" + ks[2] + ", 100%, " + bg + "%)";
   lnk.innerHTML += "<option style='background-color:hsl("+ks[2]+", 100%, "+bg+"%);' value='"+ks_[i]+"_'>"+ks[0]+"</option>";
@@ -672,7 +349,7 @@ for (var i=0; i<keys_.length; i++) {
   var lnk = c_[i];
   lnk.id = keys.length+i;
   phoneme[keys.length+i] = ks[3];
-  lnk.onclick=function(e){if(ctl!=vowels && ctl!=b){addPhoneme(e.target.title, 'transparent');}playPhoneme(parseInt(phoneme[this.id]));};
+  lnk.onfocus=function(e){if(ctl!=vowels){addPhoneme(e.target.title, 'transparent');}};
   lnk.href="javascript:";
   lnk.innerText = ks[0] + " ";
   lnk.title = ks[0];
@@ -721,6 +398,7 @@ function addWord(w_, _w) {
 }
 
 function addPhoneme(p, clr) {
+  if (ctl == res) {res_old = res.value;}
   //t.innerHTML += "<span style='background-color:" + clr + ";'>" + v + "</span> ";
   var cPos = findCursor(ctl).split(",");
   var b = parseInt(cPos[0]);
@@ -824,18 +502,26 @@ function loadTranscription(ln, wrd_, count) {
 }
 
 function colorPhonemes() {
-  res_old = res.value;
   var str = res.value;
   var lines = str.split("\n");
   str = "";
+  var cPos = findCursor(res).split(",");
+  var b = parseInt(cPos[0]);
+  var d = parseInt(cPos[1]);
+  var ln = res.value.substr(0, b).split("\n").length-1;
   for (var j=0; j<lines.length; j++) {
+    if (j > 0 && lines[j].search(/[꜌꜋꜊꜉꜈꜑꜐꜏꜎꜍]/g) != -1 && lines[j-1].search(/[꜌꜋꜊꜉꜈꜑꜐꜏꜎꜍]/g) == -1) {
+      lines[j] = "<div class='piano'>" + lines[j];
+    }
+    if (j > 0 && lines[j].search(/[꜌꜋꜊꜉꜈꜑꜐꜏꜎꜍]/g) == -1 && lines[j-1].search(/[꜌꜋꜊꜉꜈꜑꜐꜏꜎꜍]/g) != -1) {
+      lines[j] = lines[j] = "</div>";
+    }
     if (lines[j].search(/[ˊ`_·ˈˌ]/g) != -1) {
       for (var i=0; i<regexp.length; i++) {
         lines[j] = lines[j].replace(regexp[i][0], function (x) {
             return "<i style='border-bottom:4px solid " + regexp[i][1] + ";'>"+x+"</i>";
         });
       }
-      var k = Object.keys(superscript);
     }
     str += lines[j]+"\n";
   }
@@ -848,9 +534,6 @@ function colorPhonemes() {
 function undo() {
   if (ctl == res) {
     res.value = res_old;
-    highlightText();
-  } else if (ctl == b) {
-    b.value = b_old;
   }
 }
 
@@ -1085,21 +768,22 @@ function loadCorrection(wrd, o) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-      if (this.responseText == o) {
-        hl.innerHTML = hl.innerHTML.replace("…\n", "");
-        res.value = res.value.replace("…\n", "");
-      } else {
-        hl.innerHTML = hl.innerHTML.replace("…\n", "<sup>"+this.responseText+"</sup>\n");
-        res.value = res.value.replace("…\n", "\n");
-      }
       loadTranslation(o.replace(/\?/g, '%3F').replace(/\!/g, '%21'));
       loadSyntaxTree(this.responseText);
       
-      spellcheck.innerText = "spellcheck";
-      orig = null;
-      corr = null;
-      loadSyntaxPopularity(wrd);
-      loadSyntaxPopularity(this.responseText);
+      if (this.responseText == o) {
+        hl.innerHTML = hl.innerHTML.replace("…\n", "");
+        res.value = res.value.replace("…\n", "");
+        spellcheck.innerText = "gpp_good";
+      } else {
+        hl.innerHTML = hl.innerHTML.replace("…\n", "<sup>"+this.responseText+"</sup>\n");
+        res.value = res.value.replace("…\n", "\n");
+        spellcheck.innerText = "spellcheck";
+        orig = null;
+        corr = null;
+        loadSyntaxPopularity(wrd);
+        loadSyntaxPopularity(this.responseText);
+      }
     }
   };
   xhttp.open("GET", url + "?a=correct&w=" + wrd.replace(/ /g, "+") + "&tl=" + tl[0] + "&sl=" + tl[1], true);
@@ -1159,6 +843,7 @@ function loadSyntaxPopularity(wrd) {
         corr = r;
       }
       if (orig && corr) {
+        alert(orig.join(" ") + "\n"+wrd+"\n" + corr.join(" "));
         if (orig.length < corr.length) {
           for (var i=orig.length; i<corr.length; i++) {
             orig[i] = 1.0;
@@ -1174,11 +859,11 @@ function loadSyntaxPopularity(wrd) {
         }
         avg = avg / corr.length;
         if (avg > 0) {
-          spellcheck.innerText = "cancel";
+          spellcheck.innerText = "gpp_bad";
         } else if (avg < 0) {
-          spellcheck.innerText = "flaky";
+          spellcheck.innerText = "gpp_maybe";
         } else {
-          spellcheck.innerText = "task_alt";
+          spellcheck.innerText = "gpp_good";
         }
       }
     }
@@ -1284,25 +969,267 @@ function checkCompletion(q) {
 }
 
 
-function speak(ssml) {
-  const xhttp = new XMLHttpRequest();
-  xhttp.onload = function() {
-    var snd = new Audio("data:audio/mp3;base64," + this.responseText);
-	  snd.play();
-    const byteCharacters = atob(this.responseText);
-    const byteNumbers = new Array(byteCharacters.length);
-    for (let i = 0; i < byteCharacters.length; i++) {
-      byteNumbers[i] = byteCharacters.charCodeAt(i);
+function tts() {
+  var cPos = findCursor(ctl).split(",");
+  var b = parseInt(cPos[0]);
+  var d = parseInt(cPos[1]);
+  var ln = ctl.value.substr(0, b).split("\n").length-1;
+  var q = ctl.value.split("\n")[ln];
+  if (q.search(/\W/gi) >= 0 && q.search(/[ˈˌ]/g) >= 0) {
+    for (var i=0; i<regexp.length; i++) {
+      q = q.replace(regexp[i][0], function (x) {
+          return x.charAt(x.length-1) + x.slice(0,-1);
+      });
     }
-    const byteArray = new Uint8Array(byteNumbers);
-    const blob = new Blob([byteArray], {type: 'audio/mp3'});
-    var o_url = URL.createObjectURL(blob);
-    document.getElementById("tts_").src = o_url;
-    document.getElementById("tts").load();
+    q = q.replace(/[iɑɔu]/g, function(x){return x+"ː";}).replace(/[ˈˌ]ə/g, function(x){return x.charAt(0)+"ɚ";});
+    var ssml = "<phoneme alphabet='ipa' ph='"+q+"'> </phoneme>";
+  } else {
+    var ssml = q;
   }
-  xhttp.open("GET", "https://script.google.com/macros/s/AKfycbz5br4wnfSGtucWKwGQq1Tb07eshJez6uVaFatn4xJAc_rcrcA/exec?a=tts&txt="+ssml);
-  xhttp.send();
+  if (q !== "") {
+    pronounce.disabled = true;
+    const xhttp = new XMLHttpRequest();
+    xhttp.onload = function() {
+      var snd = new Audio("data:audio/mp3;base64," + this.responseText);
+  	  snd.play();
+      const byteCharacters = atob(this.responseText);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      const blob = new Blob([byteArray], {type: 'audio/mp3'});
+      var o_url = URL.createObjectURL(blob);
+      document.getElementById("tts").src = o_url;
+      document.getElementById("tts").load();
+      pronounce.disabled = false;
+      pitch();
+    }
+    xhttp.open("GET", "https://script.google.com/macros/s/AKfycbz5br4wnfSGtucWKwGQq1Tb07eshJez6uVaFatn4xJAc_rcrcA/exec?a=tts&txt="+ssml);
+    xhttp.send();
+    var l = ctl.value.substr(0, b).lastIndexOf("\n")+1;
+    ctl.focus();
+    ctl.setSelectionRange(l, l+q.length);
+  }
 }
+
+
+function populateVoiceList() {
+  voices = synth.getVoices().sort(function (a, b) {
+      const aname = a.name.toUpperCase(), bname = b.name.toUpperCase();
+      if ( aname < bname ) return -1;
+      else if ( aname == bname ) return 0;
+      else return +1;
+  });
+  var selectedIndex = voiceSelect.selectedIndex < 0 ? 0 : voiceSelect.selectedIndex;
+  voiceSelect.innerHTML = '';
+  for(i = 0; i < voices.length ; i++) {
+    var option = document.createElement('option');
+    option.textContent = voices[i].name + ' (' + voices[i].lang + ')';
+    
+    if(voices[i].default) {
+      option.textContent += ' -- DEFAULT';
+    }
+
+    option.setAttribute('data-lang', voices[i].lang);
+    option.setAttribute('data-name', voices[i].name);
+    voiceSelect.appendChild(option);
+  }
+  voiceSelect.selectedIndex = selectedIndex;
+}
+
+populateVoiceList();
+if (speechSynthesis.onvoiceschanged !== undefined) {
+  speechSynthesis.onvoiceschanged = populateVoiceList;
+}
+
+function speak_() {
+  var cPos = findCursor(res).split(",");
+  var b = parseInt(cPos[0]);
+  var d = parseInt(cPos[1]);
+  var ln = res.value.substr(0, b).split("\n").length-1;
+  var q = res.value.split("\n")[ln];
+  if (!synth.speaking && q !== '') {
+    speak.disabled = true;
+    var l = res.value.substr(0, b).lastIndexOf("\n")+1;
+    res.focus();
+    res.setSelectionRange(l, l+q.length);
+    var utterThis = new SpeechSynthesisUtterance(q);
+    utterThis.onend = function (event) {
+        console.log('SpeechSynthesisUtterance.onend');
+    }
+    utterThis.onerror = function (event) {
+        console.error('SpeechSynthesisUtterance.onerror');
+    }
+    synth.cancel();
+    var selectedOption = voiceSelect.selectedOptions[0].getAttribute('data-name');
+    for(i = 0; i < voices.length ; i++) {
+      if(voices[i].name === selectedOption) {
+        utterThis.voice = voices[i];
+        break;
+      }
+    }
+    utterThis.pitch = 1.0;
+    utterThis.rate = 1.0;
+    synth.speak(utterThis);
+    speak.disabled = false;
+  }
+}
+
+
+var audioCtx = null;
+var analyser = null;
+var bufferLength = null;
+var dataArray = null;
+var bufferN = 0;
+var dVol = [];
+var noteArray = [];
+for (var i=0; i<5; i++) {
+  noteArray[i] = [];
+}
+
+function pitch() {
+  if(!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)({latencyHint:"interactive",sampleRate: 22050});
+  }
+
+  var source = audioCtx.createMediaElementSource(document.getElementById("tts"));
+  var biquadFilter = audioCtx.createBiquadFilter();
+  
+  biquadFilter.type = "lowpass";
+  biquadFilter.frequency.setValueAtTime(512, audioCtx.currentTime);
+  biquadFilter.Q.setValueAtTime(0, audioCtx.currentTime);
+
+  analyser = audioCtx.createAnalyser();
+  analyser.fftSize = 16384;
+  bufferLength = analyser.frequencyBinCount; //=half of fftSize
+  dataArray = new Uint8Array(bufferLength);
+
+  source.connect(biquadFilter);
+  biquadFilter.connect(analyser);
+  analyser.connect(audioCtx.destination);
+}
+
+
+  function draw() {
+    if (document.getElementById("tts").ended === false || dataArray.find(function(x){return x>0;})) {
+      bufferN++;
+      requestAnimationFrame(draw);
+    } else {
+      bufferN = 0;
+      speech_chart.innerHTML = "";
+      for (var i=0; i<5; i++) {
+        speech_chart.innerHTML += noteArray[i].join("") + "\n";
+        noteArray[i] = [];
+      }
+    }
+    analyser.getByteFrequencyData(dataArray);
+
+    var f = 0;
+    var v = 0;
+    var n = "";
+    for (var i = 1; i < bufferLength; i++) {
+      if (dataArray[i] > dataArray[f]) {f = i;}
+    }
+    v = dataArray[f]/256;
+    f = f*(12000/bufferLength);
+    dVol[bufferN] = v;
+    if (bufferN > 1 && dVol[bufferN-1] < dVol[bufferN-2] && dVol[bufferN-1] < dVol[bufferN]) {dVol[bufferN-1] = 0; var s = " ";} else {var s = "";}
+    
+    for (var i=0; i<Object.keys(piano).length; i++) {
+      if (piano[Object.keys(piano)[i]][0] <= f) {
+        n = Object.keys(piano)[i];
+        console.log(bufferN+" "+f+"hz "+n+" "+i+" | "+dVol[bufferN-1]+" "+v);
+        for (var j=0; j<5; j++) {
+          noteArray[j][bufferN] = s + " ";
+        }
+        if (i >= 80) {
+          noteArray[4][bufferN] = s + "<span style='color:rgba(0,0,0,"+v+");'>" + tone_chart[tone_chart.length - 1 - (i - 80)] + "</span>";
+        } else if (i >= 75) {
+          noteArray[3][bufferN] = s + "<span style='color:rgba(0,0,0,"+v+");'>" + tone_chart[tone_chart.length - 1 - (i - 75)] + "</span>";
+        } else if (i >= 70) {
+          noteArray[2][bufferN] = s + "<span style='color:rgba(0,0,0,"+v+");'>" + tone_chart[tone_chart.length - 1 - (i - 70)] + "</span>";
+        } else if (i >= 65) {
+          noteArray[1][bufferN] = s + "<span style='color:rgba(0,0,0,"+v+");'>" + tone_chart[tone_chart.length - 1 - (i - 65)] + "</span>";
+        } else if (i >= 60) {
+          noteArray[0][bufferN] = s + "<span style='color:rgba(0,0,0,"+v+");'>" + tone_chart[tone_chart.length - 1 - (i - 60)] + "</span>";
+        }
+        break;
+      }
+    }
+  }
+
+
+/*
+function record_speech() {
+  record.disabled = true;
+
+  var grammar = '#JSGF V1.0; grammar phrase; public <phrase> = ' + phrase +';';
+  var recognition = new SpeechRecognition();
+  var speechRecognitionList = new SpeechGrammarList();
+  speechRecognitionList.addFromString(grammar, 1);
+  recognition.grammars = speechRecognitionList;
+  recognition.lang = 'en-US';
+  recognition.interimResults = false;
+  recognition.maxAlternatives = 1;
+
+  recognition.start();
+
+  recognition.onresult = function(event) {
+    // The SpeechRecognitionEvent results property returns a SpeechRecognitionResultList object
+    // The SpeechRecognitionResultList object contains SpeechRecognitionResult objects.
+    // It has a getter so it can be accessed like an array
+    // The first [0] returns the SpeechRecognitionResult at position 0.
+    // Each SpeechRecognitionResult object contains SpeechRecognitionAlternative objects that contain individual results.
+    // These also have getters so they can be accessed like arrays.
+    // The second [0] returns the SpeechRecognitionAlternative at position 0.
+    // We then return the transcript property of the SpeechRecognitionAlternative object
+    var speechResult = event.results[0][0].transcript.toLowerCase();
+    addPhoneme("\n"+speechResult+"\n", "");
+    console.log('Confidence: ' + event.results[0][0].confidence);
+  }
+  recognition.onspeechend = function() {
+    recognition.stop();
+    record.disabled = false;
+  }
+  recognition.onerror = function(event) {
+    record.disabled = false;
+    console.log('Error occurred in recognition: ' + event.error);
+  }
+  recognition.onaudiostart = function(event) {
+      //Fired when the user agent has started to capture audio.
+      console.log('SpeechRecognition.onaudiostart');
+  }
+  recognition.onaudioend = function(event) {
+      //Fired when the user agent has finished capturing audio.
+      console.log('SpeechRecognition.onaudioend');
+  }
+  recognition.onend = function(event) {
+      //Fired when the speech recognition service has disconnected.
+      console.log('SpeechRecognition.onend');
+  }
+  recognition.onnomatch = function(event) {
+      //Fired when the speech recognition service returns a final result with no significant recognition. This may involve some degree of recognition, which doesn't meet or exceed the confidence threshold.
+      console.log('SpeechRecognition.onnomatch');
+  }
+  recognition.onsoundstart = function(event) {
+      //Fired when any sound — recognisable speech or not — has been detected.
+      console.log('SpeechRecognition.onsoundstart');
+  }
+  recognition.onsoundend = function(event) {
+      //Fired when any sound — recognisable speech or not — has stopped being detected.
+      console.log('SpeechRecognition.onsoundend');
+  }
+  recognition.onspeechstart = function (event) {
+      //Fired when sound that is recognised by the speech recognition service as speech has been detected.
+      console.log('SpeechRecognition.onspeechstart');
+  }
+  recognition.onstart = function(event) {
+      //Fired when the speech recognition service has begun listening to incoming audio with intent to recognize grammars associated with the current SpeechRecognition.
+      console.log('SpeechRecognition.onstart');
+  }
+}
+*/
 
 
 function kb_symbols() {
@@ -1391,15 +1318,6 @@ function showPhonemes() {
     dict.style.visibility='visible';
   } else {
     dict.style.visibility='hidden';
-  }
-}
-
-function showSpectrogram() {
-  if (spectrogram.style.visibility!='visible') {
-    if(ac==null){init();}
-    spectrogram.style.visibility='visible';
-  } else {
-    spectrogram.style.visibility='hidden';
   }
 }
 
