@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Vocal synthesizer</title>
+<style>
+@font-face {
+  font-family: "DejaVu";
+  src: url("/verbalise/fonts/dejavu/DejaVuSansMono.ttf") format("truetype");
+}
+@font-face {
+  font-family: "DejaVuBold";
+  src: url("/verbalise/fonts/dejavu/DejaVuSansMono-Bold.ttf") format("truetype");
+}
+@font-face {
+  font-family: "DejaVuSans";
+  src: url("/verbalise/fonts/dejavu/DejaVuSans.ttf") format("truetype");
+}
+@font-face {
+  font-family: "DejaVuSansBold";
+  src: url("/verbalise/fonts/dejavu/DejaVuSans-Bold.ttf") format("truetype");
+}
+*, body {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-family: 'DejaVu', monospace;
+  line-height: 1em;
+}
+button {
+  font-size:16px;
+}
+#upload {
+  display:none;
+}
+#pre, #pitch, #color {
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}
+body {
+  margin:0;
+}
+#hscroll, #scroll {
+  background-color:lightgray;
+  overflow:scroll;
+  position:fixed;
+}
+#hscroll {
+  height:16px;
+  width:100vw;
+  left:0;
+  top:0;
+}
+#scroll {
+  width:16px;
+  height:16em;
+  right:0;
+  top:16px;
+}
+#hscroll hr {
+  width:2048em;
+  height:0;
+}
+#scroll hr {
+  height:2048em;
+  width:0;
+}
+#pre {
+  position:relative;
+  left: 32px;
+  top: 16px;
+  margin: 0;
+  padding: 0;
+  font-weight:bold;
+  font-size:8px;
+  letter-spacing:-0.175em;
+  line-height:1em;
+  height:32em;
+  width:100vw;
+  max-width:100vw;
+  overflow:hidden;
+  background-color:white !important;
+  filter: blur(4px) brightness(70%) contrast(250%);
+  touch-action: none;
+}
+#pre span {
+  display:none;
+}
+#toolbar {
+  background-color:white;
+  height:120px;
+  position: absolute;
+  bottom:296px;
+  left:24px;
+  border: 0;
+  border-bottom: 1px solid lightgray;
+}
+#toolbar a {
+  color: black;
+  text-decoration: none;
+  font-size:16px;
+  font-weight: bold;
+}
+#toolbar p {
+  margin: 12px 0;
+}
+#color, #brush {
+  float:left;
+  height:32px;
+  line-height:32px;
+  letter-spacing:-0.2em;
+  font-weight:bold;
+  font-size:2px;
+  background-color:white !important;
+  filter: blur(1px) brightness(70%) contrast(250%);
+}
+#brush {
+  text-align:center;
+  font-size:4px;
+  width:32px;
+  border:none;
+  padding:0;
+  margin:0;
+}
+#noise {
+  margin: 4px 8px;
+  width: 16px;
+}
+#controls, #data {
+  font-size:16px;
+  float: right;
+}
+#pitch {
+  margin: 0;
+  padding: 0;
+  font-weight:bold;
+  font-size:8px;
+  letter-spacing:-0.175em;
+  line-height:1em;
+  height:32em;
+  width:31px;
+  border-right:1px solid gray;
+  position:absolute;
+  left:0;
+  top:16px;
+  max-width:32px;
+  overflow:hidden;
+  touch-action: none;
+}
+#cursor {
+  line-height:1em;
+  letter-spacing:0;
+  font-weight:bold;
+  font-size:8px;
+  position:absolute;
+  top:16px;
+  left:0;
+}
+#cheat {
+  background-color:white;
+  column-count: 3;
+  position: absolute;
+  bottom: 0;
+  left: 24px;
+  width:288px;
+  height:296px;
+  line-height:1em;
+  margin:0;
+  padding:0;
+}
+#cheat div {
+  float: right;
+  margin: 2px 0;
+  padding:0;
+}
+#cheat b {
+  font-size:14px;
+}
+#cheat a {
+  color:black;
+  text-decoration:none;
+  font-size:8px;
+  vertical-align: middle;
+  filter: blur(2px) brightness(70%) contrast(250%);
+}
+audio {
+  height:16px;
+  width:288px;
+}
+#spectrogram {
+  position:absolute;
+  bottom:0;
+  left:24px;
+  border: none;
+  border-top:1px solid lightgray;
+}
+</style>
+</head>
+<body oncontextmenu="return false;" onload="phonemes();">
+<span id="cursor">⯈</span>
+<pre id="pitch" onmousedown="m=true;" onmouseup="m=false;" onmousemove="if(m && m===true){draw(event.target, parseInt(event.pageX/s*r), 0, null);}" ontouchstart="m=true;" ontouchend="m=false;" ontouchcancel="m=false;" ontouchmove="if(m && m===true){draw(event.target, parseInt(event.changedTouches[0].pageX/s*r), event.changedTouches[0].radiusY, parseInt((event.changedTouches[0].pageY-16)/s));}" onkeydown="if(event.key=='ArrowUp'){t--;point();}else if(event.key=='ArrowDown'){t++;point();}else{draw(p[l_old+t+1], kbrd.indexOf(event.key), 0, null);t++;point();}" tabindex="1"></pre>
+<pre id="pre" onmousedown="m=true;" onmouseup="m=false;" onmousemove="if(m && m===true){draw(event.target, parseInt((event.pageX-32+this.scrollLeft)/s*r), 0, null);}" ontouchstart="m=true;" ontouchend="m=false;"  ontouchcancel="m=false;" ontouchmove="if(m && m===true){draw(event.target, parseInt((event.changedTouches[0].pageX-32+this.scrollLeft)/s*r), event.changedTouches[0].radiusY, parseInt((event.changedTouches[0].pageY-16)/s));}" onkeydown="if(event.key=='ArrowUp'){t--;point();}else if(event.key=='ArrowDown'){t++;point();}else{draw(span[l_old+t+1], kbrd.indexOf(event.key)+parseInt(this.scrollLeft/s*r), 0, null);t++;point();}" tabindex="0"></pre>
+<div id="hscroll" onscroll="pre.scrollLeft=this.scrollLeft;"><hr/></div>
+<div id="scroll" onscroll="show(parseInt(this.scrollTop/s))"><hr/></div>
+<pre id="cheat"></pre>
+<div id="toolbar">
+    <input id="brush" type="text" value="⢸⣿⡇"/><div id="color" onclick="set()"></div><br/>
+    <input id="noise" type="checkbox"/>noise
+    <span id="controls">
+      <button onclick="if(!ac){init();}play();">● record</button>
+      <button onclick="stop();">■ stop</button>
+    </span>
+    <p><audio controls onplay="if(mediaRecorder.state=='paused'){mediaRecorder.resume();}" onpause="if(mediaRecorder.state=='recording'){mediaRecorder.pause();}"></audio></p>
+    <a href="/img2b" target="_blank">🖻 import</a>
+    <span id="data">
+      <a href="javascript:openCsv();">🗁 open</a><input type="file" id="upload" onchange="openCsv();"/> &nbsp; <a href="javascript:saveCsv();">🖫 save</a><a id="download"></a>
+    </span>
+</div>
+<canvas id="spectrogram" width="288" height=32></canvas>
+<script type="text/javascript" src="js/spectrogram.js"></script>
+<script>
+var pitch = document.getElementById("pitch");
+var pre = document.getElementById("pre");
+var span = pre.getElementsByTagName("span");
+var p = pitch.getElementsByTagName("span");
+var color = document.getElementById("color");
+var brush = document.getElementById("brush");
+var cheat = document.getElementById("cheat");
+var noise = document.getElementById("noise");
+var download = document.getElementById("download");
+var upload = document.getElementById("upload");
+
+var ph = {
+  "w": '▀           ',
+  "u": '██          ',
+  "υ": '▀ ▀         ',
+ "oυ": '█ ▄▀        ',
+  "ɔ": '▀  ▀        ',
+  "ɑ": '█  █        ',
+  "ʌ": '▀   ▀       ',
+  "ə": '█   █       ',
+  "æ": '█   ▀▄      ',
+  "ɛ": '▀    ▀      ',
+ "eɪ": '█    ▀▄     ',
+  "ɪ": '▀     ▀     ',
+  "i": '█     █     ',
+  "j": '▀      ▀    ',
+ "aɪ": '█   ▀▄▄     ',
+ "ɔɪ": '█  ▀▄▄▄     ',
+ "aυ": '█ ▄▄▀       ',
+  "ɹ": '███   █     ',
+  "m": '██  █ █     ',
+  "n": '█ █ █ █     ',
+  "ŋ": '█  ██ █     ',
+  "l": '██   ██     ',
+  "h": '  ████      ',
+  "p": '  ▄▄▄▄▄▄▄▄▄▄',
+  "t": '    ▄▄▄▄▄▄▄▄',
+  "k": '  ▄▄▄▄      ',
+  "b": '▄▄  ▄ ▄     ',
+  "d": '▄ ▄ ▄ ▄     ',
+  "g": '▄  ▄▄ ▄     ',
+  "s": '          ██',
+  "z": '█         ██',
+  "θ": '        ████',
+  "ð": '█       ████',
+  "ʧ": '      ██████',
+  "ʤ": '█     ██████',
+  "ʃ": '    ████████',
+  "ʒ": '█   ████████',
+  "f": '  ██████████',
+  "v": '█ ██████████',
+};
+
+var br = (
+  "⠀⢀⠠⢠⠐⢐⠰⢰⠈⢈⠨⢨⠘⢘⠸⢸" +
+  "⡀⣀⡠⣠⡐⣐⡰⣰⡈⣈⡨⣨⡘⣘⡸⣸" +
+  "⠄⢄⠤⢤⠔⢔⠴⢴⠌⢌⠬⢬⠜⢜⠼⢼" +
+  "⡄⣄⡤⣤⡔⣔⡴⣴⡌⣌⡬⣬⡜⣜⡼⣼" +
+  "⠂⢂⠢⢢⠒⢒⠲⢲⠊⢊⠪⢪⠚⢚⠺⢺" +
+  "⡂⣂⡢⣢⡒⣒⡲⣲⡊⣊⡪⣪⡚⣚⡺⣺" +
+  "⠆⢆⠦⢦⠖⢖⠶⢶⠎⢎⠮⢮⠞⢞⠾⢾" +
+  "⡆⣆⡦⣦⡖⣖⡶⣶⡎⣎⡮⣮⡞⣞⡾⣾" +
+  "⠁⢁⠡⢡⠑⢑⠱⢱⠉⢉⠩⢩⠙⢙⠹⢹" +
+  "⡁⣁⡡⣡⡑⣑⡱⣱⡉⣉⡩⣩⡙⣙⡹⣹" +
+  "⠅⢅⠥⢥⠕⢕⠵⢵⠍⢍⠭⢭⠝⢝⠽⢽" +
+  "⡅⣅⡥⣥⡕⣕⡵⣵⡍⣍⡭⣭⡝⣝⡽⣽" +
+  "⠃⢃⠣⢣⠓⢓⠳⢳⠋⢋⠫⢫⠛⢛⠻⢻" +
+  "⡃⣃⡣⣣⡓⣓⡳⣳⡋⣋⡫⣫⡛⣛⡻⣻" +
+  "⠇⢇⠧⢧⠗⢗⠷⢷⠏⢏⠯⢯⠟⢟⠿⢿" +
+  "⡇⣇⡧⣧⡗⣗⡷⣷⡏⣏⡯⣯⡟⣟⡿⣿"
+).split("");
+				
+//sort by brightness
+var bn = {};
+for (var i = 0; i<256; i++) {
+	bn[br[i]] = i.toString(2).replace(/0/g, "").length;
+}
+br.sort(function(a, b){return bn[a] - bn[b]});
+color.innerText = br.join("");
+
+var sb = (" ░▒▓█").split("");
+//https://en.wikipedia.org/wiki/Box-drawing_character
+
+var kbrd = ("1234567890-=").split("");
+var kbrd_n = ("qwertyuiop[]").split("");
+var base = ("asdfghjkl;'zxcvbnm,./").split("");
+
+var real = new Float32Array(2048);
+var imag = new Float32Array(2048);
+var freq = 16.0; //lowest audible
+var voice = 96.0; //lowest voice
+var c_length = 32;
+var lines = 32;
+var s = 8;
+var r = 1.905;
+var ac = null;
+var gain = [];
+var osc = [];
+var delays = [];
+var t = 0;
+var m = false;
+var txt = "";
+var l_old = 0;
+
+var base = voice;
+
+var l = new Array(2048);
+var k = new Array(24);
+l.fill("⠀");
+k.fill("⠀");
+var l = l.join("");
+var k = k.join("");
+var ln = [];
+ln[0] = "";
+ln[1] = "";
+for (var i=0; i<2048; i++) {
+  ln[0] += "<span></span>";
+  ln[1] += "<span></span>";
+}
+pre.innerHTML = ln[0];
+pitch.innerHTML = ln[1];
+for (var i=0; i<lines; i++) {
+  span[i].style.display = "block";
+  p[i].style.display = "block";
+  span[i].innerText = "|" + l;
+  p[i].innerText = k;
+}
+
+var chunks = [], dest, mediaRecorder, masterGain;
+var spectrogram = null;
+
+function initRec() {
+  dest = ac.createMediaStreamDestination();
+  mediaRecorder = new MediaRecorder(dest.stream);
+  document.querySelector("audio").srcObject = dest.stream;
+  document.querySelector("audio").playbackRate = 1.0;
+  document.querySelector("audio").play();
+    
+  mediaRecorder.ondataavailable = function(evt) {
+    // push each chunk (blobs) in an array
+    chunks.push(evt.data);
+  };
+    
+  mediaRecorder.onstop = function(evt) {
+    // Make blob out of our blobs, and open it.
+    document.querySelector("audio").srcObject = null;
+    let blob = new Blob(chunks, { 'type' : 'audio/wav' });
+    document.querySelector("audio").src = URL.createObjectURL(blob);
+    document.querySelector("audio").playbackRate = 4.0;
+    chunks = [];
+  };
+}
+
+function init() {
+  ac = new AudioContext();
+  masterGain = ac.createGain();
+  masterGain.gain.value = 1.0;
+  spectrogram = new App.Spectrogram(ac, document.getElementById('spectrogram'));
+  spectrogram.acceptConnection(masterGain);
+  
+  for (var i=0; i<2; i++) {
+    gain[i] = ac.createGain();
+    gain[i].gain.value = 0.0;
+    
+    osc[i] = ac.createOscillator();
+    osc[i].frequency.value = freq;
+    osc[i].connect(gain[i]);
+    osc[i].start();
+  }
+  
+  for (var i=0; i<15; i++) {
+    delays[i] = ac.createDelay((i+1)/freq);
+    delays[i].delayTime.value = (i+1)/voice;
+    for (var j=0; j<2; j++) {
+      delays[i].connect(masterGain);
+      gain[j].connect(delays[i]);
+    }
+  }
+  console.log("initialized.");
+}
+
+function play() {
+  if (!mediaRecorder || masterGain.gain.value == 0) {
+    initRec();
+    masterGain.connect(dest);
+    mediaRecorder.start();
+  } else {
+    mediaRecorder.resume();
+  }
+  masterGain.gain.linearRampToValueAtTime(1.0, ac.currentTime + 0.001);
+  
+  var binary = [];
+  binary[0] = pre.innerText.split("\n");
+  binary[1] = pitch.innerText.split("\n");
+  for (var i=0; i<binary.length; i++) {
+    for (var j=0; j<binary[i].length; j++) {
+      binary[i][j] = binary[i][j].replace(/[\|\d\w]/g, "⠀").split("");
+    }
+  }
+  t = 0;
+  
+  var iv = setInterval(function() {
+    if (binary[0][t]) {
+      for (var i=0; i<2048; i++) {
+        var amp = br.indexOf(binary[0][t][i]) / (br.length-1);
+        if (!amp) { amp = 0; }
+        if (i == 0) { i = 1; } //0th is initial phase not harmonic
+        real[i] = (Math.random()*2-1) * amp / i;
+        imag[i] = (Math.random()*2-1) * amp / i;
+      }
+      var wave = ac.createPeriodicWave(real, imag, {disableNormalization: false}); //The default is false
+      if (parseInt(t/2) == t/2) {
+        osc[0].setPeriodicWave(wave);
+        gain[0].gain.linearRampToValueAtTime(0.0625, ac.currentTime + 0.001);
+        gain[1].gain.linearRampToValueAtTime(0.0, ac.currentTime + 0.001);
+      } else {
+        osc[1].setPeriodicWave(wave);
+        gain[1].gain.linearRampToValueAtTime(0.0625, ac.currentTime + 0.001);
+        gain[0].gain.linearRampToValueAtTime(0.0, ac.currentTime + 0.001);
+      }
+      // /\/\/\/\/
+      // _/\/\/\/\
+      var j = 1;
+      var f = binary[1][t].indexOf("█");
+      while (binary[1][t+j] && binary[1][t+j].indexOf("█") == f) {
+        j++;
+      }
+      if (f > -1) {
+        base = Math.pow(2, f/12) * voice;
+        for (var i=0; i<15; i++) {
+          delays[i].delayTime.exponentialRampToValueAtTime((i+1)/base, ac.currentTime + 0.032*j);
+        }
+      } else {
+        for (var i=0; i<15; i++) {
+          delays[i].delayTime.exponentialRampToValueAtTime((i+1)/base*(1-Math.random()), ac.currentTime + 0.032*j);
+        }
+      }
+      //console.log(t);
+      t++;
+    } else {
+      t = 0;
+      clearInterval(iv);
+      stop();
+    }
+  }, 1);
+}
+
+function stop() {
+  masterGain.gain.linearRampToValueAtTime(0.0, ac.currentTime + 0.001);
+  if (mediaRecorder.state != 'inactive') {
+    mediaRecorder.requestData();
+    mediaRecorder.stop();
+  }
+}
+
+function show(l_) {
+  for (var i=l_old; i<l_old+lines; i++) {
+    if (span[i] && p[i]) {
+      span[i].removeAttribute("style");
+      p[i].removeAttribute("style");
+    }
+  }
+  for (var i=l_; i<l_+lines; i++) {
+    if (span[i] && p[i]) {
+      span[i].style.display = "block";
+      p[i].style.display = "block";
+      if (span[i].innerText == "" || p[i].innerText == "") {
+        span[i].innerText = "|" + l;
+        p[i].innerText = k;
+      }
+    }
+  }
+  l_old = l_;
+  if (l_+lines > c_length) {
+    c_length = l_+lines;
+    //console.log(c_length);
+  }
+}
+
+function draw(c, x, v, y) {
+  if (x > -1) {
+    if (c.parentElement.id == "pre") {
+      var n = 0;
+      if (noise.checked === true) {
+        ln[n] = "";
+        for (var j=x; j<parseInt(8192/freq); j++) {
+          ln[n] += br[Math.round(Math.random()*(br.length-1))];
+        }
+      } else {
+        if (!v || v == 0) {
+          ln[n] = brush.value;
+        } else {
+          ln[n] = "";
+          for (var j=-1; j<=1; j++) {
+            ln[n] += br[Math.round((-Math.abs(j)+2)/2*v)];
+          }
+          c = span[y];
+          console.log(v + " " + ln[n]);
+        }
+      }
+      txt = c.innerText;
+    } else {
+      var n = 1;
+      ln[n] = "█";
+      if (v && v > 0) {
+        c = p[y];
+      }
+      txt = k;
+    }
+    txt = txt.substr(0, x) + ln[n] + txt.substr(x+ln[n].length);
+    c.innerText = txt;
+  }
+}
+
+function hiss(x) {
+  var n = "";
+  for (var j=(12-x.length)*3+1; j<parseInt(8192/freq); j++) {
+    n += br[Math.round(Math.random()*(br.length-1))];
+  }
+  return n;
+}
+
+function add(v) {
+  var line = [];
+  line[0] = v.replace(/[█▀]+$/, hiss).replace(/[█▀]/g, "⢸⣿⡇").replace(/[▄ ]/g, "⠀⠀⠀");
+  line[1] = v.replace(/[█▄]+$/, hiss).replace(/[█▄]/g, "⢸⣿⡇").replace(/[▀ ]/g, "⠀⠀⠀");
+  
+  for (var i=0; i<2; i++) {
+    txt = line[i] + l.substr(line[i].length);
+    span[l_old+t+i+1].innerText = "|" + txt;
+  }
+  t+=2;
+  point();
+}
+
+function set() {
+  var b = brush.selectionStart;
+  var d = brush.selectionEnd;
+  brush.value = brush.value.substr(0, b) + color.innerText.charAt(parseInt(event.pageX-48)) + brush.value.substr(d);
+}
+
+function point() {
+  if (t <= 0) {
+    t = 0;
+  } else if (t >= c_length) {
+    t = c_length - 1;
+  }
+  cursor.style.top = (t*s+s/2+16) + "px";
+}
+
+function phonemes() {
+  for (var i=0; i<Object.keys(ph).length; i++) {
+    var n = Object.keys(ph)[i];
+    var v = Object.values(ph)[i];
+    cheat.innerHTML += "<div><b>" + n + "</b>  <a href='#' onclick='add(this.innerText);'>" + v + "</a></div>";
+  }
+}
+
+function content(v) {
+  if (v === true) {
+    for (var i=0; i<c_length; i++) {
+      if (span[i] && p[i]) {
+        span[i].style.display = "block";
+        p[i].style.display = "block";
+      }
+    }
+  } else {
+    for (var i=0; i<c_length; i++) {
+      if (span[i] && p[i]) {
+        span[i].removeAttribute("style");
+        p[i].removeAttribute("style");
+      }
+    }
+  }
+}
+
+function saveCsv() {
+  content(true);
+  var a = [];
+  var p_ = pitch.innerText.split("\n");
+  var f_ = pre.innerText.split("\n");
+  for (var i=0; i<c_length; i++) {
+    if (p_[i] && f_[i]) {
+      a[i] = p_[i] + f_[i] + "\n";
+    }
+  }
+  var filename = "spectrogram.csv";
+  download.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(a.join("").slice(0,-1)));
+  download.setAttribute('download', filename);
+  download.click();
+  content(false);
+}
+
+function openCsv() {
+  if (!upload.files[0]) {
+    upload.click();
+  } else {
+    var file    = upload.files[0];
+    var reader  = new FileReader();
+  
+    reader.addEventListener("load", function () {
+      var a = reader.result.split("\n");
+      var p_ = [];
+      var f_ = [];
+      for (var i=0; i<span.length; i++) {
+        if (a[i]) {
+          a[i] = a[i].split("|");
+          p_[i] = "<span>" + a[i][0] + "</span>";
+          f_[i] = "<span>|" + a[i][1] + "</span>";
+        } else {
+          f_[i] = "<span></span>";
+          p_[i] = "<span></span>";
+        }
+      }
+      pre.innerHTML = f_.join("");
+      pitch.innerHTML = p_.join("");
+      show(0);
+      upload.value = null;
+    }, false);
+  
+    if (file && file.name.slice(-4) == ".csv") {
+      reader.readAsText(file);
+    }
+  }
+}
+
+</script>
+</body>
+</html>
