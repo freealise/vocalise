@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
   <title>
-    Compose song lyrics, poetry or rap and improve your English - with an advanced rhyming dictionary based on CMUDict and speech formant synthesizer, as well as definition and translation, lookup of word forms or common phrases by part of speech, sentence parser and text editor with spell and grammar checking.
+    Compose song lyrics, poetry or rap and improve your English - with an advanced rhyming dictionary based on CMUDict and speech formant synthesizer, lookup of word forms or common phrases by part of speech, sentence parser and text editor with spell and punctuation checking.
   </title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <script type="text/javascript" src="piano.js"></script>
-  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <link rel="preconnect" href="https://fonts.gstatic.com"/>
   <link href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet'/>
   <link rel="stylesheet" href="index.css"/>
@@ -22,21 +21,37 @@
 
 <div id="area" class="notranslate">
   <div id="highlight"><pre id="hl"></pre></div>
-  <textarea placeholder="Lyrics" id="res" onkeyup="if(event.key=='Enter'){highlightText();}else if(event.key=='.' || event.key=='?' || event.key=='!'){getSentence();}else if(event.key==' ' || event.key=='Backspace' || event.key=='Delete' || event.ctrlKey || event.metaKey){colorPhonemes();}" onkeydown="if(event.key.length==1 && kbrd[event.key] && event.getModifierState('CapsLock') && !event.ctrlKey && !event.metaKey){addPhoneme(kbrd[event.key], 0);}" onmouseup="" ontouchup="" onfocus="ctl=this;" onscroll="highlight.scrollTop = this.scrollTop;highlight.scrollLeft = this.scrollLeft;" style="visibility:visible;"></textarea>
+  <textarea placeholder="Lyrics" id="res" onclick="keepSymbols(null);" onkeyup="keepSymbols(event.key);if(event.key=='Enter'){highlightText();}else if(event.key=='.' || event.key=='?' || event.key=='!'){getSentence();}else if(event.key==' ' || event.key=='Backspace' || event.key=='Delete' || event.ctrlKey || event.metaKey){colorPhonemes();}" onkeydown="if(event.key.length==1 && kbrd[event.key] && event.getModifierState('CapsLock') && !event.ctrlKey && !event.metaKey){addPhoneme(kbrd[event.key], 0);}" onmouseup="" ontouchup="" onfocus="ctl=this;" onscroll="highlight.scrollTop = this.scrollTop;highlight.scrollLeft = this.scrollLeft;" style="visibility:visible;"></textarea>
 </div>
 
+  <div id="library"><input type="text" id="artist" placeholder="Artist" onchange="loadLibrary(this.value, song.value);"/><input type="text" id="song" placeholder="Song" onchange="loadLibrary(artist.value, this.value);"/><div id="library_iframe" class="notranslate"></div>
+    <a id="youtube_music" href="" title="YouTube Music" target="_blank" onfocus="this.href='https://music.youtube.com/search?q='+encodeURIComponent(artist.value+'+'+song.value);"><i class='material-icons notranslate'>video_library</i> <b>YouTube Music</b></a> &nbsp;
+    <a id="lyrics_translate" href="" title="LyricsTranslate" target="_blank" onfocus="this.href='https://lyricstranslate.com/en/'+artist.value.replace(/ /g, '-')+'-'+song.value.replace(/ /g, '-')+'-lyrics.html';"><i class='material-icons notranslate'>sticky_note_2</i> <b>LyricsTranslate</b></a><br/>
+    <a id="youtube" href="javascript:(function(){document.location.href=document.location.href.replace('music.youtube.com', 'www.youtube.com');})();" title="Redirect from YouTube Music to YouTube to use adblocker"><i class='material-icons notranslate'>bookmark_add</i> Bookmarklet</a> &nbsp; &nbsp;
+    <a id="music_styles" href="https://en.wikipedia.org/wiki/List_of_music_styles" title="Music genres on Wikipedia" target="_blank"><i class='material-icons notranslate'>library_music</i> Music genres</a>
+  </div>
+
   <div id="resources">
-    <p><a id="grammar_ref" href="https://simple.m.wikipedia.org/" title="Simple English Wikipedia" target="_blank"><b><img src="icons/Wiki.svg" height="14" alt="Simple English Wikipedia"/> Simple English Wikipedia</b></a> is an English-language edition of the Wikipedia online encyclopedia written primarily in basic English. It was launched in 2001. Its simpler word structure and syntax can make the information easy to understand.
-    </p>
     <p><a id="grammar_ref" href="https://www.bbc.co.uk/learningenglish/english/basic-grammar-guide" title="Grammar" target="_blank"><b><img src="icons/BBC.svg" height="11" alt="British Broadcasting Corporation"/> Learning English</b></a> is a department of the BBC World Service devoted to English language teaching. It has won numerous awards, including two Eltons from the British Council and an English Speaking Union award for innovation in English language teaching. There were a number of series for teaching language comprehension with the help of song lyrics, such as Pop Words. It was usual for the major broadcasters in the 1950s to have a programme teaching the language of the country the broadcaster served.
     </p>
     <p><a id="vocabulary_ref" href="https://learningenglish.voanews.com/" title="Vocabulary" target="_blank"><b><img src="icons/VOA.svg" height="11" alt="Voice of America"/> Learning English</b></a><br/>
       is a controlled version of the English language first used on 19 October 1959, and still presented daily by the United States broadcasting service Voice of America. World news and other programs are read one-third slower than regular VOA English. Reporters avoid idioms and use a core vocabulary of about 1500 words, plus any terms needed to explain a story. The intended audience is intermediate to advanced learners of English. In 1962 the VOA published the first edition of the <a href='http://docs.voanews.eu/en-US-LEARN/2014/02/15/7f8de955-596b-437c-ba40-a68ed754c348.pdf' target='_blank'><u>Word Book</u></a>.
     </p>
-    <p><a id="grammar_bil" href="https://www.dict.com/" target="_blank"><b>dict.com</b></a>Grammar and vocabulary in your language. Pronunciation, phrase books and grammar overviews for major European languages, comprehensive morphology tables (including all word forms), current example sentences and usage.
+    <p><a id="grammar_bil" href="https://www.dict.com/" target="_blank"><b>dict.com</b></a> Grammar and vocabulary in your language. Pronunciation, phrase books and grammar overviews for major European languages, comprehensive morphology tables (including all word forms), current example sentences and usage.
     </p>
-    <!-- https://www.ldoceonline.com/exercise/, oxford fill in the blanks, mad libs ? -->
-    <!-- pangrams: http://clagnut.com/blog/2380/, synonyms popularity: https://trends.google.com/ -->
+    <p><a id="grammarly" href="https://www.grammarly.com/" target="_blank"><b>Grammarly</b></a> Compose bold, clear, mistake-free writing with Grammarly’s AI-powered writing assistant.
+    </p>
+    <p><a id="languagetool" href="https://languagetool.org/" target="_blank"><b>LanguageTool</b></a>’s multilingual grammar, style, and spell checker is used by millions of people around the world.
+    </p>
+    <p><a id="ms_editor" href="https://support.microsoft.com/en-us/office/check-grammar-and-spelling-with-the-microsoft-editor-browser-extension-49dd8e1b-3dfa-4ba7-a40e-1bc120f9a71c" target="_blank"><b>Microsoft Editor</b></a> browser extension checks for grammar and spelling mistakes, and it makes suggestions for refining your writing, like addressing passive voice or wordiness.
+    </p>
+    <p><a id="ms_audio" href="https://speech.microsoft.com/audiocontentcreation" target="_blank"><b>Microsoft Audio content creation</b></a> enables you to <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/speech-synthesis-markup" target="_blank">visually control</a> speech attributes in real-time – such as voice style, rate, pitch, volume, pronunciation and breaks. It allows you to quickly create more accurate, expressive and customized audio.
+    </p>
+    <p><a id="longman" href="https://www.ldoceonline.com/" target="_blank"><b>Longman Dictionary of Contemporary English</b></a> Learn English online for free with hundreds of interactive English exercises on this site. Practise grammar, prepare for exams, learn English words and do listening practice.
+    </p>
+    <p><a id="oxford" href="https://elt.oup.com/learning_resources/subjects/grammar/" target="_blank"><b>Oxford University Press</b></a> Learn, practice, and improve your English! Do it all with the Learning English with Oxford community.
+    </p>
+    <!-- https://elsaspeak.com/en/ -->
   </div>
   
   <div id="mobile">On mobile, switch the system keyboard to floating mode.</div>
@@ -45,15 +60,15 @@
     <p>Reverse phonetic dictionary, includes a lyrics editor and vowel sound synthesizer. Licensed under the GNU GPL-3.0, hosted on <a href="https://github.com/freealise/phonetic" title="Github" target="_blank"><u>GitHub</u></a> and <a href="https://script.google.com" title="Google Script" target="_blank"><u>Google Script</u></a>.</p>
     <p>Dictionary by <a href="http://www.speech.cs.cmu.edu/cgi-bin/cmudict" title="Carnegie Mellon University" target="_blank"><u>CMU</u></a>, sorted by frequency based on <a href="https://books.google.com/ngrams" title="Google Books Ngrams" target="_blank"><u>Google Books Ngrams</u></a> with <a href="https://phrasefinder.io/" title="PhraseFinder" target="_blank"><u>PhraseFinder</u></a> API, <a href="https://dictionaryapi.dev/" title="DictionaryAPI" target="_blank"><u>definitions</u></a> by <a href="https://www.lexico.com/" title="Oxford Dictionary" target="_blank"><u>Oxford</u></a>.</p>
     <p>Thanks to <a href="https://www.gearspace.com/board/showpost.php?p=11559456&amp;postcount=10" title="jerry123 from GearSpace" target="_blank"><u>jerry123 from GearSpace</u></a> for the idea of phonetic songwriting, <a href="https://englishwithkim.com/" title="English with Kim" target="_blank"><u>English with Kim</u></a> for clarifying that words and syllables are stressed with not only volume but also pitch variation.</p>
-    <p>Separating vowels and consonants for slant rhyme and alliteration within a line has been inspired by rap and the Hebrew language, vocal synthesis by <a href="https://dreamtonics.com/en/synthesizerv/" target="_blank"><u>SynthesizerV</u></a>.</p>
+    <p>Separating vowels and consonants for slant rhyme and alliteration within a line has been inspired by rap and the Hebrew language, vocal synthesis by Hatsune Miku.</p>
   </div>
   
   <div id="sidebar">
     <div id="pronounciation">
-      <button id="speak" title='Speak' onclick="speak_();"><i class='material-icons notranslate'>play_circle_outline</i></button><button id='pronounce' title='Speak and download' onclick='if(ctl.value!=""){tts();}'><i class='material-icons notranslate'>graphic_eq</i></button><audio controls id="tts" onplay="draw();"></audio><!--<button id="record" title='Record' onclick="record_speech();"><i class='material-icons notranslate'>record_voice_over</i></button>--><button id="g_translate" title='Google Translate' onclick="window.open('https://translate.google.com/?sl=en', '_blank', 'width=320,height=480,status=no,menubar=no');"><i class='material-icons notranslate'>g_translate</i></button>
+      <button id="listen" title='Listen' onclick="tts();"><i class='material-icons notranslate'>headphones</i></button><button id='speak' title='Speak' onclick='recordSpeech();'><i class='material-icons notranslate'>record_voice_over</i></button><audio controls id="tts" onplay="draw();" onpause="stop();"></audio><!--<button id="record" title='Record' onclick="record_speech();"><i class='material-icons notranslate'>record_voice_over</i></button>--><button id="g_translate" title='Google Translate' onclick="window.open('https://translate.google.com/?sl=en&tl=fy&text='+selectText()+'&op=translate', '_blank', 'width=320,height=480,status=no,menubar=no');"><i class='material-icons notranslate'>translate</i></button>
     </div>
-    <div id="translations">
-      <button onclick="if(phrase.value.search(/\W/g)!=-1){loadPhrases();}else if(phrase.value!=''){loadTranslations(phrase.value);}" id="translate" title="Translate"><i class='material-icons notranslate'>content_paste_search</i></button>
+    <div id="grammar">
+      <button onclick="if(phrase.value.indexOf(',')>-1){loadTrends(phrase.value);}else if(phrase.value!=''){loadPhrases();}" id="phrases" title="Phrases"><i class='material-icons notranslate'>content_paste_search</i></button>
       <input type="text" name="phrase" id="phrase" placeholder="Phrase" onfocus="ctl=this;" onkeydown="if(event.key=='_'){loadInflections(this.value);}"/>
       <input title="Part of speech" type="text" id="pos" size="2" list="pos_" placeholder="*" onchange="if(this.value.length==1){phrase.value=this.value;phrase.focus();}this.value='';">
       <datalist id="pos_" size="1">
@@ -93,18 +108,14 @@
             _END_	end of a sentence
         -->
       <div id="word_" class="notranslate" onclick="if(event.target.title){addWord(event.target.innerText, event.target.title);}"></div>
-      <select disabled class="notranslate" id="ngram" size="1" onfocus="this.selectedIndex=-1" onblur="this.selectedIndex=0" onchange="loadTranslation(this.options[this.selectedIndex].innerText);loadExamples(this.options[this.selectedIndex].innerText);if(phrase.value.split(' ').length<5){phrase.value=this.options[this.selectedIndex].innerText+' *';loadPhrases();}">
+      <select disabled class="notranslate" id="ngram" size="1" onfocus="this.selectedIndex=-1" onblur="this.selectedIndex=0" onchange="loadPopularity(this.options[this.selectedIndex].innerText);if(phrase.value.split(' ').length<5){phrase.value=this.options[this.selectedIndex].innerText+' *';loadPhrases();}">
         <option selected>Phrasebook</option>
       </select>
-      <div id="translation"><sub><i class='material-icons notranslate'>translate</i> Translation</sub></div>
-      <div id="chart_"><sub><i class='material-icons notranslate'>insights</i> Word usage</sub></div>
     </div>
     <div id="syntax" class="notranslate">
-      <div id="translation_"></div>
       <div id="syntax_chart"><sub><i class='material-icons notranslate'>spellcheck</i> Grammar</sub></div>
       <div><sub><i class='material-icons notranslate'>record_voice_over</i> Voice pitch</sub><pre id="speech_chart"></pre></div>
     </div>
-    <div id="examples" class="notranslate"><sub><i class='material-icons notranslate'>grading</i> Examples</sub></div>
   </div>
 
   <div id="dict">
@@ -118,18 +129,17 @@
           <a title="Wildcard" href="javascript:" onclick="addPhoneme('*', 'transparent');">* </a>       <a title="Space" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme(' ', 'transparent');">⎵ </a> <a title="Symbols to use" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="kb_symbols();"><i class='material-icons notranslate' id="tgl">toggle_off</i></a></pre>
     <pre oncontextmenu="return false;" id="keys"><span class="notranslate"><select title="i"></select><select title="ɪ"></select><select title="eɪ"></select><select title="ɛ"></select><select title="æ"></select><select title="ə"></select><select title="ʌ"></select><select title="ɑ"></select><select title="ɔ"></select><select title="oʊ"></select><select title="ʊ"></select><select title="u"></select></span>
 <a title="Any stress with any vowel" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme('_', 'transparent');"><span class="notranslate">_ </span></a><a title="No stress with any vowel" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme('_·', 'transparent');"><span class="notranslate">_·</span></a><a title="Primary stress with any vowel" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme('_ˈ', 'transparent');"><span class="notranslate">_ˈ</span></a><a title="Secondary stress with any vowel" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme('_ˌ', 'transparent');"><span class="notranslate">_ˌ</span></a><span class="notranslate"><select title="aɪ"></select><select title="ɔɪ"></select><select title="aʊ"></select></span></pre>
-  <div title="Pitch symbols for word and syllable stress, span octave (12 semitones)" onmousedown="mobile.innerText=this.title;"><span id="tone" class="notranslate"></span></div>
+  <div title="Pitch symbols for word and syllable stress, span octave (12 semitones)" onmousedown="mobile.innerText=this.title;"><div id="tone" class="notranslate"></div></div>
   </div>
   
   <div id="links">
     <a id="undo" href="javascript:undo();" title="Undo"><i class='material-icons notranslate'>undo</i> Undo</a><br/>
     <a id="orig_link" href="javascript:" target="_blank" onfocus="orig_check();" title="Originality"><i class='material-icons notranslate'>search</i> Originality</a><br/>
-    <a id="_examples" href="javascript:loadQuiz(false);" title="Quiz"><i class='material-icons notranslate'>grading</i> Quiz</a><br/>
-    <a id="_syntax" href="javascript:showSyntax();" title="Sentences"><i class='material-icons notranslate' id='spellcheck'>spellcheck</i> Sentences</a><br/>
-    <a id="show_words" href="javascript:showWords();" title="Words"><i class='material-icons notranslate'>translate</i> Words</a><br/>
-    <a id="show_ph" href="javascript:showPhonemes();" title="Phonemes"><i class='material-icons notranslate'>keyboard_hide</i> Phonemes</a><br/>
+    <a id="_syntax" href="javascript:showSyntax();" title="Sentences"><i class='material-icons notranslate' id='spellcheck'>spellcheck</i> Grammar</a><br/>
+    <a id="show_ph" href="javascript:showPhonemes();" title="Phonemes"><i class='material-icons notranslate'>keyboard_hide</i> Keyboard</a><br/>
     <a id="mobile_view" href="javascript:showLyrics();" title="Mobile view"><i class='material-icons notranslate'>devices</i> Mobile view</a><br/>
     <a id="tooltips" href="javascript:showMobile();" title="Tooltips"><i class='material-icons notranslate'>wysiwyg</i> Tooltips</a><br/>
+    <a id="library_" href="javascript:showLibrary();" title="Library"><i class='material-icons notranslate'>lyrics</i> Library</a><br/>
     <a id="resources_" href="javascript:showResources();" title="Resources"><i class='material-icons notranslate'>link</i> Resources</a><br/>
     <a id="credits_" href="javascript:showCredits();" title="Credits"><i class='material-icons notranslate'>copyright</i> Credits</a><br/>
     <a id="show_" href="javascript:showLinks();" title="Share"><i class='material-icons notranslate'>share</i> Share</a> <a onfocus="this.href='https://www.facebook.com/sharer/sharer.php?u=https://freealise.com&hashtag=%23freealise&quote='+res.value.split('\n').join(' / ');" href="javascript:" target="_blank" title="Facebook"><i class='material-icons notranslate'>facebook</i></a>
@@ -171,7 +181,7 @@
           <option value="10">Spanish 2009</option>
           -->
         </select>
-    <!--<a id="select_voice" href="javascript:showLinks();" title="Select voice"><i class='material-icons notranslate'>record_voice_over</i></a>--> <select id="voice_select" class='notranslate' onchange="speak_();"></select><br/>
+    <!--<a id="select_voice" href="javascript:showLinks();" title="Select voice"><i class='material-icons notranslate'>record_voice_over</i></a>--> <select id="voice_select" class='notranslate' onchange="sing();"></select><br/>
     <a id="show_links" href="javascript:showLinks();" title="Show links"><i class='material-icons notranslate'>menu_open</i></a><div id="google_translate_element"></div>
   </div>
 
