@@ -1,89 +1,51 @@
-var dots = (
-"⠀⢀⠠⢠⠐⢐⠰⢰⠈⢈⠨⢨⠘⢘⠸⢸" +
-"⡀⣀⡠⣠⡐⣐⡰⣰⡈⣈⡨⣨⡘⣘⡸⣸" +
-"⠄⢄⠤⢤⠔⢔⠴⢴⠌⢌⠬⢬⠜⢜⠼⢼" +
-"⡄⣄⡤⣤⡔⣔⡴⣴⡌⣌⡬⣬⡜⣜⡼⣼" +
-"⠂⢂⠢⢢⠒⢒⠲⢲⠊⢊⠪⢪⠚⢚⠺⢺" +
-"⡂⣂⡢⣢⡒⣒⡲⣲⡊⣊⡪⣪⡚⣚⡺⣺" +
-"⠆⢆⠦⢦⠖⢖⠶⢶⠎⢎⠮⢮⠞⢞⠾⢾" +
-"⡆⣆⡦⣦⡖⣖⡶⣶⡎⣎⡮⣮⡞⣞⡾⣾" +
-"⠁⢁⠡⢡⠑⢑⠱⢱⠉⢉⠩⢩⠙⢙⠹⢹" +
-"⡁⣁⡡⣡⡑⣑⡱⣱⡉⣉⡩⣩⡙⣙⡹⣹" +
-"⠅⢅⠥⢥⠕⢕⠵⢵⠍⢍⠭⢭⠝⢝⠽⢽" +
-"⡅⣅⡥⣥⡕⣕⡵⣵⡍⣍⡭⣭⡝⣝⡽⣽" +
-"⠃⢃⠣⢣⠓⢓⠳⢳⠋⢋⠫⢫⠛⢛⠻⢻" +
-"⡃⣃⡣⣣⡓⣓⡳⣳⡋⣋⡫⣫⡛⣛⡻⣻" +
-"⠇⢇⠧⢧⠗⢗⠷⢷⠏⢏⠯⢯⠟⢟⠿⢿" +
-"⡇⣇⡧⣧⡗⣗⡷⣷⡏⣏⡯⣯⡟⣟⡿⣿"
-).split("");
-
-/*sort by number of dots
-var bn = {};
-for (var i = 0; i<256; i++) {
-  bn[dots[i]] = i.toString(2).replace(/0/g, "").length;
-}
-dots.sort(function(a, b){return bn[a] - bn[b]});*/
-
-var phonemes =
-"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠛⠛⣿⣿⠛⠛⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⢸⠀⢸⢸⠘⠘⠀⠀" + "\n" +
-"⠀⠀⠀⠀⠀⠀⠀⣀⣀⣤⠤⠶⠀⠀⠀⠛⠛⠒⠒⣿⣿⠀⠀⠭⠀⠀⣒⣒⣒⣤⠶⠀⢸⢸⠀⢸⢸⠀⠀⠨⢐" + "\n" +
-"⣀⣤⠤⠶⠒⠛⠉⠉⠀⠀⠀⠀⠀⠀⣀⠀⣀⠛⣛⠿⣿⠀⣶⠭⠀⣤⣤⣒⣉⣤⣀⠀⠀⢀⠀⠸⢸⠀⢀⠨⢈";
-
-/*
-uuooaaeaeeii sztdszfv rh wmnnly cj pbtdkg
-: : : re : :   hhhh         g   hh
-*/
-
-var phonemes_ = phonemes.split("\n");
-for (var i=0; i<phonemes_.length; i++) {
-  phonemes_[i] = phonemes_[i].split("");
-}
+var v_ssml = ("iː ɪ eɪ ɛ æ ə ɚ ʌ ɑː ɔː oʊ ʊ uː aɪ aʊ ɔɪ").split(" ");
+var c_ssml = ("p b t d k ɡ m n ŋ f v s z θ ð ʃ ʒ h l ɹ ʧ ʤ j w").split(" ");
 
 var keys = [
-  " i;IY;330;0.1664;0.3341;0.1498;0.0153;11",
-  " ɪ;IH;300;0.3084;0.5288;0.3583;0.0380;10",
-  "eɪ;EY;270;0.0699;0.0026;0.1882;0.0188;9",
-  " ɛ;EH;240;0.1077;0.0145;0.2819;0.0266;8",
-  " æ;AE;210;0.1024;0.0084;0.2871;0.0118;7",
-  " ə;ER;180;0.1080;0.2535;0.0684;0.0021;6",
-  " ʌ;AH;150;0.4567;1.0000;0.3641;0.0060;5",
-  " ɑ;AA;120;0.0612;0.0046;0.1674;0.0115;4",
-  " ɔ;AO;90;0.0557;0.0048;0.1554;0.0070;3",
-  "oʊ;OW;60;0.0371;0.0182;0.0857;0.0075;2",
-  " ʊ;UH;30;0.0112;0.0008;0.0310;0.0018;1",
-  " u;UW;0;0.0605;0.0202;0.1523;0.0089;0",
-  "aɪ;AY;210;0.0483;0.0066;0.1246;0.0138;0",
-  "ɔɪ;OY;180;0.0034;0.0001;0.0098;0.0004;0",
-  "aʊ;AW;90;0.0156;0.0006;0.0442;0.0021;0",
-  //"__;__;0;0.0000;0.0000;0.0000;0.0000;0",
+  " i;IY;330;0.1664;0.3341;0.1498;0.0153",
+  " ɪ;IH;300;0.3084;0.5288;0.3583;0.0380",
+  "eɪ;EY;270;0.0699;0.0026;0.1882;0.0188",
+  " ɛ;EH;240;0.1077;0.0145;0.2819;0.0266",
+  " æ;AE;210;0.1024;0.0084;0.2871;0.0118",
+  " ə;ER;180;0.1080;0.2535;0.0684;0.0021",
+  " ʌ;AH;150;0.4567;1.0000;0.3641;0.0060",
+  " ɑ;AA;120;0.0612;0.0046;0.1674;0.0115",
+  " ɔ;AO;90;0.0557;0.0048;0.1554;0.0070",
+  "oʊ;OW;60;0.0371;0.0182;0.0857;0.0075",
+  " ʊ;UH;30;0.0112;0.0008;0.0310;0.0018",
+  " u;UW;0;0.0605;0.0202;0.1523;0.0089",
+  "aɪ;AY;210;0.0483;0.0066;0.1246;0.0138",
+  "ɔɪ;OY;180;0.0034;0.0001;0.0098;0.0004",
+  "aʊ;AW;90;0.0156;0.0006;0.0442;0.0021",
+  //"__;__;0;0.0000;0.0000;0.0000;0.0000",
 ];
 
 var keys_ = [
-  "b,B,0.2141,36",
-  "p,P,0.2477,35",
-  "d,D,0.5656,38",
-  "t,T,0.9327,37",
-  "ʤ,JH,0.0791,33",
-  "ʧ,CH,0.0717,32",
-  "ɡ,G,0.0920,40",
-  "k,K,0.3811,39",
-  "v,V,0.2394,20",
-  "f,F,0.2387,19",
-  "ð,DH,0.6531,18",
-  "θ,TH,0.0758,17",
-  "ʒ,ZH,0.0086,16",
-  "ʃ,SH,0.1072,15",
-  "z,Z,0.4163,14",
-  "s,S,0.5710,13",
-  "ɹ,R,0.5663,22",
-  "h,HH,0.1739,23",
-  "w,W,0.2890,25",
-  "m,M,0.3173,26",
+  "b,B,0.2141",
+  "p,P,0.2477",
+  "d,D,0.5656",
+  "t,T,0.9327",
+  "ʤ,JH,0.0791",
+  "ʧ,CH,0.0717",
+  "ɡ,G,0.0920",
+  "k,K,0.3811",
+  "v,V,0.2394",
+  "f,F,0.2387",
+  "ð,DH,0.6531",
+  "θ,TH,0.0758",
+  "ʒ,ZH,0.0086",
+  "ʃ,SH,0.1072",
+  "z,Z,0.4163",
+  "s,S,0.5710",
+  "ɹ,R,0.5663",
+  "h,HH,0.1739",
+  "w,W,0.2890",
+  "m,M,0.3173",
   "_,_,1",
-  "n,N,1.0000,27",
-  "ŋ,NG,0.1000,28",
-  "l,L,0.4471,29",
-  "j,Y,0.0911,30",
+  "n,N,1.0000",
+  "ŋ,NG,0.1000",
+  "l,L,0.4471",
+  "j,Y,0.0911",
 ];
 
 var kbrd = {
@@ -189,10 +151,14 @@ var superscript = {
 //https://en.wikipedia.org/wiki/Secondary_articulation
 
 var s = ["·", "ˈ", "ˌ"];
+var stress = (" –=≡≣").split("");
 
-var tone = [ '꜌', '꜋', '꜊', '꜉', '꜈', 'ˊ', '꜑', '꜐', '꜏', '꜎', '꜍', '`' ];
+var tone = [ '꜌', '꜋', '꜊', '꜉', '꜈', 'ᣟ𝍩', '꜑', '꜐', '꜏', '꜎', '꜍', '𝍩ᣟ' ]; //ᐧ
 var tone_chart = [ '˩', '˨', '˧', '˦', '˥', '꜖', '꜕', '꜔', '꜓', '꜒' ];
 //https://en.wikipedia.org/wiki/Tone_letter
+//https://en.wikipedia.org/wiki/Unicode_subscripts_and_superscripts
+//https://en.wikipedia.org/wiki/Counting_Rod_Numerals_(Unicode_block)
+
 var colors = [0,1,0,1,0,0,1,0,1,0,1,0,0];
 
 function playAudio() {
@@ -251,8 +217,6 @@ determiner, preposition, conjunction, interjection
 
 */
 
-google.charts.load('current', {packages:["orgchart"]});
-
 var url = "https://script.google.com/macros/s/AKfycbz5br4wnfSGtucWKwGQq1Tb07eshJez6uVaFatn4xJAc_rcrcA/exec"; //"http://192.168.0.61:8080/";
 var fbase = "https://freealise-181308.firebaseio.com/cmudict/";
 var base = "https://docs.google.com/spreadsheets/d/1lx3voPc-GWdzkhiCetUh0UGtU5FzdnAVMH6YZ4qBQrQ/gviz/tq?tqx=out:csv&gid=";
@@ -279,15 +243,11 @@ var _word = document.getElementById("_word");
 var word_ = document.getElementById("word_");
 var highlight = document.getElementById("highlight");
 var sidebar = document.getElementById("sidebar");
-var translations = document.getElementById("translations");
 var dict = document.getElementById("dict");
 var res = document.getElementById("res");
 var phrase = document.getElementById("phrase");
 var ngram = document.getElementById("ngram");
 var corpus = document.getElementById("corpus");
-var chart_ = document.getElementById("chart_");
-var translation = document.getElementById("translation");
-var translation_ = document.getElementById("translation_");
 var languages = null; //document.getElementById("languages");
 var it = null;
 var pos = document.getElementById("pos");
@@ -296,15 +256,20 @@ var syntax = document.getElementById("syntax");
 var syntax_chart = document.getElementById("syntax_chart");
 var speech_chart = document.getElementById("speech_chart");
 var spellcheck = document.getElementById("spellcheck");
-var examples = document.getElementById("examples");
 var wiki = document.getElementById("wiki");
 var mobile = document.getElementById("mobile");
+var library = document.getElementById("library");
+var library_iframe = document.getElementById("library_iframe");
+var artist = document.getElementById("artist");
+var song = document.getElementById("song");
+var resources = document.getElementById("resources");
+var credits = document.getElementById("credits");
 var orig_link = document.getElementById("orig_link");
 var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
 var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList;
 var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent;
 var record = document.querySelector('#record');
-var pronounce = document.querySelector('#pronounce');
+var listen = document.querySelector('#listen');
 var synth = window.speechSynthesis;
 var voiceSelect = document.querySelector('#voice_select');
 var speak = document.querySelector('#speak');
@@ -321,6 +286,12 @@ var orig, corr;
 var a_c = false;
 
 var r_ = new RegExp("("+Object.keys(superscript).join("|")+")", "g");
+var _r = new RegExp("("+Object.values(superscript).join("|").slice(1)+")", "g");
+var note_ = new RegExp("("+tone.join("|")+")", "g");
+var stress_ = new RegExp("("+stress.join("|")+")", "g");
+var ph_ = new RegExp("("+v_ssml.join("|")+"|"+c_ssml.join("|")+")", "g");
+var _v = new RegExp("("+v_ssml.join("|")+")", "g");
+var _c = new RegExp("("+c_ssml.join("|")+")", "g");
 
 for (var i=0; i<keys.length; i++) {
   var ks = keys[i].split(";");
@@ -328,7 +299,6 @@ for (var i=0; i<keys.length; i++) {
   lnk.id = i;
   ks_[i] = ks[0].trim();
   lnk.title = ks_[i];
-  phoneme[i] = ks[7];
   lnk.onfocus = function(e){this.selectedIndex=-1;};
   lnk.onblur = function(e){this.selectedIndex=0;};
   lnk.onchange = function(e){if(ctl!=consonants){addPhoneme(e.target.value, e.target.style.backgroundColor);}this.blur();};
@@ -348,7 +318,6 @@ for (var i=0; i<keys_.length; i++) {
   var ks = keys_[i].split(",");
   var lnk = c_[i];
   lnk.id = keys.length+i;
-  phoneme[keys.length+i] = ks[3];
   lnk.onfocus=function(e){if(ctl!=vowels){addPhoneme(e.target.title, 'transparent');}};
   lnk.href="javascript:";
   lnk.innerText = ks[0] + " ";
@@ -360,6 +329,11 @@ for (var i=0; i<keys_.length; i++) {
 for (var i=0; i<tone.length; i++) {
   var ks = tone[i];
   tone_.innerHTML += "<a title='"+ks+"' href='javascript:' onclick='addPhoneme(this.title);' style='color:rgba(0,0,0,"+(colors[i]*0.75+0.25)+");'>"+ks+"</a> ";
+}
+tone_.innerHTML += "<br/> &nbsp;";
+for (var i=1; i<stress.length; i++) {
+  var ks = stress[i];
+  tone_.innerHTML += "<a title='"+ks+"' href='javascript:' onclick='addPhoneme(this.title);'>"+ks+"</a> ";
 }
 
 function findCursor(v) {
@@ -468,7 +442,7 @@ function highlightText() {
   var b_ = res.value.substr(0, d).split("\n");
   var ln = b_[b_.length-2];
   
-  if (ln.search(/\w/gi) >= 0 && ln.search(/[ˊ`_·ˈˌ]/g) == -1) {
+  if (ln.search(/\w/gi) >= 0 && ln.charAt(ln.length-1) != " " && ln.search(note_) == -1 && ln.search(/[ˊ`_·ˈˌ]/g) == -1) {
     var wrd_ = ln.replace(/[\,\.\?\!]/g, "").split(" ");
     res.value = res.value.substr(0, d) + "…" + res.value.substr(d);
     loadTranscription(ln, wrd_, wrd_.length-1);
@@ -510,13 +484,17 @@ function colorPhonemes() {
   var d = parseInt(cPos[1]);
   var ln = res.value.substr(0, b).split("\n").length-1;
   for (var j=0; j<lines.length; j++) {
-    if (j > 0 && lines[j].search(/[꜌꜋꜊꜉꜈꜑꜐꜏꜎꜍]/g) != -1 && lines[j-1].search(/[꜌꜋꜊꜉꜈꜑꜐꜏꜎꜍]/g) == -1) {
-      lines[j] = "<div class='piano'>" + lines[j];
+    if (lines[j+1] && lines[j].search(/\w/) != -1 && lines[j+1].search(ph_) != -1) {
+      lines[j] = "<div class='ipa'>" + lines[j];
     }
-    if (j > 0 && lines[j].search(/[꜌꜋꜊꜉꜈꜑꜐꜏꜎꜍]/g) == -1 && lines[j-1].search(/[꜌꜋꜊꜉꜈꜑꜐꜏꜎꜍]/g) != -1) {
-      lines[j] = lines[j] = "</div>";
+    if (lines[j-1] && lines[j].search(ph_) != -1 && lines[j-1].search(/\w/) != -1) {
+      if (lines[j+1] && lines[j+1].search(stress_) != -1) {
+        lines[j+1] = lines[j+1] + "</div>";
+      } else {
+        lines[j] = lines[j] + "</div>";
+      }
     }
-    if (lines[j].search(/[ˊ`_·ˈˌ]/g) != -1) {
+    if (lines[j].search(_r) != -1) {
       for (var i=0; i<regexp.length; i++) {
         lines[j] = lines[j].replace(regexp[i][0], function (x) {
             return "<i style='border-bottom:4px solid " + regexp[i][1] + ";'>"+x+"</i>";
@@ -535,35 +513,6 @@ function undo() {
   if (ctl == res) {
     res.value = res_old;
   }
-}
-
-function loadDefinition(w_) {
-  translations.style.visibility='visible';
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      if (this.responseText != "") {
-        var json = JSON.parse(this.responseText)[0];
-        translation.innerHTML = "<b>" + json.word + "</b><i class='material-icons notranslate'>volume_up</i> ";
-        for (var i=0; i<json.phonetics.length; i++) {
-          translation.innerHTML += "<audio><source src='"+json.phonetics[i].audio+"' type='audio/mpeg'></audio><a href='javascript:playAudio();'>" + json.phonetics[i].text + "</a> ";
-        }
-        for (var i=0; i<json.meanings.length; i++) {
-          translation.innerHTML += "<hr/><b>" + json.meanings[i].partOfSpeech + "</b>";
-          for (var j=0; j<json.meanings[i].definitions.length; j++) {
-            translation.innerHTML += "<br/><br/>" + json.meanings[i].definitions[j].definition + "<br/>";
-            for (var k=0; k<json.meanings[i].definitions[j].synonyms.length; k++) {
-              translation.innerHTML += "<i><u><a href='javascript:' onclick='word.value=this.innerText;'>" + json.meanings[i].definitions[j].synonyms[k] + "</a></u></i> ";
-            }
-          }
-        }
-      } else {
-        translation.innerHTML = "Unknown word";
-      }
-    }
-  };
-  xhttp.open("GET", "https://api.dictionaryapi.dev/api/v2/entries/en/" + w_, true);
-  xhttp.send();
 }
 
 
@@ -674,49 +623,6 @@ function loadLanguages() {
 }
 
 
-function loadTranslations(wrd) {
-  if (sl != tl[0]) {
-    translation.innerHTML = "Translating...";
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        var r = this.responseText.split("\n");
-        if (r[0]) {
-          translation.innerHTML = r[0];
-          ngram.innerHTML = "<option>" + r[1].replace(/,/g, "</option><option>") + "</option>";
-          ngram.disabled=false;
-        } else {
-          translation.innerHTML = "";
-          loadTranslation(wrd);
-        }
-      }
-    };
-    xhttp.open("GET", url + "?a=translate&w=" + wrd + "&tl=" + sl + "&sl=" + tl[0], true);
-    xhttp.send();
-  } else {
-    loadDefinition(wrd);
-    return wrd;
-  }
-  chart_.innerHTML = '<iframe id="chart_iframe" src="https://books.google.com/ngrams/interactive_chart?content='+wrd+'_*&year_start=1500&year_end=2019&corpus=26&smoothing=0&case_insensitive=" width="100%" height="128" marginwidth=0 marginheight=0 hspace=0 vspace=0 frameborder=0 scrolling=no></iframe><br/><a href="https://books.google.com/ngrams/graph?content='+wrd+'_*&year_start=1500&year_end=2019&corpus=26&smoothing=0&case_insensitive=" target="_blank"><i class="material-icons notranslate">fullscreen</i></a>';
-}
-
-
-function loadTranslation(wrd) {
-  if (sl != tl[0]) {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        translation_.innerHTML = this.responseText + "<br/>";
-      }
-    };
-    xhttp.open("GET", url + "?a=translate_beta&w=" + wrd.replace(/ /g, "+") + "&tl=" + sl + "&sl=" + tl[0], true);
-    xhttp.send();
-  } else {
-    return wrd;
-  }
-}
-
-
 function getSentence() {
   var d = findCursor(res).split(',')[1];
   var b_ = res.value.substr(0, d).replace(/[\.\?\!]/g, function(x){return x+"+";}).split("+");
@@ -724,7 +630,6 @@ function getSentence() {
   var b = res.value.indexOf(wrd);
   res.value = res.value.substr(0, b) + "…\n" + res.value.substr(b);
   colorPhonemes();
-  syntax_chart.innerHTML = "Checking...";
   var wrd_ = wrd.replace(/\n\W*\n/g, "\n").replace(/\n/g, " ").replace(/[\,\"\'\-\:\;]/g, "").replace(/\?/g, " \?").replace(/[\!\.]/, function(x){return " "+x;}).split(" ");
   loadPunctuation(wrd_, 0, wrd);
 }
@@ -768,108 +673,46 @@ function loadCorrection(wrd, o) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-      loadTranslation(o.replace(/\?/g, '%3F').replace(/\!/g, '%21'));
-      loadSyntaxTree(this.responseText);
-      
       if (this.responseText == o) {
         hl.innerHTML = hl.innerHTML.replace("…\n", "");
         res.value = res.value.replace("…\n", "");
-        spellcheck.innerText = "gpp_good";
       } else {
         hl.innerHTML = hl.innerHTML.replace("…\n", "<sup>"+this.responseText+"</sup>\n");
         res.value = res.value.replace("…\n", "\n");
-        spellcheck.innerText = "spellcheck";
-        orig = null;
-        corr = null;
-        loadSyntaxPopularity(wrd);
-        loadSyntaxPopularity(this.responseText);
       }
+      loadSyntax(this.responseText);
     }
   };
-  xhttp.open("GET", url + "?a=correct&w=" + wrd.replace(/ /g, "+") + "&tl=" + tl[0] + "&sl=" + tl[1], true);
+  xhttp.open("GET", url + "?a=spell&w=" + wrd.replace(/ /g, "+") + "&tl=" + tl[0], true);
   xhttp.send();
 }
 
 
-function loadSyntaxTree(wrd) {
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      var r = this.responseText.split("\n");
-      r[0] = r[0].replace(/\[{"/g, "<option>&nbsp;").replace(/"},{"/g, "</option>\n<option>&nbsp;").replace(/\w+":"\w+/g, function(x){var y=x.split('":"');return y[1]+' '+y[0];}).replace(/","/g, "</option><option>").replace(/"}\]/g, "</option>").split("\n");
-      r[1] = r[1].split(" ");
-      r[2] = r[2].split(" ");
-      var tree = [[]];
-      var wrd_ = wrd.trim().replace(/[^\w\s]/g, function(x){return " "+x;}).replace(/\s+/g, " ").split(" ");
-      for (var i=0; i<r[0].length*2; i+=2) {
-        tree[i] = [{'v':''+i, 'f':'<select onfocus="this.selectedIndex=-1" onblur="this.selectedIndex=0" onchange="loadWiki(this.options[this.selectedIndex].innerText);this.blur();"><optgroup label="'+r[2][i/2]+'">'+r[0][i/2]+'</optgroup></select>'}, ''+r[1][i/2]*2, ''+i];
-        var j = i+1;
-        tree[j] = [{'v':''+j, 'f':'<b>'+wrd_[i/2]+'</b>'}, ''+i, ''+j];
-      }
-      syntax_chart.innerHTML = "";
-      drawChart(tree);
-    }
-  };
-  xhttp.open("GET", url + "?a=syntax&w=" + wrd.replace(/ /g, "+") + "&tl=" + tl[0] + "&tl_=&c=1", true);
-  xhttp.send();
+function loadSyntax(wrd) {
+  var str = "";
+  var arr = wrd.slice(0,-1).split(" ");
+  for (var i=0; i<arr.length; i++) {
+    arr[i] = arr[i] + "_%2A";
+    str += arr.join("+") + "%2C+";
+    arr[i] = arr[i].replace("_%2A", "");
+  }
+  syntax_chart.innerHTML = '<iframe name="ngram_chart" src="https://books.google.com/ngrams/interactive_chart?content='+str+'&year_start=1800&year_end=2019&corpus=26&smoothing=0" width="95%" height="256" marginwidth=0 marginheight=0 hspace=0 vspace=0 frameborder=0 scrolling=no></iframe>';
 }
 
 
-      function drawChart(tree) {
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Index');
-        data.addColumn('string', 'Root');
-        data.addColumn('string', 'ToolTip');
+function loadPopularity(q) {
+  syntax_chart.innerHTML = '<iframe id="ngram_chart" name="ngram_chart" src="https://books.google.com/ngrams/interactive_chart?content='+encodeURIComponent(q)+'&year_start=1800&year_end=2019&corpus=26&smoothing=3&direct_url=t1%3B%2C'+encodeURIComponent(q)+'%3B%2Cc0" width="95%" height="256" marginwidth=0 marginheight=0 hspace=0 vspace=0 frameborder=0 scrolling=no></iframe>';
+}
 
-        // For each orgchart box, provide the name, manager, and tooltip to show.
-        data.addRows(tree);
 
-        // Create the chart.
-        var chart = new google.visualization.OrgChart(document.getElementById('syntax_chart'));
-        // Draw the chart, setting the allowHtml option to true for the tooltips.
-        chart.draw(data, {'allowHtml':true, 'allowCollapse':true, 'size':'small', 'nodeClass':'tree', 'selectedNodeClass':'tree_selected'});
-      }
-      
-      
-function loadSyntaxPopularity(wrd) {
-  var tl_ = corpus.options[corpus.selectedIndex].value;
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      var r = this.responseText.split(",");
-      if (!orig) {
-        orig = r;
-      } else {
-        corr = r;
-      }
-      if (orig && corr) {
-        alert(orig.join(" ") + "\n"+wrd+"\n" + corr.join(" "));
-        if (orig.length < corr.length) {
-          for (var i=orig.length; i<corr.length; i++) {
-            orig[i] = 1.0;
-          }
-        } else if (corr.length < orig.length) {
-          for (var i=corr.length; i<orig.length; i++) {
-            corr[i] = 1.0;
-          }
-        }
-        var avg = 0;
-        for (var i=0; i<corr.length; i++) {
-          avg += parseFloat(corr[i]) - parseFloat(orig[i]);
-        }
-        avg = avg / corr.length;
-        if (avg > 0) {
-          spellcheck.innerText = "gpp_bad";
-        } else if (avg < 0) {
-          spellcheck.innerText = "gpp_maybe";
-        } else {
-          spellcheck.innerText = "gpp_good";
-        }
-      }
-    }
-  };
-  xhttp.open("GET", url + "?a=syntax&w=" + wrd.replace(/ /g, "+") + "&tl=" + tl[0] + "&tl_=" + tl_ + "&c=0", true);
-  xhttp.send();
+function loadTrends(q) {
+  var d = new Date().toISOString().split("T")[0];
+  var q_ = q.split(",");
+  var json = "";
+  for (var i=0; i<q_.length; i++) {
+    json += '{"keyword":"'+q_[i]+'","geo":"","time":"2004-01-01 '+d+'"},';
+  }
+  syntax_chart.innerHTML = '<iframe id="ngram_chart" src="data:text/html,' + encodeURIComponent('<html><head></head><body><style>#trends-widget-1{width:100%;height:320px;margin-top:-80px;}</style><script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/3045_RC01/embed_loader.js"></script><script type="text/javascript">trends.embed.renderExploreWidget("TIMESERIES", {"comparisonItem":['+json+'],"category":0,"property":""}, {"exploreQuery":"date=all&q='+q.replace(/ /g, '%20')+'","guestPath":"https://trends.google.com:443/trends/embed/"});</script></body></html>') + '"></iframe>';
 }
 
 
@@ -894,14 +737,14 @@ function loadPhrases() {
 }
 
 
-function loadWiki(q) {
-  q = q.replace(/\s\w+\s/, '').replace(' ', '_').toLowerCase();
-  examples.innerHTML = "<iframe id='wiki' src='https://simple.m.wikipedia.org/wiki/"+q+"' width='100%' height='256'/>";
+function loadLibrary(artist, song) {
+  library_iframe.innerHTML = '<iframe id="musixmatch" src="https://www.musixmatch.com/lyrics/'+artist.replace(/ /g, '-')+'/'+song.replace(/ /g, '-')+'/embed?theme=light" width="310" height="210" border="0"></iframe>';
 }
 
 
-function loadExamples(q) {
-  examples.innerHTML = "<iframe id='wiki' src='https://en.m.wikipedia.org/w/index.php?ns0=1&search=%22"+encodeURIComponent(q)+"%22' width='100%' height='256'/>";
+function loadWiki(q) {
+  q = q.replace(/\s\w+\s/, '').replace(' ', '_').toLowerCase();
+  syntax_chart.innerHTML = "<iframe id='wiki' src='https://en.m.wikipedia.org/wiki/"+q+"' width='100%' height='256'/>";
 }
 
 
@@ -915,104 +758,45 @@ function orig_check() {
   } else {
     var q = res.value.substring(b, d).replace(/\n/g, " ");
   }
-  orig_link.href = "https://www.google.com/search?gl=ru&q=%22" + encodeURIComponent(q) + "%22";
-}
-
-
-function loadQuiz(d) {
-  var q = words_[parseInt(Math.random()*words_.length)];
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      if (this.responseText != "") {
-        examples.innerHTML = "";
-        var r = JSON.parse(this.responseText)[0];
-        var r_ = [];
-        for (var i=0; i<r.meanings.length; i++) {
-          for (var j=0; j<r.meanings[i].definitions.length; j++) {
-            if (d === true) {
-              var e = r.meanings[i].definitions[j].definition;
-              if (e) {r_.push(" "+e+" "+r.word+" ");}
-            } else {
-              var e = r.meanings[i].definitions[j].example;
-              if (e) {r_.push(" "+e+" ");}
-            }
-          }
-        }
-        var q_ = new RegExp("\\W"+q+"\\W", "gi");
-        examples.innerHTML = "<form onsubmit='event.preventDefault();checkCompletion(&quot;"+q+"&quot;);'>"+r_.join("<br/><br/>").replace(q_, function(x) {
-       	  return x.slice(0,1)+"<input class='complete' type='text' size='"+(x.length-2)+"' style='width:"+(x.length-2)/1.67+"em' required/>"+x.slice(-1);
-        })+"<br/><input id='complete' type='submit' value='>'/></form>";
-        examples.scrollTop = 0;
-      } else {
-        examples.innerHTML = "Unknown word";
-      }
-    }
-  };
-  xhttp.open("GET", 'https://api.dictionaryapi.dev/api/v2/entries/en/'+q, true);
-  xhttp.send();
-}
-
-
-function checkCompletion(q) {
-  var completed = document.getElementsByClassName("complete");
-  for (var i=0; i<completed.length; i++) {
-    if (completed[i].value != q) {
-      completed[i].placeholder = completed[i].value;
-      completed[i].value = "";
-      completed[i].focus();
-      return false;
-    }
-  }
-  loadQuiz(false);
-  return true;
+  orig_link.href = "https://www.google.com/search?q=%22" + encodeURIComponent(q) + "%22";
 }
 
 
 function tts() {
-  var cPos = findCursor(ctl).split(",");
-  var b = parseInt(cPos[0]);
-  var d = parseInt(cPos[1]);
-  var ln = ctl.value.substr(0, b).split("\n").length-1;
-  var q = ctl.value.split("\n")[ln];
-  if (q.search(/\W/gi) >= 0 && q.search(/[ˈˌ]/g) >= 0) {
-    for (var i=0; i<regexp.length; i++) {
-      q = q.replace(regexp[i][0], function (x) {
-          return x.charAt(x.length-1) + x.slice(0,-1);
-      });
-    }
-    q = q.replace(/[iɑɔu]/g, function(x){return x+"ː";}).replace(/[ˈˌ]ə/g, function(x){return x.charAt(0)+"ɚ";});
-    var ssml = "<phoneme alphabet='ipa' ph='"+q+"'> </phoneme>";
+  if (document.getElementsByClassName("ipa")[0]) {
+    var ssml = parseTxt();
   } else {
-    var ssml = q;
-  }
-  if (q !== "") {
-    pronounce.disabled = true;
-    const xhttp = new XMLHttpRequest();
-    xhttp.onload = function() {
-      var snd = new Audio("data:audio/mp3;base64," + this.responseText);
-  	  snd.play();
-      const byteCharacters = atob(this.responseText);
-      const byteNumbers = new Array(byteCharacters.length);
-      for (let i = 0; i < byteCharacters.length; i++) {
-        byteNumbers[i] = byteCharacters.charCodeAt(i);
+    var cPos = findCursor(ctl).split(",");
+    var b = parseInt(cPos[0]);
+    var d = parseInt(cPos[1]);
+    var ln = ctl.value.substr(0, b).split("\n").length-1;
+    var q = ctl.value.split("\n")[ln];
+    if (q.search(_v) >= 0) {
+      for (var i=0; i<regexp.length; i++) {
+        q = q.replace(regexp[i][0], function (x) {
+          if (x.charAt(x.length-1) == "ˈ" || x.charAt(x.length-1) == "ˌ") {
+            return x.charAt(x.length-1) + x.slice(0,-1);
+          } else {
+            return x;
+          }
+        });
       }
-      const byteArray = new Uint8Array(byteNumbers);
-      const blob = new Blob([byteArray], {type: 'audio/mp3'});
-      var o_url = URL.createObjectURL(blob);
-      document.getElementById("tts").src = o_url;
-      document.getElementById("tts").load();
-      pronounce.disabled = false;
-      pitch();
+      q = q.replace(/[iɑɔu]/g, function(x){return x+"ː";}).replace(/[ˈˌ]ə/g, function(x){return x.charAt(0)+"ɚ";});
+      var ssml = "<phoneme alphabet='ipa' ph='"+q+"'> </phoneme>"
+    } else {
+      var ssml = q;
     }
-    xhttp.open("GET", "https://script.google.com/macros/s/AKfycbz5br4wnfSGtucWKwGQq1Tb07eshJez6uVaFatn4xJAc_rcrcA/exec?a=tts&txt="+ssml);
-    xhttp.send();
     var l = ctl.value.substr(0, b).lastIndexOf("\n")+1;
     ctl.focus();
     ctl.setSelectionRange(l, l+q.length);
   }
+  console.log(ssml);
+  talk(ssml);
 }
 
+
+//https://www.w3.org/TR/speech-synthesis11/#S3.2.4
+//https://developers.google.com/assistant/conversational/ssml-phonemes#levels_of_stress
 
 function populateVoiceList() {
   voices = synth.getVoices().sort(function (a, b) {
@@ -1043,25 +827,22 @@ if (speechSynthesis.onvoiceschanged !== undefined) {
   speechSynthesis.onvoiceschanged = populateVoiceList;
 }
 
-function speak_() {
-  var cPos = findCursor(res).split(",");
-  var b = parseInt(cPos[0]);
-  var d = parseInt(cPos[1]);
-  var ln = res.value.substr(0, b).split("\n").length-1;
-  var q = res.value.split("\n")[ln];
-  if (!synth.speaking && q !== '') {
-    speak.disabled = true;
-    var l = res.value.substr(0, b).lastIndexOf("\n")+1;
-    res.focus();
-    res.setSelectionRange(l, l+q.length);
-    var utterThis = new SpeechSynthesisUtterance(q);
+function talk(ssml){
+  if (synth.speaking) {
+      console.error('speechSynthesis.speaking');
+      return;
+  }
+  if (ssml !== '') {
+    ssml = "<speak>" + ssml + "</speak>";
+    listen.disabled = true;
+    var utterThis = new SpeechSynthesisUtterance(ssml);
     utterThis.onend = function (event) {
         console.log('SpeechSynthesisUtterance.onend');
     }
     utterThis.onerror = function (event) {
         console.error('SpeechSynthesisUtterance.onerror');
     }
-    synth.cancel();
+    synth.cancel(); //added to avoid chrome bug
     var selectedOption = voiceSelect.selectedOptions[0].getAttribute('data-name');
     for(i = 0; i < voices.length ; i++) {
       if(voices[i].name === selectedOption) {
@@ -1072,53 +853,103 @@ function speak_() {
     utterThis.pitch = 1.0;
     utterThis.rate = 1.0;
     synth.speak(utterThis);
-    speak.disabled = false;
+    listen.disabled = false;
+  }
+}
+
+function parseTxt() {
+  var a = document.getElementsByClassName("ipa")[0].innerText.replace(/\|/g, "").split("\n");
+  
+  a[0] = a[0].trim().replace(/\s+/g, " ").split(" ");
+  console.log(a[0]);
+  
+  a[1] = a[1].trim().replace(/\s+/g, " ").split(" ");
+  console.log(a[1]);
+  
+  a[2] = a[2].trim().replace(/\s+/g, " ").replace(stress_, function(x){return stress.indexOf(x);}).split(" ");
+  console.log(a[2]);
+  
+  var v = "";
+  for (var i=0; i<a[0].length; i++) {
+    v += "<prosody rate='100%' pitch='+"+a[2][i]+"st' volume='0dB'><phoneme alphabet='ipa' ph='"+a[1][i]+"'>"+a[0][i]+"</phoneme></prosody>";
+  }
+  console.log(v);
+  
+  return v;
+}
+
+function keepSymbols(key) {
+  var b = ctl.selectionStart;
+  var d = ctl.selectionEnd;
+  if ((ctl.value.charAt(b) == "ᣟ" && ctl.value.slice(b-2,b) == "𝍩") || (ctl.value.charAt(b-1) == "ᣟ" && ctl.value.slice(b,b+2) == "𝍩")) {
+    if (key == 'ArrowRight' || key == 'ArrowUp') {
+      ctl.focus();
+      if (ctl.value.charAt(b) == "ᣟ") {
+        ctl.setSelectionRange(b+1, b+1);
+      } else {
+        ctl.setSelectionRange(b+2, b+2);
+      }
+    } else if (key == 'ArrowLeft' || key == 'ArrowDown' || key === null) {
+      ctl.focus();
+      if (ctl.value.charAt(b) == "ᣟ") {
+        ctl.setSelectionRange(d-2, d-2);
+      } else {
+        ctl.setSelectionRange(d-1, d-1);
+      }
+    }
   }
 }
 
 
 var audioCtx = null;
+var source = null;
+var biquadFilter = null;
 var analyser = null;
 var bufferLength = null;
 var dataArray = null;
 var bufferN = 0;
+var note_old = 0;
 var dVol = [];
 var noteArray = [];
-for (var i=0; i<5; i++) {
+for (var i=0; i<4; i++) {
   noteArray[i] = [];
 }
 
-function pitch() {
+var chunks = [], mediaRecorder;
+var constraints = { audio: true };
+
+function initRec() {
   if(!audioCtx) {
     audioCtx = new (window.AudioContext || window.webkitAudioContext)({latencyHint:"interactive",sampleRate: 22050});
-  }
+    source = audioCtx.createMediaElementSource(document.getElementById("tts"));
 
-  var source = audioCtx.createMediaElementSource(document.getElementById("tts"));
-  var biquadFilter = audioCtx.createBiquadFilter();
+    biquadFilter = audioCtx.createBiquadFilter();
+    biquadFilter.type = "lowpass";
+    biquadFilter.frequency.setValueAtTime(512, audioCtx.currentTime);
+    biquadFilter.Q.setValueAtTime(0, audioCtx.currentTime);
   
-  biquadFilter.type = "lowpass";
-  biquadFilter.frequency.setValueAtTime(512, audioCtx.currentTime);
-  biquadFilter.Q.setValueAtTime(0, audioCtx.currentTime);
-
-  analyser = audioCtx.createAnalyser();
-  analyser.fftSize = 16384;
-  bufferLength = analyser.frequencyBinCount; //=half of fftSize
-  dataArray = new Uint8Array(bufferLength);
-
-  source.connect(biquadFilter);
-  biquadFilter.connect(analyser);
-  analyser.connect(audioCtx.destination);
+    analyser = audioCtx.createAnalyser();
+    analyser.fftSize = 16384;
+    bufferLength = analyser.frequencyBinCount; //=half of fftSize
+    dataArray = new Uint8Array(bufferLength);
+  
+    source.connect(biquadFilter);
+    biquadFilter.connect(analyser);
+    
+    source.connect(audioCtx.destination);
+  }
 }
 
 
   function draw() {
-    if (document.getElementById("tts").ended === false || dataArray.find(function(x){return x>0;})) {
+    if (mediaRecorder.state == 'inactive' && (document.getElementById("tts").ended === false || dataArray.find(function(x){return x>0;}))) {
       bufferN++;
       requestAnimationFrame(draw);
     } else {
       bufferN = 0;
+      note_old = 0;
       speech_chart.innerHTML = "";
-      for (var i=0; i<5; i++) {
+      for (var i=0; i<4; i++) {
         speech_chart.innerHTML += noteArray[i].join("") + "\n";
         noteArray[i] = [];
       }
@@ -1140,22 +971,78 @@ function pitch() {
       if (piano[Object.keys(piano)[i]][0] <= f) {
         n = Object.keys(piano)[i];
         console.log(bufferN+" "+f+"hz "+n+" "+i+" | "+dVol[bufferN-1]+" "+v);
-        for (var j=0; j<5; j++) {
-          noteArray[j][bufferN] = s + " ";
-        }
-        if (i >= 80) {
-          noteArray[4][bufferN] = s + "<span style='color:rgba(0,0,0,"+v+");'>" + tone_chart[tone_chart.length - 1 - (i - 80)] + "</span>";
-        } else if (i >= 75) {
-          noteArray[3][bufferN] = s + "<span style='color:rgba(0,0,0,"+v+");'>" + tone_chart[tone_chart.length - 1 - (i - 75)] + "</span>";
-        } else if (i >= 70) {
-          noteArray[2][bufferN] = s + "<span style='color:rgba(0,0,0,"+v+");'>" + tone_chart[tone_chart.length - 1 - (i - 70)] + "</span>";
-        } else if (i >= 65) {
-          noteArray[1][bufferN] = s + "<span style='color:rgba(0,0,0,"+v+");'>" + tone_chart[tone_chart.length - 1 - (i - 65)] + "</span>";
-        } else if (i >= 60) {
-          noteArray[0][bufferN] = s + "<span style='color:rgba(0,0,0,"+v+");'>" + tone_chart[tone_chart.length - 1 - (i - 60)] + "</span>";
+        if (bufferN/3 == parseInt(bufferN/3)) {
+          for (var j=0; j<4; j++) {
+            noteArray[j][bufferN] = s + " ";
+          }
+          if (note_old != i) {
+            v = "<span style='color:rgba(0,0,0,"+v+");'>";
+            if (i >= 84) {
+              noteArray[3][bufferN] = s + v + tone[tone.length - 1 - (i - 84)] + "</span>";
+            } else if (i >= 78) {
+              noteArray[2][bufferN] = s + v + tone[tone.length - 1 - (i - 78)] + "</span>";
+            } else if (i >= 72) {
+              noteArray[1][bufferN] = s + v + tone[tone.length - 1 - (i - 72)] + "</span>";
+            } else if (i >= 66) {
+              noteArray[0][bufferN] = s + v + tone[tone.length - 1 - (i - 66)] + "</span>";
+            }
+          }
+          note_old = i;
+        } else {
+          for (var j=0; j<4; j++) {
+            noteArray[j][bufferN] = "";
+          }
         }
         break;
       }
+    }
+  }
+  
+  function stop() {
+    if (mediaRecorder.state !== 'inactive') {
+      mediaRecorder.stop();
+      console.log(mediaRecorder.state);
+      console.log("recorder stopped");
+      // mediaRecorder.requestData();
+    }
+    speak.disabled = false;
+  }
+  
+  function recordSpeech() {
+    speak.disabled = true;
+    
+    if (navigator.mediaDevices.getUserMedia) {
+      console.log('getUserMedia supported.');
+      initRec();
+
+      let onSuccess = function(stream) {
+        mediaRecorder = new MediaRecorder(stream);
+        document.getElementById("tts").srcObject = stream;
+          
+        mediaRecorder.ondataavailable = function(evt) {
+          // push each chunk (blobs) in an array
+          chunks.push(evt.data);
+        };
+          
+        mediaRecorder.onstop = function(evt) {
+          // Make blob out of our blobs, and open it.
+          document.getElementById("tts").srcObject = null;
+          let blob = new Blob(chunks, { 'type' : 'audio/wav' });
+          document.getElementById("tts").src = URL.createObjectURL(blob);
+          document.getElementById("tts").playbackRate = 1.0;
+          chunks = [];
+        };
+
+        mediaRecorder.start();
+        console.log(mediaRecorder.state);
+        console.log("recorder started");
+        document.getElementById("tts").play();
+      }
+      
+      let onError = function(err) {
+        console.log(err);
+      }
+      navigator.mediaDevices.getUserMedia(constraints).then(onSuccess, onError);
     }
   }
 
@@ -1267,6 +1154,14 @@ function showLyrics() {
   }
 }
 
+function showLibrary() {
+  if (library.style.visibility!='visible') {
+    library.style.visibility='visible';
+  } else {
+    library.style.visibility='hidden';
+  }
+}
+
 function showResources() {
   if (resources.style.visibility!='visible') {
     resources.style.visibility='visible';
@@ -1326,14 +1221,6 @@ function showSyntax() {
     syntax.style.visibility='hidden';
   } else {
     syntax.style.visibility='visible';
-  }
-}
-
-function showWords() {
-  if (translations.style.display!='none') {
-    translations.style.display='none';
-  } else {
-    translations.style.display='block';
   }
 }
 
