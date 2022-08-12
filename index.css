@@ -15,16 +15,6 @@
   src: url("fonts/dejavu/DejaVuSans-Bold.ttf") format("truetype");
 }
 
-@font-face {
-  font-family: 'AndikaW';
-  src: url('fonts/andika/Andika-Regular.ttf') format("truetype");
-}
-@font-face {
-	font-family: 'AndikaWBold';
-	font-weight: bold;
-	src: url('fonts/andika/Andika-Bold.ttf') format("truetype");
-}
-
 * {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -115,7 +105,7 @@ a {
   color:lightgray;
 }
 #tone {
-  width:288px;
+  width:300px;
   height:1.5em;
   line-height:1.5em;
   overflow:scroll;
@@ -126,7 +116,7 @@ a {
   text-decoration:none;
   font-weight:bold;
   font-family:'DejaVuBold';
-  padding:0px 2.95px;
+  padding:0px 2.5px;
 }
 select {
   height:24px;
@@ -173,7 +163,7 @@ option {
   float: left;
   font-size: 16px;
 }
-#split, #search, #translate, #complete {
+#split, #search, #phrases {
   width:29px;
   height:24px;
   border:1px solid lightgray;
@@ -303,7 +293,7 @@ pre {
   float:left;
   margin-right:10px;
 }
-#resources, #credits {
+#library, #resources, #credits {
   overflow:scroll;
   font-size: 14px;
   height:264px;
@@ -318,6 +308,25 @@ pre {
   visibility:hidden;
   z-index:11;
   top:0px;
+}
+#library {
+  padding:0;
+}
+#library_iframe {
+  padding:0;
+  margin:0;
+  border:0;
+  height:210px;
+}
+#musixmatch {
+  border:0;
+  margin:0;
+}
+#artist, #song {
+  width:149px;
+}
+#library i {
+  font-size:12px;
 }
 .skiptranslate {
   position: fixed;
@@ -342,36 +351,9 @@ pre {
   height: 40px;
   float:right;
 }
-#translation .material-icons {
-  font-size: 16px;
-  color: gray;
-  top: 3px;
-  position: relative;
-}
 #words {
   width:50%;
   float:left;
-}
-#translation {
-  float:right;
-  width:50%;
-  max-height:128px;
-  overflow:scroll;
-}
-#translation_ {
-  float:right;
-}
-#chart_ {
-  float:left;
-  width:40%;
-  max-height:128px;
-  margin:0;
-  overflow:scroll;
-}
-#chart_ a {
-  float:right;
-  position:relative;
-  top:-128px;
 }
 #phrase {
   padding:2px;
@@ -387,7 +369,7 @@ pre {
   position:absolute;
   right:28px;
 }
-#translate {
+#phrases {
   position:absolute;
   right:0px;
 }
@@ -408,8 +390,14 @@ pre {
   overflow:scroll;
   visibility:visible;
 }
-#translation, #translation_, #syntax_chart, #examples {
+#syntax_chart {
   margin-right:30px;
+}
+#ngram_chart {
+  border:0;
+  margin:0;
+  height:256px;
+  width:100%;
 }
 .tree {
   background-color:transparent;
@@ -431,24 +419,24 @@ pre {
   font-size: inherit;
   background-color:white;
 }
-.piano {
-  height:4em;
+.ipa {
+  height:3em;
+  overflow:hidden;
+  background-size: 0.6em 1em;
+  background-image:
+    linear-gradient(to right, lightgray 1px, transparent 1px);
 }
 #speech_chart {
-  max-height:4.8em;
-}
-#speech_chart, .piano {
+  font-size: 18px;
+  padding: 0.25em 0;
+  max-height:3.5em;
   overflow:hidden;
-  background-image: repeating-linear-gradient(white 0%, white 4.17%, lightgray 4.17%, lightgray 8.33%, white 8.33%, white 12.50%, lightgray 12.50%, lightgray 16.67%, white 16.67%, white 20.83%, lightgray 20.83%, lightgray 25.00%, white 25.00%, white 33.33%, lightgray 33.33%, lightgray 37.50%, white 37.50%, white 41.67%, lightgray 41.67%, lightgray 45.83%, white 45.83%, white 50%);
+  background-image: repeating-linear-gradient(transparent 0%, transparent 4.17%, lightgray 4.17%, lightgray 8.33%, transparent 8.33%, transparent 12.50%, lightgray 12.50%, lightgray 16.67%, transparent 16.67%, transparent 20.83%, lightgray 20.83%, lightgray 25.00%, transparent 25.00%, transparent 33.33%, lightgray 33.33%, lightgray 37.50%, transparent 37.50%, transparent 41.67%, lightgray 41.67%, lightgray 45.83%, transparent 45.83%, transparent 50%);
 }
 #speech_chart, #speech_chart span {
   letter-spacing:0;
   line-height: 1em;
   font-weight: bold;
-  font-family: 'AndikaWBold';
-  -webkit-font-feature-settings: "cv92" 1;
-  -moz-font-feature-settings: "cv92" 1;
-  font-feature-settings: "cv92" 1;
 }
 #pronounciation {
   position:fixed;
@@ -456,15 +444,15 @@ pre {
   bottom:0;
   width:100%;
 }
-#pronounce, #speak, #record, #g_translate {
+#listen, #speak, #record, #g_translate {
   border:0;
   padding:0;
   width:32px;
 }
-#pronounce i, #speak i, #record i, #g_translate i {
+#listen i, #speak i, #record i, #g_translate i {
   font-size:1em;
 }
-#pronounce, #tts, #speak, #record, #g_translate {
+#listen, #tts, #speak, #record, #g_translate {
   height:16px;
 }
 #tts {
@@ -472,20 +460,6 @@ pre {
 }
 #voice_select {
   width: 100%;
-}
-#examples {
-  max-height:256px;
-  overflow:scroll;
-  font-size:14px;
-}
-#examples iframe {
-  border:1px solid lightgray;
-}
-#examples form {
-  width:100%;
-}
-#complete {
-  font-weight:bold;
 }
 #mobile {
   position:absolute;
