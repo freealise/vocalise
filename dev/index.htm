@@ -41,6 +41,8 @@ button {
 }
 body {
   margin:0;
+  user-select: none;
+  touch-action: none;
 }
 #hscroll, #scroll {
   background-color:lightgray;
@@ -206,7 +208,7 @@ audio {
 <div id="scroll" onscroll="show(parseInt(this.scrollTop/s))"><hr/></div>
 <pre id="cheat"></pre>
 <div id="toolbar">
-    <input id="brush" type="text" value="⢸⣿⡇"/><div id="color" onclick="set()"></div><br/>
+    <input id="brush" type="text" value="⢸⣿⡇"/><div id="color" onmousedown="m=true;" onmouseup="m=false;" onmousemove="if(m && m===true){set(event.pageX);}" ontouchstart="m=true;" ontouchend="m=false;" ontouchmove="if(m && m===true){set(event.changedTouches[0].pageX);}"></div><br/>
     <input id="noise" type="checkbox"/>noise
     <span id="controls">
       <button onclick="if(!ac){init();}play();">● record</button>
@@ -375,7 +377,7 @@ function initRec() {
 }
 
 function init() {
-  ac = new AudioContext();
+  ac = new (window.AudioContext || window.webkitAudioContext)({latencyHint:"interactive", sampleRate: 8000});
   masterGain = ac.createGain();
   masterGain.gain.value = 1.0;
   spectrogram = new App.Spectrogram(ac, document.getElementById('spectrogram'));
@@ -506,7 +508,7 @@ function draw(c, x, v, y) {
       var n = 0;
       if (noise.checked === true) {
         ln[n] = "";
-        for (var j=x; j<parseInt(8192/freq); j++) {
+        for (var j=x; j<2048; j++) {
           ln[n] += br[Math.round(Math.random()*(br.length-1))];
         }
       } else {
@@ -556,10 +558,10 @@ function add(v) {
   point();
 }
 
-function set() {
+function set(x) {
   var b = brush.selectionStart;
   var d = brush.selectionEnd;
-  brush.value = brush.value.substr(0, b) + color.innerText.charAt(parseInt(event.pageX-48)) + brush.value.substr(d);
+  brush.value = brush.value.substr(0, b) + color.innerText.charAt(parseInt(x-48)) + brush.value.substr(d);
 }
 
 function point() {
@@ -645,6 +647,19 @@ function openCsv() {
       reader.readAsText(file);
     }
   }
+}
+
+
+function lerp(start, end, amt){
+  return (1-amt)*start+amt*end;
+}
+
+function smooth() {
+  for (var i=0; i<256; i++) {
+    var avg = (d[frame*256+i]+d[frame*256+i+1]+d[frame*256+i+2]+d[frame*256+i+3])/4;
+    p[i] = i+","+avg;
+  }
+  wave.setAttribute("points", p.join(" "));
 }
 
 </script>
