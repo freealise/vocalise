@@ -650,16 +650,58 @@ function openCsv() {
 }
 
 
-function lerp(start, end, amt){
+function changePoints(x, y) {
+  var b = txt.selectionStart;
+  var d = txt.selectionEnd;
+  
+  var b_ = txt.value.substr(0, b).lastIndexOf("\n");
+  var d_ = txt.value.substr(d).indexOf("\n");
+  if (d_ == -1) {
+    d_ = txt.value.substr(d).length;
+  }
+  var ln = txt.value.substr(b_+1, d+d_);
+  
+  if (br[parseInt(y)] && ln.length < 256) {
+    txt.value = txt.value.substr(0, b) + br[parseInt(y)] + txt.value.substr(d);
+  }
+}
+
+
+function lerp(start, end, amt) {
   return (1-amt)*start+amt*end;
 }
+
+
+function morph() {
+  var arr = txt.value.split("\n");
+  arr[0] = arr[0].split("");
+  var arr_old = arr[0];
+  var i_old = 0;
+  
+  for (var i=1; i<arr.length; i++) {
+    arr[i] = arr[i].split("");
+    if (arr[i].length > 0) {
+      for (var j=0; j<arr[i].length; j++) {
+        for (var k=i_old+1; k<i; k++) {
+          arr[k][j] = br[Math.round(lerp(br.indexOf(arr_old[j]), br.indexOf(arr[i][j]), (k-i_old)/(i-i_old)))];
+        }
+      }
+      arr_old = arr[i];
+      i_old = i;
+    }
+  }
+  for (var i=0; i<arr.length; i++) {
+    arr[i] = arr[i].join("");
+  }
+  txt.value = arr.join("\n");
+}
+
 
 function smooth() {
   for (var i=0; i<256; i++) {
     var avg = (d[frame*256+i]+d[frame*256+i+1]+d[frame*256+i+2]+d[frame*256+i+3])/4;
     p[i] = i+","+avg;
   }
-  wave.setAttribute("points", p.join(" "));
 }
 
 </script>
