@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Vocal synthesizer</title>
@@ -301,6 +301,8 @@ for (var i = 0; i<256; i++) {
 	bn[br[i]] = i.toString(2).replace(/0/g, "").length;
 }
 br.sort(function(a, b){return bn[a] - bn[b]});
+
+var br_ = new RegExp("("+br.join("|")+")", "g");
 color.innerText = br.join("");
 
 var sb = (" ░▒▓█").split("");
@@ -646,23 +648,6 @@ function openCsv() {
     if (file && file.name.slice(-4) == ".csv") {
       reader.readAsText(file);
     }
-  }
-}
-
-
-function changePoints(x, y) {
-  var b = txt.selectionStart;
-  var d = txt.selectionEnd;
-  
-  var b_ = txt.value.substr(0, b).lastIndexOf("\n");
-  var d_ = txt.value.substr(d).indexOf("\n");
-  if (d_ == -1) {
-    d_ = txt.value.substr(d).length;
-  }
-  var ln = txt.value.substr(b_+1, d+d_);
-  
-  if (br[parseInt(y)] && ln.length < 256) {
-    txt.value = txt.value.substr(0, b) + br[parseInt(y)] + txt.value.substr(d);
   }
 }
 
