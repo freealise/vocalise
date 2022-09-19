@@ -1,4 +1,4 @@
-# phonetic
+# vocalise
 
 <p>Includes a speech formant synthesizer, as well as definition and translation, lookup of word forms or common phrases by part of speech, sentence parser and text editor with spell and grammar checking through Google API.</p>
 
