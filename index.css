@@ -68,6 +68,16 @@ table, tbody, tr, td {
   padding:0;
   margin:0;
 }
+#synth {
+  position: fixed;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  border:0;
+  margin:0;
+  padding:0;
+}
 #keys {
   width: 288px;
   margin:0px;
@@ -101,7 +111,7 @@ a {
 #keys_ a {
   font-family:'DejaVuBold';
 }
-#tgl {
+#tgl, #undo {
   color:lightgray;
 }
 #tone {
@@ -135,35 +145,16 @@ option {
   margin:0px;
   padding:0px;
 }
-#word, #word_ {
+#word {
   border:1px solid lightgray;
   margin:0px;
   background:white;
   float:left;
-}
-#word {
   height:20px;
   width:224px;
   padding:1px 2px;
 }
-#word_ {
-  overflow:scroll;
-  height:18px;
-  width:50%;
-  padding:2px;
-  margin:0px -4px;
-}
-#word_ div {
-  padding:2px;
-  cursor: pointer;
-  height: 22px;
-  border-bottom: 1px solid darkgray;
-}
-#word_ i {
-  float: left;
-  font-size: 16px;
-}
-#split, #search, #phrases {
+#split, #search {
   width:29px;
   height:24px;
   border:1px solid lightgray;
@@ -203,16 +194,11 @@ pre {
   margin:0px;
   letter-spacing:0px;
 }
-#area {
-  position:fixed;
-  top:0px;
-}
-#highlight, #sidebar {
+#highlight {
   width:50%;
   overflow-y:scroll;
   overflow-x:hidden;
-  top:0px;
-  position:fixed;
+  position:absolute;
   z-index:-1;
   background:transparent;
   margin:0px;
@@ -240,7 +226,7 @@ pre {
   top: 0.5em;
 }
 #res {
-  position:fixed;
+  resize: none;
   overflow-y:scroll;
   overflow-x:hidden;
   margin:-1px;
@@ -253,25 +239,20 @@ pre {
   line-height:1em;
 }
 #highlight, #res {
-  left:0px;
+  width:100%;
+  height:175px;
   text-align:left;
   display:block;
   white-space: pre;
-}
-#sidebar {
-  right:0px;
-  text-align:left;
-  display:block;
-  z-index:0;
 }
 #dict {
   width:288px;
   position:fixed;
   left:50%;
-  margin-left:-159px;
+  margin-left:-160px;
   background:white;
   bottom:0px;
-  visibility:hidden;
+  border: 2px solid white;
 }
 #links {
   border:1px solid lightgray;
@@ -289,11 +270,16 @@ pre {
 #links i {
   font-size:20px;
 }
+#links b {
+  position:absolute;
+  right:0;
+  top:auto;
+}
 #show_links {
   float:left;
   margin-right:10px;
 }
-#library, #resources, #credits {
+#library, #resources, #credits, #trends_chart, #wiki_ {
   overflow:scroll;
   font-size: 14px;
   height:264px;
@@ -318,7 +304,7 @@ pre {
   border:0;
   height:210px;
 }
-#musixmatch {
+#musixmatch, #wiki {
   border:0;
   margin:0;
 }
@@ -328,138 +314,28 @@ pre {
 #library i {
   font-size:12px;
 }
-.skiptranslate {
-  position: fixed;
-  width: 32px;
-  height: 32px;
-  right: -2px;
-  bottom: 0;
-  overflow: hidden;
-  z-index: 10;
-}
-.goog-te-gadget {
-  position:relative;
-  width:auto;
-  height:auto;
-  right:auto;
-  bottom:auto;
-}
-.skiptranslate iframe {
-  position: relative;
-  width: 100vw;
-  min-width: 480px;
-  height: 40px;
-  float:right;
-}
-#words {
-  width:50%;
-  float:left;
-}
 #phrase {
-  padding:2px;
+  padding:1px;
   margin:0;
-  border:1px;
+  border:1px solid lightgray;
   height:20px;
-  width:100%;
+  width:284px;
   float:left;
 }
-#pos {
-  width:36px;
-  padding:2px;
-  position:absolute;
-  right:28px;
+#languages, #corpus {
+  width:120px;
 }
-#phrases {
-  position:absolute;
-  right:0px;
-}
-#languages, #corpus, .goog-te-combo {
-  width:100%;
-}
-#languages, #corpus, #voice_select {
+#corpus {
   display:none;
 }
-#ngram {
-  width:50%;
-  float:right;
-  background-color:white;
-  border:1px solid lightgray;
-}
-#syntax {
-  width:100%;
-  overflow:scroll;
-  visibility:visible;
-}
-#syntax_chart {
+#trends_chart {
   margin-right:30px;
 }
-#ngram_chart {
+#chart {
   border:0;
   margin:0;
   height:256px;
   width:100%;
-}
-.tree {
-  background-color:transparent;
-  border:0;
-  margin:0;
-  padding:0;
-}
-.tree_selected {
-  text-decoration:underline;
-  border:0;
-  margin:0;
-  padding:0;
-}
-#syntax * {
-  border-color:darkgray;
-}
-#syntax_chart select {
-  width: 3.4em;
-  font-size: inherit;
-  background-color:white;
-}
-.ipa {
-  height:3em;
-  overflow:hidden;
-  background-size: 0.6em 1em;
-  background-image:
-    linear-gradient(to right, lightgray 1px, transparent 1px);
-}
-#speech_chart {
-  font-size: 18px;
-  padding: 0.25em 0;
-  max-height:3.5em;
-  overflow:hidden;
-  background-image: repeating-linear-gradient(transparent 0%, transparent 4.17%, lightgray 4.17%, lightgray 8.33%, transparent 8.33%, transparent 12.50%, lightgray 12.50%, lightgray 16.67%, transparent 16.67%, transparent 20.83%, lightgray 20.83%, lightgray 25.00%, transparent 25.00%, transparent 33.33%, lightgray 33.33%, lightgray 37.50%, transparent 37.50%, transparent 41.67%, lightgray 41.67%, lightgray 45.83%, transparent 45.83%, transparent 50%);
-}
-#speech_chart, #speech_chart span {
-  letter-spacing:0;
-  line-height: 1em;
-  font-weight: bold;
-}
-#pronounciation {
-  position:fixed;
-  left:0;
-  bottom:0;
-  width:100%;
-}
-#listen, #speak, #record, #g_translate {
-  border:0;
-  padding:0;
-  width:32px;
-}
-#listen i, #speak i, #record i, #g_translate i {
-  font-size:1em;
-}
-#listen, #tts, #speak, #record, #g_translate {
-  height:16px;
-}
-#tts {
-  max-width:224px;
-}
-#voice_select {
-  width: 100%;
 }
 #mobile {
   position:absolute;
@@ -473,48 +349,4 @@ pre {
   z-index:11;
   overflow:hidden;
   font-size:12px;
-}
-@media only screen and (max-height: 511px) {
-  #highlight, #res {
-    height:128px;
-    width:100%;
-  }
-  #sidebar {
-    top:128px;
-    height:350px;
-    width:100%;
-  }
-}
-@media only screen and (min-height: 512px) {
-  #highlight, #res {
-    height:25vh;
-    width:100%;
-  }
-  #sidebar {
-    top:25vh;
-    height:75vh;
-    width:100%;
-  }
-}
-@media only screen and (max-width: 511px) {
-  #highlight, #res {
-    height:128px;
-    width:100%;
-  }
-  #sidebar {
-    top:128px;
-    height:350px;
-    width:100%;
-  }
-}
-@media only screen and (min-width: 512px) {
-  #highlight, #res {
-    height:100vh;
-    width:50%;
-  }
-  #sidebar {
-    top:0px;
-    height:100vh;
-    width:50%;
-  }
 }
