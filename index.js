@@ -347,8 +347,8 @@ function addWord(w_, _w) {
   var d = parseInt(cPos[1]);
   if (w_.search(/\D/g) != -1) {
     phrase.value = phrase.value.substr(0, b) + w_.split(' ')[0] + phrase.value.substr(d);
-    phrase.focus();
     phrase.setSelectionRange(d+w_.length+1, d+w_.length+1);
+    phrase.focus();
   }
   word.value = _w;
 }
@@ -360,8 +360,8 @@ function addPhoneme(p, clr) {
   var b = parseInt(cPos[0]);
   var d = parseInt(cPos[1]);
   ctl.value = ctl.value.substr(0, b) + p + ctl.value.substr(d);
-  ctl.focus();
   ctl.setSelectionRange(b+p.length, b+p.length);
+  ctl.focus();
 }
 
 function findWords() {
@@ -702,19 +702,19 @@ function keepSymbols(key) {
   var d = ctl.selectionEnd;
   if ((ctl.value.charAt(b) == "ᣟ" && ctl.value.slice(b-2,b) == "𝍩") || (ctl.value.charAt(b-1) == "ᣟ" && ctl.value.slice(b,b+2) == "𝍩")) {
     if (key == 'ArrowRight' || key == 'ArrowUp') {
-      ctl.focus();
       if (ctl.value.charAt(b) == "ᣟ") {
         ctl.setSelectionRange(b+1, b+1);
       } else {
         ctl.setSelectionRange(b+2, b+2);
       }
-    } else if (key == 'ArrowLeft' || key == 'ArrowDown' || key === null) {
       ctl.focus();
+    } else if (key == 'ArrowLeft' || key == 'ArrowDown' || key === null) {
       if (ctl.value.charAt(b) == "ᣟ") {
         ctl.setSelectionRange(d-2, d-2);
       } else {
         ctl.setSelectionRange(d-1, d-1);
       }
+      ctl.focus();
     }
   }
 }
