@@ -240,7 +240,7 @@ pre {
 }
 #highlight, #res {
   width:100%;
-  height:175px;
+  height:12em;
   text-align:left;
   display:block;
   white-space: pre;
