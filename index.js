@@ -1,5 +1,6 @@
 var v_ssml = ("iː ɪ eɪ ɛ æ ə ɚ ʌ ɑː ɔː oʊ ʊ uː aɪ aʊ ɔɪ").split(" ");
 var c_ssml = ("p b t d k ɡ m n ŋ f v s z θ ð ʃ ʒ h l ɹ ʧ ʤ j w").split(" ");
+//https://en.wikipedia.org/wiki/Sonority_Sequencing_Principle
 
 var keys = [
   " i;IY;330;0.1664;0.3341;0.1498;0.0153",
@@ -21,31 +22,31 @@ var keys = [
 ];
 
 var keys_ = [
-  "b,B,0.2141",
-  "p,P,0.2477",
-  "d,D,0.5656",
-  "t,T,0.9327",
-  "ʤ,JH,0.0791",
-  "ʧ,CH,0.0717",
-  "ɡ,G,0.0920",
-  "k,K,0.3811",
-  "v,V,0.2394",
-  "f,F,0.2387",
-  "ð,DH,0.6531",
-  "θ,TH,0.0758",
-  "ʒ,ZH,0.0086",
-  "ʃ,SH,0.1072",
-  "z,Z,0.4163",
-  "s,S,0.5710",
-  "ɹ,R,0.5663",
-  "h,HH,0.1739",
-  "w,W,0.2890",
-  "m,M,0.3173",
-  "_,_,1",
-  "n,N,1.0000",
-  "ŋ,NG,0.1000",
-  "l,L,0.4471",
-  "j,Y,0.0911",
+  "b,B,0.2141,0.25",
+  "p,P,0.2477,0.25",
+  "d,D,0.5656,0.25",
+  "t,T,0.9327,0.25",
+  "ʤ,JH,0.0791,0.25",
+  "ʧ,CH,0.0717,0.25",
+  "g,G,0.0920,0.25",
+  "k,K,0.3811,0.25",
+  "v,V,0.2394,0.5",
+  "f,F,0.2387,0.5",
+  "ð,DH,0.6531,0.5",
+  "θ,TH,0.0758,0.5",
+  "ʒ,ZH,0.0086,0.5",
+  "ʃ,SH,0.1072,0.5",
+  "z,Z,0.4163,0.5",
+  "s,S,0.5710,0.25",
+  "ɹ,R,0.5663,0.5",
+  "h,HH,0.1739,0.5",
+  "w,W,0.2890,0.75",
+  "m,M,0.3173,0.75",
+  "_,_,1,0",
+  "n,N,1.0000,0.75",
+  "ŋ,NG,0.1000,0.75",
+  "l,L,0.4471,0.75",
+  "j,Y,0.0911,0.75",
 ];
 
 var kbrd = {
@@ -104,6 +105,12 @@ var superscript = {
   '·':'',
   'ˈ':'ˊ',
   'ˌ':'`',
+  '_':'-',
+  'eɪ':'ᵉᶦ',
+  'oʊ':'ᵒᶷ',
+  'aɪ':'ᵃᶦ',
+  'ɔɪ':'ᵓᶦ',
+  'aʊ':'ᵃᶷ',
   'a':'ᵃ',
   'i':'ⁱ',
   'ɪ':'ᶦ',
@@ -258,7 +265,9 @@ var credits = document.getElementById("credits");
 var orig_link = document.getElementById("orig_link");
 var res_old = "";
 var regexp = [];
+var regexp_ = [];
 var ks_ = [];
+var sonority = {};
 var ctl = res;
 var ln = 20;
 var wn = 0;
@@ -293,8 +302,9 @@ for (var i=0; i<keys.length; i++) {
     lnk.innerHTML += "<option style='background-color:hsl("+ks[2]+", 100%, "+bg+"%);' value='"+ks_[i]+s[j]+"'>"+ks[0]+s[j]+"</option>";
   }
   regexp[i] = [];
-  regexp[i][0] = new RegExp("("+ks_[i]+"[_·ˈˌ]*|"+superscript[ks_[i]]+"[ˊ`]*)", "g");
-  regexp[i][1] = "hsl(" + ks[2] + ", 100%, 75%)";
+  regexp[i][0] = new RegExp("("+superscript[ks_[i]]+"[ˊ`]*)", "g");
+  regexp[i][1] = "hsl(" + ks[2] + ", 100%, 50%)";
+  sonority[ks_[i]] = 1.0;
 }
 
 for (var i=0; i<keys_.length; i++) {
@@ -307,6 +317,10 @@ for (var i=0; i<keys_.length; i++) {
   lnk.title = ks[0];
   var bg = 100 - Math.pow(parseFloat(ks[2]), 1/3)*100;
   lnk.style.color = "hsl(0, 0%, " + bg + "%)";
+  regexp_[i] = [];
+  regexp_[i][0] = new RegExp("("+superscript[ks[0]]+")", "g");
+  regexp_[i][1] = "hsl(0, 0%, " + (100-ks[3]*50) + "%)";
+  sonority[ks[0]] = parseFloat(ks[3]);
 }
 
 for (var i=0; i<tone.length; i++) {
@@ -354,13 +368,15 @@ function addWord(w_, _w) {
 }
 
 function addPhoneme(p, clr) {
+  var s = "";
+  if (ctl == word || ctl == phrase) { s = " "; }
   if (ctl == res) {res_old = res.value;}
   //t.innerHTML += "<span style='background-color:" + clr + ";'>" + v + "</span> ";
   var cPos = findCursor(ctl).split(",");
   var b = parseInt(cPos[0]);
   var d = parseInt(cPos[1]);
-  ctl.value = ctl.value.substr(0, b) + p + ctl.value.substr(d);
-  ctl.setSelectionRange(b+p.length, b+p.length);
+  ctl.value = ctl.value.substr(0, b) + p + s + ctl.value.substr(d);
+  ctl.setSelectionRange(b+p.length+s.length, b+p.length+s.length);
   ctl.focus();
 }
 
@@ -479,9 +495,20 @@ function colorPhonemes() {
       }
     }
     if (lines[j].search(_r) != -1) {
-      for (var i=0; i<regexp.length; i++) {
-        lines[j] = lines[j].replace(regexp[i][0], function (x) {
-            return "<i style='border-bottom:4px solid " + regexp[i][1] + ";'>"+x+"</i>";
+      for (var l=3; l>0; l--) {
+        for (var i=0; i<regexp.length; i++) {
+          lines[j] = lines[j].replace(regexp[i][0], function (x) {
+              if (x.length == l) {
+                return "<i style='color:" + regexp[i][1] + ";'>"+x.replace(/./g, "‗")+"</i>";
+              } else {
+                return x;
+              }
+          });
+        }
+      }
+      for (var i=0; i<regexp_.length; i++) {
+        lines[j] = lines[j].replace(regexp_[i][0], function (x) {
+            return "<i style='color:" + regexp_[i][1] + ";'>"+x.replace(/./g, "ˍ")+"</i>";
         });
       }
     }
@@ -492,6 +519,18 @@ function colorPhonemes() {
   hl.scrollTop = res.scrollTop;
   hl.scrollLeft = res.scrollLeft;
 }
+
+
+function ssp(txt) {
+  ctl.style.border = "1px solid lightgray";
+  var txt = txt.replace(/[*_·ˈˌ]/g, "").replace(/\s+/g, " ").trim().split(" ");
+  for (var i=0; i<txt.length; i++) {
+    if ((i == 0 || sonority[txt[i]] > sonority[txt[i-1]]) && (i == txt.length-1 || sonority[txt[i]] > sonority[txt[i+1]]) && sonority[txt[i]] < 1.0) {
+      ctl.style.border = "1px dashed black";
+    }
+  }
+}
+
 
 function undo() {
   if (ctl == res) {
@@ -636,7 +675,7 @@ function loadTranslation(wrd, o, sl_, tl_) {
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       wrd = this.responseText.replace(/[\[\]]/g, "").split(",")[0].slice(1,-1);
-      console.log(wrd);
+      //console.log(wrd);
       
       if (o == "") {
         if (tl_ == sl && sl_ != sl) {
