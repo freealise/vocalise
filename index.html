@@ -15,7 +15,6 @@
   <link rel="stylesheet" href="index.css"/>
 </head>
 <body onload="loadLanguages();" onclick="var tg=event.target;mobile.style.top=event.pageY+'px';mobile.style.left=event.pageX+'px';while(!tg.title){tg=tg.parentNode;}if(tg.tagName){mobile.innerText=tg.title;}">
-<!-- https://en.m.wiktionary.org/w/api.php?action=query&prop=revisions&titles=door&rvslots=*&rvprop=content&formatversion=2 -->
 <!--https://etherpad.wikimedia.org/p/RYC4rG0XlnKEz-bbj3YO-->
 
   <iframe name="synth" id="synth" src="synth/index.htm"></iframe>
@@ -47,7 +46,8 @@
     </p>
     <p><a id="oxford" href="https://elt.oup.com/learning_resources/subjects/grammar/" target="_blank"><b>Oxford University Press</b></a> Learn, practice, and improve your English! Do it all with the Learning English with Oxford community.
     </p>
-    <!-- https://elsaspeak.com/en/ -->
+    <!-- https://dictionary.cambridge.org/grammar/british-grammar/
+         https://elsaspeak.com/en/ -->
   </div>
   
   <div id="mobile">On mobile, switch the system keyboard to floating mode.</div>
@@ -68,8 +68,8 @@
       <textarea placeholder="Lyrics" id="res" onclick="keepSymbols(null);" onkeyup="keepSymbols(event.key);if(event.key=='Enter'){highlightText();}else if(event.key=='.' || event.key=='?' || event.key=='!'){getSentence();}else if(event.key==' ' || event.key=='Backspace' || event.key=='Delete' || event.ctrlKey || event.metaKey){colorPhonemes();}" onkeydown="if(event.key.length==1 && kbrd[event.key] && event.getModifierState('CapsLock') && !event.ctrlKey && !event.metaKey){addPhoneme(kbrd[event.key], 0);}" onmouseup="" ontouchup="" onfocus="ctl=this;" onscroll="highlight.scrollTop = this.scrollTop;highlight.scrollLeft = this.scrollLeft;"></textarea>
     </div>
     <div class="l"><input type="text" name="phrase" id="phrase" placeholder="Phrase" onfocus="ctl=this;"/></div>
-    <div class="l"><input type="text" id="word" list="_word" placeholder="Word or transcription" onkeyup="if(a_c===false && this.value.length>2 && event.key!='ArrowRight' && event.key!='ArrowLeft'){autoCompleter(this.value);}" onfocus="ctl=this;"/><datalist id="_word"></datalist><button onclick="findWords();" id="search" title="Search"><i class='material-icons notranslate'>manage_search</i></button><button onclick="splitWord();" id="split" title="Split"><i class='material-icons notranslate'>south_west</i><i class='material-icons notranslate'>south_east</i></button></div>
-    <div class="l"><input type="text" id="vowels" list="vowels_" placeholder="Vowels" onkeyup="if(a_c===false && this.value.length>1 && event.key!='ArrowRight' && event.key!='ArrowLeft'){loadIndex(this.value,'A');}" onfocus="ctl=this;"/><datalist id="_vowels"></datalist><datalist id="vowels_"></datalist><input type="text" id="consonants" list="consonants_" placeholder="Consonants" onkeyup="if(a_c===false && this.value.length>1 && event.key!='ArrowRight' && event.key!='ArrowLeft'){loadIndex(this.value,'B');}" onfocus="ctl=this;"/><datalist id="_consonants"></datalist><datalist id="consonants_"></datalist></div>
+    <div class="l"><input type="text" id="word" list="_word" placeholder="Word or transcription" onkeyup="if(a_c===false && this.value.length>2 && event.key!='ArrowRight' && event.key!='ArrowLeft'){autoCompleter(this.value);ssp(this.value);}" onblur="if(a_c===false && this.value.length>2){autoCompleter(this.value);ssp(this.value);}" onfocus="ctl=this;"/><datalist id="_word"></datalist><button onclick="findWords();" id="search" title="Search"><i class='material-icons notranslate'>manage_search</i></button><button onclick="splitWord();" id="split" title="Split"><i class='material-icons notranslate'>south_west</i><i class='material-icons notranslate'>south_east</i></button></div>
+    <div class="l"><input type="text" id="vowels" list="vowels_" placeholder="Vowels" onkeyup="if(a_c===false && this.value.length>1 && event.key!='ArrowRight' && event.key!='ArrowLeft'){loadIndex(this.value,'A');}" onblur="if(a_c===false && this.value.length>1){loadIndex(this.value,'A');}" onfocus="ctl=this;"/><datalist id="_vowels"></datalist><datalist id="vowels_"></datalist><input type="text" id="consonants" list="consonants_" placeholder="Consonants" onkeyup="if(a_c===false && this.value.length>1 && event.key!='ArrowRight' && event.key!='ArrowLeft'){loadIndex(this.value,'B');}" onblur="if(a_c===false && this.value.length>1){loadIndex(this.value,'B');}" onfocus="ctl=this;"/><datalist id="_consonants"></datalist><datalist id="consonants_"></datalist></div>
     
     <pre oncontextmenu="return false;" id="keys_">
 <span class="notranslate"><span class="u"><a title="b">  </a><a title="p">  </a></span>  <span class="u"><a title="d">  </a><a title="t">  </a></span>   <span class="u"><a data-alt="jh" title="ʤ">  </a><a data-alt="ch" title="ʧ">  </a></span>         <span class="u"><a title="g">  </a><a title="k">  </a></span>
