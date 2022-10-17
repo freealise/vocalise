@@ -28,6 +28,7 @@ body, html {
 }
 textarea, input, datalist, button, pre {
   font-size: 16px;
+  letter-spacing:0px;
 }
 input, datalist, button {
   margin:0px;
@@ -192,10 +193,8 @@ option {
 pre {
   padding:0px;
   margin:0px;
-  letter-spacing:0px;
 }
 #highlight {
-  width:50%;
   overflow-y:scroll;
   overflow-x:hidden;
   position:absolute;
@@ -205,7 +204,6 @@ pre {
   padding:0px;
   min-height:128px;
   font-size:16px;
-  letter-spacing: 0px;
   line-height:1em;
 }
 #hl {
@@ -215,9 +213,10 @@ pre {
   color:transparent;
 }
 #hl i {
+  font-style:normal;
+  font-weight:bold;
   position:relative;
-  top:-8px;
-  margin-bottom:-4px;
+  top:-2px;
 }
 #hl sup {
   color:darkgray;
@@ -232,7 +231,6 @@ pre {
   margin:-1px;
   padding:0px;
   border:1px solid lightgray;
-  letter-spacing: 0px;
   background:transparent;
   min-height:128px;
   z-index:0;
@@ -244,6 +242,7 @@ pre {
   text-align:left;
   display:block;
   white-space: pre;
+  letter-spacing:0px;
 }
 #dict {
   width:288px;
