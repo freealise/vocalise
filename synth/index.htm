@@ -259,7 +259,7 @@ audio {
 <body oncontextmenu="return false;" onload="phonemes();">
 <span id="cursor">⯈</span>
 <pre id="pitch" onmousedown="m=true;" onmouseup="m=false;" onmouseleave="m=false;" onmousemove="if(m && m===true){draw(event.target, parseInt(event.pageX/s*pr), 0, null);}" ontouchstart="m=true;" ontouchend="m=false;" ontouchcancel="m=false;" ontouchmove="if(m && m===true){draw(event.target, parseInt(event.changedTouches[0].pageX/s*pr), event.changedTouches[0].radiusY, parseInt((event.changedTouches[0].pageY-16)/s));}" onkeydown="if(event.key=='ArrowUp'){t--;point();}else if(event.key=='ArrowDown'){t++;point();}else{draw(p[l_old+t+1], kbrd.indexOf(event.key), 0, null);t++;point();}" tabindex="1"></pre>
-<pre id="pre" onmousedown="m=true;" onmouseup="m=false;" onmouseleave="m=false;" onmousemove="if(m && m===true){draw(event.target, parseInt((event.pageX-64+this.scrollLeft)/s*r), 0, null);}" ontouchstart="m=true;" ontouchend="m=false;"  ontouchcancel="m=false;" ontouchmove="if(m && m===true){draw(event.target, parseInt((event.changedTouches[0].pageX-64+this.scrollLeft)/s*r), event.changedTouches[0].radiusY, parseInt((event.changedTouches[0].pageY-16)/s));}" onkeydown="if(event.key=='ArrowUp'){t--;point();}else if(event.key=='ArrowDown'){t++;point();}else{draw(span[l_old+t+1], kbrd.indexOf(event.key)+parseInt(this.scrollLeft/s*r), 0, null);t++;point();}" tabindex="0"></pre>
+<pre id="pre" onmousedown="m=true;" onmouseup="m=false;" onmouseleave="m=false;" onmousemove="if(m && m===true){draw(event.target, parseInt((event.pageX-64+this.scrollLeft)/s*r), 0, null);}" ontouchstart="m=true;" ontouchend="m=false;" ontouchcancel="m=false;" ontouchmove="if(m && m===true){draw(event.target, parseInt((event.changedTouches[0].pageX-64+this.scrollLeft)/s*r), event.changedTouches[0].radiusY, parseInt((event.changedTouches[0].pageY-16)/s));}" onkeydown="if(event.key=='ArrowUp'){t--;point();}else if(event.key=='ArrowDown'){t++;point();}else{draw(span[l_old+t+1], kbrd.indexOf(event.key)+parseInt(this.scrollLeft/s*r), 0, null);t++;point();}" onwheel="setVolume(event);" tabindex="0"></pre>
 <div id="hscroll" onscroll="pre.scrollLeft=this.scrollLeft;"></div>
 <textarea id="scroll" onscroll="show(parseInt(this.scrollTop/s))"></textarea>
 <div id="panel">
@@ -396,6 +396,7 @@ var t = 0;
 var m = false;
 var txt = "";
 var l_old = 0;
+var scale = 1;
 
 var base = voice;
 
@@ -628,7 +629,7 @@ function draw(c, x, v, y) {
           for (var i=0; i<brush.value.length; i++) {
             v += br.indexOf(brush.value.charAt(i));
           }
-          v /= (brush.value.length * 256);
+          v = v / (brush.value.length * 255) * scale;
         } else {
           v /= 16;
         }
@@ -640,13 +641,11 @@ function draw(c, x, v, y) {
         ln[n] = brush.value.replace(/./g, "⠀");
       } else {
         if (!v || v == 0) {
-          ln[n] = brush.value;
+          v = scale;
         } else {
-          ln[n] = "";
-          for (var j=-1; j<=1; j++) {
-            ln[n] += br[Math.round((-Math.abs(j)+2)*8*v)];
-          }
+          v /= 16;
         }
+        ln[n] = brush.value.replace(/./g, function(x){ return br[Math.round(br.indexOf(x)*v)]; });
       }
       if (y) { c = span[y]; }
       console.log(v + " " + ln[n]);
@@ -701,6 +700,14 @@ function set(x) {
   var b = brush.selectionStart;
   var d = brush.selectionEnd;
   brush.value = brush.value.substr(0, b) + color.innerText.charAt(parseInt(x)) + brush.value.substr(d);
+}
+
+function setVolume(event) {
+  event.preventDefault();
+  scale += event.deltaY * -0.001;
+  // Restrict scale
+  scale = Math.min(Math.max(0.0039, scale), 1);
+  console.log("volume: " + scale);
 }
 
 function point() {
