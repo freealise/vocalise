@@ -176,6 +176,7 @@ label {
   top:16px;
   max-width:63px;
   overflow:hidden;
+  filter:blur(3px);
   touch-action: none;
 }
 #cursor {
@@ -229,7 +230,7 @@ audio {
 .scale {
   position:relative;
   top:0.25em;
-  letter-spacing:0;
+  letter-spacing:0.1em;
 }
 #hz {
   position:absolute;
@@ -258,7 +259,7 @@ audio {
 </head>
 <body oncontextmenu="return false;" onload="phonemes();">
 <span id="cursor">⯈</span>
-<pre id="pitch" onmousedown="m=true;" onmouseup="m=false;" onmouseleave="m=false;" onmousemove="if(m && m===true){draw(event.target, parseInt(event.pageX/s*pr), 0, null);}" ontouchstart="m=true;" ontouchend="m=false;" ontouchcancel="m=false;" ontouchmove="if(m && m===true){draw(event.target, parseInt(event.changedTouches[0].pageX/s*pr), event.changedTouches[0].radiusY, parseInt((event.changedTouches[0].pageY-16)/s));}" onkeydown="if(event.key=='ArrowUp'){t--;point();}else if(event.key=='ArrowDown'){t++;point();}else{draw(p[l_old+t+1], kbrd.indexOf(event.key), 0, null);t++;point();}" tabindex="1"></pre>
+<pre id="pitch" onmousedown="m=true;" onmouseup="m=false;" onmouseleave="m=false;" onmousemove="if(m && m===true){draw(event.target, parseInt(event.pageX/s*pr), 0, null);}" ontouchstart="m=true;" ontouchend="m=false;" ontouchcancel="m=false;" ontouchmove="if(m && m===true){draw(event.target, parseInt(event.changedTouches[0].pageX/s*pr), event.changedTouches[0].radiusY, parseInt((event.changedTouches[0].pageY-16)/s));}" onkeydown="if(event.key=='ArrowUp'){t--;point();}else if(event.key=='ArrowDown'){t++;point();}else{draw(p[l_old+t+1], kbrd.indexOf(event.key), 0, null);t++;point();}" onwheel="setVolume(event);" tabindex="1"></pre>
 <pre id="pre" onmousedown="m=true;" onmouseup="m=false;" onmouseleave="m=false;" onmousemove="if(m && m===true){draw(event.target, parseInt((event.pageX-64+this.scrollLeft)/s*r), 0, null);}" ontouchstart="m=true;" ontouchend="m=false;" ontouchcancel="m=false;" ontouchmove="if(m && m===true){draw(event.target, parseInt((event.changedTouches[0].pageX-64+this.scrollLeft)/s*r), event.changedTouches[0].radiusY, parseInt((event.changedTouches[0].pageY-16)/s));}" onkeydown="if(event.key=='ArrowUp'){t--;point();}else if(event.key=='ArrowDown'){t++;point();}else{draw(span[l_old+t+1], kbrd.indexOf(event.key)+parseInt(this.scrollLeft/s*r), 0, null);t++;point();}" onwheel="setVolume(event);" tabindex="0"></pre>
 <div id="hscroll" onscroll="pre.scrollLeft=this.scrollLeft;"></div>
 <textarea id="scroll" onscroll="show(parseInt(this.scrollTop/s))"></textarea>
@@ -403,7 +404,7 @@ var base = voice;
 var l = new Array(2048);
 var k = new Array(24);
 l.fill("⠀");          //dots space
-k.fill(" ");          //regular space
+k.fill("⠀");          //dots space
 var l = l.join("");
 var k = k.join("");
 var ln = [];
@@ -463,6 +464,7 @@ function init() {
   
   source = ac.createMediaElementSource(document.querySelector("audio"));
   spectrogram.acceptConnection(source);
+  source.connect(ac.destination);
   
   for (var i=0; i<2; i++) {
     gain[i] = ac.createGain();
@@ -486,21 +488,23 @@ function init() {
 }
 
 function play() {
-  if (!mediaRecorder || masterGain.gain.value == 0) {
+  if (!mediaRecorder || mediaRecorder.state == 'inactive') {
     initRec();
     masterGain.connect(dest);
     mediaRecorder.start();
   } else {
     mediaRecorder.resume();
   }
-  masterGain.gain.linearRampToValueAtTime(1.0, ac.currentTime + 0.001);
   
   var binary = [];
   binary[0] = pre.innerText.split("\n");
   binary[1] = pitch.innerText.split("\n");
   for (var i=0; i<binary.length; i++) {
     for (var j=0; j<binary[i].length; j++) {
-      binary[i][j] = binary[i][j].replace(/[\|\d\w]/g, "⠀").split("");
+      binary[i][j] = binary[i][j].replace(/[\|\d\w]/g, "⠀");
+      if (i == 0) {
+        binary[i][j] = binary[i][j].split("");
+      }
     }
   }
   t = 0;
@@ -527,8 +531,8 @@ function play() {
       // /\/\/\/\/
       // _/\/\/\/\
       var j = 1;
-      var f = binary[1][t].indexOf("█");
-      while (binary[1][t+j] && binary[1][t+j].indexOf("█") == f) {
+      var f = binary[1][t].search(/[^⠀]/);
+      while (binary[1][t+j] && binary[1][t+j].search(/[^⠀]/) == f) {
         j++;
       }
       if (f > -1) {
@@ -536,10 +540,12 @@ function play() {
         for (var i=0; i<15; i++) {
           delays[i].delayTime.exponentialRampToValueAtTime((i+1)/base, ac.currentTime + 0.032*j);
         }
+        masterGain.gain.linearRampToValueAtTime(br.indexOf(binary[1][t].charAt(f))/255, ac.currentTime + 0.032*j);
       } else {
         for (var i=0; i<15; i++) {
           delays[i].delayTime.exponentialRampToValueAtTime((i+1)/base*(1-Math.random()), ac.currentTime + 0.032*j);
         }
+        masterGain.gain.linearRampToValueAtTime(1.0, ac.currentTime + 0.032*j);
       }
       //console.log(t);
       t++;
@@ -552,7 +558,6 @@ function play() {
 }
 
 function stop() {
-  masterGain.gain.linearRampToValueAtTime(0.0, ac.currentTime + 0.001);
   if (mediaRecorder.state != 'inactive') {
     mediaRecorder.requestData();
     mediaRecorder.stop();
@@ -653,13 +658,16 @@ function draw(c, x, v, y) {
     } else {
       var n = 1;
       if (eraser.checked === true) {
-        ln[n] = " ";
+        ln[n] = "⠀";
       } else {
-        ln[n] = "█";
+        if (!v || v == 0) {
+          v = scale * 255;
+        } else {
+          v *= 16;
+        }
+        ln[n] = br[Math.round(v)];
       }
-      if (v && v > 0) {
-        c = p[y];
-      }
+      if (y) { c = p[y]; }
       txt = k;
     }
     txt = txt.substr(0, x) + ln[n] + txt.substr(x+ln[n].length);
