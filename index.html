@@ -27,14 +27,12 @@
   </div>
 
   <div id="resources">
-    <p><a id="grammar_ref" href="https://www.bbc.co.uk/learningenglish/english/basic-grammar-guide" title="Grammar" target="_blank"><b><img src="icons/BBC.svg" height="11" alt="British Broadcasting Corporation"/> Learning English</b></a> is a department of the BBC World Service devoted to English language teaching. It has won numerous awards, including two Eltons from the British Council and an English Speaking Union award for innovation in English language teaching. There were a number of series for teaching language comprehension with the help of song lyrics, such as Pop Words. It was usual for the major broadcasters in the 1950s to have a programme teaching the language of the country the broadcaster served.
-    </p>
-    <p><a id="vocabulary_ref" href="https://learningenglish.voanews.com/" title="Vocabulary" target="_blank"><b><img src="icons/VOA.svg" height="11" alt="Voice of America"/> Learning English</b></a><br/>
-      is a controlled version of the English language first used on 19 October 1959, and still presented daily by the United States broadcasting service Voice of America. World news and other programs are read one-third slower than regular VOA English. Reporters avoid idioms and use a core vocabulary of about 1500 words, plus any terms needed to explain a story. The intended audience is intermediate to advanced learners of English. In 1962 the VOA published the first edition of the <a href='http://docs.voanews.eu/en-US-LEARN/2014/02/15/7f8de955-596b-437c-ba40-a68ed754c348.pdf' target='_blank'><u>Word Book</u></a>.
-    </p>
-    <p><a id="grammar_bil" href="https://www.dict.com/" target="_blank"><b>dict.com</b></a> Grammar and vocabulary in your language. Pronunciation, phrase books and grammar overviews for major European languages, comprehensive morphology tables (including all word forms), current example sentences and usage.
-    </p>
-    <p><a id="grammarly" href="https://www.grammarly.com/" target="_blank"><b>Grammarly</b></a> Compose bold, clear, mistake-free writing with Grammarly’s AI-powered writing assistant.
+    <div><a id="grammar_ref" href="https://www.bbc.co.uk/learningenglish/" target="_blank"><b><img src="icons/BBC.svg" height="11" alt="BBC"/> Learning English</b> Grammar</a><br/>
+      <a href="https://www.bbc.co.uk/learningenglish/english/basic-grammar-guide" target="ltwf" onclick="basic_words.style.visibility='visible';"><i>Easy</i></a> | <a href="http://www.bbc.co.uk/learningenglish/intermediate-grammar-guide" target="ltwf" onclick="basic_words.style.visibility='visible';"><i>Medium</i></a> | <a href="http://www.bbc.co.uk/learningenglish/upper-intermediate-grammar-guide" target="ltwf" onclick="basic_words.style.visibility='visible';"><i>Medium 2</i></a> | <a href="http://www.bbc.co.uk/learningenglish/advanced-grammar-guide" target="ltwf" onclick="basic_words.style.visibility='visible';"><i>Hard</i></a></li>
+    </div><br/>
+    <div><a id="vocabulary_ref" href="https://learnthesewordsfirst.com/about/what-can-you-read.html" title="Vocabulary" target="ltwf" onclick="basic_words.style.visibility='visible';"><b>What you can read 🢒</b></a>
+    </div>
+    <p><a id="oxford" href="https://elt.oup.com/learning_resources/subjects/grammar/" target="_blank"><b>Oxford University Press</b></a> grammar and vocabulary practice exercises.
     </p>
     <p><a id="languagetool" href="https://languagetool.org/" target="_blank"><b>LanguageTool</b></a>’s multilingual grammar, style, and spell checker is used by millions of people around the world.
     </p>
@@ -42,12 +40,11 @@
     </p>
     <p><a id="ms_audio" href="https://speech.microsoft.com/audiocontentcreation" target="_blank"><b>Microsoft Audio content creation</b></a> enables you to <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/speech-synthesis-markup" target="_blank">visually control</a> speech attributes in real-time – such as voice style, rate, pitch, volume, pronunciation and breaks. It allows you to quickly create more accurate, expressive and customized audio.
     </p>
-    <p><a id="longman" href="https://www.ldoceonline.com/" target="_blank"><b>Longman Dictionary of Contemporary English</b></a> Learn English online for free with hundreds of interactive English exercises on this site. Practise grammar, prepare for exams, learn English words and do listening practice.
-    </p>
-    <p><a id="oxford" href="https://elt.oup.com/learning_resources/subjects/grammar/" target="_blank"><b>Oxford University Press</b></a> Learn, practice, and improve your English! Do it all with the Learning English with Oxford community.
-    </p>
-    <!-- https://dictionary.cambridge.org/grammar/british-grammar/
-         https://elsaspeak.com/en/ -->
+    <!-- https://elsaspeak.com/en/ -->
+  </div>
+  
+  <div id="basic_words">
+    <iframe id="ltwf" name="ltwf" src="https://learnthesewordsfirst.com/LearnTheseWordsFirst.html" width="310" height="235"></iframe>
   </div>
   
   <div id="mobile">On mobile, switch the system keyboard to floating mode.</div>
@@ -65,7 +62,7 @@
   <div id="dict">
     <div id="area" class="notranslate">
       <div id="highlight"><pre id="hl"></pre></div>
-      <textarea placeholder="Lyrics" id="res" onclick="keepSymbols(null);" onkeyup="keepSymbols(event.key);if(event.key=='Enter'){highlightText();}else if(event.key=='.' || event.key=='?' || event.key=='!'){getSentence();}else if(event.key==' ' || event.key=='Backspace' || event.key=='Delete' || event.ctrlKey || event.metaKey){colorPhonemes();}" onkeydown="if(event.key.length==1 && kbrd[event.key] && event.getModifierState('CapsLock') && !event.ctrlKey && !event.metaKey){addPhoneme(kbrd[event.key], 0);}" onmouseup="" ontouchup="" onfocus="ctl=this;" onscroll="highlight.scrollTop = this.scrollTop;highlight.scrollLeft = this.scrollLeft;"></textarea>
+      <textarea placeholder="Verse" id="res" onclick="keepSymbols(null);" onkeyup="keepSymbols(event.key);if(event.key=='Enter'){highlightText();}else if(event.key=='.' || event.key=='?' || event.key=='!'){getSentence();}else if(event.key==' ' || event.key=='Backspace' || event.key=='Delete' || event.ctrlKey || event.metaKey){colorPhonemes();}" onkeydown="if(event.key.length==1 && kbrd[event.key] && event.getModifierState('CapsLock') && !event.ctrlKey && !event.metaKey){addPhoneme(kbrd[event.key], 0);}" onmouseup="" ontouchup="" onfocus="ctl=this;" onscroll="highlight.scrollTop = this.scrollTop;highlight.scrollLeft = this.scrollLeft;"></textarea>
     </div>
     <div class="l"><input type="text" name="phrase" id="phrase" placeholder="Phrase" onfocus="ctl=this;"/></div>
     <div class="l"><input type="text" id="word" list="_word" placeholder="Word or transcription" onkeyup="if(a_c===false && this.value.length>2 && event.key!='ArrowRight' && event.key!='ArrowLeft'){autoCompleter(this.value);ssp(this.value);}" onblur="if(a_c===false && this.value.length>2){autoCompleter(this.value);ssp(this.value);}" onfocus="ctl=this;"/><datalist id="_word"></datalist><button onclick="findWords();" id="search" title="Search"><i class='material-icons notranslate'>manage_search</i></button><button onclick="splitWord();" id="split" title="Split"><i class='material-icons notranslate'>south_west</i><i class='material-icons notranslate'>south_east</i></button></div>
@@ -81,17 +78,27 @@
   <div title="Pitch symbols for word and syllable stress, span octave (12 semitones)" onmousedown="mobile.innerText=this.title;"><div id="tone" class="notranslate"></div></div>
   </div>
   
+<div id="nsm">≡ ⋯♡⎋⚟⍝⊙⋖
+⎃⎁⊨ ⎆◇⎌ ✓⍻
+⍩⍨@⎉⛶‡ ❦⛼
+∅¿≍∵⌥∴&|
+⊹⯐∸⨪⟷↭ŀ⍽
+⧖⋈⊰⊱⇼⇹↔⥈
+12%∀* ☟=⎇
+¤ ⊂⋲~ ⍜⍛ !></div>
+  
   <div id="links">
     <a href="javascript:showPanel();" title="Synthesizer"><i class='material-icons notranslate'>piano</i> Synthesizer</a><br/>
     <a href="javascript:showPhonemes();" title="Keyboard"><i class='material-icons notranslate'>keyboard_hide</i> Keyboard</a><br/>
     <a href="javascript:showTooltips();" title="Tooltips"><i class='material-icons notranslate'>wysiwyg</i> Tooltips</a><br/>
-    <a href="javascript:showLibrary();" title="Musixmatch"><i class='material-icons notranslate'>lyrics</i> Library</a><br/>
-    <a href="javascript:showTrends();" title="Google Trends"><i class='material-icons notranslate'>auto_graph</i> Popularity</a><br/>
+    <a href="javascript:showTrends();" title="Google Trends"><i class='material-icons notranslate'>auto_graph</i> Trends</a><br/>
+    <a href="javascript:showLibrary();" title="Musixmatch"><i class='material-icons notranslate'>lyrics</i> Lyrics</a><br/>
     <a href="javascript:showWiki();" title="Wikipedia"><i class='material-icons notranslate'>extension</i> Wiki</a><br/>
+    <a href="javascript:showBasicWords();" title="Learn These Words First"><i class='material-icons notranslate'>local_library</i> Vocabulary</a><br/>
     <a href="javascript:window.open('https://translate.google.com/?sl=en&tl='+sl+'&text='+selectText()+'&op=translate', '_blank', 'width=320,height=480,status=no,menubar=no');" title='Google Translate'><i class='material-icons notranslate'>translate</i> Dictionary</a><b>🢒</b><br/>
     <a href="javascript:window.open('https://books.google.com/ngrams/graph?content='+selectText()+'&year_start=1800&year_end=2019&corpus=en-2019&smoothing=50', '_blank', 'width=320,height=480,status=no,menubar=no');" title='Google Books Ngrams'><i class='material-icons notranslate'>query_stats</i> Phrases</a><b>🢒</b><br/>
     <a href="javascript:" target="_blank" onfocus="orig_check();" title="Google Search"><i class='material-icons notranslate'>content_paste_search</i> Originality</a><b>🢒</b><br/>
-    <a href="javascript:showResources();" title="Resources"><i class='material-icons notranslate'>link</i> Resources</a><br/>
+    <a href="javascript:showResources();" title="Grammar"><i class='material-icons notranslate'>link</i> Grammar</a><br/>
     <a href="javascript:showCredits();" title="Credits"><i class='material-icons notranslate'>copyright</i> Credits</a><br/>
     <a href="javascript:showLinks();" title="Share"><i class='material-icons notranslate'>share</i> Share</a> <a onfocus="this.href='https://www.facebook.com/sharer/sharer.php?u=https://freealise.com&hashtag=%23freealise&quote='+res.value.split('\n').join(' / ');" href="javascript:" target="_blank" title="Facebook"><i class='material-icons notranslate'>facebook</i></a>
     <a onfocus="this.href='https://twitter.com/intent/tweet/?url=https://freealise.com&hashtags=freealise&text='+res.value.split('\n').join(' / ');" href="javascript:" target="_blank" title="Twitter"><svg width="20" height="20" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path fill="black" d="M1684 408q-67 98-162 167 1 14 1 42 0 130-38 259.5t-115.5 248.5-184.5 210.5-258 146-323 54.5q-271 0-496-145 35 4 78 4 225 0 401-138-105-2-188-64.5t-114-159.5q33 5 61 5 43 0 85-11-112-23-185.5-111.5t-73.5-205.5v-4q68 38 146 41-66-44-105-115t-39-154q0-88 44-163 121 149 294.5 238.5t371.5 99.5q-8-38-8-74 0-134 94.5-228.5t228.5-94.5q140 0 236 102 109-21 205-78-37 115-142 178 93-10 186-50z"></path></svg></a>
