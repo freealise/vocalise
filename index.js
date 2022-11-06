@@ -224,6 +224,76 @@ determiner, preposition, conjunction, interjection
 
 */
 
+//https://intranet.secure.griffith.edu.au/schools-departments/natural-semantic-metalanguage
+var primes = {
+  "⍩": ["I", "F 2-19"],
+  "⍨": ["you", "F 2-20"],
+  "@": ["someone / who", "G 2-23"],
+  "⎉": ["person", "B 1-08"],
+  "⛶": ["something / thing / what", "A 1-02"],
+  "‡": ["body", "H 2-27"],
+  "⊂": ["kind", "F 1-20"],
+  "⋲": ["part", "A 2-03"],
+  "~": ["like / as / way", "A 2-01"],
+  "☟": ["this", "A 1-03"],
+  "=": ["same", "B 1-05"],
+  "⎇": ["other / else", "A 1-04"],
+  "1": ["1", "B 1-06"],
+  "2": ["2", "B 1-07"],
+  "%": ["some", "D 1-12"],
+  "∀": ["all", "D 1-13"],
+  "*": ["much / many", "C 1-09"],
+  "✓": ["good / well", "D 2-12"],
+  "⍻": ["bad", "D 2-11"],
+  "⍜": ["big", "E 1-17"],
+  "⍛": ["small", "E 1-18"],
+  "⋯": ["think", "C 2-07"],
+  "♡": ["feel", "D 2-13"],
+  "⎋": ["want", "C 2-09"],
+  "⚟": ["hear", "H 1-28"], //⚞
+  "⍝": ["touch", "F 1-22"],
+  "⊙": ["know", "C 2-08"],
+  "⋖": ["see", "A 1-01"], //⋗⩹⩺
+  "⎃": ["say", "H 1-29"],
+  "⎁": ["word", "H 1-30"],
+  "⊨": ["true", "H 1-31"],
+  "⎆": ["do", "B 2-04"], //⌤
+  "◇": ["happen", "B 2-05"], //╌
+  "⎌": ["move", "E 2-18"],
+  "∃": ["be", " -"],
+  "≡": ["is", "D 1-14"],
+  "¤": ["have", "A 2-02"],
+  "❦": ["live", "E 1-16"],
+  "⛼": ["die", "H 2-28"],
+  "⧖": ["time / when", "E 2-14"],
+  "⋈": ["now", "F 2-22"],
+  "⊰": ["before", "E 2-15"],
+  "⊱": ["after", "G 2-24"],
+  "⇼": ["long time", "E 2-16"],
+  "⇹": ["short time", "E 2-17"],
+  "↔": ["some time", "G 2-25"],
+  "⥈": ["moment", "G 2-26"],
+  "⊹": ["somewhere / place / where", "G 1-25"],
+  "⯐": ["here", "F 2-21"], //⟟
+  "∸": ["above", "G 1-26"],
+  "⨪": ["below", "H 2-30"],
+  "⟷": ["far", "F 1-23"],
+  "↭": ["near", "F 1-24"],
+  "ŀ": ["side", "G 1-27"],
+  "⍽": ["in", "C 1-10"],
+  "∅": ["not", "C 1-11"],
+  "¿": ["maybe", "H 2-29"], //⸮
+  "≍": ["can", "C 2-10"],
+  "∵": ["because", "B 2-06"],
+  "⌥": ["if", "F 1-21"],
+  "∴": ["then", "F 1-21"],
+  "&": ["and", "A 3-02"],
+  "|": ["or", "A 3-03"],
+  "!": ["very", "E 1-19"],
+  ">": ["more / anymore", "D 1-15"],
+};
+
+
 var url = "https://script.google.com/macros/s/AKfycbz5br4wnfSGtucWKwGQq1Tb07eshJez6uVaFatn4xJAc_rcrcA/exec"; //"http://192.168.0.61:8080/";
 var fbase = "https://freealise-181308.firebaseio.com/cmudict/";
 var base = "https://docs.google.com/spreadsheets/d/1lx3voPc-GWdzkhiCetUh0UGtU5FzdnAVMH6YZ4qBQrQ/gviz/tq?tqx=out:csv&gid=";
@@ -263,6 +333,9 @@ var song = document.getElementById("song");
 var resources = document.getElementById("resources");
 var credits = document.getElementById("credits");
 var orig_link = document.getElementById("orig_link");
+var nsm = document.getElementById("nsm");
+var ltwf = document.getElementById('ltwf');
+ltwf_ = ltwf.contentWindow || ( ltwf.contentDocument.document || ltwf.contentDocument);
 var res_old = "";
 var regexp = [];
 var regexp_ = [];
@@ -333,6 +406,10 @@ for (var i=1; i<stress.length; i++) {
   tone_.innerHTML += "<a title='"+ks+"' href='javascript:' onclick='addPhoneme(this.title);'>"+ks+"</a> ";
 }
 
+nsm.innerHTML = nsm.innerText.replace(/\S/g, function(x){ return "<div><a href='about:blank' target='ltwf' onclick='loadBasicWords(&apos;"+primes[x][1]+"&apos;);' title='"+primes[x][0]+"'>"+x+"</a></div>"; }).replace(/(> <)/g, "><span></span><") + " <div id='nsm_lookup'><a href='https://learnthesewordsfirst.com/WordFindingTool.html#Input' target='ltwf'>⚲</a></div>";
+nsm.style.visibility = "hidden";
+
+
 function findCursor(v) {
     var startPos = v.selectionStart;
     var endPos = v.selectionEnd;
@@ -383,12 +460,12 @@ function addPhoneme(p, clr) {
 function findWords() {
   //https://developers.google.com/chart/interactive/docs/querylanguage#where
   var query = null;
-  if (word.value != "" && word.value.trim().search(/[_·ˈˌ ]/) != -1) {
+  if (word.value != "" && word.value.trim().search(/[*_·ˈˌ ]/) != -1) {
     var w_ = word.value.replace(/\s+/g, " ").replace(/_/g, "[^ ]+").replace(/\*/g, ".*").trim();
     query = "select A, D where A matches '" + w_ + "'";
   } else if (vowels.value != "" || consonants.value != "") {
     if (vowels.value != "") {
-      var q = vowels.value.replace(/[_·ˈˌ]/g, function(x){return x+" ";}).replace(/\s+/g, " ").replace(/_/g, "[^ ]+").replace(/\*/g, ".*").trim();
+      var q = vowels.value.replace(/[*_·ˈˌ]/g, function(x){return x+" ";}).replace(/\s+/g, " ").replace(/_/g, "[^ ]+").replace(/\*/g, ".*").trim();
     } else {
       var q = ".*";
     }
@@ -398,6 +475,9 @@ function findWords() {
       var q_ = ".*";
     }
     query = "select A, D where B matches '" + q + "' and C matches '" + q_ + "'";
+  } else if (word.value != "") {
+    autoCompleter(word.value);
+    ssp(word.value);
   }
   if (query != null) {
     word.value = "";
@@ -718,7 +798,7 @@ function loadLibrary(artist, song) {
 function loadWiki() {
   var q = "" + selectText();
   q = q.replace(/ /g, '_').toLowerCase();
-  wiki_.innerHTML = "<iframe id='wiki' src='https://en.m.wikipedia.org/wiki/"+q+"' width='100%' height='256' border='0'/>";
+  wiki_.innerHTML = "<iframe id='wiki' src='https://en.m.wikipedia.org/wiki/"+q+"' width='310' height='235' border='0'/>";
 }
 
 
@@ -789,6 +869,20 @@ function kb_symbols() {
   }
 }
 
+function loadBasicWords(q) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      ltwf_.document.open();
+      ltwf_.document.write(this.responseText.replace("<head>", "<head><base href='https://learnthesewordsfirst.com/'/>"));
+      ltwf_.document.close();
+      ltwf.src = "#" + q.split(" ")[1];
+    }
+  };
+  xhttp.open("GET", url + "?a=nsm&q=" + q.replace(" ", "_"), true);
+  xhttp.send();
+}
+
 
 function showLibrary() {
   if (library.style.visibility!='visible') {
@@ -803,6 +897,7 @@ function showResources() {
     resources.style.visibility='visible';
   } else {
     resources.style.visibility='hidden';
+    basic_words.style.visibility='hidden';
   }
 }
 
@@ -853,6 +948,16 @@ function showPhonemes() {
     dict.style.visibility='hidden';
   } else {
     dict.style.visibility='visible';
+  }
+}
+
+function showBasicWords() {
+  if (nsm.style.visibility!='visible') {
+    nsm.style.visibility='visible';
+    basic_words.style.visibility='visible';
+  } else {
+    nsm.style.visibility='hidden';
+    basic_words.style.visibility='hidden';
   }
 }
 
