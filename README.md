@@ -19,7 +19,7 @@ Dictionary by <a href="http://www.speech.cs.cmu.edu/cgi-bin/cmudict" title="Carn
 - underline only pronounced vowels<br/>
 - calligraphy (touch sensitivity)<br/>
 - app for android (also with ordinary keyboard sorted by sound)<br/>
-- general outline of structure (json), sentiment analysis for value shift; credit and notify (savethecat.com, mckeestory.com)<br/>
+- general outline of structure (json), sentiment analysis for value shift; credit and post on forum (savethecat.com, mckeestory.com et al.)<br/>
 - algorithmic filter for explicit / overused / repetitive words and synonyms suggestion<br/>
 - more languages (Hebrew, _)
 </p>
