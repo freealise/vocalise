@@ -310,8 +310,10 @@ pre {
 }
 #nsm #nsm_lookup i {
   position: relative;
-  top: 8px;
-  left: 2px;
+  top: 5px;
+  left: 0;
+  font-size: 18px;
+  font-weight: bold;
 }
 #links {
   border:1px solid lightgray;
