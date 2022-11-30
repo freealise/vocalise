@@ -444,7 +444,7 @@ for (var i=0; i<stress.length; i++) {
   tone_.innerHTML += "<a title='"+ks+"' href='javascript:' onclick='addPhoneme(this.title);copySymbols();'>"+ks+"</a> ";
 }
 
-nsm.innerHTML = nsm.innerText.replace(/\S/g, function(x){ return "<div><a href='about:blank' target='ltwf' onclick='loadBasicWords(&apos;"+primes[x][1]+"&apos;);' title='"+primes[x][0]+"'>"+x+"</a></div>"; }).replace(/(> <)/g, "><span></span><") + " <div id='nsm_lookup'><a href='https://learnthesewordsfirst.com/WordFindingTool.html#Input' target='ltwf'>⌕</a></div>";
+nsm.innerHTML = nsm.innerText.replace(/\S/g, function(x){ return "<div><a href='about:blank' target='ltwf' onclick='loadBasicWords(&apos;"+primes[x][1]+"&apos;);' title='"+primes[x][0]+"'>"+x+"</a></div>"; }).replace(/(> <)/g, "><span></span><") + " <div id='nsm_lookup'><a href='https://learnthesewordsfirst.com/WordFindingTool.html#Input' target='ltwf'><i class='material-icons notranslate'>search</i></a></div>";
 nsm.style.visibility = "hidden";
 
 
