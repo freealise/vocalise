@@ -47,13 +47,17 @@
     <iframe id="ltwf" name="ltwf" src="https://learnthesewordsfirst.com/LearnTheseWordsFirst.html" width="310" height="235"></iframe>
   </div>
   
+  <div id="metadata">
+    <iframe name="genre" id="genre" src="genre.htm" onload="gform=this.contentWindow.location.search.slice(1).split('&');setCookies(true);getCookie();"></iframe>
+  </div>
+  
   <div id="mobile">On mobile, switch the system keyboard to floating mode.</div>
   
   <div id="credits">
     <p>Reverse phonetic dictionary, includes a lyrics editor and vowel sound synthesizer. Licensed under the GNU GPL-3.0, hosted on <a href="https://github.com/freealise/phonetic" title="Github" target="_blank"><u>GitHub</u></a> and <a href="https://script.google.com" title="Google Script" target="_blank"><u>Google Script</u></a>.</p>
     <p>Dictionary by <a href="http://www.speech.cs.cmu.edu/cgi-bin/cmudict" title="Carnegie Mellon University" target="_blank"><u>CMU</u></a>, sorted by frequency based on <a href="https://books.google.com/ngrams" title="Google Books Ngrams" target="_blank"><u>Google Books Ngrams</u></a> with <a href="https://phrasefinder.io/" title="PhraseFinder" target="_blank"><u>PhraseFinder</u></a> API, definitions by <a href="https://www.lexico.com/" title="Oxford Dictionary" target="_blank"><u>Oxford</u></a>.</p>
     <p>Thanks to <a href="https://www.gearspace.com/board/showpost.php?p=11559456&amp;postcount=10" title="jerry123 from GearSpace" target="_blank"><u>jerry123 from GearSpace</u></a> for the idea of phonetic songwriting, <a href="https://englishwithkim.com/" title="English with Kim" target="_blank"><u>English with Kim</u></a> for clarifying that words and syllables are stressed with not only volume but also pitch variation.</p>
-    <p>Separating vowels and consonants for slant rhyme and alliteration within a line has been inspired by rap and Hebrew language, vocal synthesis by the <a href="https://www.g200kg.com/renoid/" target="_blank">Vocaloid</a> and <a href="http://arss.sourceforge.net/" target="_blank">ARSS</a>.</p>
+    <p>Separating vowels and consonants for slant rhyme and alliteration within a line has been inspired by rap and Hebrew language, vocal synthesis by the <a href="https://www.g200kg.com/renoid/" target="_blank"><u>Vocaloid</u></a> and <a href="http://arss.sourceforge.net/" target="_blank"><u>ARSS</u></a>.</p>
   </div>
   
   <div id="trends_chart"></div>
@@ -61,12 +65,25 @@
 
   <div id="dict">
     <div id="area" class="notranslate">
-      <div id="highlight"><pre id="hl"></pre></div>
-      <textarea placeholder="Verse" id="res" onclick="keepSymbols(null);" onkeyup="keepSymbols(event.key);if(event.key=='Enter'){highlightText();}else if(event.key=='.' || event.key=='?' || event.key=='!'){getSentence();}else if(event.key==' ' || event.key=='Backspace' || event.key=='Delete' || event.ctrlKey || event.metaKey){colorPhonemes();}" onkeydown="if(event.key.length==1 && kbrd[event.key] && event.getModifierState('CapsLock') && !event.ctrlKey && !event.metaKey){addPhoneme(kbrd[event.key], 0);}" onmouseup="" ontouchup="" onfocus="ctl=this;" onscroll="highlight.scrollTop = this.scrollTop;highlight.scrollLeft = this.scrollLeft;"></textarea>
+      <div class="l"><a id="dl" href="#"></a><button title="Download" id="download" onclick="download();"><i class='material-icons notranslate'>download</i></button><button title="Upload" id="upload" onclick="upload();"><i class='material-icons notranslate'>upload</i></button><input type="file" id="ul" onchange="upload();"/>
+      <select title="Setlist" name="toc" id="toc" onchange="res.scrollTo(0,this.value*16);"><option value="0">Setlist</option></select></div>
+      <form action="#">
+        <textarea id="vs" name="vs" title="Value shift" placeholder="꜔˧&#13;1&#13;&#13;&#13;&#13;&#13;-&#13;&#13;&#13;&#13;&#13;2&#13;&#13;&#13;&#13;&#13;3&#13;&#13;&#13;&#13;&#13;4" onscroll="outline.scrollTo(0,this.scrollTop);res.scrollTo(0,this.scrollTop);" onchange="setCookies(false);"></textarea>
+        <div id="outline"><hr/></div>
+        <div id="highlight"><pre id="hl"></pre></div>
+        <textarea title="Album" placeholder="Title&#13;Verse&#13;&#13;&#13;&#13;&#13;Chorus&#13;&#13;&#13;&#13;&#13;Verse&#13;&#13;&#13;&#13;&#13;Verse&#13;&#13;&#13;&#13;&#13;Verse" id="res" name="res" onclick="keepSymbols(null);" onkeyup="keepSymbols(event.key);if(event.key=='Enter'){highlightText();}else if(event.key=='.' || event.key=='?' || event.key=='!'){getSentence();}else if(event.key==' ' || event.key=='Backspace' || event.key=='Delete' || event.ctrlKey || event.metaKey){colorPhonemes();}" onkeydown="if(event.key.length==1 && kbrd[event.key] && event.getModifierState('CapsLock') && !event.ctrlKey && !event.metaKey){addPhoneme(kbrd[event.key], 0);}" onmouseup="" ontouchup="" onfocus="ctl=this;" onscroll="highlight.scrollTo(this.scrollLeft,this.scrollTop);outline.scrollTo(0,this.scrollTop);vs.scrollTo(0,this.scrollTop);" onchange="setCookies(false);addTitles();"></textarea>
+        <input type="submit" id="submit"/>
+      </form>
     </div>
-    <div class="l"><input type="text" name="phrase" id="phrase" placeholder="Phrase" onfocus="ctl=this;"/></div>
-    <div class="l"><input type="text" id="word" list="_word" placeholder="Word or transcription" onkeyup="if(a_c===false && this.value.length>2 && event.key!='ArrowRight' && event.key!='ArrowLeft'){autoCompleter(this.value);ssp(this.value);}" onblur="if(a_c===false && this.value.length>2){autoCompleter(this.value);ssp(this.value);}" onfocus="ctl=this;"/><datalist id="_word"></datalist><button onclick="findWords();" id="search" title="Search"><i class='material-icons notranslate'>manage_search</i></button><button onclick="splitWord();" id="split" title="Split"><i class='material-icons notranslate'>south_west</i><i class='material-icons notranslate'>south_east</i></button></div>
-    <div class="l"><input type="text" id="vowels" list="vowels_" placeholder="Vowels" onkeyup="if(a_c===false && this.value.length>1 && event.key!='ArrowRight' && event.key!='ArrowLeft'){loadIndex(this.value,'A');}" onblur="if(a_c===false && this.value.length>1){loadIndex(this.value,'A');}" onfocus="ctl=this;"/><datalist id="_vowels"></datalist><datalist id="vowels_"></datalist><input type="text" id="consonants" list="consonants_" placeholder="Consonants" onkeyup="if(a_c===false && this.value.length>1 && event.key!='ArrowRight' && event.key!='ArrowLeft'){loadIndex(this.value,'B');}" onblur="if(a_c===false && this.value.length>1){loadIndex(this.value,'B');}" onfocus="ctl=this;"/><datalist id="_consonants"></datalist><datalist id="consonants_"></datalist></div>
+    <div class="l">
+      <input type="text" name="phrase" id="phrase" title="Phrase" placeholder="Phrase" onfocus="ctl=this;" onchange="loadSyntax(this.value);"/>
+      <button onclick="if(phrase.value.length==0){phrase.value=selectText();}loadSyntax(phrase.value);" id="parse" title="Parse"><i class='material-icons notranslate'>more</i></button>
+      <select onchange="addPhoneme(this.value, 'transparent');" id="pos" title="Part of speech">
+        <option value="">🗩</option>
+      </select>
+    </div>
+    <div class="l"><input type="text" id="word" list="_word" title="Word or transcription" placeholder="Word or transcription" onkeyup="if(a_c===false && this.value.length>2 && event.key!='ArrowRight' && event.key!='ArrowLeft'){autoCompleter(this.value);ssp(this.value);}" onblur="if(a_c===false && this.value.length>2){autoCompleter(this.value);ssp(this.value);}" onfocus="ctl=this;"/><datalist id="_word"></datalist><button onclick="findWords();" id="search" title="Search"><i class='material-icons notranslate'>manage_search</i></button><button onclick="splitWord();" id="split" title="Split"><i class='material-icons notranslate'>south_west</i><i class='material-icons notranslate'>south_east</i></button></div>
+    <div class="l"><input type="text" id="vowels" list="vowels_" title="Vowels" placeholder="Vowels" onkeyup="if(a_c===false && this.value.length>1 && event.key!='ArrowRight' && event.key!='ArrowLeft'){loadIndex(this.value,'A');}" onblur="if(a_c===false && this.value.length>1){loadIndex(this.value,'A');}" onfocus="ctl=this;"/><datalist id="_vowels"></datalist><datalist id="vowels_"></datalist><input type="text" id="consonants" list="consonants_" title="Consonants" placeholder="Consonants" onkeyup="if(a_c===false && this.value.length>1 && event.key!='ArrowRight' && event.key!='ArrowLeft'){loadIndex(this.value,'B');}" onblur="if(a_c===false && this.value.length>1){loadIndex(this.value,'B');}" onfocus="ctl=this;"/><datalist id="_consonants"></datalist><datalist id="consonants_"></datalist></div>
     
     <pre oncontextmenu="return false;" id="keys_">
 <span class="notranslate"><span class="u"><a title="b">  </a><a title="p">  </a></span>  <span class="u"><a title="d">  </a><a title="t">  </a></span>   <span class="u"><a data-alt="jh" title="ʤ">  </a><a data-alt="ch" title="ʧ">  </a></span>         <span class="u"><a title="g">  </a><a title="k">  </a></span>
@@ -75,13 +92,20 @@
 <a href="javascript:undo();" title="Undo"><i class='material-icons notranslate' id='undo'>undo</i></a>        <a title="Wildcard" href="javascript:" onclick="addPhoneme('*', 'transparent');">* </a>        <a title="Space" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme(' ', 'transparent');">⎵ </a>     <a title="Symbols to use" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="kb_symbols();"><i class='material-icons notranslate' id="tgl">toggle_off</i></a></pre>
     <pre oncontextmenu="return false;" id="keys"><span class="notranslate"><select title="i"></select><select title="ɪ"></select><select title="eɪ"></select><select title="ɛ"></select><select title="æ"></select><select title="ə"></select><select title="ʌ"></select><select title="ɑ"></select><select title="ɔ"></select><select title="oʊ"></select><select title="ʊ"></select><select title="u"></select></span>
 <a title="Any stress with any vowel" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme('_', 'transparent');"><span class="notranslate">_ </span></a><a title="No stress with any vowel" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme('_·', 'transparent');"><span class="notranslate">_·</span></a><a title="Primary stress with any vowel" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme('_ˈ', 'transparent');"><span class="notranslate">_ˈ</span></a><a title="Secondary stress with any vowel" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme('_ˌ', 'transparent');"><span class="notranslate">_ˌ</span></a><span class="notranslate"><select title="aɪ"></select><select title="ɔɪ"></select><select title="aʊ"></select></span></pre>
-  <div title="Pitch symbols for word and syllable stress, span octave (12 semitones)" onmousedown="mobile.innerText=this.title;"><div id="tone" class="notranslate"></div></div>
+  <div id="rows" title="Pitch and volume for word and syllable stress, grammatic parse tree levels" onmousedown="mobile.innerText=this.title;">
+    <div id="tone" class="notranslate"></div>
+    <select onchange="tone_.scrollTo(0,24*this.options.selectedIndex);" id="row" title="Symbols selector">
+        <option selected>· note</option>
+        <option>| parse</option>
+        <option>- volume</option>
+    </select>
   </div>
+</div>
   
 <div id="nsm">≡ ⋯♡⎋⚟⍝⊙⋖
 ⎃⎁⊨ ⎆◇⎌ ✓⍻
 ⍩⍨@⎉⛶‡ ❦⛼
-∅¿≍∵⌥∴&|
+∅¿≍∵⌥∴⚭⚮
 ⊹⯐∸⨪⟷↭ŀ⍽
 ⧖⋈⊰⊱⇼⇹↔⥈
 12%∀* ☟=⎇
@@ -91,6 +115,7 @@
     <a href="javascript:showPanel();" title="Synthesizer"><i class='material-icons notranslate'>piano</i> Synthesizer</a><br/>
     <a href="javascript:showPhonemes();" title="Keyboard"><i class='material-icons notranslate'>keyboard_hide</i> Keyboard</a><br/>
     <a href="javascript:showTooltips();" title="Tooltips"><i class='material-icons notranslate'>wysiwyg</i> Tooltips</a><br/>
+    <a href="javascript:showGenre();" title="Genre"><i class='material-icons notranslate'>flaky</i> Genre</a><br/>
     <a href="javascript:showTrends();" title="Google Trends"><i class='material-icons notranslate'>auto_graph</i> Trends</a><br/>
     <a href="javascript:showLibrary();" title="Musixmatch"><i class='material-icons notranslate'>lyrics</i> Library</a><br/>
     <a href="javascript:showWiki();" title="Wikipedia"><i class='material-icons notranslate'>extension</i> Wiki</a><br/>
