@@ -115,13 +115,21 @@ a {
 #tgl, #undo {
   color:lightgray;
 }
+#rows {
+  width:324px;
+}
+#row {
+  padding-left:8px;
+}
 #tone {
-  width:300px;
+  width:288px;
   height:1.5em;
   line-height:1.5em;
-  overflow:scroll;
+  overflow:hidden;
   background-color:transparent;
   margin-bottom:0.5em;
+  float:left;
+  text-align:center;
 }
 #tone a {
   text-decoration:none;
@@ -146,7 +154,7 @@ option {
   margin:0px;
   padding:0px;
 }
-#word {
+#word, #phrase, #toc {
   border:1px solid lightgray;
   margin:0px;
   background:white;
@@ -155,7 +163,12 @@ option {
   width:224px;
   padding:1px 2px;
 }
-#split, #search {
+#toc {
+  color: gray;
+  height: 24px;
+  width: 230px;
+}
+#split, #search, #pos, #parse, #download, #upload {
   width:29px;
   height:24px;
   border:1px solid lightgray;
@@ -164,6 +177,14 @@ option {
   background:#eeeeee;
   float:right;
   font-size:14px;
+}
+#pos {
+  padding-left:4px;
+  font-weight:bold;
+}
+#parse i, #download i, #upload i {
+  font-size:16px;
+  margin-top:2px;
 }
 #split i {
   font-size:14px;
@@ -198,6 +219,8 @@ pre {
   overflow-y:scroll;
   overflow-x:hidden;
   position:absolute;
+  right: 0;
+  top: 0;
   z-index:-1;
   background:transparent;
   margin:0px;
@@ -237,7 +260,7 @@ pre {
   line-height:1em;
 }
 #highlight, #res {
-  width:100%;
+  width:260px;
   height:12em;
   text-align:left;
   display:block;
@@ -311,7 +334,7 @@ pre {
   float:left;
   margin-right:10px;
 }
-#library, #resources, #credits, #trends_chart, #wiki_, #basic_words {
+#library, #resources, #credits, #trends_chart, #wiki_, #basic_words, #metadata {
   overflow:scroll;
   font-size: 14px;
   height:235px;
@@ -331,7 +354,7 @@ pre {
   width:100%;
   clear:both;
 }
-#library, #trends_chart, #wiki_, #basic_words {
+#library, #trends_chart, #wiki_, #basic_words, #metadata {
   padding:0;
 }
 #library_iframe {
@@ -350,14 +373,6 @@ pre {
 #library i {
   font-size:12px;
 }
-#phrase {
-  padding:1px;
-  margin:0;
-  border:1px solid lightgray;
-  height:20px;
-  width:284px;
-  float:left;
-}
 #languages, #corpus {
   width:120px;
 }
@@ -367,10 +382,9 @@ pre {
 #trends_chart {
   margin-right:30px;
 }
-#chart {
+.chart {
   border:0;
   margin:0;
-  height:256px;
   width:100%;
 }
 #mobile {
@@ -385,4 +399,35 @@ pre {
   z-index:11;
   overflow:hidden;
   font-size:12px;
+}
+#genre {
+  width:310px;
+  height:232px;
+  border:none;
+}
+#submit, #ul {
+  display:none;
+}
+#vs {
+  float: left;
+  width: 20px;
+  height: 12em;
+  line-height: 1em;
+  font-size: 16px;
+  text-align: left;
+  padding:0;
+  resize:none;
+}
+#outline {
+  float:left;
+  line-height:1em;
+  height:12.125em;
+  overflow:hidden;
+}
+#outline hr {
+  border:none;
+  height:512em;
+  width:4px;
+  background: repeating-linear-gradient(to bottom, transparent, transparent 1em, gray 1em, gray 5em, transparent 5em, transparent 6em, lightgray 6em, lightgray 10em, transparent 10em, transparent 11em, gray 11em, gray 15em, transparent 15em, transparent 16em, gray 16em, gray 20em, transparent 20em, transparent 21em, gray 21em, gray 25em, transparent 25em, transparent 27em);
+  background-position:0 2px;
 }
