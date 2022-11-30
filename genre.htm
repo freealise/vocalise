@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Genre</title>
+<style>
+  @font-face {
+    font-family: "DejaVu";
+    src: url("fonts/dejavu/DejaVuSansMono.ttf") format("truetype");
+  }
+  @font-face {
+    font-family: "DejaVuBold";
+    src: url("fonts/dejavu/DejaVuSansMono-Bold.ttf") format("truetype");
+  }
+  @font-face {
+    font-family: "DejaVuSans";
+    src: url("fonts/dejavu/DejaVuSans.ttf") format("truetype");
+  }
+  @font-face {
+    font-family: "DejaVuSansBold";
+    src: url("fonts/dejavu/DejaVuSans-Bold.ttf") format("truetype");
+  }
+  
+  * {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-family: 'DejaVu', 'DejaVuSans', monospace;
+  }
+  body {
+    margin:0;
+    font-size:14px;
+  }
+  textarea, input[type=text] {
+    width:300px;
+    resize:vertical;
+    border-width: 0 0 1px 0;
+    border-color: lightgray;
+    border-style: dashed;
+    font-size:14px;
+    padding:3px 0;
+  }
+  input[type=radio] {
+    margin: 0 0 0 2px;
+    width: 1em;
+  }
+  form .genre {
+    width:210px;
+  }
+</style>
+</head>
+<body onload="l=true;" onblur="l=false;document.forms[0].submit();">
+    <form action="#">
+      <textarea name="logline" id="logline" title="Controlling idea (concept or logline) or Theme" placeholder="Controlling idea (concept or logline) or Theme"></textarea><br/>
+      <input class="genre" name="external_genre_and_value" type="text" id="external_genre_and_value" title="External genre and value" placeholder="External genre and value"/> <label title="Global" for="e_value">Archplot</label><input title="Global" id="e_value" type="radio" name="plot" value="archplot" checked/><br/>
+      <input class="genre" name="internal_genre_and_value" type="text" id="internal_genre_and_value" title="Internal genre and value" placeholder="Internal genre and value"/> <label title="Global" for="i_value">Miniplot</label><input title="Global" id="i_value" type="radio" name="plot" value="miniplot"/><br/>
+      <textarea name="conventions" id="conventions" title="Genre conventions and expected scenes" placeholder="Genre conventions and expected scenes"></textarea><br/>
+      <input name="point_of_view" type="text" id="point_of_view" title="Point of view" placeholder="Point of view"/><br/>
+      <input name="objects_of_desire" type="text" id="objects_of_desire" title="Objects of desire (wants, needs)" placeholder="Objects of desire (wants, needs)"/><br/>
+      <input name="medium" type="text" id="medium" title="Medium (drama, comedy, documentary)" placeholder="Medium (drama, comedy, documentary)"/><br/>
+      <label title="Reality" for="r_actual">actual</label><input title="actual" id="r_actual" type="radio" name="reality" value="actual" checked/> <label title="Reality" for="r_fiction">fiction</label><input title="fiction" id="r_fiction" type="radio" name="reality" value="fiction"/> <label title="Reality" for="r_realist">realist</label><input title="realist" id="r_realist" type="radio" name="reality" value="realist"/> <label title="Reality" for="r_absurd">absurd</label><input title="absurd" id="r_absurd" type="radio" name="reality" value="absurd"/><br/>
+    </form>
+<script>
+  var l = false;
+</script>
+</body>
+</html>
