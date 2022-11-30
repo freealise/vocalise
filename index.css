@@ -306,8 +306,12 @@ pre {
 #nsm #nsm_lookup {
   padding:0;
   font-weight:bold;
+  background-color: white;
+}
+#nsm #nsm_lookup i {
   position: relative;
-  top: 4px;
+  top: 8px;
+  left: 2px;
 }
 #links {
   border:1px solid lightgray;
