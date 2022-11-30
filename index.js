@@ -158,10 +158,11 @@ var superscript = {
 //https://en.wikipedia.org/wiki/Secondary_articulation
 
 var s = ["·", "ˈ", "ˌ"];
-var stress = (" –=≡≣").split("");
+var stress = ("┈┄╌─┉┅╍━").split("");
+var stress_v = ("┊┆╎│┋┇╏┃").split("");
 
 var tone = [ '꜌', '꜑', '꜋', '꜐', '꜊', '꜏', '꜉', '꜎', '꜈', '꜍', 'ᣟ𝍩', '𝍩ᣟ' ]; //ᐧ
-var tone_chart = [ '˩', '˨', '˧', '˦', '˥', '꜖', '꜕', '꜔', '꜓', '꜒' ];
+var tone_chart = ['꜒', '˥', '꜓', '˦', '꜔', '˧', '꜕', '˨',  '꜖', '˩'];
 //https://en.wikipedia.org/wiki/Tone_letter
 //https://en.wikipedia.org/wiki/Unicode_subscripts_and_superscripts
 //https://en.wikipedia.org/wiki/Counting_Rod_Numerals_(Unicode_block)
@@ -222,7 +223,21 @@ In a non-tonal language, segments may be differentiated as follows:
 noun, adjective, verb, adverb, pronoun,
 determiner, preposition, conjunction, interjection
 
+English has strict word order, what a word can possibly be goes with the definition
 */
+
+var _pos = {
+  "_NOUN": ["﹞", "noun"],
+  "_VERB": ["﹥", "verb"],
+  "_ADJ": ["﹚", "adjective"],
+  "_ADV": ["﹜", "adverb"],
+  "_NUM": ["﹟", "numeral"],
+  "_ADP": ["﹫", "adposition"],
+  "_PRON": ["﹡", "pronoun"],
+  "_CONJ": ["﹠", "conjunction"],
+  "_DET": ["﹦", "determiner"],
+  "_PRT": ["﹑", "particle"]
+};
 
 //https://intranet.secure.griffith.edu.au/schools-departments/natural-semantic-metalanguage
 var primes = {
@@ -273,7 +288,7 @@ var primes = {
   "⇹": ["short time", "E 2-17"],
   "↔": ["some time", "G 2-25"],
   "⥈": ["moment", "G 2-26"],
-  "⊹": ["somewhere / place / where", "G 1-25"],
+  "⊹": ["somewhere / place / where", "G 1-25"], //⚲
   "⯐": ["here", "F 2-21"], //⟟
   "∸": ["above", "G 1-26"],
   "⨪": ["below", "H 2-30"],
@@ -287,8 +302,8 @@ var primes = {
   "∵": ["because", "B 2-06"],
   "⌥": ["if", "F 1-21"],
   "∴": ["then", "F 1-21"],
-  "&": ["and", "A 3-02"],
-  "|": ["or", "A 3-03"],
+  "⚭": ["and", "A 3-02"],
+  "⚮": ["or", "A 3-03"],
   "!": ["very", "E 1-19"],
   ">": ["more / anymore", "D 1-15"],
 };
@@ -336,6 +351,16 @@ var orig_link = document.getElementById("orig_link");
 var nsm = document.getElementById("nsm");
 var ltwf = document.getElementById('ltwf');
 ltwf_ = ltwf.contentWindow || ( ltwf.contentDocument.document || ltwf.contentDocument);
+var pos = document.getElementById('pos');
+var genre = document.getElementById("genre");
+var submit = document.getElementById("submit");
+var outline = document.getElementById("outline");
+var vs = document.getElementById("vs");
+var dl = document.getElementById("dl");
+var ul = document.getElementById("ul");
+var toc = document.getElementById("toc");
+var field, gform, cname, cvalue;
+var h = "";
 var res_old = "";
 var regexp = [];
 var regexp_ = [];
@@ -352,11 +377,19 @@ var a_c = false;
 var r_ = new RegExp("("+Object.keys(superscript).join("|")+")", "g");
 var _r = new RegExp("("+Object.values(superscript).join("|").slice(1)+")", "g");
 var note_ = new RegExp("("+tone.join("|")+")", "g");
-var notes_ = new RegExp("[^("+tone.join("|")+"| )]", "g");
+var note_n = new RegExp("[^("+tone.join("|")+"| )]", "g");
 var stress_ = new RegExp("("+stress.join("|")+")", "g");
+var stress_n = new RegExp("[^("+stress.join("|")+"| )]", "g");
 var ph_ = new RegExp("("+v_ssml.join("|")+"|"+c_ssml.join("|")+")", "g");
 var _v = new RegExp("("+v_ssml.join("|")+")", "g");
 var _c = new RegExp("("+c_ssml.join("|")+")", "g");
+var pos_ = new RegExp("("+Object.keys(_pos).join("|")+")", "g");
+
+pos.innerHTML += '<optgroup label="Part of speech">';
+for (var i=0; i<Object.keys(_pos).length; i++) {
+  pos.innerHTML += '<option value="'+Object.values(_pos)[i][0]+'">'+Object.values(_pos)[i][0]+' '+Object.values(_pos)[i][1]+'</option>';
+}
+pos.innerHTML += '</optgroup>';
 
 for (var i=0; i<keys.length; i++) {
   var ks = keys[i].split(";");
@@ -400,13 +433,18 @@ for (var i=0; i<tone.length; i++) {
   var ks = tone[i];
   tone_.innerHTML += "<a title='"+ks+"' href='javascript:' onclick='addPhoneme(this.title);copySymbols();' style='color:rgba(0,0,0,"+(colors[i]*0.75+0.25)+");'>"+ks+"</a> ";
 }
-tone_.innerHTML += "<br/> &nbsp;";
-for (var i=1; i<stress.length; i++) {
-  var ks = stress[i];
+tone_.innerHTML += "<br/>";
+for (var i=0; i<tone_chart.length; i++) {
+  var ks = tone_chart[i];
   tone_.innerHTML += "<a title='"+ks+"' href='javascript:' onclick='addPhoneme(this.title);'>"+ks+"</a> ";
 }
+tone_.innerHTML += "<br/>";
+for (var i=0; i<stress.length; i++) {
+  var ks = stress[i];
+  tone_.innerHTML += "<a title='"+ks+"' href='javascript:' onclick='addPhoneme(this.title);copySymbols();'>"+ks+"</a> ";
+}
 
-nsm.innerHTML = nsm.innerText.replace(/\S/g, function(x){ return "<div><a href='about:blank' target='ltwf' onclick='loadBasicWords(&apos;"+primes[x][1]+"&apos;);' title='"+primes[x][0]+"'>"+x+"</a></div>"; }).replace(/(> <)/g, "><span></span><") + " <div id='nsm_lookup'><a href='https://learnthesewordsfirst.com/WordFindingTool.html#Input' target='ltwf'>⚲</a></div>";
+nsm.innerHTML = nsm.innerText.replace(/\S/g, function(x){ return "<div><a href='about:blank' target='ltwf' onclick='loadBasicWords(&apos;"+primes[x][1]+"&apos;);' title='"+primes[x][0]+"'>"+x+"</a></div>"; }).replace(/(> <)/g, "><span></span><") + " <div id='nsm_lookup'><a href='https://learnthesewordsfirst.com/WordFindingTool.html#Input' target='ltwf'>⌕</a></div>";
 nsm.style.visibility = "hidden";
 
 
@@ -756,7 +794,6 @@ function loadTranslation(wrd, o, sl_, tl_) {
     if (this.readyState == 4 && this.status == 200) {
       wrd = this.responseText.replace(/[\[\]]/g, "").split(",")[0].slice(1,-1);
       //console.log(wrd);
-      
       if (o == "") {
         if (tl_ == sl && sl_ != sl) {
           phrase.value = wrd;
@@ -786,7 +823,7 @@ function loadTrends(q) {
   for (var i=0; i<q_.length; i++) {
     json += '{"keyword":"'+q_[i]+'","geo":"","time":"2004-01-01 '+d+'"},';
   }
-  trends_chart.innerHTML = '<iframe id="chart" src="data:text/html,' + encodeURIComponent('<html><head></head><body><style>#trends-widget-1{width:100%;height:320px;margin-top:-80px;}</style><script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/3045_RC01/embed_loader.js"></script><script type="text/javascript">trends.embed.renderExploreWidget("TIMESERIES", {"comparisonItem":['+json+'],"category":0,"property":""}, {"exploreQuery":"date=all&q='+q.replace(/ /g, '%20')+'","guestPath":"https://trends.google.com:443/trends/embed/"});</script></body></html>') + '"></iframe>';
+  trends_chart.innerHTML = '<iframe width="100%" height="230" class="chart" src="data:text/html,' + encodeURIComponent('<html><head></head><body><style>#trends-widget-1{width:100%;height:294px;margin-top:-80px;}</style><script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/3045_RC01/embed_loader.js"></script><script type="text/javascript">trends.embed.renderExploreWidget("TIMESERIES", {"comparisonItem":['+json+'],"category":0,"property":""}, {"exploreQuery":"date=all&q='+q.replace(/ /g, '%20')+'","guestPath":"https://trends.google.com:443/trends/embed/"});</script></body></html>') + '"></iframe><iframe name="ngram_chart" src="https://books.google.com/ngrams/interactive_chart?content='+q.replace(/ /g, '%20')+'&year_start=1800&year_end=2019&corpus=26&smoothing=0" width="100%" height="128" marginwidth=0 marginheight=0 hspace=0 vspace=0 frameborder=0 scrolling=no></iframe>';
 }
 
 
@@ -798,7 +835,7 @@ function loadLibrary(artist, song) {
 function loadWiki() {
   var q = "" + selectText();
   q = q.replace(/ /g, '_').toLowerCase();
-  wiki_.innerHTML = "<iframe id='wiki' src='https://en.m.wikipedia.org/wiki/"+q+"' width='310' height='235' border='0'/>";
+  wiki_.innerHTML = "<iframe id='wiki' src='https://en.m.wikipedia.org/wiki/"+q+"' width='310' height='232' border='0'/>";
 }
 
 
@@ -839,11 +876,13 @@ function keepSymbols(key) {
 }
 
 function copySymbols() {
-  var notes = ctl.value.replace(/\s+\w/g, "").replace(/\w\s+/g, "").replace(notes_, "").replace(note_, function(x){ return tone.indexOf(x)+","; }).replace(/\s/g, "-1,").slice(0,-1).split(",");
+  var notes = ctl.value.replace(/\s+\w/g, "").replace(/\w\s+/g, "").replace(note_n, "").replace(note_, function(x){ return tone.indexOf(x)+","; }).replace(/\s/g, "-1,").slice(0,-1).split(",");
+  var volumes = ctl.value.replace(/\s+\w/g, "").replace(/\w\s+/g, "").replace(stress_n, "").replace(stress_, function(x){ return stress.indexOf(x)+","; }).replace(/\s/g, "-1,").slice(0,-1).split(",");
   for (var i=0; i<notes.length; i++) {
     if (notes[i] != -1) {
       var k = window.frames['synth'].k;
-      window.frames['synth'].p[i].innerText = k.substr(0, notes[i]) + "█" + k.substr(notes[i]+1);
+      if (!volumes[i]) { volumes[i] = 8; }
+      window.frames['synth'].p[i].innerText = k.substr(0, notes[i]) + window.frames['synth'].br[volumes[i]*32-1] + k.substr(notes[i]+1);
     } else {
       window.frames['synth'].p[i].innerText = k;
     }
@@ -869,6 +908,41 @@ function kb_symbols() {
   }
 }
 
+function loadSyntax(q) {
+  var q = q.replace(/[^\w\s]/g, "").trim().split(" ");
+  for (var i=0; i<q.length; i++) {
+    q[i] += "_*";
+    if (q[i+1]) {
+      q[i] = q[i] + " " + q[i+1];
+    }
+  }
+  var q = q.join(",");
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      console.log(this.responseText);
+      var json = JSON.parse("["+this.responseText.split(">[")[1].split("]<")[0]+"]");
+      var r = "";
+      for (var i=0; i<json.length; i++) {
+        if (json[i].ngram.indexOf("_*") > -1) {
+          var j = i+2;
+          while (json[j] && json[j].ngram.split(" ")[0].split("_")[0] == json[i].ngram.split(" ")[0].split("_")[0]) {
+            json[j].ngram = "";
+            j++;
+          }
+          json[i].ngram = "";
+        }
+        if (json[i].ngram.length > 0) {
+          r += json[i].ngram.split(" ")[0] + " ";
+        }
+      }
+      phrase.value = r.trim().replace(pos_, function(x) { return _pos[x][0]; });
+    }
+  };
+  xhttp.open("GET", url + "?a=parse&q=" + encodeURIComponent(q), true);
+  xhttp.send();
+}
+
 function loadBasicWords(q) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
@@ -883,6 +957,190 @@ function loadBasicWords(q) {
   xhttp.send();
 }
 
+
+  function addTitles() {
+    var lines = [];
+    var titles = res.value.split("\n\n\n");
+    var toc_index = "";
+    for (var i=0; i<titles.length; i++) {
+      lines[i] = res.value.substr(0,res.value.indexOf(titles[i])).split("\n").length-1;
+      titles[i] = titles[i].substr(0,titles[i].indexOf("\n"));
+      toc_index += "<option value='"+lines[i]+"'>"+titles[i]+"</option>";
+    }
+    toc.innerHTML = toc_index;
+  }
+  
+  function download() {
+    var data = "";
+    if (window.frames['genre'].l == true) {
+      gform = genre.contentWindow.location.search.slice(1).split('&').join('\n');
+      data = decodeURIComponent(gform).replace(/\=/g, ": ").replace(/\+/g, " ").replace(/\n\n/g,"");
+      var filename = "lyrics.txt";
+      dl.setAttribute('href', 'data:text/plain;charset=utf-8,' + data + "\n\n" + vs.value.replace(/\n\n/g, " ").replace(/\n/g, "") + "\n\n" + res.value);
+      dl.setAttribute('download', filename);
+      dl.click();
+    }
+  }
+  
+  function upload() {
+    if (!ul.files[0]) {
+      ul.click();
+    } else {
+      var file    = ul.files[0];
+      var reader  = new FileReader();
+    
+      reader.addEventListener("load", function () {
+        var data = reader.result.slice(0, reader.result.indexOf("\n\n")).split("\n");
+        for (var i=0; i<data.length; i++) {
+          var ck = data[i].split(": ");
+          field = window.frames['genre'].contentDocument.getElementsByName(ck[0]);
+          if (field && field.length == 1) {
+            field[0].value = ck[1].replace(/\+/g, " ");
+          } else if (field.length > 1) {
+            for (var j=0; j<field.length; j++) {
+              if (field[j].value == ck[1]) {
+                field[j].checked = true;
+              }
+            }
+          }
+        }
+        var data = reader.result.slice(reader.result.indexOf("\n\n")+2).split("\n\n");
+        vs.value = data[0].replace(/ /g, "\n\n");
+        res.value = data[1];
+
+        setCookies(false);
+        setCookies(true);
+        ul.value = null;
+      }, false);
+    
+      if (file && file.name.slice(-4) == ".txt") {
+        reader.readAsText(file);
+      }
+    }
+  }
+  
+  function setCookies(g) {
+    var d = new Date();
+    d.setTime(d.getTime() + (365*24*60*60*1000));
+    let expires = "expires=" + d.toUTCString();
+    
+    if (g === true) {
+      for (var i=0; i<gform.length; i++) {
+        document.cookie = gform[i] + ";" + expires + ";path=/";
+      }
+    } else {
+      document.cookie = "lyrics=" + encodeURIComponent(vs.value)+'|'+encodeURIComponent(res.value) + ";" + expires + ";path=/";
+    }
+  }
+  
+  function getCookie() {
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split('; ');
+    
+    for (let i = 0; i < ca.length; i++) {
+      let ck = ca[i].split("=");
+      field = window.frames['genre'].contentDocument.getElementsByName(ck[0]);
+      if (field && field.length == 1) {
+        field[0].value = ck[1].replace(/\+/g, " ");
+      } else if (field.length > 1) {
+        for (var j=0; j<field.length; j++) {
+          if (field[j].value == ck[1]) {
+            field[j].checked = true;
+          }
+        }
+      } else if (ck[0] == 'lyrics') {
+        var cv = ck[1].split("|");
+        vs.value = cv[0];
+        res.value = cv[1];
+      }
+    }
+  }
+  getCookie();
+
+  vs.addEventListener("keyup", function (event) {
+    h = "Value shift (external, internal)";
+    vs.setCustomValidity(h);
+    res.setCustomValidity("");
+    submit.click();
+  });
+
+  res.addEventListener("keyup", function (event) {
+    var cPos = findCursor(res).split(",");
+    var b = parseInt(cPos[0]);
+    var d = parseInt(cPos[1]);
+    var ln = res.value.substr(0,b).split("\n").length-1;
+    h = "";
+    switch (ln) {
+      case 0:
+        h = "Title"
+        break;
+      case 1:
+        h = "verse 1: opening image > theme stated > setup | catalyst (inciting incident)";
+        break;
+      case 2:
+        h = "verse 1: catalyst (inciting incident) | opening image > theme stated > setup";
+        break;
+      case 3:
+        h = "verse 1: debate (inciting incident)";
+        break;
+      case 4:
+        h = "verse 1: break into II";
+        break;
+      case 5:
+        h = "";
+        break;
+      case 6: case 7: case 8: case 9:
+        h = "chorus: b story";
+        break;
+      case 10:
+        h = "";
+        break;
+      case 11: case 12: case 13:
+        h = "verse 2: premise (progressive complication) | crisis";
+        break;
+      case 14:
+        h = "bridge: midpoint (turning point) | all is lost";
+        break;
+      case 15:
+        h = "";
+        break;
+      case 16: case 17: case 18:
+        h = "verse 3: crisis | premise (progressive complication)";
+        break;
+      case 19:
+        h = "bridge: all is lost | midpoint (turning point)";
+        break;
+      case 20:
+        h = "";
+        break;
+      case 21:
+        h = "verse 4: break into III";
+        break;
+      case 22:
+        h = "verse 4: finale (climax)";
+        break;
+      case 23:
+        h = "verse 4: finale (resolution)";
+        break;
+      case 24:
+        h = "verse 4: finale > final image";
+        break;
+      default:
+        h = "";
+    }
+    res.setCustomValidity(h);
+    vs.setCustomValidity("");
+    if (h != "") { submit.click(); }
+  });
+
+
+function showGenre() {
+  if (metadata.style.visibility!='visible') {
+    metadata.style.visibility='visible';
+  } else {
+    metadata.style.visibility='hidden';
+  }
+}
 
 function showLibrary() {
   if (library.style.visibility!='visible') {
