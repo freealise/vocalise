@@ -49,11 +49,12 @@
 </head>
 <body onload="l=true;" onblur="l=false;document.forms[0].submit();">
     <form action="#">
-      <textarea name="logline" id="logline" title="Controlling idea (concept or logline) or Theme" placeholder="Controlling idea (concept or logline) or Theme"></textarea><br/>
+      <textarea name="logline" id="logline" title="Controlling idea (concept or logline)" placeholder="Controlling idea (concept or logline)"></textarea><br/>
       <input class="genre" name="external_genre_and_value" type="text" id="external_genre_and_value" title="External genre and value" placeholder="External genre and value"/> <label title="Global" for="e_value">Archplot</label><input title="Global" id="e_value" type="radio" name="plot" value="archplot" checked/><br/>
       <input class="genre" name="internal_genre_and_value" type="text" id="internal_genre_and_value" title="Internal genre and value" placeholder="Internal genre and value"/> <label title="Global" for="i_value">Miniplot</label><input title="Global" id="i_value" type="radio" name="plot" value="miniplot"/><br/>
       <textarea name="conventions" id="conventions" title="Genre conventions and expected scenes" placeholder="Genre conventions and expected scenes"></textarea><br/>
-      <input name="point_of_view" type="text" id="point_of_view" title="Point of view" placeholder="Point of view"/><br/>
+      <textarea name="conflict" type="text" id="conflict" title="Conflict (internal | personal | social) and Theme" placeholder="Conflict (internal | personal | social) and Theme"></textarea><br/>
+      <input name="point_of_view" type="text" id="point_of_view" title="Point of view (narrator)" placeholder="Point of view (narrator)"/><br/>
       <input name="objects_of_desire" type="text" id="objects_of_desire" title="Objects of desire (wants, needs)" placeholder="Objects of desire (wants, needs)"/><br/>
       <input name="medium" type="text" id="medium" title="Medium (drama, comedy, documentary)" placeholder="Medium (drama, comedy, documentary)"/><br/>
       <label title="Reality" for="r_actual">actual</label><input title="actual" id="r_actual" type="radio" name="reality" value="actual" checked/> <label title="Reality" for="r_fiction">fiction</label><input title="fiction" id="r_fiction" type="radio" name="reality" value="fiction"/> <label title="Reality" for="r_realist">realist</label><input title="realist" id="r_realist" type="radio" name="reality" value="realist"/> <label title="Reality" for="r_absurd">absurd</label><input title="absurd" id="r_absurd" type="radio" name="reality" value="absurd"/><br/>
