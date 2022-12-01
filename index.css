@@ -220,7 +220,7 @@ pre {
   overflow-x:hidden;
   position:absolute;
   right: 0;
-  top: 0;
+  top: 24px;
   z-index:-1;
   background:transparent;
   margin:0px;
