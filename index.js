@@ -1069,6 +1069,7 @@ function loadBasicWords(q) {
     var b = parseInt(cPos[0]);
     var d = parseInt(cPos[1]);
     var ln = res.value.substr(0,b).split("\n").length-1;
+    while (ln >= 27) { ln -= 27; }
     h = "";
     switch (ln) {
       case 0:
