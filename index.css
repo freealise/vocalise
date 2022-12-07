@@ -168,7 +168,7 @@ option {
   height: 24px;
   width: 230px;
 }
-#split, #search, #pos, #parse, #download, #upload {
+#split, #search, #pos, #parse, #morph, #download, #upload {
   width:29px;
   height:24px;
   border:1px solid lightgray;
@@ -182,17 +182,9 @@ option {
   padding-left:4px;
   font-weight:bold;
 }
-#parse i, #download i, #upload i {
+#parse i, #morph i, #split i, #download i, #upload i {
   font-size:16px;
   margin-top:2px;
-}
-#split i {
-  font-size:14px;
-  margin-top:4px;
-  position:relative;
-  right:2px;
-  letter-spacing:-4px;
-  font-weight:bold;
 }
 #search i {
   margin-top:-2px;
@@ -208,7 +200,7 @@ option {
   height:22px;
 }
 #consonants {
-  width:128px;
+  width:99px;
   height:22px;
 }
 pre {
