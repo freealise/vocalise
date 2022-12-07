@@ -14,7 +14,6 @@
   font-family: "DejaVuSansBold";
   src: url("fonts/dejavu/DejaVuSans-Bold.ttf") format("truetype");
 }
-
 * {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
