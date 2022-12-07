@@ -943,6 +943,33 @@ function loadSyntax(q) {
   xhttp.send();
 }
 
+function loadMorph() {
+  if (word.value != "") {
+    q = word.value.replace(/[^\w\s]/g, "").trim() + "_INF";
+    _word.innerHTML = "";
+    word.value = "";
+    word.placeholder = "Searching...";
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        console.log(this.responseText);
+        var json = JSON.parse("["+this.responseText.split(">[")[1].split("]<")[0]+"]");
+        var r = "";
+        for (var i=1; i<json.length; i++) {
+          if (json[i].ngram.length > 0) {
+            r += "<option>" + json[i].ngram + "</option>";
+          }
+        }
+        _word.innerHTML = r;
+        word.placeholder = "Click for results";
+        word.focus();
+      }
+    };
+    xhttp.open("GET", url + "?a=parse&q=" + encodeURIComponent(q), true);
+    xhttp.send();
+  }
+}
+
 function loadBasicWords(q) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
