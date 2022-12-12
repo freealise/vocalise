@@ -1,30 +1,8 @@
 var apiKey = '<!--google-api-key-->';
 
 /*
-//https://www.w3.org/TR/speech-synthesis11/#S3.2.4
-//https://developers.google.com/assistant/conversational/ssml-phonemes#levels_of_stress
-
-      <datalist id="pos_" size="1">
-            <option value="Options"></option>
-            <option class="*" value="*">any word</option>
-            <option class="," value=",">several</option>
-            <option class="_INF" value="_">inflection</option>
-            <option value="Part of speech"></option>
-            <option class="_NOUN_" value="$">noun</option>
-            <option class="_VERB_" value="=">verb</option>
-            <option class="_ADJ_" value="%">adjective</option>
-            <option class="_ADV_" value="~">adverb</option>
-            <option class="_PRON_" value="|">pronoun</option>
-            <option class="_DET_" value="^">determiner</option>
-            <option class="_ADP_" value="@">adposition</option>
-            <option class="_NUM_" value="#">numeral</option>
-            <option class="_CONJ_" value=";">conjunction</option>
-            <option class="_PRT_" value="`">particle</option>
-            <option value="Sentence"></option>
-            <option class="_ROOT_=>" value=">">root</option>
-            <option class="_START_" value=":">start</option>
-            <option class="_END_" value=".">end</option>
-        </datalist>
+https://www.w3.org/TR/speech-synthesis11/#S3.2.4
+https://developers.google.com/assistant/conversational/ssml-phonemes#levels_of_stress
 */
 
 var pos = {
@@ -65,12 +43,13 @@ function languages(tl) {
 }
 
 
-//billing over 100 q.per day - $5 per 1000 q.
+//billing over 100 q.per day - $5 per 1000 q. (two-way translator corrects it anyway)
+//suggest alternative if a word is not in list (train own model ?)
 function spell(words, tl) {
 //var words = "Oakword silence stupid is.";
 //var tl = "en";
  var words_ = encodeURIComponent(words);
- var apiEndpoint = "https://customsearch.googleapis.com/customsearch/v1?cx=c67b7f7baea614d96&q="+words_+"&cr=countryUS&gl=us&lr=lang_en&ie=utf8&oe=utf8&language="+tl+"&key=" + apiKey;
+ var apiEndpoint = "https://www.googleapis.com/customsearch/v1/siterestrict?cx=c67b7f7baea614d96&q="+words_+"&cr=countryUS&gl=us&lr=lang_en&ie=utf8&oe=utf8&language="+tl+"&key=" + apiKey;
  var nlOptions = {
    method : 'get',
    contentType: 'application/json',
@@ -89,47 +68,20 @@ function spell(words, tl) {
 }
 
 
-function getBW() {
-  getBasicWords(0, 10000);
+function parse(q) { //_DET_+kittens_*+_VERB_%2C_DET_+kittens_*+_VERB_
+  var apiEndpoint = "https://books.google.com/ngrams/interactive_chart?content="+q+"&year_start=1800&year_end=2019&corpus=26&smoothing=0";
+  var response = UrlFetchApp.fetch(apiEndpoint).getContentText();
+  //Logger.log(response);
+  return response;
 }
 
 
-function getBasicWords(s, l) {
-  var dataEndpoint = 'https://freealise-181308.firebaseio.com/cmudict/.json?orderBy=%224%22&startAt='+s+'&limitToFirst='+l;
-  var r = UrlFetchApp.fetch(dataEndpoint).getContentText();
-  var d = Object.keys(JSON.parse(r)).join(". ") + ".";
-  var apiEndpoint = 'https://language.googleapis.com/v1/documents:analyzeSyntax?key=' + apiKey;
-   var nlData = {
-     document: {
-       language: 'en',
-       type: 'PLAIN_TEXT',
-       content: d
-     },
-     encodingType: 'UTF8'
-   };
-   var nlOptions = {
-     method : 'post',
-     contentType: 'application/json',
-     payload : JSON.stringify(nlData)
-   };
-   var response = UrlFetchApp.fetch(apiEndpoint, nlOptions);
-   var parsed = JSON.parse(response);
-   var tags = ['NOUN','VERB','ADJ','ADV','NUM','UNKNOWN','X','PUNCT'];
-   var r = [];
-   var j = 0;
-   for (var i=0; i<parsed.tokens.length; i++) {
-     var json = '{"'+parsed.tokens[i].text.content+'":"'+parsed.tokens[i].partOfSpeech.tag+'"}';
-     if (!tags.includes(parsed.tokens[i].partOfSpeech.tag) && !r.includes(json) && parsed.tokens[i].text.content.search(/\W/)==-1) {
-       r[j] = json;
-       j++;
-       //Logger.log(parsed.tokens[i].partOfSpeech.tag);
-     }
-   }
-   Logger.log(r.join(",")+",");
-   if (s <= 130000) {
-     getBasicWords(s+l, l);
-   }
-   //return r.join(",");
+function nsm(q) {
+  var u = q.split("_");
+  var apiEndpoint = "https://learnthesewordsfirst.com/Lesson-"+u[1].split("-")[0]+u[0]+".html#"+u[1];
+  var response = UrlFetchApp.fetch(apiEndpoint).getContentText();
+  //Logger.log(response);
+  return response;
 }
 
 
