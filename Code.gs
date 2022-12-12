@@ -46,6 +46,10 @@ function doGet(e) {
     return ContentService.createTextOutput(languages(e.parameter.tl));
   } else if (e.parameter.a == "spell") {
     return ContentService.createTextOutput(spell(e.parameter.w, e.parameter.tl));
+  } else if (e.parameter.a == "parse") {
+    return ContentService.createTextOutput(parse(e.parameter.q));
+  } else if (e.parameter.a == "nsm") {
+    return ContentService.createTextOutput(nsm(e.parameter.q));
   } else if (e.parameter.a == 'post') {
     return ContentService.createTextOutput(post(e.parameter.name, e.parameter.site, e.parameter.email, e.parameter.subj, e.parameter.msg));
   } else if (e.parameter.a == 'subscribe') {
