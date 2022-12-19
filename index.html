@@ -71,18 +71,18 @@
         <textarea id="vs" name="vs" title="Value shift" placeholder="꜔˧&#13;1&#13;&#13;&#13;&#13;&#13;-&#13;&#13;&#13;&#13;&#13;2&#13;&#13;&#13;&#13;&#13;3&#13;&#13;&#13;&#13;&#13;4" onscroll="outline.scrollTo(0,this.scrollTop);res.scrollTo(0,this.scrollTop);" onchange="setCookies(false);"></textarea>
         <div id="outline"><hr/></div>
         <div id="highlight"><pre id="hl"></pre></div>
-        <textarea title="Album" placeholder="Title&#13;Verse&#13;&#13;&#13;&#13;&#13;Chorus&#13;&#13;&#13;&#13;&#13;Verse&#13;&#13;&#13;&#13;&#13;Verse&#13;&#13;&#13;&#13;&#13;Verse" id="res" name="res" onclick="keepSymbols(null);" onkeyup="keepSymbols(event.key);if(event.key=='Enter'){highlightText();}else if(event.key=='.' || event.key=='?' || event.key=='!'){getSentence();}else if(event.key==' ' || event.key=='Backspace' || event.key=='Delete' || event.ctrlKey || event.metaKey){colorPhonemes();}" onkeydown="if(event.key.length==1 && kbrd[event.key] && event.getModifierState('CapsLock') && !event.ctrlKey && !event.metaKey){addPhoneme(kbrd[event.key], 0);}" onmouseup="" ontouchup="" onfocus="ctl=this;" onscroll="highlight.scrollTo(this.scrollLeft,this.scrollTop);outline.scrollTo(0,this.scrollTop);vs.scrollTo(0,this.scrollTop);" onchange="setCookies(false);addTitles();"></textarea>
+        <textarea title="Album" placeholder="Title&#13;Verse&#13;&#13;&#13;&#13;&#13;Chorus&#13;&#13;&#13;&#13;&#13;Verse&#13;&#13;&#13;&#13;&#13;Verse&#13;&#13;&#13;&#13;&#13;Verse" id="res" name="res" onclick="keepSymbols(null);" onkeyup="keepSymbols(event.key);if(event.key=='Enter'){highlightText();getSentence();}else if(event.key==' ' || event.key=='Backspace' || event.key=='Delete' || event.ctrlKey || event.metaKey){colorPhonemes();}" onkeydown="if(event.key.length==1 && kbrd[event.key] && event.getModifierState('CapsLock') && !event.ctrlKey && !event.metaKey){addPhoneme(kbrd[event.key], 0);}" onmouseup="" ontouchup="" onfocus="ctl=this;" onscroll="highlight.scrollTo(this.scrollLeft,this.scrollTop);outline.scrollTo(0,this.scrollTop);vs.scrollTo(0,this.scrollTop);" onchange="setCookies(false);addTitles();"></textarea>
         <input type="submit" id="submit"/>
       </form>
     </div>
     <div class="l">
-      <input type="text" name="phrase" id="phrase" title="Phrase" placeholder="Phrase" onfocus="ctl=this;" onchange="loadSyntax(this.value);"/>
+      <input type="text" name="phrase" id="phrase" list="_phrase" title="Phrase" placeholder="Phrase" onfocus="ctl=this;" onchange="loadSyntax(this.value);"/><datalist id="_phrase"></datalist>
       <button onclick="if(phrase.value.length==0){phrase.value=selectText();}loadSyntax(phrase.value);" id="parse" title="Parse"><i class='material-icons notranslate'>more</i></button>
       <select onchange="addPhoneme(this.value, 'transparent');" id="pos" title="Part of speech">
         <option value="">🗩</option>
       </select>
     </div>
-    <div class="l"><input type="text" id="word" list="_word" title="Word or transcription" placeholder="Word or transcription" onkeyup="if(a_c===false && this.value.length>2 && event.key!='ArrowRight' && event.key!='ArrowLeft'){autoCompleter(this.value);ssp(this.value);}" onblur="if(a_c===false && this.value.length>2){autoCompleter(this.value);ssp(this.value);}" onfocus="ctl=this;"/><datalist id="_word"></datalist><button onclick="findWords();" id="search" title="Search"><i class='material-icons notranslate'>manage_search</i></button><button onclick="loadMorph();" id="morph" title="Morph"><i class='material-icons notranslate'>spellcheck</i></button></div>
+    <div class="l"><input type="text" id="word" list="_word" title="Word or transcription" placeholder="Word or transcription" onkeydown="if(a_c===false && this.value.length>2 && event.key=='Enter'){autoCompleter(this.value);ssp(this.value);}" onblur="if(a_c===false && this.value.length>2){autoCompleter(this.value);ssp(this.value);}" onfocus="ctl=this;"/><datalist id="_word"></datalist><button onclick="findWords();" id="search" title="Search"><i class='material-icons notranslate'>manage_search</i></button><button onclick="loadMorph();" id="morph" title="Morph"><i class='material-icons notranslate'>spellcheck</i></button></div>
     <div class="l"><input type="text" id="vowels" list="vowels_" title="Vowels" placeholder="Vowels" onkeyup="if(a_c===false && this.value.length>1 && event.key!='ArrowRight' && event.key!='ArrowLeft'){loadIndex(this.value,'A');}" onblur="if(a_c===false && this.value.length>1){loadIndex(this.value,'A');}" onfocus="ctl=this;"/><datalist id="_vowels"></datalist><datalist id="vowels_"></datalist><input type="text" id="consonants" list="consonants_" title="Consonants" placeholder="Consonants" onkeyup="if(a_c===false && this.value.length>1 && event.key!='ArrowRight' && event.key!='ArrowLeft'){loadIndex(this.value,'B');}" onblur="if(a_c===false && this.value.length>1){loadIndex(this.value,'B');}" onfocus="ctl=this;"/><datalist id="_consonants"></datalist><datalist id="consonants_"></datalist><button onclick="splitWord();" id="split" title="Split"><i class='material-icons notranslate'>subdirectory_arrow_left</i></button></div>
     
     <pre oncontextmenu="return false;" id="keys_">
@@ -96,19 +96,19 @@
     <div id="tone" class="notranslate"></div>
     <select onchange="tone_.scrollTo(0,24*this.options.selectedIndex);" id="row" title="Symbols selector">
         <option selected>· note</option>
-        <option>| parse</option>
+        <option>| level</option>
         <option>- volume</option>
     </select>
   </div>
 </div>
   
 <div id="nsm">∃ ⋯♡⎋⚟⍝⊙ᐶ
-⎃⎁⊨ ⌯⎚⎌ ✓⍻
+⎃⎁⊨ ␥⎚⎌ ✓⍻
 ⍩⍨≖⎉⛶‡ ❦⛼
 ∅¿≍∵⌥∴⚭⚮
 ⊹⯐∸⨪⟷↭וּ⛋
 ⧖⋈⊰⊱⇼⇹↔⥈
-12‰∀⛆ ☟〃⎇
+12‰∀⛆ ☟⌯⎇
 ¤ ⊂⋲≈ ⍜⍛ ¡≻</div>
   
   <div id="links">
