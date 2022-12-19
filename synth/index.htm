@@ -116,7 +116,7 @@ body {
   border-bottom: 1px solid lightgray;
 }
 label {
-  font-size:32px;
+  font-size:36px;
   line-height:16px;
 }
 #toolbar a {
@@ -147,11 +147,14 @@ label {
   margin:0;
 }
 #sound, #noise, #eraser {
-  margin: 2px;
+  margin: 0;
   height: 16px;
   width: 16px;
-  filter: grayscale(1);
-  opacity: 0.5;
+  opacity: 0;
+  margin-left: -18px;
+}
+#_sound {
+  text-decoration:underline;
 }
 #controls, #data {
   font-size:16px;
@@ -176,7 +179,7 @@ label {
   top:16px;
   max-width:63px;
   overflow:hidden;
-  filter:blur(3px);
+  filter:blur(2px);
   touch-action: none;
 }
 #cursor {
@@ -243,6 +246,36 @@ audio {
   border: none;
   border-top:2px dashed lightgray;
 }
+#toggle {
+  position:relative;
+  float:right;
+  margin-right:-20px;
+  margin-bottom: 0;
+}
+#_cheat, #_toolbar {
+  overflow:hidden;
+  width:32px;
+  height:16px;
+  margin:0;
+  padding:0;
+}
+#_toolbar {
+  position:relative;
+  top:10px;
+  z-index:0;
+}
+#_toolbar i {
+  font-style:normal;
+  font-size:28px;
+  position:relative;
+  top:-8px;
+}
+#_cheat i {
+  font-style:normal;
+  font-size:16px;
+  position:relative;
+  top:2px;
+}
 #synthesizer {
   display:none;
   text-align: center;
@@ -255,31 +288,51 @@ audio {
   right:0px;
   bottom:0px;
 }
+#example {
+  font-weight:normal;
+  font-size:36px;
+}
+#chart {
+  height:296px;
+  width:290px;
+  overflow:hidden;
+  visibility:hidden;
+  position:absolute;
+  bottom:0;
+  left:20px;
+}
+#chart img {
+  margin-left:-20px;
+}
 </style>
 </head>
 <body oncontextmenu="return false;" onload="phonemes();">
 <span id="cursor">⯈</span>
-<pre id="pitch" onmousedown="m=true;" onmouseup="m=false;" onmouseleave="m=false;" onmousemove="if(m && m===true){draw(event.target, parseInt(event.pageX/s*pr), 0, null);}" ontouchstart="m=true;" ontouchend="m=false;" ontouchcancel="m=false;" ontouchmove="if(m && m===true){draw(event.target, parseInt(event.changedTouches[0].pageX/s*pr), event.changedTouches[0].radiusY, parseInt((event.changedTouches[0].pageY-16)/s));}" onkeydown="if(event.key=='ArrowUp'){t--;point();}else if(event.key=='ArrowDown'){t++;point();}else{draw(p[l_old+t+1], kbrd.indexOf(event.key), 0, null);t++;point();}" onwheel="setVolume(event);" tabindex="1"></pre>
-<pre id="pre" onmousedown="m=true;" onmouseup="m=false;" onmouseleave="m=false;" onmousemove="if(m && m===true){draw(event.target, parseInt((event.pageX-64+this.scrollLeft)/s*r), 0, null);}" ontouchstart="m=true;" ontouchend="m=false;" ontouchcancel="m=false;" ontouchmove="if(m && m===true){draw(event.target, parseInt((event.changedTouches[0].pageX-64+this.scrollLeft)/s*r), event.changedTouches[0].radiusY, parseInt((event.changedTouches[0].pageY-16)/s));}" onkeydown="if(event.key=='ArrowUp'){t--;point();}else if(event.key=='ArrowDown'){t++;point();}else{draw(span[l_old+t+1], kbrd.indexOf(event.key)+parseInt(this.scrollLeft/s*r), 0, null);t++;point();}" onwheel="setVolume(event);" tabindex="0"></pre>
+<pre id="pitch" onmousedown="m=true;" onmouseup="m=false;" onmouseleave="m=false;" onmousemove="if(m && m===true){draw(event.target, parseInt(event.pageX/s*pr), 0, null);}" ontouchstart="m=true;" ontouchend="m=false;" ontouchcancel="m=false;" ontouchmove="if(m && m===true){draw(event.target, parseInt(event.changedTouches[0].pageX/s*pr), event.changedTouches[0].radiusY, parseInt((event.changedTouches[0].pageY-16)/s));}" onkeydown="if(event.key==' '){add(Object.values(ph)[0][0],' ');}else if(event.key=='ArrowUp'){t--;point();}else if(event.key=='ArrowDown'){t++;point();}else{draw(p[l_old+t+1], kbrd.indexOf(event.key), 0, null);t++;point();}" onwheel="setVolume(event);" tabindex="1"></pre>
+<pre id="pre" onmousedown="m=true;" onmouseup="m=false;" onmouseleave="m=false;" onmousemove="if(m && m===true){draw(event.target, parseInt((event.pageX-64+this.scrollLeft)/s*r), 0, null);}" ontouchstart="m=true;" ontouchend="m=false;" ontouchcancel="m=false;" ontouchmove="if(m && m===true){draw(event.target, parseInt((event.changedTouches[0].pageX-64+this.scrollLeft)/s*r), event.changedTouches[0].radiusY, parseInt((event.changedTouches[0].pageY-16)/s));}" onkeydown="if(event.key==' '){add(Object.values(ph)[0][0],' ');}else if(event.key=='ArrowUp'){t--;point();}else if(event.key=='ArrowDown'){t++;point();}else{draw(span[l_old+t+1], kbrd.indexOf(event.key)+parseInt(this.scrollLeft/s*r), 0, null);t++;point();}" onwheel="setVolume(event);" tabindex="0"></pre>
 <div id="hscroll" onscroll="pre.scrollLeft=this.scrollLeft;"></div>
 <textarea id="scroll" onscroll="show(parseInt(this.scrollTop/s))"></textarea>
 <div id="panel">
   <pre id="cheat"></pre>
   <div id="toolbar">
       <input id="brush" type="text" value="⠂⠆⡇⡷⣿⣿⣿⣿⡷⡇⠆⠂"/><div id="color" onmousedown="m=true;" onmouseup="m=false;" onmousemove="if(m && m===true){set(event.pageX-this.getBoundingClientRect().left);}" ontouchstart="m=true;" ontouchend="m=false;" ontouchmove="if(m && m===true){set(event.changedTouches[0].pageX);}"></div><br/>
-      <label for="sound">✑</label><input title="Sound" id="sound" type="radio" name="tool" checked/>
-      <label for="noise">✎</label><input title="Noise" id="noise" type="radio" name="tool"/>
-      <label for="eraser">❑</label><input title="Eraser" id="eraser" type="radio" name="tool"/>
+      <a href="#" title="Example" id="example" onclick="showExample();">❔</a>
+      <label for="sound" id="_sound" class="tool">✑</label><input title="Sound" id="sound" type="radio" name="tool" checked onclick="switchTool(this.id);"/>
+      <label for="noise" id="_noise" class="tool">✏</label><input title="Noise" id="noise" type="radio" name="tool" onclick="switchTool(this.id);"/>
+      <label for="eraser" id="_eraser" class="tool">❑</label><input title="Eraser" id="eraser" type="radio" name="tool" onclick="switchTool(this.id);"/>
       <span id="controls">
         <button title="Play" onclick="if(!ac){init();}play();">▶</button><button title="Stop" onclick="if(!ac){init();}stop();">■</button><button title="Record" onclick='if(!ac){init();}recordSpeech();'>●</button><button title="Upload" onclick='if(!ac){init();}uploadVoice(null);' id='arrow'>🡅</button><input type="file" id="upload_voice" onchange="uploadVoice(this.files[0]);"/>
       </span>
       <p><audio controls onplay="if(mediaRecorder && mediaRecorder.state=='paused'){mediaRecorder.resume();}" onpause="if(mediaRecorder && mediaRecorder.state=='recording'){mediaRecorder.pause();}"></audio></p>
-      <a href="/img2b" target="_blank">🖻 import</a>
       <span id="data">
-        <a href="javascript:openCsv(null);">🗁 open</a><input type="file" id="upload" onchange="openCsv(this.files[0]);"/> &nbsp; <a href="javascript:saveCsv();">🖫 save</a><a id="download"></a>
+        <a href="/img2b" target="_blank">🖻 import</a>&nbsp;&nbsp;<a href="javascript:openCsv(null);">🗁 open</a><input type="file" id="upload" onchange="openCsv(this.files[0]);"/>&nbsp;&nbsp;<a href="javascript:saveCsv();">🖫 save</a><a id="download"></a> &nbsp; <a href="#" title="Clear" onclick="add(Object.values(ph)[0][0],' ');">⎵</a>
       </span>
   </div>
   <canvas id="spectrogram" width="288" height=32></canvas>
+  <span id="toggle">
+    <button id="_toolbar" title="Toggle toolbar" onclick="togglePanel(this.id.slice(1));"><i>✍</i></button><br/><button id="_cheat" title="Toggle cheat sheet" onclick="togglePanel(this.id.slice(1));"><i>⎙</i></button>
+  </span>
+  <div id="chart"><a href="https://en.wikipedia.org/wiki/Spectrogram" target="_blank"><img src="wideband.narrowband.jpg" alt="Spectrogram of speech" height="320"/></a></div>
 </div>
 <a id="synthesizer" title="Synthesizer" href="#" onclick="showPanel();">🎘</a>
 <script type="text/javascript" src="spectrogram.js"></script>
@@ -292,6 +345,8 @@ var p = pitch.getElementsByTagName("span");
 var color = document.getElementById("color");
 var brush = document.getElementById("brush");
 var cheat = document.getElementById("cheat");
+var toolbar = document.getElementById("toolbar");
+var tools = document.getElementsByClassName("tool");
 var noise = document.getElementById("noise");
 var eraser = document.getElementById("eraser");
 var download = document.getElementById("download");
@@ -303,6 +358,7 @@ var scr = new Array(2048);
 scroll.value = scr.join("\n");
 
 var ph = {
+  "   ": ['            ', 1.0],
   "u │": ['██     ▒  ░ ', 1.0],
   "ʊ ╵": ['▀ ▀    ▀  ▀ ', 1.0],
  "oʊ │": ['▄▀█    ▒  ░ ', 1.0],
@@ -450,7 +506,7 @@ function initRec() {
     document.querySelector("audio").srcObject = null;
     let blob = new Blob(chunks, { 'type' : 'audio/wav' });
     document.querySelector("audio").src = URL.createObjectURL(blob);
-    document.querySelector("audio").playbackRate = 4.0;
+    document.querySelector("audio").playbackRate = 1.0;
     chunks = [];
   };
 }
@@ -691,7 +747,7 @@ function sibilance(x) {
   return n;
 }
 
-function add(v) {
+function add(v, sn) {
   var line = [];
   line[0] = "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀" + v.replace(/[░▒▓█▀]+$/, hiss).replace(/[░▒▓█▀]{4}/, sibilance).replace(/[░▒▓█▀]/g, "⠀⠀⠂⠆⡇⡷⣿⣿⣿⣿⡷⡇⠆⠂⠀⠀").replace(/[▄ ]/g, "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
   line[1] = "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀" + v.replace(/[░▒▓█▄]+$/, hiss).replace(/[░▒▓█▄]{4}/, sibilance).replace(/[░▒▓█▄]/g, "⠀⠀⠂⠆⡇⡷⣿⣿⣿⣿⡷⡇⠆⠂⠀⠀").replace(/[▀ ]/g, "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
@@ -699,6 +755,15 @@ function add(v) {
   for (var i=0; i<2; i++) {
     txt = line[i] + l.substr(line[i].length);
     span[l_old+t+i+1].innerText = "|" + txt;
+    if (sn != " ") {
+      if (p[l_old+t+i+1].innerText == k) {
+        p[l_old+t+i+1].innerText = k.substr(0,5) + "⣿" + k.substr(6);
+      }
+    } else {
+      if (p[l_old+t+i+1].innerText != k) {
+        p[l_old+t+i+1].innerText = k;
+      }
+    }
   }
   t+=2;
   point();
@@ -728,11 +793,12 @@ function point() {
 }
 
 function phonemes() {
-  for (var i=0; i<Object.keys(ph).length; i++) {
+  for (var i=1; i<Object.keys(ph).length; i++) {
     var n = Object.keys(ph)[i];
     var v = Object.values(ph)[i][0];
     var s = Math.pow(Object.values(ph)[i][1], 1/2);
-    cheat.innerHTML += "<div><b style='color:rgba(0,0,0,"+s+");'>" + n.split(" ")[0] + "</b> <span>" + n.slice(-1) + "</span><a href='#' onclick='add(this.innerText);'>" + v.replace(/[▀▄]\s+[▀▄]\s+$/, function(x){ return "<u>"+x+"</u>"; }) + "</a></div>";
+    var sn = n.slice(-1);
+    cheat.innerHTML += "<div><b style='color:rgba(0,0,0,"+s+");'>" + n.split(" ")[0] + "</b> <span>" + sn + "</span><a href='#' title='" + sn + "' onclick='add(this.innerText,this.title);'>" + v.replace(/[▀▄]\s+[▀▄]\s+$/, function(x){ return "<u>"+x+"</u>"; }) + "</a></div>";
   }
 }
 
@@ -811,49 +877,44 @@ function uploadVoice(file) {
 }
 
 
-function lerp(start, end, amt) {
-  return (1-amt)*start+amt*end;
-}
-
-
-function morph() {
-  var arr = txt.value.split("\n");
-  arr[0] = arr[0].split("");
-  var arr_old = arr[0];
-  var i_old = 0;
-  
-  for (var i=1; i<arr.length; i++) {
-    arr[i] = arr[i].split("");
-    if (arr[i].length > 0) {
-      for (var j=0; j<arr[i].length; j++) {
-        for (var k=i_old+1; k<i; k++) {
-          arr[k][j] = br[Math.round(lerp(br.indexOf(arr_old[j]), br.indexOf(arr[i][j]), (k-i_old)/(i-i_old)))];
-        }
-      }
-      arr_old = arr[i];
-      i_old = i;
+function switchTool(el) {
+  for (var i=0; i<tools.length; i++) {
+    if (tools[i].id == "_"+el) {
+      tools[i].style.textDecoration = "underline";
+    } else {
+      tools[i].style.textDecoration = "none";
     }
   }
-  for (var i=0; i<arr.length; i++) {
-    arr[i] = arr[i].join("");
-  }
-  txt.value = arr.join("\n");
 }
 
 
-function smooth() {
-  for (var i=0; i<256; i++) {
-    var avg = (d[frame*256+i]+d[frame*256+i+1]+d[frame*256+i+2]+d[frame*256+i+3])/4;
-    p[i] = i+","+avg;
+function showExample() {
+  if (chart.style.visibility!='visible') {
+    chart.style.visibility='visible';
+  } else {
+    chart.style.visibility='hidden';
   }
 }
-
 
 function showPanel() {
   if (panel.style.visibility!='visible') {
     panel.style.visibility='visible';
   } else {
     panel.style.visibility='hidden';
+  }
+}
+
+function togglePanel(el) {
+  if (document.getElementById(el).style.display != "none") {
+    document.getElementById(el).style.display = "none";
+    if (el == "cheat") {
+      toolbar.style.bottom = "32px";
+    }
+  } else {
+    document.getElementById(el).style.display = "initial";
+    if (el == "cheat") {
+      toolbar.style.bottom = "296px";
+    }
   }
 }
 
