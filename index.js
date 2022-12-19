@@ -251,7 +251,7 @@ var primes = {
   "⋲": ["part", "A 2-03"],
   "≈": ["like / as / way", "A 2-01"],
   "☟": ["this", "A 1-03"],
-  "〃": ["same", "B 1-05"],
+  "⌯": ["same", "B 1-05"],
   "⎇": ["other / else", "A 1-04"],
   "1": ["1", "B 1-06"],
   "2": ["2", "B 1-07"],
@@ -272,7 +272,7 @@ var primes = {
   "⎃": ["say", "H 1-29"],
   "⎁": ["word", "H 1-30"],
   "⊨": ["true", "H 1-31"],
-  "⌯": ["do", "B 2-04"], //⌤
+  "␥": ["do", "B 2-04"], //⌤
   "⎚": ["happen", "B 2-05"], //╌
   "⎌": ["move", "E 2-18"],
   "": ["be", " -"],
@@ -336,6 +336,7 @@ var highlight = document.getElementById("highlight");
 var dict = document.getElementById("dict");
 var res = document.getElementById("res");
 var phrase = document.getElementById("phrase");
+var _phrase = document.getElementById("_phrase");
 var corpus = document.getElementById("corpus");
 var languages = document.getElementById("languages");
 var trends_chart = document.getElementById("trends_chart");
@@ -431,7 +432,7 @@ for (var i=0; i<keys_.length; i++) {
 
 for (var i=0; i<tone.length; i++) {
   var ks = tone[i];
-  tone_.innerHTML += "<a title='"+ks+"' href='javascript:' onclick='addPhoneme(this.title);copySymbols();' style='color:rgba(0,0,0,"+(colors[i]*0.75+0.25)+");'>"+ks+"</a> ";
+  tone_.innerHTML += "<a title='"+ks+"' href='javascript:' onclick='addPhoneme(this.title);' style='color:rgba(0,0,0,"+(colors[i]*0.75+0.25)+");'>"+ks+"</a> ";
 }
 tone_.innerHTML += "<br/>";
 for (var i=0; i<tone_chart.length; i++) {
@@ -441,7 +442,7 @@ for (var i=0; i<tone_chart.length; i++) {
 tone_.innerHTML += "<br/>";
 for (var i=0; i<stress.length; i++) {
   var ks = stress[i];
-  tone_.innerHTML += "<a title='"+ks+"' href='javascript:' onclick='addPhoneme(this.title);copySymbols();'>"+ks+"</a> ";
+  tone_.innerHTML += "<a title='"+ks+"' href='javascript:' onclick='addPhoneme(this.title);'>"+ks+"</a> ";
 }
 
 nsm.innerHTML = nsm.innerText.replace(/\S/g, function(x){ return "<div><a href='about:blank' target='ltwf' onclick='loadBasicWords(&apos;"+primes[x][1]+"&apos;);' title='"+primes[x][0]+"'>"+x+"</a></div>"; }).replace(/(> <)/g, "><span></span><") + " <div id='nsm_lookup'><a href='https://learnthesewordsfirst.com/WordFindingTool.html#Input' target='ltwf'><i class='material-icons notranslate'>search</i></a></div>";
@@ -687,7 +688,6 @@ function loadIndex(txt, i) {
 function autoCompleter(txt) {
   if (txt.indexOf(" ") == -1) {
     a_c = true;
-    word.blur();
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
@@ -695,7 +695,6 @@ function autoCompleter(txt) {
         _word.innerHTML = "<option value='" + r + "</option>";
       	r = null;
       	a_c = false;
-      	word.focus();
       }
     };
     var query = "select A, D where D contains '" + txt + "'";
@@ -729,10 +728,11 @@ function loadLanguages() {
 
 function getSentence() {
   var d = findCursor(res).split(',')[1];
-  var b_ = res.value.substr(0, d).replace(/[\.\?\!]/g, function(x){return x+"+";}).split("+");
-  var wrd = b_[b_.length-2].trim();
-  var b = res.value.indexOf(wrd);
-  res.value = res.value.substr(0, b) + "…\n" + res.value.substr(b);
+  var b = res.value.substr(0, d).split("\n");
+  var wrd = b[b.length-2].trim();
+  phrase.value = "";
+  phrase.placeholder = "…";
+  _phrase.innerHTML = "";
   colorPhonemes();
   var wrd_ = wrd.replace(/\n\W*\n/g, "\n").replace(/\n/g, " ").replace(/[\,\"\'\-\:\;]/g, "").replace(/\?/g, " \?").replace(/[\!\.]/, function(x){return " "+x;}).split(" ");
   loadPunctuation(wrd_, 0, wrd);
@@ -797,17 +797,16 @@ function loadTranslation(wrd, o, sl_, tl_) {
       if (o == "") {
         if (tl_ == sl && sl_ != sl) {
           phrase.value = wrd;
+          _phrase.innerHTML += "<option>" + wrd + "</option>";
         }
       } else if (tl_ == tl[1]) {
         loadTranslation(wrd, o, tl[1], tl[0]);
       } else if (tl_ == tl[0]) {
-        if (wrd == o) {
-          hl.innerHTML = hl.innerHTML.replace("…\n", "");
-          res.value = res.value.replace("…\n", "");
-        } else {
-          hl.innerHTML = hl.innerHTML.replace("…\n", "<sup>"+wrd+"</sup>\n");
-          res.value = res.value.replace("…\n", "\n");
+        if (wrd != o) {
+          phrase.value = wrd;
+          _phrase.innerHTML += "<option>" + wrd + "</option>";
         }
+        phrase.placeholder = "Phrase";
       }
     }
   };
@@ -873,23 +872,6 @@ function keepSymbols(key) {
       ctl.focus();
     }
   }
-}
-
-function copySymbols() {
-  var notes = ctl.value.replace(/\s+\w/g, "").replace(/\w\s+/g, "").replace(note_n, "").replace(note_, function(x){ return tone.indexOf(x)+","; }).replace(/\s/g, "-1,").slice(0,-1).split(",");
-  var volumes = ctl.value.replace(/\s+\w/g, "").replace(/\w\s+/g, "").replace(stress_n, "").replace(stress_, function(x){ return stress.indexOf(x)+","; }).replace(/\s/g, "-1,").slice(0,-1).split(",");
-  for (var i=0; i<notes.length; i++) {
-    if (notes[i] != -1) {
-      var k = window.frames['synth'].k;
-      if (!volumes[i]) { volumes[i] = 8; }
-      window.frames['synth'].p[i].innerText = k.substr(0, notes[i]) + window.frames['synth'].br[volumes[i]*32-1] + k.substr(notes[i]+1);
-    } else {
-      window.frames['synth'].p[i].innerText = k;
-    }
-  }
-  var letters = ctl.value.replace(note_, "").replace(/[^\w\s\.\,\!\?\-]/g, "").replace(/\s+/g, " ");
-  var scroll = window.frames['synth'].scroll.value.replace(/[^\n]/g, "\n");
-  window.frames['synth'].scroll.value = letters + scroll.slice(letters.length);
 }
 
 function kb_symbols() {
