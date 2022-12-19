@@ -52,9 +52,6 @@ ul .d {
   float:left;
   padding:0 4px;
 }
-sub {
-  color: darkgray;
-}
 hr {
   margin:0;
   padding:0;
@@ -118,7 +115,9 @@ a {
   width:324px;
 }
 #row {
-  padding-left:8px;
+  padding-left: 12px;
+  width: 32px;
+  height: 32px;
 }
 #tone {
   width:288px;
@@ -231,12 +230,6 @@ pre {
   font-weight:bold;
   position:relative;
   top:-2px;
-}
-#hl sup {
-  color:darkgray;
-  line-height:0;
-  position: relative;
-  top: 0.5em;
 }
 #res {
   resize: none;
