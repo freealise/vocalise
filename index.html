@@ -68,7 +68,7 @@
       <div class="l"><a id="dl" href="#"></a><button title="Download" id="download" onclick="download();"><i class='material-icons notranslate'>download</i></button><button title="Upload" id="upload" onclick="upload();"><i class='material-icons notranslate'>upload</i></button><input type="file" id="ul" onchange="upload();"/>
       <select title="Setlist" name="toc" id="toc" onchange="res.scrollTo(0,this.value*16);"><option value="0">Setlist</option></select></div>
       <form action="#">
-        <textarea id="vs" name="vs" title="Value shift" placeholder="꜔˧&#13;1&#13;&#13;&#13;&#13;&#13;-&#13;&#13;&#13;&#13;&#13;2&#13;&#13;&#13;&#13;&#13;3&#13;&#13;&#13;&#13;&#13;4" onscroll="outline.scrollTo(0,this.scrollTop);res.scrollTo(0,this.scrollTop);" onchange="setCookies(false);"></textarea>
+        <textarea id="vs" name="vs" title="Value shift" placeholder="꜔˧&#13;1&#13;&#13;&#13;&#13;&#13;-&#13;&#13;&#13;&#13;&#13;2&#13;&#13;&#13;&#13;&#13;3&#13;&#13;&#13;&#13;&#13;4" onscroll="outline.scrollTo(0,this.scrollTop);res.scrollTo(0,this.scrollTop);" onchange="setCookies(false);" onfocus="ctl=this;"></textarea>
         <div id="outline"><hr/></div>
         <div id="highlight"><pre id="hl"></pre></div>
         <textarea title="Album" placeholder="Title&#13;Verse&#13;&#13;&#13;&#13;&#13;Chorus&#13;&#13;&#13;&#13;&#13;Verse&#13;&#13;&#13;&#13;&#13;Verse&#13;&#13;&#13;&#13;&#13;Verse" id="res" name="res" onclick="keepSymbols(null);" onkeyup="keepSymbols(event.key);if(event.key=='Enter'){highlightText();getSentence();}else if(event.key==' ' || event.key=='Backspace' || event.key=='Delete' || event.ctrlKey || event.metaKey){colorPhonemes();}" onkeydown="if(event.key.length==1 && kbrd[event.key] && event.getModifierState('CapsLock') && !event.ctrlKey && !event.metaKey){addPhoneme(kbrd[event.key], 0);}" onmouseup="" ontouchup="" onfocus="ctl=this;" onscroll="highlight.scrollTo(this.scrollLeft,this.scrollTop);outline.scrollTo(0,this.scrollTop);vs.scrollTo(0,this.scrollTop);" onchange="setCookies(false);addTitles();"></textarea>
@@ -96,7 +96,7 @@
     <div id="tone" class="notranslate"></div>
     <select onchange="tone_.scrollTo(0,24*this.options.selectedIndex);" id="row" title="Symbols selector">
         <option selected>· note</option>
-        <option>| level</option>
+        <option>| shift</option>
         <option>- volume</option>
     </select>
   </div>
