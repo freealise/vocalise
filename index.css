@@ -117,7 +117,7 @@ a {
 #row {
   padding-left: 12px;
   width: 32px;
-  height: 32px;
+  height: 24px;
 }
 #tone {
   width:288px;
@@ -125,7 +125,7 @@ a {
   line-height:1.5em;
   overflow:hidden;
   background-color:transparent;
-  margin-bottom:0.5em;
+  margin-bottom:0.125em;
   float:left;
   text-align:center;
 }
@@ -166,7 +166,7 @@ option {
   height: 24px;
   width: 230px;
 }
-#split, #search, #pos, #parse, #morph, #download, #upload {
+#split, #search, #pos, #parse, #morph, #download, #upload, #speech, #accent {
   width:29px;
   height:24px;
   border:1px solid lightgray;
@@ -176,16 +176,20 @@ option {
   float:right;
   font-size:14px;
 }
+#accent {
+  padding-left:4px;
+}
 #pos {
   padding-left:4px;
   font-weight:bold;
 }
-#parse i, #morph i, #split i, #download i, #upload i {
+#parse i, #morph i, #split i, #download i, #upload i, #speech i {
   font-size:16px;
   margin-top:2px;
 }
 #search i {
-  margin-top:-2px;
+  font-size:18px;
+  margin-top:1px;
 }
 .l {
   width:100%;
@@ -244,7 +248,7 @@ pre {
   line-height:1em;
 }
 #highlight, #res {
-  width:260px;
+  width:282px;
   height:12em;
   text-align:left;
   display:block;
@@ -288,6 +292,7 @@ pre {
   height: 1.75em;
 }
 #nsm #nsm_lookup {
+  width: 27px;
   padding:0;
   font-weight:bold;
   background-color: white;
@@ -324,7 +329,7 @@ pre {
   float:left;
   margin-right:10px;
 }
-#library, #resources, #credits, #trends_chart, #wiki_, #basic_words, #metadata {
+#library, #resources, #credits, #trends_chart, #wiki_, #basic_words, #metadata, #mobile {
   overflow:scroll;
   font-size: 14px;
   height:235px;
@@ -378,17 +383,8 @@ pre {
   width:100%;
 }
 #mobile {
-  position:absolute;
-  background-color:white;
-  border:1px solid lightgray;
-  height:2.5em;
-  width:128px;
-  margin-left:-128px;
-  margin-top:-3em;
-  visibility:hidden;
-  z-index:11;
-  overflow:hidden;
-  font-size:12px;
+  height:1.75em;
+  font-size:14px;
 }
 #genre {
   width:310px;
@@ -397,16 +393,6 @@ pre {
 }
 #submit, #ul {
   display:none;
-}
-#vs {
-  float: left;
-  width: 20px;
-  height: 12em;
-  line-height: 1em;
-  font-size: 16px;
-  text-align: left;
-  padding:0;
-  resize:none;
 }
 #outline {
   float:left;
@@ -420,4 +406,12 @@ pre {
   width:4px;
   background: repeating-linear-gradient(to bottom, transparent, transparent 1em, gray 1em, gray 5em, transparent 5em, transparent 6em, lightgray 6em, lightgray 10em, transparent 10em, transparent 11em, gray 11em, gray 15em, transparent 15em, transparent 16em, gray 16em, gray 20em, transparent 20em, transparent 21em, gray 21em, gray 25em, transparent 25em, transparent 27em);
   background-position:0 2px;
+}
+audio {
+  height: 20px;
+  width: 230px;
+  margin: 0;
+  padding: 0;
+  top: 2px;
+  position: relative;
 }
