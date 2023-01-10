@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -14,7 +14,7 @@
   <link href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet'/>
   <link rel="stylesheet" href="index.css"/>
 </head>
-<body onload="loadLanguages();" onclick="var tg=event.target;mobile.style.top=event.pageY+'px';mobile.style.left=event.pageX+'px';while(!tg.title){tg=tg.parentNode;}if(tg.tagName){mobile.innerText=tg.title;}">
+<body onload="loadLanguages();" onclick="var tg=event.target;while(!tg.title){tg=tg.parentNode;}if(tg.tagName){mobile.innerText=tg.title;}">
 <!--https://etherpad.wikimedia.org/p/RYC4rG0XlnKEz-bbj3YO-->
 
   <iframe name="synth" id="synth" src="synth/index.htm"></iframe>
@@ -33,6 +33,7 @@
     <div><a id="vocabulary_ref" href="https://learnthesewordsfirst.com/about/what-can-you-read.html" title="Vocabulary" target="ltwf" onclick="basic_words.style.visibility='visible';"><b>What you can read 🢒</b></a>
     </div>
     <p><a id="oxford" href="https://elt.oup.com/learning_resources/subjects/grammar/" target="_blank"><b>Oxford University Press</b></a> grammar and vocabulary practice exercises.
+      <a id="cambridge" href="https://dictionary.cambridge.org/grammar/british-grammar/" target="_blank"><b>Cambridge English Grammar</b></a> clear explanations with hundreds of examples.
     </p>
     <p><a id="languagetool" href="https://languagetool.org/" target="_blank"><b>LanguageTool</b></a>’s multilingual grammar, style, and spell checker is used by millions of people around the world.
     </p>
@@ -40,11 +41,17 @@
     </p>
     <p><a id="ms_audio" href="https://speech.microsoft.com/audiocontentcreation" target="_blank"><b>Microsoft Audio content creation</b></a> enables you to <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/speech-synthesis-markup" target="_blank">visually control</a> speech attributes in real-time – such as voice style, rate, pitch, volume, pronunciation and breaks. It allows you to quickly create more accurate, expressive and customized audio.
     </p>
+    <p><a id="inputtools" href="https://www.google.com/inputtools/try/" target="_blank"><b>Google Input Tools</b></a> makes it easy to type (or handwrite) in the language you choose, anywhere on the web.
+    </p>
+    <p><a id="cefr" href="http://englishprofile.org/wordlists/text-inspector" target="_blank"><b>English Profile TextInspector</b></a> checks the difficulty of any text for non-native speakers by levels of words in order of their learning by a common European standard (CEFR).
+    </p>
+    <p><a id="coca" href="https://www.english-corpora.org/coca/" target="_blank"><b>Corpus of Contemporary American English</b></a> contains more than one billion words of text from eight media sources: spoken, fiction, popular magazines, newspapers, academic texts, TV and Movies subtitles, blogs, and other web pages.
+    </p>
     <!-- https://elsaspeak.com/en/ -->
   </div>
   
   <div id="basic_words">
-    <iframe id="ltwf" name="ltwf" src="https://learnthesewordsfirst.com/LearnTheseWordsFirst.html" width="310" height="235"></iframe>
+    <iframe id="ltwf" name="ltwf" src="https://learnthesewordsfirst.com/LearnTheseWordsFirst.html" width="310" height="232"></iframe>
   </div>
   
   <div id="metadata">
@@ -68,21 +75,21 @@
       <div class="l"><a id="dl" href="#"></a><button title="Download" id="download" onclick="download();"><i class='material-icons notranslate'>download</i></button><button title="Upload" id="upload" onclick="upload();"><i class='material-icons notranslate'>upload</i></button><input type="file" id="ul" onchange="upload();"/>
       <select title="Setlist" name="toc" id="toc" onchange="res.scrollTo(0,this.value*16);"><option value="0">Setlist</option></select></div>
       <form action="#">
-        <textarea id="vs" name="vs" title="Value shift" placeholder="꜔˧&#13;1&#13;&#13;&#13;&#13;&#13;-&#13;&#13;&#13;&#13;&#13;2&#13;&#13;&#13;&#13;&#13;3&#13;&#13;&#13;&#13;&#13;4" onscroll="outline.scrollTo(0,this.scrollTop);res.scrollTo(0,this.scrollTop);" onchange="setCookies(false);" onfocus="ctl=this;"></textarea>
         <div id="outline"><hr/></div>
         <div id="highlight"><pre id="hl"></pre></div>
-        <textarea title="Album" placeholder="Title&#13;Verse&#13;&#13;&#13;&#13;&#13;Chorus&#13;&#13;&#13;&#13;&#13;Verse&#13;&#13;&#13;&#13;&#13;Verse&#13;&#13;&#13;&#13;&#13;Verse" id="res" name="res" onclick="keepSymbols(null);" onkeyup="keepSymbols(event.key);if(event.key=='Enter'){highlightText();getSentence();}else if(event.key==' ' || event.key=='Backspace' || event.key=='Delete' || event.ctrlKey || event.metaKey){colorPhonemes();}" onkeydown="if(event.key.length==1 && kbrd[event.key] && event.getModifierState('CapsLock') && !event.ctrlKey && !event.metaKey){addPhoneme(kbrd[event.key], 0);}" onmouseup="" ontouchup="" onfocus="ctl=this;" onscroll="highlight.scrollTo(this.scrollLeft,this.scrollTop);outline.scrollTo(0,this.scrollTop);vs.scrollTo(0,this.scrollTop);" onchange="setCookies(false);addTitles();"></textarea>
+        <textarea title="Album" placeholder="Title&#13;Verse&#13;&#13;&#13;&#13;&#13;Chorus&#13;&#13;&#13;&#13;&#13;Verse&#13;&#13;&#13;&#13;&#13;Verse&#13;&#13;&#13;&#13;&#13;Verse" id="res" name="res" onclick="keepSymbols(null);" onkeyup="keepSymbols(event.key);if(event.key=='Enter'){highlightText();getSentence();}else if(event.key==' ' || event.key=='Backspace' || event.key=='Delete' || event.ctrlKey || event.metaKey){colorPhonemes();}" onkeydown="if(event.key.length==1 && kbrd[event.key] && event.getModifierState('CapsLock') && !event.ctrlKey && !event.metaKey){addPhoneme(kbrd[event.key], 0);}" onmouseup="" ontouchup="" onfocus="ctl=this;" onscroll="highlight.scrollTo(this.scrollLeft,this.scrollTop);outline.scrollTo(0,this.scrollTop);" onchange="setCookies(false);addTitles();"></textarea>
         <input type="submit" id="submit"/>
       </form>
     </div>
     <div class="l">
-      <input type="text" name="phrase" id="phrase" list="_phrase" title="Phrase" placeholder="Phrase" onfocus="ctl=this;" onchange="loadSyntax(this.value);"/><datalist id="_phrase"></datalist>
-      <button onclick="if(phrase.value.length==0){phrase.value=selectText();}loadSyntax(phrase.value);" id="parse" title="Parse"><i class='material-icons notranslate'>more</i></button>
-      <select onchange="addPhoneme(this.value, 'transparent');" id="pos" title="Part of speech">
-        <option value="">🗩</option>
-      </select>
+      <audio src="" controls></audio><button id="speech" onclick="loadSpeech();" title="Speech"><i class='material-icons notranslate'>record_voice_over</i></button><select id="accent" title="Accent"><option value="US">US</option><option value="UK">UK</option><option value="AU">AU</option></select>
     </div>
-    <div class="l"><input type="text" id="word" list="_word" title="Word or transcription" placeholder="Word or transcription" onkeydown="if(a_c===false && this.value.length>2 && event.key=='Enter'){autoCompleter(this.value);ssp(this.value);}" onblur="if(a_c===false && this.value.length>2){autoCompleter(this.value);ssp(this.value);}" onfocus="ctl=this;"/><datalist id="_word"></datalist><button onclick="findWords();" id="search" title="Search"><i class='material-icons notranslate'>manage_search</i></button><button onclick="loadMorph();" id="morph" title="Morph"><i class='material-icons notranslate'>spellcheck</i></button></div>
+    <div class="l">
+      <input type="text" name="phrase" id="phrase" list="_phrase" title="Phrase" placeholder="Phrase" onfocus="ctl=this;"/><datalist id="_phrase"></datalist>
+      <button onclick="if(phrase.value.length==0){phrase.value=selectText();}loadSyntax(phrase.value);" id="parse" title="Parse"><i class='material-icons notranslate'>more</i></button>
+      <select onchange="addPhoneme(this.value, 'transparent');" id="pos" title="Part of speech"></select>
+    </div>
+    <div class="l"><input type="text" id="word" list="_word" title="Word or transcription" placeholder="Word or transcription" onkeydown="if(a_c===false && this.value.length>2 && event.key=='Enter'){autoCompleter(this.value);ssp(this.value);}" onblur="if(a_c===false && this.value.length>2){autoCompleter(this.value);ssp(this.value);}" onfocus="ctl=this;"/><datalist id="_word"></datalist><button onclick="if(word.value.length==0){word.value=selectText();}findWords();" id="search" title="Search"><i class='material-icons notranslate'>search</i></button><button onclick="if(word.value.length==0){word.value=selectText();}loadMorph();" id="morph" title="Morph"><i class='material-icons notranslate'>spellcheck</i></button></div>
     <div class="l"><input type="text" id="vowels" list="vowels_" title="Vowels" placeholder="Vowels" onkeyup="if(a_c===false && this.value.length>1 && event.key!='ArrowRight' && event.key!='ArrowLeft'){loadIndex(this.value,'A');}" onblur="if(a_c===false && this.value.length>1){loadIndex(this.value,'A');}" onfocus="ctl=this;"/><datalist id="_vowels"></datalist><datalist id="vowels_"></datalist><input type="text" id="consonants" list="consonants_" title="Consonants" placeholder="Consonants" onkeyup="if(a_c===false && this.value.length>1 && event.key!='ArrowRight' && event.key!='ArrowLeft'){loadIndex(this.value,'B');}" onblur="if(a_c===false && this.value.length>1){loadIndex(this.value,'B');}" onfocus="ctl=this;"/><datalist id="_consonants"></datalist><datalist id="consonants_"></datalist><button onclick="splitWord();" id="split" title="Split"><i class='material-icons notranslate'>subdirectory_arrow_left</i></button></div>
     
     <pre oncontextmenu="return false;" id="keys_">
@@ -92,12 +99,12 @@
 <a href="javascript:undo();" title="Undo"><i class='material-icons notranslate' id='undo'>undo</i></a>        <a title="Wildcard" href="javascript:" onclick="addPhoneme('*', 'transparent');">* </a>        <a title="Space" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme(' ', 'transparent');">⎵ </a>     <a title="Symbols to use" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="kb_symbols();"><i class='material-icons notranslate' id="tgl">toggle_off</i></a></pre>
     <pre oncontextmenu="return false;" id="keys"><span class="notranslate"><select title="i"></select><select title="ɪ"></select><select title="eɪ"></select><select title="ɛ"></select><select title="æ"></select><select title="ə"></select><select title="ʌ"></select><select title="ɑ"></select><select title="ɔ"></select><select title="oʊ"></select><select title="ʊ"></select><select title="u"></select></span>
 <a title="Any stress with any vowel" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme('_', 'transparent');"><span class="notranslate">_ </span></a><a title="No stress with any vowel" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme('_·', 'transparent');"><span class="notranslate">_·</span></a><a title="Primary stress with any vowel" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme('_ˈ', 'transparent');"><span class="notranslate">_ˈ</span></a><a title="Secondary stress with any vowel" onmousedown="mobile.innerText=this.title;" href="javascript:" onclick="addPhoneme('_ˌ', 'transparent');"><span class="notranslate">_ˌ</span></a><span class="notranslate"><select title="aɪ"></select><select title="ɔɪ"></select><select title="aʊ"></select></span></pre>
-  <div id="rows" title="Pitch and volume for word and syllable stress, grammatic parse tree levels" onmousedown="mobile.innerText=this.title;">
+  <div id="rows" title="Pitch and volume, sentiment levels" onmousedown="mobile.innerText=this.title;">
     <div id="tone" class="notranslate"></div>
     <select onchange="tone_.scrollTo(0,24*this.options.selectedIndex);" id="row" title="Symbols selector">
         <option selected>· note</option>
-        <option>| shift</option>
         <option>- volume</option>
+        <option title="external, internal">| sentiment</option>
     </select>
   </div>
 </div>
@@ -119,10 +126,12 @@
     <a href="javascript:showTrends();" title="Google Trends"><i class='material-icons notranslate'>auto_graph</i> Trends</a><br/>
     <a href="javascript:showLibrary();" title="Musixmatch"><i class='material-icons notranslate'>lyrics</i> Library</a><br/>
     <a href="javascript:showWiki();" title="Wikipedia"><i class='material-icons notranslate'>extension</i> Wiki</a><br/>
-    <a href="javascript:showBasicWords();" title="Learn These Words First"><i class='material-icons notranslate'>abc</i> Vocabulary</a><br/>
-    <a href="javascript:window.open('https://translate.google.com/?sl=en&tl='+sl+'&text='+selectText()+'&op=translate', '_blank', 'width=320,height=480,status=no,menubar=no');" title='Google Translate'><i class='material-icons notranslate'>translate</i> Dictionary</a><b>🢒</b><br/>
-    <a href="javascript:window.open('https://books.google.com/ngrams/graph?content='+selectText()+'&year_start=1800&year_end=2019&corpus=en-2019&smoothing=50', '_blank', 'width=320,height=480,status=no,menubar=no');" title='Google Books Ngrams'><i class='material-icons notranslate'>query_stats</i> Phrases</a><b>🢒</b><br/>
+    <a href="javascript:showBasicWords();" title="Learn These Words First"><i class='material-icons notranslate'>category</i> Vocabulary</a><br/>
+    <a href="javascript:window.open('/#gsc.tab=0&gsc.sort=&gsc.q='+getQuery(), '_blank', 'width=320,height=480,status=no,menubar=no');" title='Dictionary search'><i class='material-icons notranslate'>abc</i> Examples</a><b>🢒</b><br/>
+    <a href="javascript:window.open('https://translate.google.com/?sl=en&tl='+sl+'&text='+getQuery()+'&op=translate', '_blank', 'width=320,height=480,status=no,menubar=no');" title='Google Translate'><i class='material-icons notranslate'>translate</i> Translate</a><b>🢒</b><br/>
+    <a href="javascript:window.open('https://books.google.com/ngrams/graph?content='+getQuery()+'&year_start=1800&year_end=2019&corpus=en-2019&smoothing=50', '_blank', 'width=320,height=480,status=no,menubar=no');" title='Google Books Ngrams'><i class='material-icons notranslate'>query_stats</i> Phrases</a><b>🢒</b><br/>
     <a href="javascript:" target="_blank" onfocus="orig_check();" title="Google Search"><i class='material-icons notranslate'>content_paste_search</i> Originality</a><b>🢒</b><br/>
+    <a href="javascript:window.open('https://www.google.com/search?q='+word.value+'+definition', '_blank', 'width=320,height=480,status=no,menubar=no');" title='Oxford Dictionary'><i class='material-icons notranslate'>manage_search</i> Definition</a><b>🢒</b><br/>
     <a href="javascript:showResources();" title="Grammar"><i class='material-icons notranslate'>link</i> Grammar</a><br/>
     <a href="javascript:showCredits();" title="Credits"><i class='material-icons notranslate'>copyright</i> Credits</a><br/>
     <a href="javascript:showLinks();" title="Share"><i class='material-icons notranslate'>share</i> Share</a> <a onfocus="this.href='https://www.facebook.com/sharer/sharer.php?u=https://freealise.com&hashtag=%23freealise&quote='+res.value.split('\n').join(' / ');" href="javascript:" target="_blank" title="Facebook"><i class='material-icons notranslate'>facebook</i></a>
@@ -163,10 +172,11 @@
           <option value="12">Russian 2009</option>
           <option value="10">Spanish 2009</option>
           -->
-        </select><br/>
+        </select><select id="voiceSelect"></select><br/>
     <a href="javascript:showLinks();" title="Show links"><i class='material-icons notranslate'>menu_open</i></a>
   </div>
 
 <script type="text/javascript" src="index.js"></script>
+<script type="text/javascript" src="tts.js"></script>
 </body>
 </html>
