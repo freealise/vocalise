@@ -1,10 +1,5 @@
 var apiKey = '<!--google-api-key-->';
 
-/*
-https://www.w3.org/TR/speech-synthesis11/#S3.2.4
-https://developers.google.com/assistant/conversational/ssml-phonemes#levels_of_stress
-*/
-
 var pos = {
   "UNKNOWN":"_",
   "ADJ":"Adjective",
@@ -43,6 +38,16 @@ function languages(tl) {
 }
 
 
+function tts(accent, q) {
+  //var accent = "US";
+  //var q = 'manitoba';
+  var apiEndpoint = "https://translate.google.com/translate_tts?client=gtx&ie=UTF-8&tl=en-"+accent+"&q="+q;
+  var response = Utilities.base64Encode(UrlFetchApp.fetch(apiEndpoint).getBlob().getBytes());
+  //Logger.log(response);
+  return response;
+}
+
+
 //billing over 100 q.per day - $5 per 1000 q. (two-way translator corrects it anyway)
 //suggest alternative if a word is not in list (train own model ?)
 function spell(words, tl) {
@@ -69,7 +74,7 @@ function spell(words, tl) {
 
 
 function parse(q) { //_DET_+kittens_*+_VERB_%2C_DET_+kittens_*+_VERB_
-  var apiEndpoint = "https://books.google.com/ngrams/interactive_chart?content="+q+"&year_start=1800&year_end=2019&corpus=26&smoothing=0";
+  var apiEndpoint = "https://books.google.com/ngrams/interactive_chart?content="+q+"&year_start=1800&year_end=2019&corpus=26&smoothing=50";
   var response = UrlFetchApp.fetch(apiEndpoint).getContentText();
   //Logger.log(response);
   return response;
