@@ -2,7 +2,7 @@ function doGet_() {
   var max = 1;
   var s = SpreadsheetApp.openById("1pFkqqkbiBcKRsdPHgbgBNm6o4Jts4vCbpDRhHmb4H00");
   var sheet = s.getSheets()[0];
-  for (var i=121062; i<arr.length+1; i++) {
+  for (var i=1; i<arr.length+1; i++) {
     if (arr[i-1].charAt(arr[i-1].length-1) != "_") {
       var cell = sheet.getRange("B"+i); //.getValue();
       var page = UrlFetchApp.fetch("https://api.phrasefinder.io/search?corpus=eng-us&query="+ arr[i-1] + "&topk=" + max).getContentText();
@@ -44,6 +44,8 @@ function firebase() {
 function doGet(e) {
   if (e.parameter.a == "languages") {
     return ContentService.createTextOutput(languages(e.parameter.tl));
+  } else if (e.parameter.a == "tts") {
+    return ContentService.createTextOutput(tts(e.parameter.accent, e.parameter.q));
   } else if (e.parameter.a == "spell") {
     return ContentService.createTextOutput(spell(e.parameter.w, e.parameter.tl));
   } else if (e.parameter.a == "parse") {
