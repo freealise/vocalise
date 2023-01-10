@@ -1,5 +1,5 @@
-var v_ssml = ("iː ɪ eɪ ɛ æ ə ɚ ʌ ɑː ɔː oʊ ʊ uː aɪ aʊ ɔɪ").split(" ");
-var c_ssml = ("p b t d k ɡ m n ŋ f v s z θ ð ʃ ʒ h l ɹ ʧ ʤ j w").split(" ");
+var v_ssml = "iː ɪ eɪ ɛ æ ə ɚ ʌ ɑː ɔː oʊ ʊ uː aɪ aʊ ɔɪ";
+var c_ssml = "p b t d k ɡ m n ŋ f v s z θ ð ʃ ʒ h l ɹ ʧ ʤ j w";
 //https://en.wikipedia.org/wiki/Sonority_Sequencing_Principle
 
 var keys = [
@@ -159,19 +159,16 @@ var superscript = {
 
 var s = ["·", "ˈ", "ˌ"];
 var stress = ("┈┄╌─┉┅╍━").split("");
-var stress_v = ("┊┆╎│┋┇╏┃").split("");
+var rate = ("│┃╎╏┆┇┊┋").split("");
+var freq = ["        ", "ᐧ       ", "ᐧᐧ      ", "ᐧᐧᐧ     ", "ᐧᐧᐧᐧ    ", "ᐧᐧᐧᐧᐧ   ", "ᐧᐧᐧᐧᐧᐧ  ", "ᐧᐧᐧᐧᐧᐧᐧ ", "ᐧᐧᐧᐧᐧᐧᐧᐧ"];
 
-var tone = [ '꜌', '꜑', '꜋', '꜐', '꜊', '꜏', '꜉', '꜎', '꜈', '꜍', 'ᣟ𝍩', '𝍩ᣟ' ]; //ᐧ
+var tone = [ '꜌', '꜑', '꜋', '꜐', '꜊', '꜏', '꜉', '꜎', '꜈', '꜍', 'ᣟ𝍩', '𝍩ᣟ' ]; //ᐧ ⸽
 var tone_chart = ['꜒', '˥', '꜓', '˦', '꜔', '˧', '꜕', '˨',  '꜖', '˩'];
 //https://en.wikipedia.org/wiki/Tone_letter
 //https://en.wikipedia.org/wiki/Unicode_subscripts_and_superscripts
 //https://en.wikipedia.org/wiki/Counting_Rod_Numerals_(Unicode_block)
 
 var colors = [0,1,0,1,0,0,1,0,1,0,1,0,0];
-
-function playAudio() {
-  document.getElementsByTagName('audio')[0].play();
-}
 
 /*
 
@@ -339,6 +336,7 @@ var phrase = document.getElementById("phrase");
 var _phrase = document.getElementById("_phrase");
 var corpus = document.getElementById("corpus");
 var languages = document.getElementById("languages");
+var accent = document.getElementById("accent");
 var trends_chart = document.getElementById("trends_chart");
 var wiki_ = document.getElementById("wiki_");
 var mobile = document.getElementById("mobile");
@@ -356,7 +354,6 @@ var pos = document.getElementById('pos');
 var genre = document.getElementById("genre");
 var submit = document.getElementById("submit");
 var outline = document.getElementById("outline");
-var vs = document.getElementById("vs");
 var dl = document.getElementById("dl");
 var ul = document.getElementById("ul");
 var toc = document.getElementById("toc");
@@ -381,16 +378,19 @@ var note_ = new RegExp("("+tone.join("|")+")", "g");
 var note_n = new RegExp("[^("+tone.join("|")+"| )]", "g");
 var stress_ = new RegExp("("+stress.join("|")+")", "g");
 var stress_n = new RegExp("[^("+stress.join("|")+"| )]", "g");
-var ph_ = new RegExp("("+v_ssml.join("|")+"|"+c_ssml.join("|")+")", "g");
-var _v = new RegExp("("+v_ssml.join("|")+")", "g");
-var _c = new RegExp("("+c_ssml.join("|")+")", "g");
+var ph_ = new RegExp("("+v_ssml.replace(/\w/g, "").trim().replace(/\s+/g, "|")+"|"+c_ssml.replace(/\w/g, "").trim().replace(/\s+/g, "|")+")", "g");
+var _v = new RegExp("("+v_ssml.replace(/\s/g, "|")+")", "g");
+var _c = new RegExp("("+c_ssml.replace(/\s/g, "|")+")", "g");
 var pos_ = new RegExp("("+Object.keys(_pos).join("|")+")", "g");
 
-pos.innerHTML += '<optgroup label="Part of speech">';
-for (var i=0; i<Object.keys(_pos).length; i++) {
-  pos.innerHTML += '<option value="'+Object.values(_pos)[i][0]+'">'+Object.values(_pos)[i][0]+' '+Object.values(_pos)[i][1]+'</option>';
+function initPos() {
+  pos.innerHTML = '<option value="">🗩</option><optgroup label="Part of speech">';
+  for (var i=0; i<Object.keys(_pos).length; i++) {
+    pos.innerHTML += '<option value="'+Object.values(_pos)[i][0]+'">'+Object.values(_pos)[i][0]+' '+Object.values(_pos)[i][1]+'</option>';
+  }
+  pos.innerHTML += '</optgroup>';
 }
-pos.innerHTML += '</optgroup>';
+initPos();
 
 for (var i=0; i<keys.length; i++) {
   var ks = keys[i].split(";");
@@ -435,13 +435,13 @@ for (var i=0; i<tone.length; i++) {
   tone_.innerHTML += "<a title='"+ks+"' href='javascript:' onclick='addPhoneme(this.title);' style='color:rgba(0,0,0,"+(colors[i]*0.75+0.25)+");'>"+ks+"</a> ";
 }
 tone_.innerHTML += "<br/>";
-for (var i=0; i<tone_chart.length; i++) {
-  var ks = tone_chart[i];
+for (var i=0; i<stress.length; i++) {
+  var ks = stress[i];
   tone_.innerHTML += "<a title='"+ks+"' href='javascript:' onclick='addPhoneme(this.title);'>"+ks+"</a> ";
 }
 tone_.innerHTML += "<br/>";
-for (var i=0; i<stress.length; i++) {
-  var ks = stress[i];
+for (var i=0; i<tone_chart.length; i++) {
+  var ks = tone_chart[i];
   tone_.innerHTML += "<a title='"+ks+"' href='javascript:' onclick='addPhoneme(this.title);'>"+ks+"</a> ";
 }
 
@@ -457,7 +457,6 @@ function findCursor(v) {
 
 function selectText() {
     var txt = "";
-
     if (window.getSelection) {
         txt = window.getSelection();
     }
@@ -466,8 +465,19 @@ function selectText() {
     } else if (document.selection) {
         txt = document.selection.createRange().text.trim();
     }
-
     return txt;
+}
+
+function getQuery() {
+  var q = selectText();
+  if (!q || q.length == 0) {
+    if (word.value.length == 0) {
+      q = word.value;
+    } else {
+      q = phrase.value;
+    }
+  }
+  return q;
 }
 
 function addWord(w_, _w) {
@@ -501,7 +511,7 @@ function findWords() {
   var query = null;
   if (word.value != "" && word.value.trim().search(/[*_·ˈˌ ]/) != -1) {
     var w_ = word.value.replace(/\s+/g, " ").replace(/_/g, "[^ ]+").replace(/\*/g, ".*").trim();
-    query = "select A, D where A matches '" + w_ + "'";
+    query = "select A, F, D where A matches '" + w_ + "'";
   } else if (vowels.value != "" || consonants.value != "") {
     if (vowels.value != "") {
       var q = vowels.value.replace(/[*_·ˈˌ]/g, function(x){return x+" ";}).replace(/\s+/g, " ").replace(/_/g, "[^ ]+").replace(/\*/g, ".*").trim();
@@ -513,7 +523,7 @@ function findWords() {
     } else {
       var q_ = ".*";
     }
-    query = "select A, D where B matches '" + q + "' and C matches '" + q_ + "'";
+    query = "select A, F, D where B matches '" + q + "' and C matches '" + q_ + "'";
   } else if (word.value != "") {
     autoCompleter(word.value);
     ssp(word.value);
@@ -525,7 +535,7 @@ function findWords() {
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
         if (this.responseText != "") {
-          var r = this.responseText.slice(1,-1).replace(/","/g, "'>").replace(/"\n"/g, "</option><option value='");
+          var r = this.responseText.slice(1,-1).replace(/","/g, "'>").replace(/\d+'>/g, function(x){ return freq[parseInt(Math.log2(x.slice(0,-2))/2)]; }).replace(/"\n"/g, "</option><option value='");
           _word.innerHTML = "<option value='" + r + "</option>";
           r = null;
         } else {
@@ -603,16 +613,6 @@ function colorPhonemes() {
   var d = parseInt(cPos[1]);
   var ln = res.value.substr(0, b).split("\n").length-1;
   for (var j=0; j<lines.length; j++) {
-    if (lines[j+1] && lines[j].search(/\w/) != -1 && lines[j+1].search(ph_) != -1) {
-      lines[j] = "<div class='ipa'>" + lines[j];
-    }
-    if (lines[j-1] && lines[j].search(ph_) != -1 && lines[j-1].search(/\w/) != -1) {
-      if (lines[j+1] && lines[j+1].search(stress_) != -1) {
-        lines[j+1] = lines[j+1] + "</div>";
-      } else {
-        lines[j] = lines[j] + "</div>";
-      }
-    }
     if (lines[j].search(_r) != -1) {
       for (var l=3; l>0; l--) {
         for (var i=0; i<regexp.length; i++) {
@@ -691,13 +691,17 @@ function autoCompleter(txt) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-        var r = this.responseText.slice(1,-1).replace(/","/g, "'>").replace(/"\n"/g, "</option><option value='");
-        _word.innerHTML = "<option value='" + r + "</option>";
-      	r = null;
+        if (this.responseText != "") {
+          var r = this.responseText.slice(1,-1).replace(/","/g, "'>").replace(/\d+'>/g, function(x){ return freq[parseInt(Math.log2(x.slice(0,-2))/2)]; }).replace(/"\n"/g, "</option><option value='");
+          _word.innerHTML = "<option value='" + r + "</option>";
+      	  r = null;
+        } else {
+          _word.innerHTML = "";
+        }
       	a_c = false;
       }
     };
-    var query = "select A, D where D contains '" + txt + "'";
+    var query = "select A, F, D where D contains '" + txt + "'";
     xhttp.open("GET", base + gid + "&tq=" + encodeURIComponent(query), true);
     xhttp.send();
   }
@@ -832,7 +836,7 @@ function loadLibrary(artist, song) {
 
 
 function loadWiki() {
-  var q = "" + selectText();
+  var q = "" + getQuery();
   q = q.replace(/ /g, '_').toLowerCase();
   wiki_.innerHTML = "<iframe id='wiki' src='https://en.m.wikipedia.org/wiki/"+q+"' width='310' height='232' border='0'/>";
 }
@@ -891,6 +895,14 @@ function kb_symbols() {
 }
 
 function loadSyntax(q) {
+  var cPos = findCursor(phrase).split(",");
+  var b = parseInt(cPos[0]);
+  var d = parseInt(cPos[1]);
+  if (b == d) {
+    var n = q.substr(0, b).replace(/[^\w\s]/g, "").trim().split(" ").length;
+  } else {
+    var n = q.replace(/[^\w\s]/g, "").trim().split(" ").length;
+  }
   var q = q.replace(/[^\w\s]/g, "").trim().split(" ");
   for (var i=0; i<q.length; i++) {
     q[i] += "_*";
@@ -918,7 +930,57 @@ function loadSyntax(q) {
           r += json[i].ngram.split(" ")[0] + " ";
         }
       }
-      phrase.value = r.trim().replace(pos_, function(x) { return _pos[x][0]; });
+      if (b == d && phrase.value.charAt(b-1) == " " && (b == phrase.value.length || phrase.value.charAt(b) == " ")) {
+        var q = r.trim().replace(/\w+\_/g, "_").replace(/\_\w+/g, function(x){ return x+"_"; });
+        var q_ = q.split(" ");
+        if (q_.length < 5) {
+          q = "";
+          for (var i=0; i<Object.keys(_pos).length; i++) {
+            for (var j=0; j<=q_.length; j++) {
+              if (j < n) {
+                q += q_[j] + " ";
+              } else if (j == n) {
+                q += Object.keys(_pos)[i] + "_ ";
+              } else {
+                q += q_[j-1] + " ";
+              }
+            }
+            q = q.trim() + ",";
+          }
+          loadPos(q, n);
+        } else {
+          initPos();
+        }
+      }
+      r = r.trim().replace(pos_, function(x) { return _pos[x][0]; });
+      phrase.value = r.substr(0, b+n) + " " + r.substr(b+n);
+      phrase.setSelectionRange(b+n, d+n);
+      phrase.focus();
+    }
+  };
+  xhttp.open("GET", url + "?a=parse&q=" + encodeURIComponent(q), true);
+  xhttp.send();
+}
+
+function loadPos(q, n) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      console.log(this.responseText);
+      var json = JSON.parse("["+this.responseText.split(">[")[1].split("]<")[0]+"]");
+      for (var i=0; i<json.length; i++) {
+        if (json[i].ngram.length > 0) {
+          json[i].ngram = json[i].ngram.split(" ")[n].slice(0,-1);
+          json[i].ts = json[i].timeseries[json[i].timeseries.length-1];
+        }
+      }
+      json.sort(function(a, b) { return b.ts - a.ts; });
+      pos.innerHTML = '<optgroup label="🗩 Part of speech">';
+      for (var i=0; i<json.length; i++) {
+        pos.innerHTML += '<option value="'+_pos[json[i].ngram][0]+'">'+_pos[json[i].ngram][0]+' '+_pos[json[i].ngram][1]+'</option>';
+      }
+      pos.innerHTML += '</optgroup>';
+      phrase.focus();
     }
   };
   xhttp.open("GET", url + "?a=parse&q=" + encodeURIComponent(q), true);
@@ -952,6 +1014,25 @@ function loadMorph() {
   }
 }
 
+function loadSpeech() {
+  var q = "" + getQuery();
+  var ipa = q.replace(/\w/g, "");
+  if (ipa.search(ph_) != -1 || ipa.search(/[·ˈˌ]/) != -1) {
+    speak(q); //ˌmænɪˈtoʊbə
+  } else {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        document.getElementsByTagName('audio')[0].src = "data:audio/mp3;base64," + this.responseText;
+        document.getElementsByTagName('audio')[0].load();
+        document.getElementsByTagName('audio')[0].play();
+      }
+    };
+    xhttp.open("GET", url + "?a=tts&accent=" + accent.value + "&q=" + encodeURIComponent(q), true);
+    xhttp.send();
+  }
+}
+
 function loadBasicWords(q) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
@@ -981,11 +1062,11 @@ function loadBasicWords(q) {
   
   function download() {
     var data = "";
-    if (window.frames['genre'].l == true) {
+    if (window.frames['genre'].contentWindow.l === true) {
       gform = genre.contentWindow.location.search.slice(1).split('&').join('\n');
       data = decodeURIComponent(gform).replace(/\=/g, ": ").replace(/\+/g, " ").replace(/\n\n/g,"");
       var filename = "lyrics.txt";
-      dl.setAttribute('href', 'data:text/plain;charset=utf-8,' + data + "\n\n" + vs.value.replace(/\n\n/g, " ").replace(/\n/g, "") + "\n\n" + res.value);
+      dl.setAttribute('href', 'data:text/plain;charset=utf-8,' + data + "\n\n" + res.value);
       dl.setAttribute('download', filename);
       dl.click();
     }
@@ -1013,9 +1094,8 @@ function loadBasicWords(q) {
             }
           }
         }
-        var data = reader.result.slice(reader.result.indexOf("\n\n")+2).split("\n\n");
-        vs.value = data[0].replace(/ /g, "\n\n");
-        res.value = data[1];
+        var data = reader.result.slice(reader.result.indexOf("\n\n")+2);
+        res.value = data;
 
         setCookies(false);
         setCookies(true);
@@ -1038,7 +1118,7 @@ function loadBasicWords(q) {
         document.cookie = gform[i] + ";" + expires + ";path=/";
       }
     } else {
-      document.cookie = "lyrics=" + encodeURIComponent(vs.value)+'|'+encodeURIComponent(res.value) + ";" + expires + ";path=/";
+      document.cookie = "lyrics=" + encodeURIComponent(res.value) + ";" + expires + ";path=/";
     }
   }
   
@@ -1058,20 +1138,11 @@ function loadBasicWords(q) {
           }
         }
       } else if (ck[0] == 'lyrics') {
-        var cv = ck[1].split("|");
-        vs.value = cv[0];
-        res.value = cv[1];
+        res.value = ck[1];
       }
     }
   }
   getCookie();
-
-  vs.addEventListener("keyup", function (event) {
-    h = "Value shift (external, internal)";
-    vs.setCustomValidity(h);
-    res.setCustomValidity("");
-    submit.click();
-  });
 
   res.addEventListener("keyup", function (event) {
     var cPos = findCursor(res).split(",");
@@ -1139,7 +1210,6 @@ function loadBasicWords(q) {
         h = "";
     }
     res.setCustomValidity(h);
-    vs.setCustomValidity("");
     if (h != "") { submit.click(); }
   });
 
@@ -1195,7 +1265,7 @@ function showTooltips() {
 
 function showTrends() {
   if (trends_chart.style.visibility!='visible') {
-    loadTrends("" + selectText());
+    loadTrends("" + getQuery());
     trends_chart.style.visibility='visible';
   } else {
     trends_chart.style.visibility='hidden';
