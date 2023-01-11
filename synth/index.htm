@@ -246,6 +246,18 @@ audio {
   border: none;
   border-top:2px dashed lightgray;
 }
+#thumbnail {
+  width:288px;
+  height:32px;
+  overflow:scroll;
+  position:absolute;
+  bottom:0;
+  left:24px;
+}
+#canvas {
+  border: none;
+  padding-right:32px;
+}
 #toggle {
   position:relative;
   float:right;
@@ -329,10 +341,11 @@ audio {
       </span>
   </div>
   <canvas id="spectrogram" width="288" height=32></canvas>
+  <div id="thumbnail"><canvas id="canvas" width="256" height="2048" onclick="showThumbnail();" ondblclick="saveThumbnail();"></canvas></div>
   <span id="toggle">
     <button id="_toolbar" title="Toggle toolbar" onclick="togglePanel(this.id.slice(1));"><i>✍</i></button><br/><button id="_cheat" title="Toggle cheat sheet" onclick="togglePanel(this.id.slice(1));"><i>⎙</i></button>
   </span>
-  <div id="chart"><a href="https://en.wikipedia.org/wiki/Spectrogram" target="_blank"><img src="wideband.narrowband.jpg" alt="Spectrogram of speech" height="320"/></a></div>
+  <div id="chart"><a href="https://www.google.com/search?q=phonemes+spectrogram" target="_blank"><img src="wideband.narrowband.jpg" alt="Spectrogram of speech" height="320"/></a></div>
 </div>
 <a id="synthesizer" title="Synthesizer" href="#" onclick="showPanel();">🎘</a>
 <script type="text/javascript" src="spectrogram.js"></script>
@@ -352,6 +365,8 @@ var eraser = document.getElementById("eraser");
 var download = document.getElementById("download");
 var upload = document.getElementById("upload");
 var upload_voice = document.getElementById("upload_voice");
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
 var hscroll = document.getElementById("hscroll");
 var scroll = document.getElementById("scroll");
 var scr = new Array(2048);
@@ -544,6 +559,7 @@ function init() {
 }
 
 function play() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
   if (!mediaRecorder || mediaRecorder.state == 'inactive') {
     initRec();
     masterGain.connect(dest);
@@ -885,6 +901,32 @@ function switchTool(el) {
       tools[i].style.textDecoration = "none";
     }
   }
+}
+
+
+function showThumbnail() {
+  var binary = pre.innerText.split("\n");
+  var imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+  for (var j=0; j<binary.length; j++) {
+    binary[j] = binary[j].replace(/[\|\d\w]/g, "⠀").split("");
+    for (var i=0; i<256*4; i+=4) {
+      imgData.data[j*256*4+i] = 0;
+      imgData.data[j*256*4+i+1] = 0;
+      imgData.data[j*256*4+i+2] = 0;
+      imgData.data[j*256*4+i+3] = br.indexOf(binary[j][i]);
+    }
+  }
+  ctx.putImageData(imgData, 0, 0);
+}
+
+
+function saveThumbnail() {
+  var filename = "spectrogram.png";
+  download.href = document.getElementById('canvas').toDataURL("image/png");
+  download.setAttribute('download', filename);
+  download.click();
 }
 
 
