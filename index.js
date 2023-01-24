@@ -630,6 +630,8 @@ function colorPhonemes() {
             return "<i style='color:" + regexp_[i][1] + ";'>"+x.replace(/./g, "ˍ")+"</i>";
         });
       }
+    } else if (lines[j].search("⸽") != -1) {
+      lines[j] = "<div style='background-image:repeating-linear-gradient(to bottom, lightgray 1px, lightgray 2px, transparent 2px, transparent 3px);'>" + lines[j] + "</div>";
     }
     str += lines[j]+"\n";
   }
@@ -731,18 +733,20 @@ function loadLanguages() {
 
 
 function getSentence() {
+  colorPhonemes();
   var d = findCursor(res).split(',')[1];
   var b = res.value.substr(0, d).split("\n");
   var wrd = b[b.length-2].trim();
-  phrase.value = "";
-  phrase.placeholder = "…";
-  _phrase.innerHTML = "";
-  colorPhonemes();
-  var wrd_ = wrd.replace(/\n\W*\n/g, "\n").replace(/\n/g, " ").replace(/[\,\"\'\-\:\;]/g, "").replace(/\?/g, " \?").replace(/[\!\.]/, function(x){return " "+x;}).split(" ");
-  loadPunctuation(wrd_, 0, wrd);
-  loadTranslation(wrd, "", tl[0], sl);
-  wrd = wrd.replace(/[\n\W]/g, " ").trim();
-  loadTrends(wrd);
+  if (wrd.search(/\w/) != -1) {
+    phrase.value = "";
+    phrase.placeholder = "…";
+    _phrase.innerHTML = "";
+    var wrd_ = wrd.replace(/\n\W*\n/g, "\n").replace(/\n/g, " ").replace(/[\,\"\'\-\:\;]/g, "").replace(/\?/g, " \?").replace(/[\!\.]/, function(x){return " "+x;}).split(" ");
+    loadPunctuation(wrd_, 0, wrd);
+    loadTranslation(wrd, "", tl[0], sl);
+    wrd = wrd.replace(/[\n\W]/g, " ").trim();
+    loadTrends(wrd);
+  }
 }
 
 
