@@ -631,7 +631,7 @@ function colorPhonemes() {
         });
       }
     } else if (lines[j].search("⸽") != -1) {
-      lines[j] = "<div style='background-image:repeating-linear-gradient(to bottom, lightgray 1px, lightgray 2px, transparent 2px, transparent 3px);'>" + lines[j] + "</div>";
+      lines[j] = "<div style='width:100%;display:inline-block;background-image:repeating-linear-gradient(to bottom, lightgray 2px, lightgray 3px, transparent 3px, transparent 6px);'>" + lines[j] + "</div>";
     }
     str += lines[j]+"\n";
   }
