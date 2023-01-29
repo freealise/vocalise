@@ -160,7 +160,7 @@ var superscript = {
 var s = ["·", "ˈ", "ˌ"];
 var stress = ("┈┄╌─┉┅╍━").split("");
 var rate = ("│┃╎╏┆┇┊┋").split("");
-var freq = ["        ", "ᐧ       ", "ᐧᐧ      ", "ᐧᐧᐧ     ", "ᐧᐧᐧᐧ    ", "ᐧᐧᐧᐧᐧ   ", "ᐧᐧᐧᐧᐧᐧ  ", "ᐧᐧᐧᐧᐧᐧᐧ ", "ᐧᐧᐧᐧᐧᐧᐧᐧ"];
+var freq = ["        ", "        ", "ᐧ       ", "ᐧᐧ      ", "ᐧᐧᐧ     ", "ᐧᐧᐧᐧ    ", "ᐧᐧᐧᐧᐧ   ", "ᐧᐧᐧᐧᐧᐧ  ", "ᐧᐧᐧᐧᐧᐧᐧ ", "ᐧᐧᐧᐧᐧᐧᐧᐧ"];
 
 var tone = [ '꜌', '꜋', '꜊', '꜉', '꜈', 'ᣟ𝍩', '꜑', '꜐', '꜏', '꜎', '꜍', '𝍩ᣟ' ]; //ᐧ ⸽
 var tone_chart = ['꜒', '˥', '꜓', '˦', '꜔', '˧', '꜕', '˨',  '꜖', '˩'];
@@ -535,7 +535,7 @@ function findWords() {
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
         if (this.responseText != "") {
-          var r = this.responseText.slice(1,-1).replace(/","/g, "'>").replace(/\d+'>/g, function(x){ return freq[parseInt(Math.log2(x.slice(0,-2))/2)]; }).replace(/"\n"/g, "</option><option value='");
+          var r = this.responseText.slice(1,-1).replace(/","/g, "'>").replace(/\d+'>/g, function(x){ return freq[parseInt(Math.log2(x.slice(0,-2)+1)/2)]; }).replace(/"\n"/g, "</option><option value='");
           _word.innerHTML = "<option value='" + r + "</option>";
           r = null;
         } else {
@@ -694,7 +694,7 @@ function autoCompleter(txt) {
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
         if (this.responseText != "") {
-          var r = this.responseText.slice(1,-1).replace(/","/g, "'>").replace(/\d+'>/g, function(x){ return freq[parseInt(Math.log2(x.slice(0,-2))/2)]; }).replace(/"\n"/g, "</option><option value='");
+          var r = this.responseText.slice(1,-1).replace(/","/g, "'>").replace(/\d+'>/g, function(x){ return freq[parseInt(Math.log2(x.slice(0,-2)+1)/2)]; }).replace(/"\n"/g, "</option><option value='");
           _word.innerHTML = "<option value='" + r + "</option>";
       	  r = null;
         } else {
