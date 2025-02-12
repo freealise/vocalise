@@ -6,6 +6,9 @@
 Dictionary by <a href="http://www.speech.cs.cmu.edu/cgi-bin/cmudict" title="Carnegie Mellon University" target="_blank"><u>CMU</u></a>, sorted by frequency based on <a href="https://books.google.com/ngrams" title="Google Books Ngrams" target="_blank"><u>Google Books Ngrams</u></a> with <a href="https://phrasefinder.io/" title="PhraseFinder" target="_blank"><u>PhraseFinder</u></a>.</p>
 
 <p><b>TODO:</b><br/>
+- shuffled flashcards combining into sentences (for formants/phonemes as by keyboard rows and columns, according to frequency to arrange by SSP; for words if facing up are a poetry set - practical, if down are solitaire / poker game - educational)<br/>  
+- word tree / net from dict: first noun in description of same pos is parent, synonyms if parents of each other (or similar descriptions)<br/>  
+  
 - use https://concepticon.clld.org/parameters with LTWF<br/>
 - add web and fiction word frequency data ?<br/>
 - writing and reading, speaking and listening with AI and Google Assistant<br/>
