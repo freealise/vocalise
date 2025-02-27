@@ -168,6 +168,9 @@ var tone_chart = ['꜒', '˥', '꜓', '˦', '꜔', '˧', '꜕', '˨',  '꜖', '�
 //https://en.wikipedia.org/wiki/Combining_Diacritical_Marks
 //https://en.wikipedia.org/wiki/Counting_Rod_Numerals_(Unicode_block)
 
+var theta = ('🕛|🕐|🕑|🕒|🕓|🕔|🕕|🕖|🕗|🕘|🕙|🕚').split('|');
+var phi = ('🕧|🕜|🕝|🕞|🕟|🕠|🕡|🕢|🕣|🕤|🕥|🕦').split('|');
+
 var colors = [0,1,0,1,0,0,1,0,1,0,1,0,0];
 
 /*
