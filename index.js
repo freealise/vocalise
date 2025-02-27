@@ -165,7 +165,7 @@ var freq = ["        ", "        ", "ᐧ  �
 var tone = [ ' ̣𝍠', '꜌', '꜋', '꜊', '꜉', '꜈', '꜑', '꜐', '꜏', '꜎', '꜍', '𝍠̇' ]; //ᐧ
 var tone_chart = ['꜒', '˥', '꜓', '˦', '꜔', '˧', '꜕', '˨',  '꜖', '˩'];
 //https://en.wikipedia.org/wiki/Tone_letter
-//https://en.wikipedia.org/wiki/Unicode_subscripts_and_superscripts
+//https://en.wikipedia.org/wiki/Combining_Diacritical_Marks
 //https://en.wikipedia.org/wiki/Counting_Rod_Numerals_(Unicode_block)
 
 var colors = [0,1,0,1,0,0,1,0,1,0,1,0,0];
