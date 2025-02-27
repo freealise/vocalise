@@ -126,6 +126,7 @@ a {
   overflow:hidden;
   background-color:transparent;
   margin-bottom:0.125em;
+  margin-left:-1em;
   float:left;
   text-align:center;
 }
