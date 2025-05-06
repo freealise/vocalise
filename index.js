@@ -157,6 +157,7 @@ var superscript = {
 //https://en.wikipedia.org/wiki/Spacing_Modifier_Letters
 //https://en.wikipedia.org/wiki/Secondary_articulation
 
+var dice = ("☐⚀⚁⚂⚃⚄⚅").split("");
 var s = ["·", "ˈ", "ˌ"];
 var stress = ["𝍩","𝍪","𝍫","𝍬","𝍭"];
 var rate = ["𝍠","𝍡","𝍢","𝍣","𝍤"];
