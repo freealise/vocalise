@@ -241,7 +241,7 @@ var _pos = {
 };
 
 //https://intranet.secure.griffith.edu.au/schools-departments/natural-semantic-metalanguage
-//sort by POS and opposites
+//sort by POS and opposites; use as programming language keywords ?
 var primes = {
   "⍩": ["I", "F 2-19"],
   "⍨": ["you", "F 2-20"],
