@@ -4,7 +4,9 @@
 
 <p>Is a web service written in Javascript and Google Script, compatible with major browsers and mobile platforms.<br/>
 Dictionary by <a href="http://www.speech.cs.cmu.edu/cgi-bin/cmudict" title="Carnegie Mellon University" target="_blank"><u>CMU</u></a>, sorted by frequency based on <a href="https://books.google.com/ngrams" title="Google Books Ngrams" target="_blank"><u>Google Books Ngrams</u></a> with <a href="https://phrasefinder.io/" title="PhraseFinder" target="_blank"><u>PhraseFinder</u></a>.</p>
-
+  
+formants -> phonemes -> <a href='https://en.wikipedia.org/wiki/Phonestheme' target='_blank'>phonesthemes</a> -> syllables -> morphemes -> words -> phrases -> sentences (4 types) -> story  
+  
 <p><b>TODO:</b><br/>
 - deterministic natural language parser (https://observablehq.com/@spencermountain/compromise-tags, https://github.com/lagodiuk/earley-parser-js, https://github.com/lagodiuk/decision-tree-js)<br/>
 - phoneme recognition (https://docs.opencv.org/3.4/d6/de2/tutorial_py_table_of_contents_ml.html, https://docs.opencv.org/3.4/d5/dc4/tutorial_adding_images.html)<br/>
