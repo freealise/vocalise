@@ -6,6 +6,7 @@
 Dictionary by <a href="http://www.speech.cs.cmu.edu/cgi-bin/cmudict" title="Carnegie Mellon University" target="_blank"><u>CMU</u></a>, sorted by frequency based on <a href="https://books.google.com/ngrams" title="Google Books Ngrams" target="_blank"><u>Google Books Ngrams</u></a> with <a href="https://phrasefinder.io/" title="PhraseFinder" target="_blank"><u>PhraseFinder</u></a>.</p>
   
 formants -> phonemes -> <a href='https://en.wikipedia.org/wiki/Phonestheme' target='_blank'>phonesthemes</a> -> syllables -> morphemes -> words -> phrases -> sentences (4 types) -> story  
+form as story structure, tune and rhythm as stress pattern, and inline rhyme or alliteration as hypnosis  
   
 <p><b>TODO:</b><br/>
 - deterministic natural language parser (https://observablehq.com/@spencermountain/compromise-tags, https://github.com/lagodiuk/earley-parser-js, https://github.com/lagodiuk/decision-tree-js)<br/>
