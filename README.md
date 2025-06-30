@@ -9,6 +9,7 @@ formants -> phonemes (rhyme) -> <a href='https://en.wikipedia.org/wiki/Phonesthe
 form as story structure, tune and rhythm as stress pattern, and inline rhyme or alliteration as hypnosis  
   
 <p><b>TODO:</b><br/>
+- use tone letters and spaces of different width for sentence structure  
 - deterministic natural language parser (https://observablehq.com/@spencermountain/compromise-tags, https://github.com/lagodiuk/earley-parser-js, https://github.com/lagodiuk/decision-tree-js)<br/>
 - phoneme recognition (https://docs.opencv.org/3.4/d6/de2/tutorial_py_table_of_contents_ml.html, https://docs.opencv.org/3.4/d5/dc4/tutorial_adding_images.html)<br/>
 - shuffled flashcards combining into sentences (for formants/phonemes as by keyboard rows and columns, according to frequency to arrange by SSP; for words if facing up are a poetry set - practical, if down are solitaire / poker game - educational); stake money that can be won or lost according to in|correct answers<br/>  
