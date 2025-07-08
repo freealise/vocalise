@@ -9,7 +9,7 @@ formants -> phonemes (rhyme) -> <a href='https://en.wikipedia.org/wiki/Phonesthe
 form as story structure, tune and rhythm as stress pattern, and inline rhyme or alliteration as hypnosis  
   
 <p><b>TODO:</b><br/>
-- testing like on https://www.dict.com/ ?
+- testing like on https://www.dict.com/ ?  
 - use tone letters and spaces of different width for sentence structure<br/>
 - option for search with nearby phoneme substitutes, additions and removals<br/>
 - deterministic natural language parser (https://observablehq.com/@spencermountain/compromise-tags, https://github.com/lagodiuk/earley-parser-js, https://github.com/lagodiuk/decision-tree-js)<br/>
