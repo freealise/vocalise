@@ -19,7 +19,7 @@ form as story structure, tune and rhythm as stress pattern, and inline rhyme or 
   
 - use https://concepticon.clld.org/parameters with LTWF<br/>
 - add web and fiction word frequency data ?<br/>
-- writing and reading, speaking and listening with gemini and google tts / stt (speech recognition typing in textarea)<br/>
+- writing and reading, speaking and listening with gemini and google TTS / STT (speech recognition typing in textarea) with pitch detector<br/>
 - reverse dictionary with AI and several dictionaries with defining vocabulary<br/>
 - better defining dictionary and example sentences (english wiktionary / voa instead of oxford)<br/>
 - highlighting with color as a mnemonic device (not in the order of reading but same frequent words, letters or phonemes all over the text)<br/>
