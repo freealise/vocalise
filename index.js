@@ -1,6 +1,7 @@
 var v_ssml = "iː ɪ eɪ ɛ æ ə ɚ ʌ ɑː ɔː oʊ ʊ uː aɪ aʊ ɔɪ";
 var c_ssml = "p b t d k ɡ m n ŋ f v s z θ ð ʃ ʒ h l ɹ ʧ ʤ j w";
 //https://en.wikipedia.org/wiki/Sonority_Sequencing_Principle
+// ! regex for SSP
 
 var keys = [
   " i;IY;330;0.1664;0.3341;0.1498;0.0153",
