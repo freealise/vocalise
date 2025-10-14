@@ -2,6 +2,8 @@
 //https://cloud.google.com/text-to-speech/docs/ssml
 //https://www.w3.org/TR/speech-synthesis11/#S3.2.4
 
+//https://mdn.github.io/dom-examples/web-speech-api/speak-easy-synthesis/  
+
 const synth = window.speechSynthesis;
 const voiceSelect = document.getElementById("voiceSelect");
 
