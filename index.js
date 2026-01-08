@@ -312,7 +312,7 @@ var primes = {
 };
 
 
-var url = "https://script.google.com/macros/s/AKfycbz5br4wnfSGtucWKwGQq1Tb07eshJez6uVaFatn4xJAc_rcrcA/exec"; //"http://192.168.0.61:8080/";
+var url = "https://script.google.com/macros/s/AKfycbyYo_zODFB1fWxUPO3hg-3CFh5NNLUVd7E8rtUfDpOuIKDftakLiiNEdIsFeliw_69e/exec"; //"http://192.168.0.61:8080/";
 var fbase = "https://freealise-181308.firebaseio.com/cmudict/";
 var base = "https://docs.google.com/spreadsheets/d/1lx3voPc-GWdzkhiCetUh0UGtU5FzdnAVMH6YZ4qBQrQ/gviz/tq?tqx=out:csv&gid=";
 var gid = "2110937646";
