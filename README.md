@@ -9,6 +9,7 @@ formants -> phonemes (rhyme) -> <a href='https://en.wikipedia.org/wiki/Phonesthe
 form as story structure, tune and rhythm as stress pattern, and inline rhyme or alliteration as hypnosis  
   
 <p><b>TODO:</b><br/>
+- https://englishprofile.org/?menu=egp-online, https://englishprofile.org/?menu=evp-online  
 - https://www.omniglot.com/conscripts/phonobraille.htm<br/>  
 - translate https://slovniky.lingea.cz/, https://vyuka.lingea.cz/, https://www.dict.com/ ?<br/>
 - use tone letters and spaces of different width for sentence structure<br/>
