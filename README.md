@@ -11,7 +11,7 @@ form as story structure, tune and rhythm as stress pattern, and inline rhyme or 
 <p><b>TODO:</b><br/>
 - https://englishprofile.org/?menu=egp-online, https://englishprofile.org/?menu=evp-online  
 - https://www.omniglot.com/conscripts/phonobraille.htm<br/>  
-- translate https://vyuka.lingea.cz/anglictina/gramatika -> Simple English Wikipedia<br/>
+- translate https://vyuka.lingea.cz/anglictina/gramatika, 'grammar in tables & schemes' -> Simple English Wikipedia<br/>
 - use tone letters and spaces of different width for sentence structure<br/>
 - option for search with nearby phoneme substitutes, additions and removals<br/>
 - phoneme recognition (https://docs.opencv.org/3.4/d6/de2/tutorial_py_table_of_contents_ml.html, https://docs.opencv.org/3.4/d5/dc4/tutorial_adding_images.html)<br/>
