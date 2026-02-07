@@ -9,6 +9,7 @@ formants -> phonemes (rhyme) -> <a href='https://en.wikipedia.org/wiki/Phonesthe
 form as story structure, tune and rhythm as stress pattern, and inline rhyme or alliteration as hypnosis  
   
 <p><b>TODO:</b><br/>
+- connect phonemes on keyboard with lines of opacity varying by frequency of them following each other  
 - add stress pattern and number of syllables; search by syllables|stresses|phonemes|vowels|consonants; rhyme by each syllable with checkboxes  
 - https://englishprofile.org/?menu=egp-online, https://englishprofile.org/?menu=evp-online  
 - https://www.omniglot.com/conscripts/phonobraille.htm<br/>  
