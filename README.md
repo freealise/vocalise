@@ -40,3 +40,38 @@ form as story structure, tune and rhythm as stress pattern, and inline rhyme or 
 - algorithmic filter for explicit / overused / repetitive words and synonyms suggestion<br/>
 - more languages (Hebrew, _)
 </p>
+
+<pre>
+- sort primes by POS and opposites, map to programming language (js | py)
+              use https://concepticon.clld.org/parameters with ltwf
+              pitch / formant corrector for multilingual vocaloid (google tts)
+              highlight the point in cefr examples and use as blank space to fill, words in datalist as options, 
+              add phrases and idioms (?)
+              prompt AI for pictograms of basic words
+              average basic vocabulary definitions with AI; pos and recursive word definition similarity as hint and auto correctness checker (Levenstein distance for word definitions and definition of every word in them - https://en.wikipedia.org/wiki/Damerau%E2%80%93Levenshtein_distance or https://github.com/tensorflow/tfjs-models/tree/master/universal-sentence-encoder with dataset from cefr and dictionary examples), assess by translation to native language
+  (https://www.englishprofile.org/english-grammar-profile/egp-online, https://www.englishprofile.org/wordlists/evp, https://learnenglish.britishcouncil.org/)
+            words keyboard like poetry set (heap of words to drag and click, sort by POS and frequency, use defining vocabulary)
+            popup definitions from several dictionaries
+            use scrolling vector image with long radial gradient instead of ascii ?
+            apply multitouch (?) pointer interface to spectrograms (_interface with velocity / acceleration as depth) 
+              (https://developer.squareup.com/blog/smoother-signatures/)
+            detect syllables and phonemes by volume / spectrum to prolong vowels and reduce consonants (common TTS)
+              (https://www.lingea.com/pronunciation-training)
+            improve phoneme charts (show interpolation; dots in 2 rows ?)
+              phoneme symbols based on dots instead of pseudographics
+              type phoneme formants from keyboard with 48 keys and interpolate
+            hsl on phonetic keyboard (sonority = saturation, voiced = lightness; =lil-gui ?)
+              draw phonemes with mouse as hsl color vector (<input type="color" value="#ff0000" id="color_v"/>)
+            rewrite / edit / shorten awkward LTWF entries (on server), 
+              add examples (may be in verse although harder to translate)
+            highlight question words on basic word set (https://en.m.wikipedia.org/wiki/Interrogative_word, https://en.m.wikipedia.org/wiki/English_interrogative_words)
+            add morphology (https://www.affixes.org/themes/index.html)
+            wiki / diff (etherpad + tiddlywiki) embedded on network page
+            ! PhraseFinder discontinued: fix punctuation, add ngrams.dev
+            add opensiddur.org, lyricfind.com as libraries
+            word tree chart for phrases ?
+              data from chart json tree ? (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#examples)
+            compose as many as possible sentences with words of different pos from top of list + 1-3 new each day
+  2-nd formant has the most range and precision; formants of perceived vowels are aligned linearly to harmonic resonances
+  women and children's formants are wider due to higher voice pitch keeping the same number of resonating harmonics per formant
+</pre>
