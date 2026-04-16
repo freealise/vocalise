@@ -75,5 +75,9 @@ form as story structure, tune and rhythm as stress pattern, and inline rhyme or 
               data from chart json tree ? (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#examples)
             compose as many as possible sentences with words of different pos from top of list + 1-3 new each day
   2-nd formant has the most range and precision; formants of perceived vowels are aligned linearly to harmonic resonances
-  women and children's formants are wider due to higher voice pitch keeping the same number of resonating harmonics per formant
+  women and children's formants are wider due to higher voice pitch keeping the same number of resonating harmonics per formant  
+  
+- tts as bg vocals to be a band instead of person  
+pitch correction in DAW (+online)  
+audacity has linear scale and spectral selection to prolong vowels and shorten consonants and transitions | playbackrate with then without pitch preservation in browser  
 </pre>
