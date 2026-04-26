@@ -44,6 +44,7 @@ form as story structure, tune and rhythm as stress pattern, and inline rhyme or 
 <pre>
 (test: Think in / Listen to / Speak / Read / Write in a foreign language  
   read and write, hear and speak letters and phonemes, syllables and morphemes, words, phrases and sentences, story structure)  
+  http://www.madlibslive.com/whats-a-mad-lib  
 - sort primes by POS and opposites, map to programming language (js | py)
               use https://concepticon.clld.org/parameters with ltwf
               pitch / formant corrector for multilingual vocaloid (google tts)
