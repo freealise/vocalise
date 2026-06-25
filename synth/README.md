@@ -8,7 +8,12 @@ in a sequencer than the usual score sheets.
 - detect hand drawn spectrograms on paper (https://docs.opencv.org/4.x/df/def/tutorial_js_meanshift.html, https://docs.opencv.org/4.x/d4/dc6/tutorial_py_template_matching.html)  
 - cluster consonants by SSP over vowels 2nd formant and base pitch (stress)  
 - improve phoneme representations (https://wavesurfer.xyz/examples/?vowels.js, speaknspell | sam | espeak | _) - vowels are 2 dots long, plosives take up the 2nd dot of symbol only, other consonants the 1st  
-
+  
+classic vocoder for character voices  
+  
+The Q factor is calculated by dividing the center frequency value by the affected frequency range. For example, if we are boosting or cutting at 1kHz and the range of frequencies affected is +/- 600 Hz, the Q value will be 0.83.
+0.83 = 1000 Hz / (1600 Hz - 400 Hz)  
+  
 <p>
 <img alt="'Speech and hearing science'" border="0" data-original-height="715" data-original-width="800" src="wideband.narrowband.jpg" title="'Speech and hearing science'" width="100%" />
 </p>
