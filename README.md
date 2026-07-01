@@ -10,7 +10,7 @@ form as story structure, tune and rhythm as stress pattern, and inline rhyme or 
   
 <p><b>TODO:</b><br/>
 - add sound and spectrograms to keyboard; phoneme spectrograms of the person's native language superimposed on the one for target to interpolate  
-- connect phonemes on keyboard with lines of opacity varying by frequency of them following each other  
+- set keyboard in circles according to SSP; connect phonemes on keyboard with lines of opacity varying by frequency of them following each other  
 - add stress pattern and number of syllables; search by syllables|stresses|phonemes|vowels|consonants; rhyme by each syllable with checkboxes  
 - https://englishprofile.org/?menu=egp-online, https://englishprofile.org/?menu=evp-online  
 - https://www.omniglot.com/conscripts/phonobraille.htm<br/>  
